@@ -4,3 +4,7 @@ RemoteSystemsTempFiles
 RemoteSystemsTempFiles/*
 NuceloKeyboardController/Debug/
 NuceloKeyboardController/Debug/*
+NuceloKeyboardController/NuceloKeyboardController\ Debug.cfg
+NuceloKeyboardController/NuceloKeyboardController\ Run.cfg
+NuceloKeyboardController/STM32F429ZITx_FLASH.ld
+NuceloKeyboardController/NUCLEO-F429ZI.xml
