@@ -26,7 +26,7 @@
     { K_NO,    K_##K10, K_NO}  \
 }
 
-typedef int key_grid_TypeDef[KEYBOARD_ROWS][KEYBOARD_COLS];
+typedef uint8_t key_grid_TypeDef[KEYBOARD_ROWS][KEYBOARD_COLS];
 
 typedef enum{
 	km_ok				= 0,
@@ -36,7 +36,8 @@ typedef enum{
 } keymap_err_TypeDef;
 
 typedef struct {
-	key_grid_TypeDef* grid;
+//	key_grid_TypeDef* grid;
+	uint8_t grid[KEYBOARD_ROWS][KEYBOARD_COLS];
 
 	char* name;
 	uint8_t ID;
@@ -141,7 +142,8 @@ typedef struct {
 
 //prototypes
 keymap_err_TypeDef layer_list_init( keymap_list* layer_list,
-		key_grid_TypeDef* grid, char* layer_name );
+//		key_grid_TypeDef* grid, char* layer_name );
+		uint8_t* grid[KEYBOARD_ROWS][KEYBOARD_COLS], char* layer_name);
 keymap_err_TypeDef layer_list_append_layer( keymap_list* layer_list,
 		key_grid_TypeDef* grid, char* layer_name );
 uint8_t layer_list_get_ID( keymap_list* layer_list);

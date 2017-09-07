@@ -22,14 +22,15 @@ const key_grid_TypeDef keymap1 =
 		   LGUI);
 
 keymap_err_TypeDef layer_list_init( keymap_list* layer_list,
-		key_grid_TypeDef* grid, char* layer_name )
+//		key_grid_TypeDef* grid, char* layer_name )
+		uint8_t* grid[KEYBOARD_ROWS][KEYBOARD_COLS], char* layer_name)
 {
 
 	//TODO bravity check
 	layer_list->layer_count = 1;
 	layer_list->ID_count = 1;
 
-	keymap_layer *layer = (keymap_layer*) malloc (sizeof(keymap_layer));
+	keymap_layer* layer = (keymap_layer*) malloc (sizeof(keymap_layer));
 	if (layer == NULL)
 		return km_init_err;
 
@@ -41,14 +42,9 @@ keymap_err_TypeDef layer_list_init( keymap_list* layer_list,
 			return km_init_err;
 	strcpy(layer->name, layer_name);
 
-	if(sizeof(keymap0) == sizeof(*layer->grid))
-		memcpy(layer->grid, grid, KEYBOARD_ROWS * KEYBOARD_COLS);
+	if(sizeof(keymap0) == sizeof(layer->grid))
+		memcpy(&layer->grid, grid, KEYBOARD_ROWS * KEYBOARD_COLS);
 	else{
-		free(layer);
-		return km_init_err;
-	}
-
-	if(*layer->grid[0][0] != keymap0[0][0]){
 		free(layer);
 		return km_init_err;
 	}
