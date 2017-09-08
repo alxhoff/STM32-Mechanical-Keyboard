@@ -574,6 +574,11 @@ void KeyboardListenCallback(void const * argument)
 
 	ret = layer_list_append_layer(&key_layer_list, &keymap_init1);
 
+	ret = layer_list_append_layer(&key_layer_list, &keymap_init2);
+
+	ret = layer_table_init( &key_layer_list );
+
+
 	TickType_t xLastWakeTime = xTaskGetTickCount();
 	const TickType_t xPeriod = 100;
 	const TickType_t xDelay = 50 / portTICK_PERIOD_MS;

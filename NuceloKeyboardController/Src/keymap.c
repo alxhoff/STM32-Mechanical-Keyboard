@@ -26,9 +26,21 @@ const layer_init keymap_init1 =
 					   f, e, d, \
 					   g, h, i, \
 					   LGUI),
-		.key_code = HID_KEYBOARD_SC_LEFT_GUI,
+		.key_code = HID_KEYBOARD_SC_RIGHT_CONTROL,
 		.name = "Second_layer"
 };
+
+const layer_init keymap_init2 =
+{
+		.grid =
+				KEYMAP(j, k, k, \
+					   m, n, o, \
+					   o, q, r, \
+					   RGUI),
+		.key_code = HID_KEYBOARD_SC_LEFT_GUI,
+		.name = "Third_layer"
+};
+
 //TODO whichspace names
 keymap_err_TypeDef layer_list_init( keymap_list* layer_list,
 //		uint8_t* grid[KEYBOARD_ROWS][KEYBOARD_COLS], char* layer_name)
@@ -52,7 +64,7 @@ keymap_err_TypeDef layer_list_init( keymap_list* layer_list,
 			return km_init_err;
 	strcpy(layer->name, initial_layer_to_add->name);
 
-	memcpy(&layer->grid, initial_layer_to_add->grid, KEYBOARD_ROWS * KEYBOARD_COLS);
+	memcpy(&layer->grid, &initial_layer_to_add->grid, KEYBOARD_ROWS * KEYBOARD_COLS);
 	//########################
 
 	//set new layer as head node
@@ -81,7 +93,7 @@ keymap_err_TypeDef layer_list_append_layer( keymap_list* layer_list, layer_init*
 		return km_init_err;
 	strcpy(layer->name, layer_to_add->name);
 
-	memcpy(&layer->grid, layer_to_add->grid, KEYBOARD_ROWS * KEYBOARD_COLS);
+	memcpy(&layer->grid, &layer_to_add->grid, KEYBOARD_ROWS * KEYBOARD_COLS);
 	//##################
 
 
@@ -134,10 +146,13 @@ keymap_err_TypeDef layer_table_init ( keymap_list* layer_list )
 		new_entry->grid = &layer_list_head->grid;
 
 		//if first entry, set head
-		if(table->entry_count == 0)
+		if(table->entry_count == 0){
 			table->head = new_entry;
+			table->entry_count++;
+		}
 		else
 			layer_table_append( layer_list, new_entry);
+		layer_list_head = layer_list_head->next;
 	}
 
 	return km_ok;
@@ -151,7 +166,7 @@ keymap_err_TypeDef layer_table_append ( keymap_list* layer_list, layer_table_ent
 	//create entry
 	layer_table_entry* last = layer_table_get_last(layer_list);
 
-	last->next = layer;
+	last->next = (layer_table_entry*) layer;
 	layer_list->table->entry_count++;
 
 	return km_ok;
