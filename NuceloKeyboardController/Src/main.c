@@ -570,9 +570,9 @@ void KeyboardListenCallback(void const * argument)
 
 	keymap_err_TypeDef ret;
 
-	ret = layer_list_init(&key_layer_list, &keymap0, "Initial layer");
+	ret = layer_list_init(&key_layer_list, &keymap_init0);
 
-	ret = layer_list_append_layer(&key_layer_list, &keymap1, "Second layer");
+	ret = layer_list_append_layer(&key_layer_list, &keymap_init1);
 
 	TickType_t xLastWakeTime = xTaskGetTickCount();
 	const TickType_t xPeriod = 100;

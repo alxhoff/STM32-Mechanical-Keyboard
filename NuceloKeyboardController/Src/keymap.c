@@ -6,24 +6,33 @@
  */
 
 #include "keymap.h"
+#include "HIDClassCommon.h"
 
-const key_grid_TypeDef keymap0 =
-    /* 0: qwerty */
-    KEYMAP(7, 8, 9, \
-           4, 5, 6, \
-           1, 2, 3, \
-		   LGUI);
+const layer_init keymap_init0 =
+{
+		.grid =
+				KEYMAP(7, 8, 9, \
+					   4, 5, 6, \
+					   1, 2, 3, \
+					   LGUI),
+	   .key_code = 0x66,
+	   .name = "Initial_layer"
+};
 
-const key_grid_TypeDef keymap1 =
-    /* 0: qwerty */
-    KEYMAP(a, b, c, \
-           f, e, d, \
-           g, h, i, \
-		   LGUI);
-
+const layer_init keymap_init1 =
+{
+		.grid =
+				KEYMAP(a, b, c, \
+					   f, e, d, \
+					   g, h, i, \
+					   LGUI),
+		.key_code = HID_KEYBOARD_SC_LEFT_GUI,
+		.name = "Second_layer"
+};
+//TODO whichspace names
 keymap_err_TypeDef layer_list_init( keymap_list* layer_list,
-//		key_grid_TypeDef* grid, char* layer_name )
-		uint8_t* grid[KEYBOARD_ROWS][KEYBOARD_COLS], char* layer_name)
+//		uint8_t* grid[KEYBOARD_ROWS][KEYBOARD_COLS], char* layer_name)
+		layer_init* initial_layer_to_add )
 {
 
 	//TODO bravity check
@@ -34,20 +43,17 @@ keymap_err_TypeDef layer_list_init( keymap_list* layer_list,
 	if (layer == NULL)
 		return km_init_err;
 
-	//NEW LAYER PROPERTIES
+	//NEW LAYER PROPERTIES ###
 	layer->ID =  layer_list_get_ID(layer_list);
+	layer->layer_modifier_key_code = initial_layer_to_add->key_code;
 
-	layer->name = (char*) malloc ((strlen(layer_name)+1)*sizeof(char));
+	layer->name = (char*) malloc ((strlen(initial_layer_to_add->name)+1)*sizeof(char));
 	if (layer->name == NULL)
 			return km_init_err;
-	strcpy(layer->name, layer_name);
+	strcpy(layer->name, initial_layer_to_add->name);
 
-	if(sizeof(keymap0) == sizeof(layer->grid))
-		memcpy(&layer->grid, grid, KEYBOARD_ROWS * KEYBOARD_COLS);
-	else{
-		free(layer);
-		return km_init_err;
-	}
+	memcpy(&layer->grid, initial_layer_to_add->grid, KEYBOARD_ROWS * KEYBOARD_COLS);
+	//########################
 
 	//set new layer as head node
 	layer_list->head = (keymap_layer*) layer;
@@ -57,8 +63,7 @@ keymap_err_TypeDef layer_list_init( keymap_list* layer_list,
 	return km_ok;
 }
 
-keymap_err_TypeDef layer_list_append_layer( keymap_list* layer_list,
-		key_grid_TypeDef* grid, char* layer_name )
+keymap_err_TypeDef layer_list_append_layer( keymap_list* layer_list, layer_init* layer_to_add )
 {
 
 	//create layer
@@ -66,16 +71,19 @@ keymap_err_TypeDef layer_list_append_layer( keymap_list* layer_list,
 	if (layer == NULL)
 		return km_init_err;
 
-	//fill layer
+	//fill layer#######
+	layer->layer_modifier_key_code = layer_to_add->key_code;
 	layer->ID = layer_list_get_ID(layer_list);
 	layer_list->layer_count++;
 
-	layer->name = (char*) malloc ((strlen(layer_name)+1)*sizeof(char));
+	layer->name = (char*) malloc ((strlen(layer_to_add->name)+1)*sizeof(char));
 	if (layer->name == NULL)
 		return km_init_err;
-	strcpy(layer->name, layer_name);
+	strcpy(layer->name, layer_to_add->name);
 
-	memcpy(layer->grid, grid, KEYBOARD_ROWS * KEYBOARD_COLS);
+	memcpy(&layer->grid, layer_to_add->grid, KEYBOARD_ROWS * KEYBOARD_COLS);
+	//##################
+
 
 	//point head's prev to new entry (end of list)
 	layer_list->head->prev = (keymap_layer*) layer;
@@ -90,6 +98,61 @@ keymap_err_TypeDef layer_list_append_layer( keymap_list* layer_list,
 
 	layer->next = layer_list->head;
 	layer->prev = head;
+
+	return km_ok;
+}
+
+//init layer table
+//loop through all entries in the layer list and create assosiation paris
+//between the key_codes and the layer addresses, done using the ID's
+keymap_err_TypeDef layer_table_init ( keymap_list* layer_list )
+{
+	//create empty table
+	layer_table* table = (layer_table*) malloc(sizeof(layer_table));
+	if(table == NULL)
+		return km_table_init_err;
+
+	//no table entries yet
+	table->head = NULL;
+	table->entry_count = 0;
+
+	//assign table to table list
+	layer_list->table = table;
+
+	//loop through all layers in layer list and create entries
+	keymap_layer* layer_list_head = layer_list->head;
+
+	//loop until the list has been iterated through once
+	while(layer_list_head->next != layer_list->head){
+		//create layer table entry associating ID's to keycodes
+		layer_table_entry* new_entry = (layer_table_entry*) malloc(sizeof(layer_table_entry));
+		if(new_entry == NULL)
+			return km_table_init_err;
+
+		new_entry->ID = layer_list_head->ID;
+		new_entry->key_code = layer_list_head->layer_modifier_key_code;
+		new_entry->grid = &layer_list_head->grid;
+
+		//if first entry, set head
+		if(table->entry_count == 0)
+			table->head = new_entry;
+		else
+			layer_table_append( layer_list, new_entry);
+	}
+
+	return km_ok;
+}
+
+//append layer to layer table with it's corresponding key_code
+//needs to find the key_code - ID assosiation and append to table
+keymap_err_TypeDef layer_table_append ( keymap_list* layer_list, layer_table_entry* layer)
+{
+	//get the end of the list
+	//create entry
+	layer_table_entry* last = layer_table_get_last(layer_list);
+
+	last->next = layer;
+	layer_list->table->entry_count++;
 
 	return km_ok;
 }
@@ -171,21 +234,6 @@ keymap_err_TypeDef layer_list_remove_with_ID ( keymap_list* layer_list, uint8_t 
 	return km_ok;
 }
 
-//init layer table
-keymap_err_TypeDef layer_table_init ( keymap_list* layer_list )
-{
-	layer_table* table = (layer_table*) malloc(sizeof(layer_table));
-	if(table == NULL)
-		return km_table_init_err;
-
-	table->head = NULL;
-	table->entry_count = 0;
-
-	layer_list->table = table;
-
-	return km_ok;
-}
-
 //get second last table entry from layer table
 layer_table_entry* layer_table_get_second_last (keymap_list* layer_list )
 {
@@ -200,26 +248,7 @@ layer_table_entry* layer_table_get_second_last (keymap_list* layer_list )
 	return second_last;
 }
 
-//append layer to layer table with it's corresponding key_code
-keymap_err_TypeDef layer_table_append ( keymap_list* layer_list, keymap_layer* layer, uint8_t key_code )
-{
-	layer_table_entry* new = (layer_table_entry*) malloc(sizeof(layer_table_entry));
-	//create key ID connection
-	new->ID = layer->ID;
-	new->key_code = key_code;
-	new->next = NULL;
-	//check if table is empty
-	if(layer_list->table->entry_count == 0){
-		//create initial node
-		layer_list->table->head = new;
-		return km_ok;
-	}
 
-	//else appednd
-	layer_table_entry* last = layer_table_find_last( layer_list );
-	last->next = new;
-	return km_ok;
-}
 
 //remove last entry from layer table
 keymap_err_TypeDef layer_table_remove_last ( keymap_list* layer_list )
@@ -234,6 +263,7 @@ keymap_err_TypeDef layer_table_remove_last ( keymap_list* layer_list )
 	return km_ok;
 }
 
+//removes a layer table entry with a certain ID
 keymap_err_TypeDef layer_table_remove_with_ID ( keymap_list* layer_list, uint8_t ID )
 {
 	layer_table_entry* next;
@@ -253,6 +283,7 @@ keymap_err_TypeDef layer_table_remove_with_ID ( keymap_list* layer_list, uint8_t
 	return km_ok;
 }
 
+//gets the ID of a layer table entry given it's layer address
 uint8_t layer_table_get_ID_with_layer ( keymap_list* layer_list, keymap_layer* layer )
 {
 	keymap_layer* head = layer_list->head;

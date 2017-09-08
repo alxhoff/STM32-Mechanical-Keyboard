@@ -28,6 +28,14 @@
 
 typedef uint8_t key_grid_TypeDef[KEYBOARD_ROWS][KEYBOARD_COLS];
 
+typedef struct{
+	const uint8_t grid[KEYBOARD_ROWS][KEYBOARD_COLS];
+
+	uint8_t key_code;
+
+	char* name;
+} layer_init;
+
 typedef enum{
 	km_ok				= 0,
 	km_init_err			= -1,
@@ -39,6 +47,8 @@ typedef struct {
 //	key_grid_TypeDef* grid;
 	uint8_t grid[KEYBOARD_ROWS][KEYBOARD_COLS];
 
+	uint8_t layer_modifier_key_code;
+
 	char* name;
 	uint8_t ID;
 
@@ -49,6 +59,8 @@ typedef struct {
 
 typedef struct{
 	uint8_t ID;
+
+	uint8_t (*grid)[KEYBOARD_ROWS][KEYBOARD_COLS];
 
 	uint8_t key_code;
 
@@ -141,23 +153,20 @@ typedef struct {
 #define K_PLAY			HID_KEYBOARD_SC_MEDIA_PLAY
 
 //prototypes
-keymap_err_TypeDef layer_list_init( keymap_list* layer_list,
-//		key_grid_TypeDef* grid, char* layer_name );
-		uint8_t* grid[KEYBOARD_ROWS][KEYBOARD_COLS], char* layer_name);
-keymap_err_TypeDef layer_list_append_layer( keymap_list* layer_list,
-		key_grid_TypeDef* grid, char* layer_name );
+keymap_err_TypeDef layer_list_init( keymap_list* layer_list, layer_init* initial_layer_to_add );
+keymap_err_TypeDef layer_list_append_layer( keymap_list* layer_list, layer_init* layer_to_add );
 uint8_t layer_list_get_ID( keymap_list* layer_list);
 keymap_layer* layer_list_get_last ( keymap_list* layer_list );
 layer_table_entry* layer_table_get_last ( keymap_list* layer_list );
 keymap_err_TypeDef layer_list_remove_with_ID ( keymap_list* layer_list, uint8_t ID );
 keymap_err_TypeDef layer_table_init ( keymap_list* layer_list );
 layer_table_entry* layer_table_get_second_last (keymap_list* layer_list );
-keymap_err_TypeDef layer_table_append ( keymap_list* layer_list, keymap_layer* layer, uint8_t key_code );
+keymap_err_TypeDef layer_table_append ( keymap_list* layer_list, layer_table_entry* layer);
 keymap_err_TypeDef layer_table_remove_last ( keymap_list* layer_list );
 keymap_err_TypeDef layer_table_remove_with_ID ( keymap_list* layer_list, uint8_t ID );
 uint8_t layer_table_get_ID_with_layer ( keymap_list* layer_list, keymap_layer* layer );
 
-extern const key_grid_TypeDef keymap0;
-extern const key_grid_TypeDef keymap1;
+extern const layer_init keymap_init0;
+extern const layer_init keymap_init1;
 
 #endif /* KEYMAP_H_ */
