@@ -65,6 +65,8 @@ struct layer_table_entry{
 
 	uint8_t (*grid)[KEYBOARD_ROWS][KEYBOARD_COLS];
 
+	keymap_layer* layer;
+
 	uint8_t key_code;
 
 	layer_table_entry* next;
@@ -85,7 +87,7 @@ typedef struct {
 
 	layer_table* table;
 
-	keymap_layer* current_layer;
+	uint8_t current_layer;
 } keymap_list;
 
 #define K_ESC			HID_KEYBOARD_SC_ESCAPE
@@ -160,14 +162,15 @@ keymap_err_TypeDef layer_list_init( keymap_list* layer_list, layer_init* initial
 keymap_err_TypeDef layer_list_append_layer( keymap_list* layer_list, layer_init* layer_to_add );
 uint8_t layer_list_get_ID( keymap_list* layer_list);
 keymap_layer* layer_list_get_last ( keymap_list* layer_list );
+keymap_layer* layer_table_get_layer_w_ID( keymap_list* layer_list, uint8_t ID);
 layer_table_entry* layer_table_get_last ( keymap_list* layer_list );
-keymap_err_TypeDef layer_list_remove_with_ID ( keymap_list* layer_list, uint8_t ID );
+keymap_err_TypeDef layer_list_rem_layer_w_ID ( keymap_list* layer_list, uint8_t ID );
 keymap_err_TypeDef layer_table_init ( keymap_list* layer_list );
 layer_table_entry* layer_table_get_second_last (keymap_list* layer_list );
 keymap_err_TypeDef layer_table_append ( keymap_list* layer_list, layer_table_entry* layer);
-keymap_err_TypeDef layer_table_remove_last ( keymap_list* layer_list );
-keymap_err_TypeDef layer_table_remove_with_ID ( keymap_list* layer_list, uint8_t ID );
-uint8_t layer_table_get_ID_with_layer ( keymap_list* layer_list, keymap_layer* layer );
+keymap_err_TypeDef layer_table_rem_last ( keymap_list* layer_list );
+keymap_err_TypeDef layer_table_rem_layer_w_ID ( keymap_list* layer_list, uint8_t ID );
+uint8_t layer_table_get_ID_w_layer ( keymap_list* layer_list, keymap_layer* layer );
 
 extern const layer_init keymap_init0;
 extern const layer_init keymap_init1;

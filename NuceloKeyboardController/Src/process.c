@@ -9,7 +9,7 @@
 #include "extern.h"
 #include "stm32f4xx_hal.h"
 
-key_err_TypeDef process_key_buf(keyboard_HID_data* data)
+key_err_TypeDef process_key_buf(keyboard_HID_data* data, keymap_list* layer_list)
 {
 	if(data->key_buf.index == 0){
 		return empty_buf;
@@ -23,11 +23,15 @@ key_err_TypeDef process_key_buf(keyboard_HID_data* data)
 	//clear modifiers
 	data->out_buf.mod_buf = 0x00;
 
+	//get current layer
+	keymap_layer* current_layer = layer_table_get_current_layer(layer_list);
+
 	//iterate through buffer and translate
 	for(int i=0;i<data->key_buf.index;i++){
 		//TODO capslock
 		//get character
-//		data->key_buf.buffer[i].key_code =
+		data->key_buf.buffer[i].key_code =
+				current_layer->grid[data->key_buf.buffer[i].row][data->key_buf.buffer[i].col];
 //				keymap0[data->key_buf.buffer[i].row][data->key_buf.buffer[i].col];
 
 		if(data->key_buf.buffer[i].key_code >= 0xE0 && data->key_buf.buffer[i].key_code <= 0xE7){
