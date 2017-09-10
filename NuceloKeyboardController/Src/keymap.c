@@ -135,7 +135,8 @@ keymap_err_TypeDef layer_table_init ( keymap_list* layer_list )
 	keymap_layer* layer_list_head = layer_list->head;
 
 	//loop until the list has been iterated through once
-	while(layer_list_head->next != layer_list->head){
+	uint8_t done = 0;
+	while(!done){
 		//create layer table entry associating ID's to keycodes
 		layer_table_entry* new_entry = (layer_table_entry*) malloc(sizeof(layer_table_entry));
 		if(new_entry == NULL)
@@ -144,6 +145,7 @@ keymap_err_TypeDef layer_table_init ( keymap_list* layer_list )
 		new_entry->ID = layer_list_head->ID;
 		new_entry->key_code = layer_list_head->layer_modifier_key_code;
 		new_entry->grid = &layer_list_head->grid;
+		new_entry->next = NULL;
 
 		//if first entry, set head
 		if(table->entry_count == 0){
@@ -153,6 +155,9 @@ keymap_err_TypeDef layer_table_init ( keymap_list* layer_list )
 		else
 			layer_table_append( layer_list, new_entry);
 		layer_list_head = layer_list_head->next;
+
+		if(layer_list_head == layer_list->head)
+			done = 1;
 	}
 
 	return km_ok;
@@ -166,11 +171,23 @@ keymap_err_TypeDef layer_table_append ( keymap_list* layer_list, layer_table_ent
 	//create entry
 	layer_table_entry* last = layer_table_get_last(layer_list);
 
-	last->next = (layer_table_entry*) layer;
+	last->next = layer;
 	layer_list->table->entry_count++;
 
 	return km_ok;
 }
+
+//get last table entry from layer table
+layer_table_entry* layer_table_get_last ( keymap_list* layer_list )
+{
+	layer_table_entry* table_head = layer_list->table->head;
+
+	while(table_head->next != NULL)
+		table_head = table_head->next;
+
+	return table_head;
+}
+
 
 //UNTESTED VVVV
 //get an ID number for a layer
@@ -221,16 +238,6 @@ keymap_layer* layer_list_get_last ( keymap_list* layer_list )
 	return head;
 }
 
-//get last table entry from layer table
-layer_table_entry* layer_table_get_last ( keymap_list* layer_list )
-{
-	layer_table_entry* table_head = layer_list->table->head;
-
-	while(table_head->next != NULL)
-		table_head = table_head->next;
-
-	return table_head;
-}
 
 //remove layer from layer list with ID
 keymap_err_TypeDef layer_list_remove_with_ID ( keymap_list* layer_list, uint8_t ID )
