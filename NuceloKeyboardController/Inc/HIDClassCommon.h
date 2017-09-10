@@ -335,6 +335,8 @@
 		#define HID_KEYBOARD_SC_MEDIA_CALCULATOR                  0xFB
 		//@}
 
+		#define HID_KEYBOARD_SC_MEDIA_FUNCTION					  0xFF
+
 		/** \name Common HID Device Report Descriptors */
 		//@{
 		/** \hideinitializer

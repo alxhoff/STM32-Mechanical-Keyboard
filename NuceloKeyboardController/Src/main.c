@@ -84,6 +84,7 @@ osThreadId ADCListenHandle;
 SemaphoreHandle_t USB_send_lock = NULL;
 
 AT24Cxx_devices eeprom_devs;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -142,7 +143,7 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
   ssd1306_Init();
-  HAL_Delay(1000);
+  HAL_Delay(100);
   ssd1306_Fill(White);
   ssd1306_SetCursor(23,23);
   ssd1306_WriteString("hello",Font_11x18, Black);
@@ -189,8 +190,8 @@ int main(void)
   KeyboardListenHandle = osThreadCreate(osThread(KeyboardListen), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
-  osThreadDef(ADCListen, MouseListenCallback, osPriorityIdle, 0, 128);
-  ADCListenHandle = osThreadCreate(osThread(ADCListen), NULL);
+//  osThreadDef(ADCListen, MouseListenCallback, osPriorityIdle, 0, 128);
+//  ADCListenHandle = osThreadCreate(osThread(ADCListen), NULL);
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_QUEUES */
@@ -526,6 +527,7 @@ void MouseListenCallback(void const * argument)
   /* Infinite loop */
   for(;;)
   {
+#ifdef ENABLE_MOUSE
 	vTaskDelayUntil(&xLastWakeTime, xPeriod);
 
 	if(ADC_retrieve_values(&mouse_data) == mouse_ok)
@@ -534,8 +536,8 @@ void MouseListenCallback(void const * argument)
 	clear_mouse_report(&mouse_data);
 	process_mouse_flags(&mouse_data);
 
-	ADC_display_values(&mouse_data.mouse_buf.x, &mouse_data.mouse_buf.y);
-
+	//ADC_display_values(&mouse_data.mouse_buf.x, &mouse_data.mouse_buf.y);
+#endif
 //	vTaskDelay(xDelay);
   }
   /* USER CODE END KeyboardListenCallback */
@@ -597,7 +599,7 @@ void KeyboardListenCallback(void const * argument)
   {
 	vTaskDelayUntil(&xLastWakeTime, xPeriod);
 
-	if(scanMatrix(&keyboard_data) == key_ok)
+	if(scan_key_matrix(&keyboard_data) == key_ok)
 		process_key_buf(&keyboard_data, &key_layer_list);
 
 	clear_keyboard_report(&keyboard_data);

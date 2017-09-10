@@ -8,6 +8,10 @@
 #include "process.h"
 #include "extern.h"
 #include "stm32f4xx_hal.h"
+#include "states.h"
+#include "ssd1306.h"
+#include "fonts.h"
+
 
 key_err_TypeDef process_key_buf(keyboard_HID_data* data, keymap_list* layer_list)
 {
@@ -23,6 +27,9 @@ key_err_TypeDef process_key_buf(keyboard_HID_data* data, keymap_list* layer_list
 	//clear modifiers
 	data->out_buf.mod_buf = 0x00;
 
+	if(current_keyboard_state == layer_set)
+		goto set_layer;
+
 	//get current layer
 	keymap_layer* current_layer = layer_table_get_current_layer(layer_list);
 
@@ -32,13 +39,17 @@ key_err_TypeDef process_key_buf(keyboard_HID_data* data, keymap_list* layer_list
 		//get character
 		data->key_buf.buffer[i].key_code =
 				current_layer->grid[data->key_buf.buffer[i].row][data->key_buf.buffer[i].col];
-//				keymap0[data->key_buf.buffer[i].row][data->key_buf.buffer[i].col];
 
+		//LAYER MODIFIER
+		if(data->key_buf.buffer[i].key_code == HID_KEYBOARD_SC_MEDIA_FUNCTION)
+			goto state_change;
+
+		//MODIFIER
 		if(data->key_buf.buffer[i].key_code >= 0xE0 && data->key_buf.buffer[i].key_code <= 0xE7){
-			//modifier
 			data->keyboard_state = active;
 			data->out_buf.mod_buf |= (1 << (data->key_buf.buffer[i].key_code - 0xE0));
 		}
+		//MEIDA
 		else if(data->key_buf.buffer[i].key_code >= 0xE8 && data->key_buf.buffer[i].key_code <= 0xEF){
 			//media
 			data->media_state = active;
@@ -48,6 +59,7 @@ key_err_TypeDef process_key_buf(keyboard_HID_data* data, keymap_list* layer_list
 						data->key_buf.buffer[i].key_code;
 				data->out_buf.med_buf.count++;
 			}
+		//OTHER KEY PRESSES
 		}else{
 			data->keyboard_state = active;
 			//check if key_code is in last HID report
@@ -87,6 +99,9 @@ key_err_TypeDef process_key_buf(keyboard_HID_data* data, keymap_list* layer_list
 	data->prev_report_len = data->out_buf.key_buf.count;
 
 	return key_ok;
+	state_change: state_enter_layer_set();
+	set_layer: state_layer_set( layer_list );
+	return key_layer_set;
 }
 
 signed int reset_buffer(six_key_buffer* buffer_to_reset)
@@ -185,4 +200,33 @@ key_err_TypeDef process_keyboard_flags ( keyboard_HID_data* data )
 	}
 
 	return key_ok;
+}
+
+uint8_t process_single_key( keymap_list* layer_list, uint8_t col, uint8_t row )
+{
+	uint8_t ret = 0;
+	ret = layer_list->head->grid[row][col];
+	if(ret)
+		return ret;
+	else
+		return 0;
+}
+
+void display_int_on_screen(uint8_t col, uint8_t row)
+{
+	static char col_str[10];
+	static char row_str[10];
+	HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_SET);
+
+	sprintf(col_str, "Col: %d", col);
+	sprintf(row_str, "Row: %d", row);
+
+	ssd1306_Fill(White);
+	ssd1306_SetCursor(23,10);
+	ssd1306_WriteString("here",Font_11x18,Black);
+
+//	ssd1306_WriteString(&col_str,Font_11x18,Black);
+	ssd1306_SetCursor(23,30);
+//	ssd1306_WriteString(&row_str,Font_11x18,Black);
+	ssd1306_UpdateScreen();
 }

@@ -41,6 +41,8 @@
 #define ROW_PORT_3			GPIOF
 #define ROW_PIN_3			ROW3_Pin
 
+typedef uint8_t key_code;
+
 typedef struct{
       const uint8_t id;
       uint8_t modifiers;
@@ -126,7 +128,9 @@ typedef enum key_err_TypeDef{
 	no_flags = -6,
 	reset_err = -7,
 	no_mouse_mov = -8,
-	mouse_ok = -9
+	mouse_ok = -9,
+	key_enter_set = -10,
+	key_layer_set = -11
 } key_err_TypeDef;
 
 extern uint16_t col_pins[KEYBOARD_COLS];

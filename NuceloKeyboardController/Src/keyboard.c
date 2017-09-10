@@ -6,6 +6,7 @@
  */
 
 #include "keyboard.h"
+#include "states.h"
 
 GPIO_TypeDef* col_ports[] = {COL_PORT_0, COL_PORT_1, COL_PORT_2};
 uint16_t col_pins[] = {COL_PIN_0, COL_PIN_1, COL_PIN_2};
@@ -45,6 +46,8 @@ key_err_TypeDef keyboardInit( keyboard_HID_data* HID_reports)
 	//set states
 	HID_reports->keyboard_state = inactive;
 	HID_reports->media_state = inactive;
+
+	current_keyboard_state = typing;
 
 	return key_ok;
 }

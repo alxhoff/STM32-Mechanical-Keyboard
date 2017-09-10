@@ -121,6 +121,7 @@
 /* USER CODE BEGIN Private defines */
 #define u08	uint8_t
 #define u16	uint16_t
+#define ENABLE_MOUSE		0
 /* USER CODE END Private defines */
 
 void _Error_Handler(char *, int);
