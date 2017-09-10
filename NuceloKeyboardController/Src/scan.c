@@ -50,7 +50,7 @@ key_code scan_get_single_key( keymap_list* layer_list ){
 			for(uint8_t col=0;col<KEYBOARD_COLS;col++){
 				if(HAL_GPIO_ReadPin(col_ports[col], col_pins[col])){
 					ret = process_single_key( layer_list, col, row);
-					display_int_on_screen(col, row);
+					//display_int_on_screen(col, row);
 				}
 			}
 			HAL_GPIO_WritePin(row_ports[row],row_pins[row], GPIO_PIN_RESET);

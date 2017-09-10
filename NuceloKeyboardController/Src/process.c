@@ -223,10 +223,10 @@ void display_int_on_screen(uint8_t col, uint8_t row)
 
 	ssd1306_Fill(White);
 	ssd1306_SetCursor(23,10);
-	ssd1306_WriteString("here",Font_11x18,Black);
+//	ssd1306_WriteString("here",Font_11x18,Black);
 
-//	ssd1306_WriteString(&col_str,Font_11x18,Black);
+	ssd1306_WriteString(&col_str,Font_11x18,Black);
 	ssd1306_SetCursor(23,30);
-//	ssd1306_WriteString(&row_str,Font_11x18,Black);
+	ssd1306_WriteString(&row_str,Font_11x18,Black);
 	ssd1306_UpdateScreen();
 }

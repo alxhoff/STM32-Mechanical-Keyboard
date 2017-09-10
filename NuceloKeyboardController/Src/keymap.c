@@ -25,7 +25,7 @@ const layer_init keymap_init1 =
 				KEYMAP(a, b, c, \
 					   f, e, d, \
 					   g, h, i, \
-					   LGUI),
+					   LAYER),
 		.key_code = HID_KEYBOARD_SC_RIGHT_CONTROL,
 		.name = "Second_layer"
 };
@@ -36,7 +36,7 @@ const layer_init keymap_init2 =
 				KEYMAP(j, k, k, \
 					   m, n, o, \
 					   o, q, r, \
-					   RGUI),
+					   LAYER),
 		.key_code = HID_KEYBOARD_SC_LEFT_GUI,
 		.name = "Third_layer"
 };
