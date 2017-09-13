@@ -8,6 +8,9 @@
 #ifndef MACRO_H_
 #define MACRO_H_
 
+#include "states.h"
+#include "keymap.h"
+
 typedef struct macro_entry macro_entry_t;
 
 struct macro_entry{
@@ -16,13 +19,16 @@ struct macro_entry{
 	char* keypress_string;
 
 	macro_entry_t* next;
-	macro_entry_t* previous;
 };
 
-typedef struct{
+typedef struct macro_table{
 	macro_entry_t* head;
 
 	uint8_t count;
-} macro_table;
+} macro_table_t;
+
+states_err_t macro_init( keymap_list_t* list );
+states_err_t macro_table_add_entry( keymap_list_t* list, macro_entry_t* entry );
+macro_entry_t* macro_table_get_last( macro_table_t* table );
 
 #endif /* MACRO_H_ */

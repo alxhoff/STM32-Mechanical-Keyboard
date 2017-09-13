@@ -26,6 +26,9 @@
     { K_NO,    K_##K10, K_NO}  \
 }
 
+typedef struct macro_table macro_table_t;
+
+
 typedef struct layer_table_entry layer_table_entry;
 typedef struct keymap_layer keymap_layer;
 
@@ -73,13 +76,14 @@ struct layer_table_entry{
 };
 
 typedef struct{
-	layer_table_entry* head;
+	layer_table_entry* layer_head;
 
 	uint8_t entry_count;
 } layer_table;
 
 typedef struct {
-	keymap_layer* head;
+	//LAYERS
+	keymap_layer* layer_head;
 
 	uint8_t ID_count;
 
@@ -88,7 +92,10 @@ typedef struct {
 	layer_table* table;
 
 	uint8_t current_layer;
-} keymap_list;
+
+	//MACROS
+	macro_table_t* macro_table;
+} keymap_list_t;
 
 #define K_ESC			HID_KEYBOARD_SC_ESCAPE
 #define K_1				HID_KEYBOARD_SC_1_AND_EXCLAMATION
@@ -160,20 +167,20 @@ typedef struct {
 #define K_PLAY			HID_KEYBOARD_SC_MEDIA_PLAY
 
 //prototypes
-keymap_err_TypeDef layer_list_init( keymap_list* layer_list, layer_init* initial_layer_to_add );
-keymap_err_TypeDef layer_list_append_layer( keymap_list* layer_list, layer_init* layer_to_add );
-uint8_t layer_list_get_ID( keymap_list* layer_list );
-keymap_layer* layer_list_get_last ( keymap_list* layer_list );
-keymap_layer* layer_table_get_layer_w_ID( keymap_list* layer_list, uint8_t ID );
-keymap_layer* layer_table_get_current_layer ( keymap_list* layer_list );
-layer_table_entry* layer_table_get_last ( keymap_list* layer_list );
-keymap_err_TypeDef layer_list_rem_layer_w_ID ( keymap_list* layer_list, uint8_t ID );
-keymap_err_TypeDef layer_table_init ( keymap_list* layer_list );
-layer_table_entry* layer_table_get_second_last (keymap_list* layer_list );
-keymap_err_TypeDef layer_table_append ( keymap_list* layer_list, layer_table_entry* layer );
-keymap_err_TypeDef layer_table_rem_last ( keymap_list* layer_list );
-keymap_err_TypeDef layer_table_rem_layer_w_ID ( keymap_list* layer_list, uint8_t ID );
-uint8_t layer_table_get_ID_w_layer ( keymap_list* layer_list, keymap_layer* layer );
+keymap_err_TypeDef layer_list_init( keymap_list_t* layer_list, layer_init* initial_layer_to_add );
+keymap_err_TypeDef layer_list_append_layer( keymap_list_t* layer_list, layer_init* layer_to_add );
+uint8_t layer_list_get_ID( keymap_list_t* layer_list );
+keymap_layer* layer_list_get_last ( keymap_list_t* layer_list );
+keymap_layer* layer_table_get_layer_w_ID( keymap_list_t* layer_list, uint8_t ID );
+keymap_layer* layer_table_get_current_layer ( keymap_list_t* layer_list );
+layer_table_entry* layer_table_get_last ( keymap_list_t* layer_list );
+keymap_err_TypeDef layer_list_rem_layer_w_ID ( keymap_list_t* layer_list, uint8_t ID );
+keymap_err_TypeDef layer_table_init ( keymap_list_t* layer_list );
+layer_table_entry* layer_table_get_second_last (keymap_list_t* layer_list );
+keymap_err_TypeDef layer_table_append ( keymap_list_t* layer_list, layer_table_entry* layer );
+keymap_err_TypeDef layer_table_rem_last ( keymap_list_t* layer_list );
+keymap_err_TypeDef layer_table_rem_layer_w_ID ( keymap_list_t* layer_list, uint8_t ID );
+uint8_t layer_table_get_ID_w_layer ( keymap_list_t* layer_list, keymap_layer* layer );
 
 extern const layer_init keymap_init0;
 extern const layer_init keymap_init1;

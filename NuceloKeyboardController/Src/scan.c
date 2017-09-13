@@ -39,7 +39,7 @@ key_err_TypeDef scan_key_matrix(keyboard_HID_data* HID_reports)
 	return key_ok;
 }
 
-key_code scan_get_single_key( keymap_list* layer_list ){
+key_code scan_get_single_key( keymap_list_t* layer_list ){
 	key_code ret = 0;
 	HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
 	//TODO FLASH STUFF

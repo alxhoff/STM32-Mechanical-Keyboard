@@ -13,7 +13,7 @@
 #include "fonts.h"
 #include "states.h"
 
-key_err_TypeDef process_key_buf(keyboard_HID_data* data, keymap_list* layer_list)
+key_err_TypeDef process_key_buf(keyboard_HID_data* data, keymap_list_t* layer_list)
 {
 	if(data->key_buf.index == 0){
 		return empty_buf;
@@ -219,10 +219,10 @@ key_err_TypeDef process_keyboard_flags ( keyboard_HID_data* data )
 	return key_ok;
 }
 
-uint8_t process_single_key( keymap_list* layer_list, uint8_t col, uint8_t row )
+uint8_t process_single_key( keymap_list_t* layer_list, uint8_t col, uint8_t row )
 {
 	uint8_t ret = 0;
-	ret = layer_list->head->grid[row][col];
+	ret = layer_list->layer_head->grid[row][col];
 	if(ret)
 		return ret;
 	else

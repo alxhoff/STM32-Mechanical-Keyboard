@@ -59,6 +59,7 @@
 #include "mouse.h"
 #include "visEffect.h"
 #include "AT24Cxx_stm32_hal.h"
+#include "macro.h"
 
 #include "fonts.h"
 #include "ssd1306.h"
@@ -568,7 +569,7 @@ void KeyboardListenCallback(void const * argument)
 	USB_send_lock = xSemaphoreCreateMutex();
 
 	//init layers
-	keymap_list key_layer_list;
+	keymap_list_t key_layer_list;
 
 	keymap_err_TypeDef ret;
 
@@ -593,6 +594,17 @@ void KeyboardListenCallback(void const * argument)
 			},
 	};
 	keyboardInit(&keyboard_data);
+
+
+	//macros
+	macro_init(&key_layer_list);
+
+	macro_entry_t test_macro = {
+			.key_code = 0x24,
+			.keypress_string = "hello world",
+	};
+
+	macro_table_add_entry(&key_layer_list, &test_macro);
 
   /* Infinite loop */
   for(;;)

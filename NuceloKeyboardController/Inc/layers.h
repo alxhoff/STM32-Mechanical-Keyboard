@@ -12,6 +12,6 @@
 #include "keymap.h"
 
 states_err_t state_exit_layer_set();
-states_err_t state_layer_set( keymap_list* layer_list );
+states_err_t state_layer_set( keymap_list_t* layer_list );
 
 #endif /* LAYERS_H_ */
