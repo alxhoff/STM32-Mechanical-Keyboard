@@ -10,6 +10,8 @@
 #include "keymap.h"
 #include "states.h"
 #include "macro.h"
+#include "lookup.h"
+#include "extern.h"
 
 states_err_t state_enter_macro_set()
 {
@@ -29,8 +31,12 @@ states_err_t state_macro_set()
 	return states_ok;
 }
 
-states_err_t state_enter_macro_run()
+states_err_t state_enter_macro_run( keymap_list_t* layer_list )
 {
+	key_code macro_key = scan_get_single_key( layer_list );
+	static macro_entry_t* cur_macro;
+	cur_macro = macro_table_get_w_key_code( layer_list, macro_key );
+
 
 	return states_ok;
 }
@@ -84,4 +90,44 @@ macro_entry_t* macro_table_get_last( macro_table_t* table )
 		head = head->next;
 
 	return head;
+}
+
+macro_entry_t* macro_table_get_w_key_code( keymap_list_t* list, key_code key )
+{
+	macro_entry_t* head = list->macro_table->head;
+
+	while(head->key_code != key){
+		head = head->next;
+		if(head == NULL)
+			return NULL;
+	}
+
+	return head;
+}
+
+states_err_t macro_execute_macro( keymap_list_t* list, macro_entry_t* macro )
+{
+	static keyboardHID_t macro_report = {
+			.id = 0,
+			.key1 = 0,
+			.key2 = 0,
+			.key3 = 0,
+			.key4 = 0,
+			.key5 = 0,
+			.key6 = 0,
+			.modifiers = 0
+	};
+
+	uint16_t i = 0;
+	while(macro->keypress_string[i] != '\0'){
+		macro_report.key1 =	allDaKeys[(uint8_t)macro->keypress_string[i]].scanCode;
+		macro_report.modifiers = allDaKeys[(uint8_t)macro->keypress_string[i]].modifier;
+		USBD_HID_SendReport(&hUsbDeviceFS, &macro_report, sizeof(keyboardHID_t));
+		i++;
+	}
+
+	macro_report.key1 = 0;
+	USBD_HID_SendReport(&hUsbDeviceFS, &macro_report, sizeof(keyboardHID_t));
+
+	return states_ok;
 }
