@@ -5,6 +5,7 @@
  *      Author: alxhoff
  */
 
+#include "layers.h"
 #include "keyboard.h"
 #include "states.h"
 

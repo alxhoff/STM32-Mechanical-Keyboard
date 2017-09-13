@@ -335,7 +335,8 @@
 		#define HID_KEYBOARD_SC_MEDIA_CALCULATOR                  0xFB
 		//@}
 
-		#define HID_KEYBOARD_SC_MEDIA_FUNCTION					  0xFF
+		#define HID_KEYBOARD_SC_LAYER_FUNCTION					  	  0xFF
+		#define HID_KEYBOARD_SC_MACRO_FUNCTION						  0xFE
 
 		/** \name Common HID Device Report Descriptors */
 		//@{

@@ -130,7 +130,9 @@ typedef enum key_err_TypeDef{
 	no_mouse_mov = -8,
 	mouse_ok = -9,
 	key_enter_set = -10,
-	key_layer_set = -11
+	key_layer_set = -11,
+	key_macro_run = -12,
+	key_macro_set = -13
 } key_err_TypeDef;
 
 extern uint16_t col_pins[KEYBOARD_COLS];

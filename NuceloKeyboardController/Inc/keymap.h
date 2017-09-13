@@ -153,7 +153,8 @@ typedef struct {
 #define K_RCRTL			HID_KEYBOARD_SC_RIGHT_CONTROL
 #define K_NO			0
 
-#define K_LAYER			HID_KEYBOARD_SC_MEDIA_FUNCTION
+#define K_LAYER			HID_KEYBOARD_SC_LAYER_FUNCTION
+#define K_MACRO			HID_KEYBOARD_SC_MACRO_FUNCTION
 //MEDIA
 
 #define K_PLAY			HID_KEYBOARD_SC_MEDIA_PLAY
@@ -161,14 +162,15 @@ typedef struct {
 //prototypes
 keymap_err_TypeDef layer_list_init( keymap_list* layer_list, layer_init* initial_layer_to_add );
 keymap_err_TypeDef layer_list_append_layer( keymap_list* layer_list, layer_init* layer_to_add );
-uint8_t layer_list_get_ID( keymap_list* layer_list);
+uint8_t layer_list_get_ID( keymap_list* layer_list );
 keymap_layer* layer_list_get_last ( keymap_list* layer_list );
-keymap_layer* layer_table_get_layer_w_ID( keymap_list* layer_list, uint8_t ID);
+keymap_layer* layer_table_get_layer_w_ID( keymap_list* layer_list, uint8_t ID );
+keymap_layer* layer_table_get_current_layer ( keymap_list* layer_list );
 layer_table_entry* layer_table_get_last ( keymap_list* layer_list );
 keymap_err_TypeDef layer_list_rem_layer_w_ID ( keymap_list* layer_list, uint8_t ID );
 keymap_err_TypeDef layer_table_init ( keymap_list* layer_list );
 layer_table_entry* layer_table_get_second_last (keymap_list* layer_list );
-keymap_err_TypeDef layer_table_append ( keymap_list* layer_list, layer_table_entry* layer);
+keymap_err_TypeDef layer_table_append ( keymap_list* layer_list, layer_table_entry* layer );
 keymap_err_TypeDef layer_table_rem_last ( keymap_list* layer_list );
 keymap_err_TypeDef layer_table_rem_layer_w_ID ( keymap_list* layer_list, uint8_t ID );
 uint8_t layer_table_get_ID_w_layer ( keymap_list* layer_list, keymap_layer* layer );

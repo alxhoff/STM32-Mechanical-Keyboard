@@ -5,13 +5,13 @@
  *      Author: alxhoff
  */
 
+#include "layers.h"
 #include "process.h"
 #include "extern.h"
 #include "stm32f4xx_hal.h"
-#include "states.h"
 #include "ssd1306.h"
 #include "fonts.h"
-
+#include "states.h"
 
 key_err_TypeDef process_key_buf(keyboard_HID_data* data, keymap_list* layer_list)
 {
@@ -30,9 +30,16 @@ key_err_TypeDef process_key_buf(keyboard_HID_data* data, keymap_list* layer_list
 	if(current_keyboard_state == layer_set)
 		goto set_layer;
 
+	if(current_keyboard_state == macro_run)
+		goto macro_run;
+
+//	if(current_keyboard_state == macro_set)
+//		goto macro_set;
+
 	//get current layer
 	keymap_layer* current_layer = layer_table_get_current_layer(layer_list);
 
+	//TODO PUT INTO STATE FUNCTIONS
 	//iterate through buffer and translate
 	for(int i=0;i<data->key_buf.index;i++){
 		//TODO capslock
@@ -41,8 +48,12 @@ key_err_TypeDef process_key_buf(keyboard_HID_data* data, keymap_list* layer_list
 				current_layer->grid[data->key_buf.buffer[i].row][data->key_buf.buffer[i].col];
 
 		//LAYER MODIFIER
-		if(data->key_buf.buffer[i].key_code == HID_KEYBOARD_SC_MEDIA_FUNCTION)
-			goto state_change;
+		if(data->key_buf.buffer[i].key_code == HID_KEYBOARD_SC_LAYER_FUNCTION)
+			goto state_change_layer;
+
+		//MACRO
+		if(data->key_buf.buffer[i].key_code == HID_KEYBOARD_SC_MACRO_FUNCTION)
+			goto state_change_macro_run;
 
 		//MODIFIER
 		if(data->key_buf.buffer[i].key_code >= 0xE0 && data->key_buf.buffer[i].key_code <= 0xE7){
@@ -99,9 +110,15 @@ key_err_TypeDef process_key_buf(keyboard_HID_data* data, keymap_list* layer_list
 	data->prev_report_len = data->out_buf.key_buf.count;
 
 	return key_ok;
-	state_change: state_enter_layer_set();
+	state_change_layer: state_enter_layer_set();
 	set_layer: state_layer_set( layer_list );
 	return key_layer_set;
+	state_change_macro_run: state_enter_macro_run();
+	macro_run: state_macro_run();
+	return key_macro_run;
+//	state_change_macro_set: state_enter_macro_set();
+//	macro_set: state_macro_set();
+//	return key_macro_set;
 }
 
 signed int reset_buffer(six_key_buffer* buffer_to_reset)
