@@ -20,6 +20,7 @@ struct allDaScanCodes
 };
 
 struct allDaScanCodes allDaKeys[127] = {
+	[32]={SC(SPACE),0},
 	[33]={SC(1_AND_EXCLAMATION),MOD(RIGHTSHIFT)},
 	[34]={SC(APOSTROPHE_AND_QUOTE),MOD(RIGHTSHIFT)},
 	[35]={SC(3_AND_HASHMARK),MOD(RIGHTSHIFT)},
