@@ -14,7 +14,7 @@ const layer_init keymap_init0 =
 				KEYMAP(7, 8, 9, \
 					   4, 5, 6, \
 					   1, 2, 3, \
-					   MACRO),
+					   MACRO_R),
 	   .key_code = 0x66,
 	   .name = "Initial_layer"
 };

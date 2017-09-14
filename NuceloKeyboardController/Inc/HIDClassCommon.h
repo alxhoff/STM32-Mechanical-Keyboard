@@ -335,9 +335,9 @@
 		#define HID_KEYBOARD_SC_MEDIA_CALCULATOR                  0xFB
 		//@}
 
-		#define HID_KEYBOARD_SC_LAYER_FUNCTION					  	  0xFF
-		#define HID_KEYBOARD_SC_MACRO_FUNCTION						  0xFE
-
+		#define HID_KEYBOARD_SC_LAYER_FUNCTION					  0xFF
+		#define HID_KEYBOARD_SC_MACRO_RUN_FUNCTION				  0xFE
+		#define	HID_KEYBOARD_SC_MACRO_SET_FUNCTION				  0xFC
 		/** \name Common HID Device Report Descriptors */
 		//@{
 		/** \hideinitializer

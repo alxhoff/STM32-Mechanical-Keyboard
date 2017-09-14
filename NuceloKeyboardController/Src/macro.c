@@ -17,6 +17,7 @@
 states_err_t state_enter_macro_set()
 {
 	current_keyboard_state = macro_set;
+	vTaskDelay(100);
 	return states_ok;
 }
 
@@ -26,8 +27,10 @@ states_err_t state_exit_macro_set()
 	return states_ok;
 }
 
-states_err_t state_macro_set()
+states_err_t state_macro_set( keymap_list_t* layer_list )
 {
+	key_code set_key = scan_get_single_key( layer_list );
+
 
 	return states_ok;
 }
@@ -155,4 +158,43 @@ states_err_t macro_send_blank( keyboardHID_t* macro_report )
 	}
 	macro_report->modifiers = 0;
 	USBD_HID_SendReport(&hUsbDeviceFS, macro_report, sizeof(keyboardHID_t));
+}
+
+char* macro_get_input_seq( keymap_list_t* list )
+{
+	static char* input_str;
+	static char input_char = 0;
+	static size_t str_size;
+	input_str = (char*)realloc(NULL, sizeof(char));
+
+	uint8_t finished = 0;
+
+	//debounce stuff
+	uint8_t button_input[KEYBOARD_COLS][KEYBOARD_ROWS] = {0};
+	uint8_t button_last_state[KEYBOARD_COLS][KEYBOARD_ROWS] = {0};
+	uint8_t button_cur_state[KEYBOARD_COLS][KEYBOARD_ROWS] = {0};
+	TickType_t button_last_time[KEYBOARD_COLS][KEYBOARD_ROWS] = {0};
+	TickType_t debounce_delay = MS_TO_TICKS(DEBOUNCE_DELAY);
+
+	while(!finished){
+		for(uint8_t row=0;row<KEYBOARD_ROWS;row++){
+			HAL_GPIO_WritePin(row_ports[row],row_pins[row], GPIO_PIN_SET);
+			for(uint8_t col=0;col<KEYBOARD_COLS;col++){
+				button_input[col][row] = HAL_GPIO_ReadPin(col_ports[col], col_pins[col]);
+				if(button_input[col][row] != button_cur_state[col][row])
+					button_last_time[col][row] = xTaskGetTickCount();
+				else if((xTaskGetTickCount() - button_last_time[col][row]) > debounce_delay){
+					button_cur_state[col][row] = button_input[col][row];
+					if(!button_input[col][row]){
+
+						//push
+					}else{
+						;
+						//release
+					}
+				}
+
+			}
+		}
+	}
 }

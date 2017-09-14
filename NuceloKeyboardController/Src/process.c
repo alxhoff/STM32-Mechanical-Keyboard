@@ -33,8 +33,8 @@ key_err_TypeDef process_key_buf(keyboard_HID_data* data, keymap_list_t* layer_li
 	if(current_keyboard_state == macro_run)
 		goto macro_run;
 
-//	if(current_keyboard_state == macro_set)
-//		goto macro_set;
+	if(current_keyboard_state == macro_set)
+		goto macro_set;
 
 	//get current layer
 	keymap_layer* current_layer = layer_table_get_current_layer(layer_list);
@@ -51,9 +51,13 @@ key_err_TypeDef process_key_buf(keyboard_HID_data* data, keymap_list_t* layer_li
 		if(data->key_buf.buffer[i].key_code == HID_KEYBOARD_SC_LAYER_FUNCTION)
 			goto state_change_layer;
 
-		//MACRO
-		if(data->key_buf.buffer[i].key_code == HID_KEYBOARD_SC_MACRO_FUNCTION)
+		//MACRO_RUN
+		if(data->key_buf.buffer[i].key_code == HID_KEYBOARD_SC_MACRO_RUN_FUNCTION)
 			goto state_change_macro_run;
+
+		//MACRO_SET
+		if(data->key_buf.buffer[i].key_code == HID_KEYBOARD_SC_MACRO_SET_FUNCTION)
+			goto state_change_macro_set;
 
 		//MODIFIER
 		if(data->key_buf.buffer[i].key_code >= 0xE0 && data->key_buf.buffer[i].key_code <= 0xE7){
@@ -116,9 +120,9 @@ key_err_TypeDef process_key_buf(keyboard_HID_data* data, keymap_list_t* layer_li
 	state_change_macro_run: state_enter_macro_run();
 	macro_run: state_macro_run( layer_list );
 	return key_macro_run;
-//	state_change_macro_set: state_enter_macro_set();
-//	macro_set: state_macro_set();
-//	return key_macro_set;
+	state_change_macro_set: state_enter_macro_set();
+	macro_set: state_macro_set( layer_list );
+	return key_macro_set;
 }
 
 signed int reset_buffer(six_key_buffer* buffer_to_reset)

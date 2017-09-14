@@ -11,6 +11,8 @@
 #include "states.h"
 #include "keymap.h"
 
+#define DEBOUNCE_DELAY 20
+
 typedef struct macro_entry macro_entry_t;
 
 struct macro_entry{
