@@ -153,5 +153,6 @@ states_err_t macro_send_blank( keyboardHID_t* macro_report )
 		*reset = 0;
 		reset + sizeof(macro_report->key1);
 	}
+	macro_report->modifiers = 0;
 	USBD_HID_SendReport(&hUsbDeviceFS, macro_report, sizeof(keyboardHID_t));
 }

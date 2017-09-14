@@ -601,7 +601,7 @@ void KeyboardListenCallback(void const * argument)
 
 	macro_entry_t test_macro = {
 			.key_code = 0x24,
-			.keypress_string = "hello world",
+			.keypress_string = "pew pew this is a macro and it can use all DA SYMBOLZZZ !@#$%^*()_+",
 	};
 
 	macro_table_add_entry(&key_layer_list, &test_macro);
