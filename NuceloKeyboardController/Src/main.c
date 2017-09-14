@@ -601,7 +601,7 @@ void KeyboardListenCallback(void const * argument)
 
 	macro_entry_t test_macro = {
 			.key_code = 0x24,
-			.keypress_string = "helllo world",
+			.keypress_string = "hellllooo world",
 	};
 
 	macro_table_add_entry(&key_layer_list, &test_macro);
