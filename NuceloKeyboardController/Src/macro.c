@@ -124,9 +124,16 @@ states_err_t macro_execute_macro( keymap_list_t* list, macro_entry_t* macro )
 
 	uint16_t i = 0;
 	while(macro->keypress_string[i] != '\0'){
+		if(macro->keypress_string[i + 1] != '\0' && macro->keypress_string[i] == macro->keypress_string[i+1]){
+//			macro_report.key1 = 0;
+			macro_send_blank( &macro_report );
+			USBD_HID_SendReport(&hUsbDeviceFS, &macro_report, sizeof(keyboardHID_t));
+			vTaskDelay(16);
+		}
 		macro_report.key1 =	allDaKeys[(uint8_t)macro->keypress_string[i]].scanCode;
 		macro_report.modifiers = allDaKeys[(uint8_t)macro->keypress_string[i]].modifier;
 		USBD_HID_SendReport(&hUsbDeviceFS, &macro_report, sizeof(keyboardHID_t));
+
 		//macro_send_blank( &macro_report );
 		vTaskDelay(16);
 		i++;
@@ -144,7 +151,7 @@ states_err_t macro_send_blank( keyboardHID_t* macro_report )
 	uint8_t* reset = &macro_report->key1;
 	for(uint8_t i =0; i< 6; i++){
 		*reset = 0;
-		reset++;
+		reset + sizeof(macro_report->key1);
 	}
 	USBD_HID_SendReport(&hUsbDeviceFS, macro_report, sizeof(keyboardHID_t));
 }
