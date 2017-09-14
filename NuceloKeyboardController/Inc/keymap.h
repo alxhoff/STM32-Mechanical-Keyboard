@@ -26,6 +26,8 @@
     { K_NO,    K_##K10, K_NO}  \
 }
 
+#define KEY(SC)	K_##SC
+
 typedef struct macro_table macro_table_t;
 
 
