@@ -114,7 +114,7 @@ key_err_TypeDef process_key_buf(keyboard_HID_data* data, keymap_list_t* layer_li
 	set_layer: state_layer_set( layer_list );
 	return key_layer_set;
 	state_change_macro_run: state_enter_macro_run();
-	macro_run: state_macro_run();
+	macro_run: state_macro_run( layer_list );
 	return key_macro_run;
 //	state_change_macro_set: state_enter_macro_set();
 //	macro_set: state_macro_set();

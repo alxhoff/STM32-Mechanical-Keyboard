@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 
+#include "stm32f4xx_hal.h"
 #include "keymap.h"
 #include "states.h"
 #include "macro.h"
@@ -15,7 +16,7 @@
 
 states_err_t state_enter_macro_set()
 {
-
+	current_keyboard_state = macro_set;
 	return states_ok;
 }
 
@@ -31,12 +32,10 @@ states_err_t state_macro_set()
 	return states_ok;
 }
 
-states_err_t state_enter_macro_run( keymap_list_t* layer_list )
+states_err_t state_enter_macro_run()
 {
-	key_code macro_key = scan_get_single_key( layer_list );
-	static macro_entry_t* cur_macro;
-	cur_macro = macro_table_get_w_key_code( layer_list, macro_key );
-
+	current_keyboard_state = macro_run;
+	vTaskDelay(100);
 
 	return states_ok;
 }
@@ -47,8 +46,13 @@ states_err_t state_exit_macro_run()
 	return states_ok;
 }
 
-states_err_t state_macro_run()
+states_err_t state_macro_run( keymap_list_t* layer_list )
 {
+	key_code macro_key = scan_get_single_key( layer_list );
+	static macro_entry_t* cur_macro;
+	cur_macro = macro_table_get_w_key_code( layer_list, macro_key );
+	macro_execute_macro(layer_list,cur_macro);
+
 
 	return states_ok;
 }
@@ -108,7 +112,7 @@ macro_entry_t* macro_table_get_w_key_code( keymap_list_t* list, key_code key )
 states_err_t macro_execute_macro( keymap_list_t* list, macro_entry_t* macro )
 {
 	static keyboardHID_t macro_report = {
-			.id = 0,
+			.id = 1,
 			.key1 = 0,
 			.key2 = 0,
 			.key3 = 0,
@@ -123,11 +127,24 @@ states_err_t macro_execute_macro( keymap_list_t* list, macro_entry_t* macro )
 		macro_report.key1 =	allDaKeys[(uint8_t)macro->keypress_string[i]].scanCode;
 		macro_report.modifiers = allDaKeys[(uint8_t)macro->keypress_string[i]].modifier;
 		USBD_HID_SendReport(&hUsbDeviceFS, &macro_report, sizeof(keyboardHID_t));
+		//macro_send_blank( &macro_report );
+		vTaskDelay(16);
 		i++;
 	}
+	macro_send_blank( &macro_report );
 
-	macro_report.key1 = 0;
-	USBD_HID_SendReport(&hUsbDeviceFS, &macro_report, sizeof(keyboardHID_t));
+//	macro_report.key1 = 0;
+//	USBD_HID_SendReport(&hUsbDeviceFS, &macro_report, sizeof(keyboardHID_t));
 
 	return states_ok;
+}
+
+states_err_t macro_send_blank( keyboardHID_t* macro_report )
+{
+	uint8_t* reset = &macro_report->key1;
+	for(uint8_t i =0; i< 6; i++){
+		*reset = 0;
+		reset++;
+	}
+	USBD_HID_SendReport(&hUsbDeviceFS, macro_report, sizeof(keyboardHID_t));
 }

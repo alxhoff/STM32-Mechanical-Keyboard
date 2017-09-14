@@ -8,11 +8,11 @@
 #ifndef SCAN_H_
 #define SCAN_H_
 
-#include "main.h"
-#include "keyboard.h"
+#include "keymap.h"
 
-//typedef enum key_err_TypeDef key_err_TypeDef;
-//
-//key_err_TypeDef scanMatrix(struct keypress_buffer* key_buf);
+typedef uint8_t key_code;
+typedef struct keymap_list keymap_list_t;
+
+key_code scan_get_single_key( keymap_list_t* layer_list );
 
 #endif /* SCAN_H_ */

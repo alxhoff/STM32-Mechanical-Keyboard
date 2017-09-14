@@ -81,7 +81,7 @@ typedef struct{
 	uint8_t entry_count;
 } layer_table;
 
-typedef struct {
+typedef struct keymap_list{
 	//LAYERS
 	keymap_layer* layer_head;
 
