@@ -21,6 +21,7 @@ states_err_t state_enter_layer_set()
 states_err_t state_exit_layer_set()
 {
 	current_keyboard_state = typing;
+	return states_ok;
 }
 
 states_err_t state_layer_set( keymap_list_t* layer_list )
@@ -29,4 +30,5 @@ states_err_t state_layer_set( keymap_list_t* layer_list )
 	//TODO CHECKL THAT RET IS VALID LAYER
 	layer_list->current_layer = layer;
 	state_exit_layer_set();
+	return states_ok;
 }

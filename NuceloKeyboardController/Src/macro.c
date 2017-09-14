@@ -52,7 +52,7 @@ states_err_t state_macro_run( keymap_list_t* layer_list )
 	static macro_entry_t* cur_macro;
 	cur_macro = macro_table_get_w_key_code( layer_list, macro_key );
 	macro_execute_macro(layer_list,cur_macro);
-
+	state_exit_macro_run();
 
 	return states_ok;
 }
