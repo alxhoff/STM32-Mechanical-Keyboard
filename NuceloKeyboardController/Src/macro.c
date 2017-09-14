@@ -32,8 +32,8 @@ states_err_t state_macro_set( keymap_list_t* layer_list )
 	key_code macro_key = scan_get_single_key( layer_list );
 	//TODO LIGHTS
 	macro_entry_t* new_macro = macro_allocate_new_macro( layer_list );
-	new_macro->key_code = macro_key;
-	new_macro->keypress_string = macro_get_input_seq( layer_list );
+	new_macro->key_code = macro_key; //GOOD
+	new_macro->keypress_string = scan_get_input_seq( layer_list );
 
 	state_exit_macro_set();
 	return states_ok;
@@ -141,14 +141,10 @@ states_err_t macro_execute_macro( keymap_list_t* list, macro_entry_t* macro )
 		macro_report.modifiers = allDaKeys[(uint8_t)macro->keypress_string[i]].modifier;
 		USBD_HID_SendReport(&hUsbDeviceFS, &macro_report, sizeof(keyboardHID_t));
 
-		//macro_send_blank( &macro_report );
 		vTaskDelay(16);
 		i++;
 	}
 	macro_send_blank( &macro_report );
-
-//	macro_report.key1 = 0;
-//	USBD_HID_SendReport(&hUsbDeviceFS, &macro_report, sizeof(keyboardHID_t));
 
 	return states_ok;
 }
@@ -158,64 +154,12 @@ states_err_t macro_send_blank( keyboardHID_t* macro_report )
 	uint8_t* reset = &macro_report->key1;
 	for(uint8_t i =0; i< 6; i++){
 		*reset = 0;
-		reset + sizeof(macro_report->key1);
+		reset += sizeof(macro_report->key1);
 	}
 	macro_report->modifiers = 0;
 	USBD_HID_SendReport(&hUsbDeviceFS, macro_report, sizeof(keyboardHID_t));
-}
 
-char* macro_get_input_seq( keymap_list_t* list )
-{
-	static char* input_str;
-	static char input_char = 0;
-	static size_t str_size = 0;
-	input_str = (char*)realloc(NULL, sizeof(char));
-
-	uint8_t finished = 0;
-
-	//debounce stuff
-	uint8_t button_input[KEYBOARD_COLS][KEYBOARD_ROWS] = {0};
-	uint8_t button_last_state[KEYBOARD_COLS][KEYBOARD_ROWS] = {0};
-	uint8_t button_cur_state[KEYBOARD_COLS][KEYBOARD_ROWS] = {0};
-	TickType_t button_last_time[KEYBOARD_COLS][KEYBOARD_ROWS] = {0};
-	TickType_t debounce_delay = pdMS_TO_TICKS(DEBOUNCE_DELAY);
-
-	keymap_layer* current_layer = layer_table_get_current_layer(list);
-
-	while(!finished){
-		for(uint8_t row=0;row<KEYBOARD_ROWS;row++){
-			HAL_GPIO_WritePin(row_ports[row],row_pins[row], GPIO_PIN_SET);
-			for(uint8_t col=0;col<KEYBOARD_COLS;col++){
-				button_input[col][row] = HAL_GPIO_ReadPin(col_ports[col], col_pins[col]);
-				if(button_input[col][row] != button_cur_state[col][row])
-					button_last_time[col][row] = xTaskGetTickCount();
-				else if((xTaskGetTickCount() - button_last_time[col][row]) > debounce_delay){
-					button_cur_state[col][row] = button_input[col][row];
-					if(!button_input[col][row]){
-						input_char = current_layer->grid[row][col];
-						if(str_size%8 == 0){
-							input_str = (char*)realloc(input_str, sizeof(char) * (str_size + 8));
-							if(!input_str) return NULL;
-						}
-						if(input_char == KEY(MACRO_S)){
-							finished = 1;
-							break;
-						}
-						input_str[str_size++]=input_char;
-
-						//push
-					}else{
-						;
-						//release
-					}
-				}
-				button_last_state[col][row] = button_input[col][row];
-			}
-		}
-	}
-	input_str[str_size++]='\0';
-
-	return realloc(input_str, sizeof(char)*str_size);
+	return states_ok;
 }
 
 macro_entry_t* macro_allocate_new_macro( keymap_list_t* list )
@@ -226,9 +170,11 @@ macro_entry_t* macro_allocate_new_macro( keymap_list_t* list )
 
 	new->keypress_string = NULL;
 	new->next = NULL;
+	new->key_code = NULL;
 
-	macro_entry_t* head = macro_table_get_last( list->macro_table );
+	//TODO empty table check
+	macro_entry_t* last = macro_table_get_last( list->macro_table );
 
-	head->next = new;
+	last->next = new;
 	return new;
 }
