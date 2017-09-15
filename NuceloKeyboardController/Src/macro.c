@@ -137,8 +137,8 @@ states_err_t macro_execute_macro( keymap_list_t* list, macro_entry_t* macro )
 			USBD_HID_SendReport(&hUsbDeviceFS, &macro_report, sizeof(keyboardHID_t));
 			vTaskDelay(16);
 		}
-		macro_report.key1 =	allDaKeys[(uint8_t)macro->keypress_string[i]].scanCode;
-		macro_report.modifiers = allDaKeys[(uint8_t)macro->keypress_string[i]].modifier;
+		macro_report.key1 =	lookup_sc[(uint8_t)macro->keypress_string[i]].scanCode;
+		macro_report.modifiers = lookup_sc[(uint8_t)macro->keypress_string[i]].modifier;
 		USBD_HID_SendReport(&hUsbDeviceFS, &macro_report, sizeof(keyboardHID_t));
 
 		vTaskDelay(16);

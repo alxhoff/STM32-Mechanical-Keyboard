@@ -8,6 +8,7 @@
 #include "scan.h"
 #include "extern.h"
 #include "process.h"
+#include "lookup.h"
 
 /*
  * functions to be called to initiate a scan of the keyboard matrix
@@ -69,6 +70,7 @@ char* scan_get_input_seq( keymap_list_t* list )
 {
 	static char* input_str = "";
 	static char input_char = 0;
+	static char* lookup_str = "";
 	static size_t str_size = 0;
 	input_str = (char*)malloc(sizeof(char));
 
@@ -99,18 +101,23 @@ char* scan_get_input_seq( keymap_list_t* list )
 						button_cur_state[row][col] = button_input[row][col]; // <---
 						if(!button_input[row][col]){
 							//push
-							input_char = current_layer->grid[row][col];
-							if(str_size%8 == 0){
+							if(str_size%8 <= 4){
 								input_str = (char*)realloc(input_str, sizeof(char) * (str_size + 8));
 								if(!input_str) return NULL;
 							}
+							input_char = current_layer->grid[row][col];
 							if(input_char == KEY(MACRO_S)){
 								finished = 1;
 								break;
 							}
 							if(input_char != 0)
-								input_str[str_size++]=input_char;
+								lookup_str = lookup_char[input_char].unmodified;
+								strncpy(&input_str[str_size], lookup_str, strlen(lookup_str));
+								str_size+=strlen(lookup_str);
+//								input_str[str_size]=input_char;
 							input_char = 0;
+
+
 						}else{
 							;
 							//release
