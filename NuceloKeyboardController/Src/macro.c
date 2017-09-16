@@ -24,18 +24,22 @@ states_err_t state_enter_macro_set()
 states_err_t state_exit_macro_set()
 {
 	current_keyboard_state = typing;
+	vTaskDelay(100);
+
 	return states_ok;
 }
 
 states_err_t state_macro_set( keymap_list_t* layer_list )
 {
+	HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
 	key_code macro_key = scan_get_single_key( layer_list );
 	//TODO LIGHTS
 	macro_entry_t* new_macro = macro_allocate_new_macro( layer_list );
 	new_macro->key_code = macro_key; //GOOD
-	new_macro->keypress_string = scan_get_input_seq( layer_list );
+	new_macro->keypress_string = (char*)scan_get_input_seq( layer_list );
 
 	state_exit_macro_set();
+	HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
 	return states_ok;
 }
 
@@ -50,16 +54,26 @@ states_err_t state_enter_macro_run()
 states_err_t state_exit_macro_run()
 {
 	current_keyboard_state = typing;
+	vTaskDelay(100);
+
 	return states_ok;
 }
 
 states_err_t state_macro_run( keymap_list_t* layer_list )
 {
+	HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_SET);
+
 	key_code macro_key = scan_get_single_key( layer_list );
+
 	static macro_entry_t* cur_macro;
 	cur_macro = macro_table_get_w_key_code( layer_list, macro_key );
-	macro_execute_macro(layer_list,cur_macro);
+
+	if(cur_macro != NULL)
+		macro_execute_macro(layer_list,cur_macro);
+
 	state_exit_macro_run();
+
+	HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_RESET);
 
 	return states_ok;
 }
