@@ -63,6 +63,7 @@
 
 #include "fonts.h"
 #include "ssd1306.h"
+#include "screen.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -82,6 +83,8 @@ osThreadId KeyboardListenHandle;
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 osThreadId ADCListenHandle;
+osThreadId CLIListenHandle;
+
 SemaphoreHandle_t USB_send_lock = NULL;
 
 AT24Cxx_devices eeprom_devs;
@@ -103,7 +106,7 @@ void KeyboardListenCallback(void const * argument);
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
 void MouseListenCallback(void const * argument);
-
+void CLIListenCallback(void const * argument);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
@@ -193,6 +196,9 @@ int main(void)
   /* USER CODE BEGIN RTOS_THREADS */
 //  osThreadDef(ADCListen, MouseListenCallback, osPriorityIdle, 0, 128);
 //  ADCListenHandle = osThreadCreate(osThread(ADCListen), NULL);
+
+  osThreadDef(CLIListen, CLIListenCallback, osPriorityIdle, 0, 128);
+  CLIListenHandle = osThreadCreate(osThread(CLIListen), NULL);
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_QUEUES */
@@ -544,6 +550,25 @@ void MouseListenCallback(void const * argument)
   /* USER CODE END KeyboardListenCallback */
 }
 /* USER CODE END 4 */
+void CLIListenCallback(void const * argument)
+{
+	TickType_t xLastWakeTime = xTaskGetTickCount();
+	const TickType_t xPeriod = 20;
+
+	screen_t CLI_screen = {
+			.line1_long = "hello thisisateststring",
+			.line2_long = "thisis the second line",
+			.line3_long = "thisis the third",
+			.cursor_x = 4,
+			.font = &Font_11x18
+	};
+
+	for(;;){
+		vTaskDelayUntil(&xLastWakeTime, xPeriod);
+
+		screen_render_two_line(&CLI_screen);
+	}
+}
 
 /* StartDefaultTask function */
 void StartDefaultTask(void const * argument)
