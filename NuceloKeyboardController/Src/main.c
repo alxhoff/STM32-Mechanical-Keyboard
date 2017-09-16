@@ -49,6 +49,7 @@
 #include "main.h"
 #include "stm32f4xx_hal.h"
 #include "cmsis_os.h"
+#include "fatfs.h"
 #include "usb_device.h"
 
 /* USER CODE BEGIN Includes */
@@ -74,6 +75,8 @@ ETH_HandleTypeDef heth;
 I2C_HandleTypeDef hi2c1;
 I2C_HandleTypeDef hi2c2;
 
+SPI_HandleTypeDef hspi1;
+
 UART_HandleTypeDef huart3;
 
 osThreadId defaultTaskHandle;
@@ -97,6 +100,7 @@ static void MX_I2C2_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_ADC2_Init(void);
+static void MX_SPI1_Init(void);
 void StartDefaultTask(void const * argument);
 void KeyboardListenCallback(void const * argument);
 
@@ -141,6 +145,7 @@ int main(void)
   MX_ADC1_Init();
   MX_I2C1_Init();
   MX_ADC2_Init();
+  MX_SPI1_Init();
 
   /* USER CODE BEGIN 2 */
   ssd1306_Init();
@@ -418,6 +423,30 @@ static void MX_I2C2_Init(void)
 
 }
 
+/* SPI1 init function */
+static void MX_SPI1_Init(void)
+{
+
+  /* SPI1 parameter configuration*/
+  hspi1.Instance = SPI1;
+  hspi1.Init.Mode = SPI_MODE_MASTER;
+  hspi1.Init.Direction = SPI_DIRECTION_2LINES;
+  hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
+  hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
+  hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
+  hspi1.Init.NSS = SPI_NSS_SOFT;
+  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
+  hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
+  hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
+  hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+  hspi1.Init.CRCPolynomial = 10;
+  if (HAL_SPI_Init(&hspi1) != HAL_OK)
+  {
+    _Error_Handler(__FILE__, __LINE__);
+  }
+
+}
+
 /* USART3 init function */
 static void MX_USART3_UART_Init(void)
 {
@@ -550,9 +579,12 @@ void StartDefaultTask(void const * argument)
 {
   /* init code for USB_DEVICE */
   MX_USB_DEVICE_Init();
-  const TickType_t xDelay = 30 / portTICK_PERIOD_MS;
+
+  /* init code for FATFS */
+  MX_FATFS_Init();
 
   /* USER CODE BEGIN 5 */
+  const TickType_t xDelay = 30 / portTICK_PERIOD_MS;
   /* Infinite loop */
   for(;;)
   {
