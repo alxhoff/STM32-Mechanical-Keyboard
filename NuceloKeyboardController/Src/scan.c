@@ -70,6 +70,7 @@ char* scan_get_input_seq( keymap_list_t* list )
 {
 	static char* input_str = "";
 	static char input_char = 0;
+	static uint8_t shift_modifier = 0;
 	static char* lookup_str = "";
 	static size_t str_size = 0;
 	input_str = (char*)malloc(sizeof(char));
@@ -106,21 +107,29 @@ char* scan_get_input_seq( keymap_list_t* list )
 								if(!input_str) return NULL;
 							}
 							input_char = current_layer->grid[row][col];
-							if(input_char == KEY(MACRO_S)){
-								finished = 1;
-								break;
+							if(input_char != 0){
+								if(input_char == KEY(MACRO_S)){
+									finished = 1;
+									break;
+								}
+								//modifier
+								if(input_char == 0xE1 || input_char == 0xE5){
+									shift_modifier |= (1 << input_char - 0xE0);
+								}else{
+									if((shift_modifier & (1<<1)) || (shift_modifier & (1<<5)))
+										lookup_str = lookup_char[input_char].modified;
+									else
+										lookup_str = lookup_char[input_char].unmodified;
+									strncpy(&input_str[str_size], lookup_str, strlen(lookup_str));
+									str_size+=strlen(lookup_str);
+								}
+								input_char = 0;
 							}
-							if(input_char != 0)
-								lookup_str = lookup_char[input_char].unmodified;
-								strncpy(&input_str[str_size], lookup_str, strlen(lookup_str));
-								str_size+=strlen(lookup_str);
-//								input_str[str_size]=input_char;
-							input_char = 0;
-
-
 						}else{
-							;
-							//release
+							input_char = current_layer->grid[row][col];
+							if(input_char == 0xE1 || input_char == 0xE5)
+									shift_modifier &= ~(1 << input_char - 0xE0);
+							input_char = 0;
 						}
 					}
 				}

@@ -13,7 +13,7 @@ const layer_init keymap_init0 =
 		.grid =
 				KEYMAP(7, 8, 9, \
 					   4, 5, 6, \
-					   1, 2, 3, \
+					   1, RSHIFT, MACRO_R, \
 					   MACRO_S),
 	   .key_code = 0x66,
 	   .name = "Initial_layer"
