@@ -64,6 +64,8 @@
 
 #include "fonts.h"
 #include "ssd1306.h"
+#include "screen.h"
+#include "sdcard.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -85,6 +87,8 @@ osThreadId KeyboardListenHandle;
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 osThreadId ADCListenHandle;
+osThreadId sdCardTaskHandle;
+
 SemaphoreHandle_t USB_send_lock = NULL;
 
 AT24Cxx_devices eeprom_devs;
@@ -107,7 +111,7 @@ void KeyboardListenCallback(void const * argument);
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
 void MouseListenCallback(void const * argument);
-
+void sdCardTaskCallback(void const * argument);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
@@ -150,10 +154,11 @@ int main(void)
   /* USER CODE BEGIN 2 */
   ssd1306_Init();
   HAL_Delay(100);
-  ssd1306_Fill(White);
-  ssd1306_SetCursor(23,23);
-  ssd1306_WriteString("hello",Font_11x18, Black);
-  ssd1306_UpdateScreen();
+//  ssd1306_Fill(White);
+//  ssd1306_SetCursor(23,23);
+//  ssd1306_WriteString("hello",Font_11x18, Black);
+//  ssd1306_UpdateScreen();
+  screen_display_2_line("hello", "cool");
 
 	visInit();
 	AT24Cxx_init(&eeprom_devs, 7);
@@ -198,6 +203,9 @@ int main(void)
   /* USER CODE BEGIN RTOS_THREADS */
 //  osThreadDef(ADCListen, MouseListenCallback, osPriorityIdle, 0, 128);
 //  ADCListenHandle = osThreadCreate(osThread(ADCListen), NULL);
+
+  osThreadDef(sdCardTask, sdCardTaskCallback, osPriorityIdle, 0, 128);
+  sdCardTaskHandle = osThreadCreate(osThread(sdCardTask), NULL);
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_QUEUES */
@@ -550,6 +558,16 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 /* ADCListenCallback function */
+void sdCardTaskCallback(void const * argument)
+{
+	sdcard_dev_t sdcard1;
+
+	for(;;){
+		sdcard_init(&sdcard1);
+	}
+}
+
+
 void MouseListenCallback(void const * argument)
 {
 	TickType_t xLastWakeTime = xTaskGetTickCount();

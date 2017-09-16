@@ -8,8 +8,8 @@
 #include "mouse.h"
 #include "keyboard.h"
 #include "fonts.h"
-#include "extern.h"
 #include "ssd1306.h"
+#include "extern.h"
 #include "stm32f4xx_hal.h"
 
 key_err_TypeDef mouse_init( mouse_HID_data* data ){
