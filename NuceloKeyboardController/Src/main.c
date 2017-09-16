@@ -582,8 +582,7 @@ void KeyboardListenCallback(void const * argument)
 	ret = layer_table_init( &key_layer_list );
 
 	TickType_t xLastWakeTime = xTaskGetTickCount();
-	const TickType_t xPeriod = 100;
-	const TickType_t xDelay = 50 / portTICK_PERIOD_MS;
+	const TickType_t xPeriod = 20;
 
 	keyboard_HID_data keyboard_data = {
 			.keyboard = {
@@ -616,8 +615,6 @@ void KeyboardListenCallback(void const * argument)
 
 	clear_keyboard_report(&keyboard_data);
 	process_keyboard_flags(&keyboard_data);
-
-//	vTaskDelay(xDelay);
   }
   /* USER CODE END KeyboardListenCallback */
 }
