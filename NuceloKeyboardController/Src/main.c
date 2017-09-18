@@ -60,6 +60,7 @@
 #include "visEffect.h"
 #include "AT24Cxx_stm32_hal.h"
 #include "macro.h"
+#include "SN54HC595.h"
 
 #include "fonts.h"
 #include "ssd1306.h"
@@ -568,6 +569,23 @@ void KeyboardListenCallback(void const * argument)
   /* USER CODE BEGIN KeyboardListenCallback */
 	USB_send_lock = xSemaphoreCreateMutex();
 
+	shift_array_t shift_array = {
+		 .dev_count				= 1,
+		 .ser_in_pin 			= GPIO_PIN_15,	//GPIO PINS FOR SHIFT ARRAY
+		 .ser_in_port 			= GPIOB,
+		 .ser_in_clock_init 	= 0,
+		 .ser_clk_pin 			= GPIO_PIN_13,
+		 .ser_clk_port 			= GPIOB,
+		 .ser_clk_clock_init 	= 0,
+		 .latch_pin 			= GPIO_PIN_12,
+		 .latch_port 			= GPIOB,
+		 .latch_clock_init		= 0
+	 };
+	 SN54HC595_init_obj(&shift_array);
+	 uint8_t test_data = 0b10101010;
+	 shift_array.set_byte(&shift_array, 0, test_data );
+	 shift_array.set_byte(&shift_array, 0, 0b01010101);
+	 shift_array.set_data(&shift_array, &test_data);
 	//init layers
 	keymap_list_t key_layer_list;
 
