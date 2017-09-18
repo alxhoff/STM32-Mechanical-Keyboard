@@ -199,7 +199,6 @@ void set_data_self(shift_array_t* self, uint8_t* data)
 void clock_data_self(shift_array_t* self)
 {
 	HAL_GPIO_WritePin(self->ser_clk_port, self->ser_clk_pin, GPIO_PIN_SET);
-	HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
 	HAL_GPIO_WritePin(self->ser_clk_port, self->ser_clk_pin, GPIO_PIN_RESET);
 }
 
