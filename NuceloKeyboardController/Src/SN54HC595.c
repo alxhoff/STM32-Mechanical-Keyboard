@@ -211,7 +211,7 @@ void latch_self(shift_array_t* self)
 
 void SN54HC595_init_obj(shift_array_t* self)
 {
-	//CLOCK ENABLE STUFF
+//	//CLOCK ENABLE STUFF
 //	if(self->ser_in_clock_init)
 //		CLOCK_SWITCH(self->ser_in_port);
 //	if((self->ser_clk_port != self->ser_in_port) && self->ser_clk_clock_init)

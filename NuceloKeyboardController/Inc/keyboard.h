@@ -25,11 +25,11 @@
 #define ROWPIN(Row)			ROW_PIN_##Row
 
 #define COL_PORT_0 			GPIOF
-#define COL_PIN_0  			COL0_Pin
+#define COL_PIN_0  			GPIO_PIN_8
 #define COL_PORT_1			GPIOF
-#define COL_PIN_1			COL1_Pin
+#define COL_PIN_1			GPIO_PIN_7
 #define COL_PORT_2			GPIOF
-#define COL_PIN_2			COL2_Pin
+#define COL_PIN_2			GPIO_PIN_9
 
 
 #define ROW_PORT_0			GPIOF

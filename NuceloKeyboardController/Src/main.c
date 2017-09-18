@@ -594,20 +594,6 @@ void KeyboardListenCallback(void const * argument)
 	 };
 	 SN54HC595_init_obj(&shift_array);
 
-	  uint8_t test_data = 0b10101010;
-
-	 int i  = 0;
-   while (1)
-	 {
-	  shift_array.set_byte(&shift_array, 0, test_data);
-	  shift_array.output_delay(&shift_array, 1, 200);
-	  test_data ^= 0xFF;
-
-	  i++;
-	  if(i == 10)
-		  shift_array.disbale(&shift_array);
-	 }
-
 	//init layers
 	keymap_list_t key_layer_list;
 

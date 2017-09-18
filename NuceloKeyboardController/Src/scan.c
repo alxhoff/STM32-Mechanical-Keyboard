@@ -20,15 +20,16 @@ key_err_TypeDef scan_key_matrix(keyboard_HID_data* HID_reports, shift_array_t* s
 	//reset keypress buffer
 	HID_reports->key_buf.index = 0;
 
-	uint8_t row_mask = 0b10101010;
-
+	uint8_t row_mask = 0x00;
+	shift_array->set_byte(shift_array, 0, row_mask);
+	shift_array->output(shift_array, 1);
 
 	for(uint8_t row=0;row<KEYBOARD_ROWS;row++){
 		//Set current column high so that rows can be read
 //		HAL_GPIO_WritePin(row_ports[row],row_pins[row], GPIO_PIN_SET);
-//		row_mask = (1<<row);
-//		shift_array->set_byte(shift_array, 0, row_mask);
-//		shift_array->output(shift_array);
+		row_mask = (1<<(7-row));
+		shift_array->set_byte(shift_array, 0, row_mask);
+		shift_array->output(shift_array, 1);
 
 		for(uint8_t col=0;col<KEYBOARD_COLS;col++){
 			if(HAL_GPIO_ReadPin(col_ports[col], col_pins[col])){
@@ -39,6 +40,8 @@ key_err_TypeDef scan_key_matrix(keyboard_HID_data* HID_reports, shift_array_t* s
 			}
 		}
 //		HAL_GPIO_WritePin(row_ports[row],row_pins[row], GPIO_PIN_RESET);
+		shift_array->set_byte(shift_array, 0, 0x00);
+		shift_array->output(shift_array, 1);
 		HAL_Delay(1);
 	}
 
