@@ -464,10 +464,13 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOE, ROW0_Pin|ROW1_Pin|ROW2_Pin|ROW3_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, LD3_Pin|LD2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12|LD3_Pin|GPIO_PIN_15|LD2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(USB_PowerSwitchOn_GPIO_Port, USB_PowerSwitchOn_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : COL0_Pin COL1_Pin COL2_Pin */
   GPIO_InitStruct.Pin = COL0_Pin|COL1_Pin|COL2_Pin;
@@ -488,8 +491,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : LD3_Pin LD2_Pin */
-  GPIO_InitStruct.Pin = LD3_Pin|LD2_Pin;
+  /*Configure GPIO pins : PB12 LD3_Pin PB15 LD2_Pin */
+  GPIO_InitStruct.Pin = GPIO_PIN_12|LD3_Pin|GPIO_PIN_15|LD2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -507,6 +510,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(USB_OverCurrent_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PA15 */
+  GPIO_InitStruct.Pin = GPIO_PIN_15;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
 }
 
@@ -551,14 +561,15 @@ void StartDefaultTask(void const * argument)
 {
   /* init code for USB_DEVICE */
   MX_USB_DEVICE_Init();
-  const TickType_t xDelay = 30 / portTICK_PERIOD_MS;
 
   /* USER CODE BEGIN 5 */
   /* Infinite loop */
+  TickType_t xLastWakeTime = xTaskGetTickCount();
+  const TickType_t xPeriod = 20;
   for(;;)
   {
+	vTaskDelayUntil(&xLastWakeTime, xPeriod);
 	visHandle();
-	vTaskDelay(xDelay);
   }
   /* USER CODE END 5 */ 
 }
@@ -573,19 +584,30 @@ void KeyboardListenCallback(void const * argument)
 		 .dev_count				= 1,
 		 .ser_in_pin 			= GPIO_PIN_15,	//GPIO PINS FOR SHIFT ARRAY
 		 .ser_in_port 			= GPIOB,
-		 .ser_in_clock_init 	= 0,
-		 .ser_clk_pin 			= GPIO_PIN_13,
-		 .ser_clk_port 			= GPIOB,
-		 .ser_clk_clock_init 	= 0,
+		 .ser_in_clock_init 	= 1,
+		 .ser_clk_pin 			= GPIO_PIN_15,
+		 .ser_clk_port 			= GPIOA,
+		 .ser_clk_clock_init 	= 1,
 		 .latch_pin 			= GPIO_PIN_12,
 		 .latch_port 			= GPIOB,
-		 .latch_clock_init		= 0
+		 .latch_clock_init		= 1
 	 };
 	 SN54HC595_init_obj(&shift_array);
-	 uint8_t test_data = 0b10101010;
-	 shift_array.set_byte(&shift_array, 0, test_data );
-	 shift_array.set_byte(&shift_array, 0, 0b01010101);
-	 shift_array.set_data(&shift_array, &test_data);
+
+	  uint8_t test_data = 0b10101010;
+
+	 int i  = 0;
+   while (1)
+	 {
+	  shift_array.set_byte(&shift_array, 0, test_data);
+	  shift_array.output_delay(&shift_array, 1, 200);
+	  test_data ^= 0xFF;
+
+	  i++;
+	  if(i == 10)
+		  shift_array.disbale(&shift_array);
+	 }
+
 	//init layers
 	keymap_list_t key_layer_list;
 
@@ -628,7 +650,7 @@ void KeyboardListenCallback(void const * argument)
   {
 	vTaskDelayUntil(&xLastWakeTime, xPeriod);
 
-	if(scan_key_matrix(&keyboard_data) == key_ok)
+	if(scan_key_matrix(&keyboard_data, &shift_array) == key_ok)
 		process_key_buf(&keyboard_data, &key_layer_list);
 
 	clear_keyboard_report(&keyboard_data);

@@ -138,9 +138,9 @@ struct shift_array{
 	uint8_t sr_clr_clock_init;
 	uint8_t sr_clr_connected;
 
-	void (* output)(shift_array_t*);
+	void (* output)(shift_array_t*, uint8_t);
 
-	void (* output_delay)(shift_array_t*, uint32_t);
+	void (* output_delay)(shift_array_t*, uint8_t, uint32_t);
 
 	void (* disbale)(shift_array_t*);
 
@@ -151,6 +151,10 @@ struct shift_array{
 	void (* set_byte)(shift_array_t*, uint8_t, uint8_t);
 
 	void (* set_data)(shift_array_t*, uint8_t*);
+
+	void (* clock_data)(shift_array_t*);
+
+	void (* latch)(shift_array_t*);
 };
 
 #endif
@@ -167,13 +171,15 @@ void SN54HC595_out_bytes_w_delay(uint8_t* data, uint8_t byte_count, uint32_t del
 
 #ifdef USE_SN54HC595_STRUCTS
 
-void output_self(shift_array_t* self);
-void output_self_delay(shift_array_t* self, uint32_t delay);
+void output_self(shift_array_t* self, uint8_t byte_count);
+void output_self_delay(shift_array_t* self, uint8_t byte_count, uint32_t delay);
 void disable_self(shift_array_t* self);
 void enable_self(shift_array_t* self);
 void reset_latch_self(shift_array_t* self);
 void set_byte_self(shift_array_t* self, uint8_t byte_index,uint8_t byte);
 void set_data_self(shift_array_t* self, uint8_t* data);
+void clock_data_self(shift_array_t* self);
+void latch_self(shift_array_t* self);
 void SN54HC595_init_obj(shift_array_t* self);
 #endif
 

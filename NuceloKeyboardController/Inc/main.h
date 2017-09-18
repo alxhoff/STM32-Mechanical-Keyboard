@@ -59,12 +59,12 @@
 
 /* Private define ------------------------------------------------------------*/
 
-#define COL0_Pin GPIO_PIN_8
-#define COL0_GPIO_Port GPIOF
-#define COL1_Pin GPIO_PIN_7
-#define COL1_GPIO_Port GPIOF
-#define COL2_Pin GPIO_PIN_9
-#define COL2_GPIO_Port GPIOF
+#define COL0_Pin GPIO_PIN_4
+#define COL0_GPIO_Port GPIOE
+#define COL1_Pin GPIO_PIN_5
+#define COL1_GPIO_Port GPIOE
+#define COL2_Pin GPIO_PIN_6
+#define COL2_GPIO_Port GPIOE
 #define USER_Btn_Pin GPIO_PIN_13
 #define USER_Btn_GPIO_Port GPIOC
 #define MCO_Pin GPIO_PIN_0
@@ -77,14 +77,14 @@
 #define RMII_RXD0_GPIO_Port GPIOC
 #define RMII_RXD1_Pin GPIO_PIN_5
 #define RMII_RXD1_GPIO_Port GPIOC
-#define ROW0_Pin GPIO_PIN_12
-#define ROW0_GPIO_Port GPIOF
-#define ROW1_Pin GPIO_PIN_13
-#define ROW1_GPIO_Port GPIOF
+#define ROW0_Pin GPIO_PIN_10
+#define ROW0_GPIO_Port GPIOE
+#define ROW1_Pin GPIO_PIN_12
+#define ROW1_GPIO_Port GPIOE
 #define ROW2_Pin GPIO_PIN_14
-#define ROW2_GPIO_Port GPIOF
+#define ROW2_GPIO_Port GPIOE
 #define ROW3_Pin GPIO_PIN_15
-#define ROW3_GPIO_Port GPIOF
+#define ROW3_GPIO_Port GPIOE
 #define RMII_TXD1_Pin GPIO_PIN_13
 #define RMII_TXD1_GPIO_Port GPIOB
 #define LD3_Pin GPIO_PIN_14
