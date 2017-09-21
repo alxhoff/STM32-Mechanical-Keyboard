@@ -10,5 +10,10 @@
 
 typedef uint8_t key_code;
 
+typedef enum{
+	keyboard,
+	media,
+	mouse
+} report_type;
 
 #endif /* TYPES_H_ */

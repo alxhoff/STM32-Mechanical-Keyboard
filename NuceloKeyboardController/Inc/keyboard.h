@@ -8,13 +8,8 @@
 #ifndef KEYBOARD_H_
 #define KEYBOARD_H_
 
-
-//#include "main.h"
-//#include "stm32f4xx.h"
-//#include "cmsis_os.h"
 #include "datatypes.h"
-#include "error.h"
-#include "states.h"
+#include "keyboard_config.h"
 
 typedef struct key_devices key_devices_t;
 
@@ -81,11 +76,7 @@ typedef struct keyboard_HID_data{
 	keypress_buffer key_buf;
 } keyboard_HID_data_t;
 
-typedef enum{
-	keyboard,
-	media,
-	mouse
-} report_type;
+
 
 typedef struct keyboard_device{
 	uint16_t row_pins[KEYBOARD_ROWS];
@@ -101,7 +92,8 @@ extern uint8_t keypress_buffer_index;
 extern send_buffer keys_to_send;
 extern six_key_buffer approved_keys;
 
-key_err_TypeDef keyboard_init(key_devices_t* keyboard_devices, GPIO_TypeDef* row_ports[KEYBOARD_ROWS], uint16_t row_pins[KEYBOARD_ROWS]);
+key_err_TypeDef keyboard_init(key_devices_t* keyboard_devices,
+		GPIO_TypeDef* row_ports[KEYBOARD_ROWS], uint16_t row_pins[KEYBOARD_ROWS]);
 void clear_keyboard_report(  keyboard_HID_data_t* HID_reports);
 
 #endif /* KEYBOARD_H_ */

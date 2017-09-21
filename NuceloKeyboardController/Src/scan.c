@@ -5,14 +5,13 @@
  *      Author: alxhoff
  */
 
+#include "keymap.h"
+#include "keyboard.h"
 #include "scan.h"
 #include "extern.h"
-#include "process.h"
 #include "lookup.h"
 #include "types.h"
-#include "error.h"
-#include "SN54HC595.h"
-#include "keyboard.h"
+#include "shift.h"
 
 /*
  * functions to be called to initiate a scan of the keyboard matrix
@@ -98,7 +97,7 @@ char* scan_get_input_seq( keyboard_device_t* keyboard_dev, keymap_list_t* list )
 	TickType_t button_last_time[KEYBOARD_ROWS][KEYBOARD_COLS] = {0};
 	TickType_t debounce_delay = pdMS_TO_TICKS(DEBOUNCE_DELAY);
 
-	keymap_layer* current_layer = layer_table_get_current_layer(list);
+	keymap_layer_t* current_layer = layer_table_get_current_layer(list);
 
 	while(!finished){
 		//FOR

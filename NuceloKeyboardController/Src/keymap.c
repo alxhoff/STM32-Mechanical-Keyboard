@@ -5,12 +5,7 @@
  *      Author: alxhoff
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include "keymap.h"
-#include "HIDClassCommon.h"
 
 const layer_init keymap_init0 =
 {
@@ -61,7 +56,7 @@ keymap_err_TypeDef layer_list_init(key_devices_t* keyboard_devices,
 		keyboard_devices->layer_list->layer_count = 1;
 		keyboard_devices->layer_list->ID_count = 0;
 
-	keymap_layer* layer = (keymap_layer*) malloc (sizeof(keymap_layer));
+	keymap_layer_t* layer = (keymap_layer_t*) malloc (sizeof(keymap_layer_t));
 	if (layer == NULL)
 		return km_init_err;
 
@@ -78,7 +73,7 @@ keymap_err_TypeDef layer_list_init(key_devices_t* keyboard_devices,
 	//########################
 
 	//set new layer as head node
-	keyboard_devices->layer_list->layer_head = (keymap_layer*) layer;
+	keyboard_devices->layer_list->layer_head = (keymap_layer_t*) layer;
 	layer->next = keyboard_devices->layer_list->layer_head;
 	layer->prev = keyboard_devices->layer_list->layer_head;
 
@@ -89,7 +84,7 @@ keymap_err_TypeDef layer_list_append_layer( keymap_list_t* layer_list, layer_ini
 {
 
 	//create layer
-	keymap_layer *layer = (keymap_layer*) malloc (sizeof(keymap_layer));
+	keymap_layer_t *layer = (keymap_layer_t*) malloc (sizeof(keymap_layer_t));
 	if (layer == NULL)
 		return km_init_err;
 
@@ -108,15 +103,15 @@ keymap_err_TypeDef layer_list_append_layer( keymap_list_t* layer_list, layer_ini
 
 
 	//point head's prev to new entry (end of list)
-	layer_list->layer_head->prev = (keymap_layer*) layer;
+	layer_list->layer_head->prev = (keymap_layer_t*) layer;
 
 	//find end of list
-	keymap_layer* head = layer_list->layer_head;
+	keymap_layer_t* head = layer_list->layer_head;
 	while(head->next != layer_list->layer_head)
 		head = head->next;
 
 	//add new element to end of list
-	head->next = (keymap_layer*) layer;
+	head->next = (keymap_layer_t*) layer;
 
 	layer->next = layer_list->layer_head;
 	layer->prev = head;
@@ -142,13 +137,13 @@ keymap_err_TypeDef layer_table_init ( keymap_list_t* layer_list )
 	layer_list->table = table;
 
 	//loop through all layers in layer list and create entries
-	keymap_layer* layer_list_head = layer_list->layer_head;
+	keymap_layer_t* layer_list_head = layer_list->layer_head;
 
 	//loop until the list has been iterated through once
 	uint8_t done = 0;
 	while(!done){
 		//create layer table entry associating ID's to keycodes
-		layer_table_entry* new_entry = (layer_table_entry*) malloc(sizeof(layer_table_entry));
+		layer_table_entry_t* new_entry = (layer_table_entry_t*) malloc(sizeof(layer_table_entry_t));
 		if(new_entry == NULL)
 			return km_table_init_err;
 
@@ -181,11 +176,11 @@ uint8_t layer_list_get_ID( keymap_list_t* layer_list)
 
 //append layer to layer table with it's corresponding key_code
 //needs to find the key_code - ID assosiation and append to table
-keymap_err_TypeDef layer_table_append ( keymap_list_t* layer_list, layer_table_entry* layer)
+keymap_err_TypeDef layer_table_append ( keymap_list_t* layer_list, layer_table_entry_t* layer)
 {
 	//get the end of the list
 	//create entry
-	layer_table_entry* last = layer_table_get_last(layer_list);
+	layer_table_entry_t* last = layer_table_get_last(layer_list);
 
 	last->next = layer;
 	layer_list->table->entry_count++;
@@ -194,12 +189,12 @@ keymap_err_TypeDef layer_table_append ( keymap_list_t* layer_list, layer_table_e
 }
 
 //get last table entry from layer table
-layer_table_entry* layer_table_get_last ( keymap_list_t* layer_list )
+layer_table_entry_t* layer_table_get_last ( keymap_list_t* layer_list )
 {
 	if(layer_list->table->layer_head == NULL)
 		return NULL;
 
-	layer_table_entry* table_head = layer_list->table->layer_head;
+	layer_table_entry_t* table_head = layer_list->table->layer_head;
 
 	while(table_head->next != NULL)
 		table_head = table_head->next;
@@ -207,11 +202,11 @@ layer_table_entry* layer_table_get_last ( keymap_list_t* layer_list )
 	return table_head;
 }
 
-keymap_layer* layer_table_get_layer_w_ID( keymap_list_t* layer_list, uint8_t ID)
+keymap_layer_t* layer_table_get_layer_w_ID( keymap_list_t* layer_list, uint8_t ID)
 {
 	//iterate through layer table to match ID and return the layer pointed to
 	//head of table
-	layer_table_entry* head = layer_list->table->layer_head;
+	layer_table_entry_t* head = layer_list->table->layer_head;
 
 	while(head->ID != ID){
 		if(head->next == layer_list->table->layer_head){
@@ -223,10 +218,10 @@ keymap_layer* layer_table_get_layer_w_ID( keymap_list_t* layer_list, uint8_t ID)
 	return head->layer;
 }
 
-keymap_layer* layer_table_get_current_layer ( keymap_list_t* layer_list )
+keymap_layer_t* layer_table_get_current_layer ( keymap_list_t* layer_list )
 {
 	//get layer from layer table with current layer ID
-//	keymap_layer* return_layer = layer_table_get_layer_w_ID(layer_list, layer_list->current_layer);
+//	keymap_layer_t* return_layer = layer_table_get_layer_w_ID(layer_list, layer_list->current_layer);
 //	return return_layer;
 	return layer_table_get_layer_w_ID(layer_list, layer_list->current_layer);
 }
@@ -237,13 +232,13 @@ keymap_layer* layer_table_get_current_layer ( keymap_list_t* layer_list )
 //remove last layer from layer_list
 keymap_err_TypeDef layer_list_rem_last ( keymap_list_t* layer_list )
 {
-	keymap_layer* end = (keymap_layer*) layer_list->layer_head->prev;
+	keymap_layer_t* end = (keymap_layer_t*) layer_list->layer_head->prev;
 
 	//set head's prev to second last
-	layer_list->layer_head->prev = (keymap_layer*) end->prev;
+	layer_list->layer_head->prev = (keymap_layer_t*) end->prev;
 
 	//set second last's next to head
-	keymap_layer* second_last =(keymap_layer*)  end->prev;
+	keymap_layer_t* second_last =(keymap_layer_t*)  end->prev;
 	second_last = layer_list->layer_head;
 
 	//free old struct
@@ -253,9 +248,9 @@ keymap_err_TypeDef layer_list_rem_last ( keymap_list_t* layer_list )
 }
 
 //find layer in layer list that matches input ID
-keymap_layer* layer_list_get_layer_w_ID ( keymap_list_t* layer_list, uint8_t ID )
+keymap_layer_t* layer_list_get_layer_w_ID ( keymap_list_t* layer_list, uint8_t ID )
 {
-	keymap_layer* head = layer_list->layer_head;
+	keymap_layer_t* head = layer_list->layer_head;
 	while(head->ID != ID){
 		if(head->next == layer_list->layer_head)
 			return NULL;
@@ -266,9 +261,9 @@ keymap_layer* layer_list_get_layer_w_ID ( keymap_list_t* layer_list, uint8_t ID 
 }
 
 //get last layer in layer list
-keymap_layer* layer_list_get_last ( keymap_list_t* layer_list )
+keymap_layer_t* layer_list_get_last ( keymap_list_t* layer_list )
 {
-	keymap_layer* head = layer_list->layer_head;
+	keymap_layer_t* head = layer_list->layer_head;
 	while(head->next != NULL || head->next != layer_list->layer_head){
 		head = head->next;
 	}
@@ -280,11 +275,11 @@ keymap_layer* layer_list_get_last ( keymap_list_t* layer_list )
 keymap_err_TypeDef layer_list_rem_layer_w_ID ( keymap_list_t* layer_list, uint8_t ID )
 {
 	//find node to be removed
-	keymap_layer* rem = layer_list_get_layer_w_ID( layer_list, ID);
+	keymap_layer_t* rem = layer_list_get_layer_w_ID( layer_list, ID);
 
 	//TODO can this be made simpler?
-	keymap_layer* previous_node = (keymap_layer*) rem->prev;
-	keymap_layer* next_node = (keymap_layer*) rem->next;
+	keymap_layer_t* previous_node = (keymap_layer_t*) rem->prev;
+	keymap_layer_t* next_node = (keymap_layer_t*) rem->next;
 	previous_node->next = next_node;
 	next_node->prev = previous_node;
 
@@ -294,10 +289,10 @@ keymap_err_TypeDef layer_list_rem_layer_w_ID ( keymap_list_t* layer_list, uint8_
 }
 
 //get second last table entry from layer table
-layer_table_entry* layer_table_get_second_last (keymap_list_t* layer_list )
+layer_table_entry_t* layer_table_get_second_last (keymap_list_t* layer_list )
 {
-	layer_table_entry* table_head = layer_list->table->layer_head;
-	layer_table_entry* second_last;
+	layer_table_entry_t* table_head = layer_list->table->layer_head;
+	layer_table_entry_t* second_last;
 
 	while(table_head->next != NULL){
 		second_last = table_head;
@@ -310,8 +305,8 @@ layer_table_entry* layer_table_get_second_last (keymap_list_t* layer_list )
 //remove last entry from layer table
 keymap_err_TypeDef layer_table_rem_last ( keymap_list_t* layer_list )
 {
-	layer_table_entry* last = layer_table_get_last( layer_list );
-	layer_table_entry* new_last = layer_table_get_second_last(layer_list);
+	layer_table_entry_t* last = layer_table_get_last( layer_list );
+	layer_table_entry_t* new_last = layer_table_get_second_last(layer_list);
 
 	new_last->next = NULL;
 
@@ -323,10 +318,10 @@ keymap_err_TypeDef layer_table_rem_last ( keymap_list_t* layer_list )
 //removes a layer table entry with a certain ID
 keymap_err_TypeDef layer_table_rem_layer_w_ID ( keymap_list_t* layer_list, uint8_t ID )
 {
-	layer_table_entry* next;
-	layer_table_entry* prev;
+	layer_table_entry_t* next;
+	layer_table_entry_t* prev;
 
-	layer_table_entry* rem = layer_list->table->layer_head;
+	layer_table_entry_t* rem = layer_list->table->layer_head;
 
 	while(rem->ID != ID){
 		prev = rem;
@@ -341,9 +336,9 @@ keymap_err_TypeDef layer_table_rem_layer_w_ID ( keymap_list_t* layer_list, uint8
 }
 
 //gets the ID of a layer table entry given it's layer address
-uint8_t layer_table_get_ID_w_layer ( keymap_list_t* layer_list, keymap_layer* layer )
+uint8_t layer_table_get_ID_w_layer ( keymap_list_t* layer_list, keymap_layer_t* layer )
 {
-	keymap_layer* head = layer_list->layer_head;
+	keymap_layer_t* head = layer_list->layer_head;
 
 	while(head != layer)
 		head = head->next;

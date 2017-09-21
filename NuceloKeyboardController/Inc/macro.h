@@ -8,7 +8,6 @@
 #ifndef MACRO_H_
 #define MACRO_H_
 
-#include "states.h"
 #include "keymap.h"
 #include "keyboard.h"
 #include "types.h"

@@ -52,18 +52,16 @@
 #include "usb_device.h"
 
 /* USER CODE BEGIN Includes */
-#include "HIDClassCommon.h"
-#include "extern.h"
-#include "keyboard.h"
-#include "keymap.h"
-#include "mouse.h"
-#include "visEffect.h"
+//#include "visEffect.h"
 #include "AT24Cxx_stm32_hal.h"
 #include "macro.h"
-#include "shift.h"
-#include "datatypes.h"
 
-#include "fonts.h"
+//hardware devices
+#include "shift.h"
+//#include "mouse.h"
+
+
+//#include "fonts.h"
 #include "ssd1306.h"
 /* USER CODE END Includes */
 

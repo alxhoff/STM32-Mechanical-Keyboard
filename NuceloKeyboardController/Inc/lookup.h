@@ -8,11 +8,10 @@
 #ifndef LOOKUP_H_
 #define LOOKUP_H_
 
+#include <stdio.h>
+
 #define SC(key) HID_KEYBOARD_SC_##key
 #define MOD(key) HID_KEYBOARD_MODIFIER_##key
-
-#include "HIDClassCommon.h"
-#include "stdio.h"
 
 struct scan_code
 {

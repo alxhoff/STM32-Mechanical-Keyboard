@@ -8,7 +8,6 @@
 #ifndef LAYERS_H_
 #define LAYERS_H_
 
-#include "states.h"
 #include "keymap.h"
 
 states_err_t state_exit_layer_set();

@@ -9,8 +9,6 @@
 #ifndef KEYBOARD_CONFIG_H_
 #define KEYBOARD_CONFIG_H_
 
-#include "stm32f4xx_hal.h"
-
 //KEYBOARD SIZE
 #define KEYBOARD_ROWS 4
 #define KEYBOARD_COLS 3

@@ -8,9 +8,6 @@
 #ifndef SCAN_H_
 #define SCAN_H_
 
-#include "keymap.h"
-#include "keyboard.h"
-
 #define DEBOUNCE_DELAY 20
 
 //key_code scan_get_single_key( keymap_list_t* layer_list );

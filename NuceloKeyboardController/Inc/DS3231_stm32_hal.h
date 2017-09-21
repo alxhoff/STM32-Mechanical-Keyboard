@@ -5,12 +5,10 @@
  *      Author: alxhoff
  */
 
-#include "main.h"
-#include "stm32f4xx_hal.h"
-
-
 #ifndef DS3231_STM32_ALEX_H_
 #define DS3231_STM32_ALEX_H_
+
+#include "stm32f4xx_hal.h"
 
 #ifndef u08
 #define u08 uint8_t

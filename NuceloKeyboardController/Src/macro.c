@@ -7,9 +7,6 @@
 
 #include <stdio.h>
 
-#include "stm32f4xx_hal.h"
-#include "keymap.h"
-#include "states.h"
 #include "macro.h"
 #include "lookup.h"
 #include "extern.h"

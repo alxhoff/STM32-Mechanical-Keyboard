@@ -8,12 +8,10 @@
 #ifndef MOUSE_H_
 #define MOUSE_H_
 
-#include <stdio.h>
+//#include <stdio.h>
 
 #include "states.h"
-
 #include "stm32f4xx_hal.h"
-//#include "keyboard.h"
 
 //CALIBRATION
 #define LARGE_RANGE 	100
@@ -30,7 +28,7 @@
 #define Y_MID			178
 
 
-typedef struct{
+typedef struct mouseHID{
 	const uint8_t id;
 	uint8_t buttons;
 	int8_t x;
@@ -49,8 +47,6 @@ typedef struct mouse_HID_data{
 
 	mouse_buf_t mouse_buf;
 } mouse_HID_data_t;
-
-//typedef struct ADC_HandleTypeDef;
 
 typedef struct mouse_device{
 	const ADC_HandleTypeDef* adc_x;
