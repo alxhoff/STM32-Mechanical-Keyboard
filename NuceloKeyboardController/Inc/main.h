@@ -51,10 +51,11 @@
   /* Includes ------------------------------------------------------------------*/
 
 /* USER CODE BEGIN Includes */
-#include "stdio.h"
-#include "scan.h"
+#include "macro.h"
+#include "mouse.h"
+#include "keymap.h"
 #include "keyboard.h"
-#include "process.h"
+#include "shift.h"
 /* USER CODE END Includes */
 
 /* Private define ------------------------------------------------------------*/
@@ -122,6 +123,33 @@
 #define u08	uint8_t
 #define u16	uint16_t
 #define ENABLE_MOUSE		0
+
+typedef struct key_devices key_devices_t;
+
+struct key_devices{
+	//keyboard
+
+	keyboard_device_t* keyboard;
+	keyboard_HID_data_t* keyboard_HID;
+
+	//layers
+	keymap_list_t* layer_list;
+
+	//macros
+	macro_table_t* macro_table;
+
+	//usb dev
+
+
+//	//mouse
+	mouse_device_t* mouse;
+	mouse_HID_data_t* mouse_HID;
+//
+//	//shift array
+	shift_array_t* shift_array;
+
+	//LCD
+};
 /* USER CODE END Private defines */
 
 void _Error_Handler(char *, int);

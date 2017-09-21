@@ -64,28 +64,27 @@ states_err_t state_macro_run( keymap_list_t* layer_list )
 	return states_ok;
 }
 
-states_err_t macro_init( keymap_list_t* list )
+states_err_t macro_init( key_devices_t* key_devs )
 {
-	macro_table_t* table = (macro_table_t*) malloc(sizeof(macro_table_t));
-	if(table == NULL)
+	key_devs->macro_table = (macro_table_t*) malloc(sizeof(macro_table_t));
+	if(key_devs->macro_table == NULL)
 		return states_init_err;
-	list->macro_table = table;
 
-	list->macro_table->count = 0;
-	list->macro_table->head = NULL;
+	key_devs->macro_table->count = 0;
+	key_devs->macro_table->head = NULL;
 	return states_init_ok;
 }
 
-states_err_t macro_table_add_entry( keymap_list_t* list, macro_entry_t* entry )
+states_err_t macro_table_add_entry( macro_table_t* table, macro_entry_t* entry )
 {
-	if(list->macro_table->count == 0){
-		list->macro_table->head = entry;
+	if(table->count == 0){
+		table->head = entry;
 	}else{
-		macro_entry_t* last = macro_table_get_last(list->macro_table);
+		macro_entry_t* last = macro_table_get_last(table);
 		last->next = entry;
 	}
 
-	list->macro_table->count++;
+	table->count++;
 
 	return states_ok;
 }
@@ -103,9 +102,9 @@ macro_entry_t* macro_table_get_last( macro_table_t* table )
 	return head;
 }
 
-macro_entry_t* macro_table_get_w_key_code( keymap_list_t* list, key_code key )
+macro_entry_t* macro_table_get_w_key_code( macro_table_t* table, key_code key )
 {
-	macro_entry_t* head = list->macro_table->head;
+	macro_entry_t* head = table->head;
 
 	while(head->key_code != key){
 		head = head->next;
@@ -116,7 +115,7 @@ macro_entry_t* macro_table_get_w_key_code( keymap_list_t* list, key_code key )
 	return head;
 }
 
-states_err_t macro_execute_macro( keymap_list_t* list, macro_entry_t* macro )
+states_err_t macro_execute_macro( macro_table_t* table, macro_entry_t* macro )
 {
 	static keyboardHID_t macro_report = {
 			.id = 1,
@@ -162,7 +161,7 @@ states_err_t macro_send_blank( keyboardHID_t* macro_report )
 	return states_ok;
 }
 
-macro_entry_t* macro_allocate_new_macro( keymap_list_t* list )
+macro_entry_t* macro_allocate_new_macro( macro_table_t* table )
 {
 	macro_entry_t* new = (macro_entry_t*) malloc(sizeof(macro_entry_t));
 	if(new == NULL)
@@ -173,7 +172,7 @@ macro_entry_t* macro_allocate_new_macro( keymap_list_t* list )
 	new->key_code = NULL;
 
 	//TODO empty table check
-	macro_entry_t* last = macro_table_get_last( list->macro_table );
+	macro_entry_t* last = macro_table_get_last( table );
 
 	last->next = new;
 	return new;

@@ -60,7 +60,8 @@
 #include "visEffect.h"
 #include "AT24Cxx_stm32_hal.h"
 #include "macro.h"
-#include "SN54HC595.h"
+#include "shift.h"
+#include "datatypes.h"
 
 #include "fonts.h"
 #include "ssd1306.h"
@@ -87,6 +88,7 @@ SemaphoreHandle_t USB_send_lock = NULL;
 
 AT24Cxx_devices eeprom_devs;
 
+key_devices_t* keyboard_dev;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -528,7 +530,7 @@ void MouseListenCallback(void const * argument)
 	const TickType_t xPeriod = 5;
 	const TickType_t xDelay = 5 / portTICK_PERIOD_MS;
 
-	mouse_HID_data mouse_data = {
+	mouse_HID_data_t mouse_data = {
 			.adc_x = &hadc2,
 			.adc_y = &hadc1,
 			.mouse = {
@@ -580,6 +582,8 @@ void KeyboardListenCallback(void const * argument)
   /* USER CODE BEGIN KeyboardListenCallback */
 	USB_send_lock = xSemaphoreCreateMutex();
 
+	keyboard_devices_init(&keyboard_dev);
+
 	shift_array_t shift_array = {
 		 .dev_count				= 1,
 		 .ser_in_pin 			= GPIO_PIN_15,	//GPIO PINS FOR SHIFT ARRAY
@@ -592,55 +596,50 @@ void KeyboardListenCallback(void const * argument)
 		 .latch_port 			= GPIOB,
 		 .latch_clock_init		= 1
 	 };
-	 SN54HC595_init_obj(&shift_array);
 
-	//init layers
-	keymap_list_t key_layer_list;
+	shift_init(&keyboard_dev, &shift_array)
 
 	keymap_err_TypeDef ret;
 
-	ret = layer_list_init(&key_layer_list, &keymap_init0);
+	ret = layer_list_init(&keyboard_dev, &keymap_init0);
 
-	ret = layer_list_append_layer(&key_layer_list, &keymap_init1);
+	ret = layer_list_append_layer(&keyboard_dev->layer_list, &keymap_init1);
 
-	ret = layer_list_append_layer(&key_layer_list, &keymap_init2);
+	ret = layer_list_append_layer(&keyboard_dev->layer_list, &keymap_init2);
 
-	ret = layer_table_init( &key_layer_list );
+
+
+	ret = layer_table_init(&keyboard_dev->layer_list);
 
 	TickType_t xLastWakeTime = xTaskGetTickCount();
 	const TickType_t xPeriod = 20;
 
-	keyboard_HID_data keyboard_data = {
-			.keyboard = {
-					.id = 1
-			},
-			.media = {
-					.id = 2
-			},
-	};
-	keyboardInit(&keyboard_data);
+	GPIO_TypeDef* col_ports[] = {COL_PORT_0, COL_PORT_1, COL_PORT_2};
+	uint16_t col_pins[] = {COL_PIN_0, COL_PIN_1, COL_PIN_2};
+
+	keyboard_init(&keyboard_dev, &col_ports, &col_pins);
 
 
 	//macros
-	macro_init(&key_layer_list);
+	macro_init(&keyboard_dev);
 
 	macro_entry_t test_macro = {
 			.key_code = 0x24,
 			.keypress_string = "pew pew this is a macro and it can use all DA SYMBOLZZZ !@#$%^*()_+",
 	};
 
-	macro_table_add_entry(&key_layer_list, &test_macro);
+	macro_table_add_entry(keyboard_dev->macro_table, &test_macro);
 
   /* Infinite loop */
   for(;;)
   {
 	vTaskDelayUntil(&xLastWakeTime, xPeriod);
 
-	if(scan_key_matrix(&keyboard_data, &shift_array) == key_ok)
-		process_key_buf(&keyboard_data, &key_layer_list);
+	if(scan_key_matrix(keyboard_dev->keyboard_HID, &shift_array) == key_ok)
+		process_key_buf(keyboard_dev->keyboard_HID, keyboard_dev->layer_list);
 
-	clear_keyboard_report(&keyboard_data);
-	process_keyboard_flags(&keyboard_data);
+	clear_keyboard_report(keyboard_dev->keyboard_HID);
+	process_keyboard_flags(keyboard_dev->keyboard_HID);
   }
   /* USER CODE END KeyboardListenCallback */
 }

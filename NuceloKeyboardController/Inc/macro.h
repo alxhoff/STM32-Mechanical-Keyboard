@@ -10,9 +10,12 @@
 
 #include "states.h"
 #include "keymap.h"
+#include "keyboard.h"
 
 
 typedef struct macro_entry macro_entry_t;
+typedef struct keymap_list keymap_list_t;
+typedef uint8_t key_code;
 
 struct macro_entry{
 	uint8_t key_code;

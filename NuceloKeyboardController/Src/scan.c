@@ -14,7 +14,7 @@
 /*
  * functions to be called to initiate a scan of the keyboard matrix
  */
-key_err_TypeDef scan_key_matrix(keyboard_HID_data* HID_reports, shift_array_t* shift_array)
+key_err_TypeDef scan_key_matrix(keyboard_HID_data_t* HID_reports, shift_array_t* shift_array)
 {
 
 	//reset keypress buffer

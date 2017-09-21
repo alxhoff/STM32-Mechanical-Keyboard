@@ -8,6 +8,8 @@
 #ifndef SN54HC595_H_
 #define SN54HC595_H_
 
+#include "stm32f4xx.h"
+
 /*
  *#####PINOUT#####
  *

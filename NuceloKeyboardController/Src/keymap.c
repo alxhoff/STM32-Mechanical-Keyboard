@@ -5,8 +5,11 @@
  *      Author: alxhoff
  */
 
+#include <stdio.h>
+
 #include "keymap.h"
 #include "HIDClassCommon.h"
+
 
 const layer_init keymap_init0 =
 {
@@ -42,22 +45,28 @@ const layer_init keymap_init2 =
 };
 
 //TODO whichspace names
-keymap_err_TypeDef layer_list_init( keymap_list_t* layer_list,
+keymap_err_TypeDef layer_list_init(key_devices_t* keyboard_devices,
+		//keymap_list_t* layer_list,
 //		uint8_t* grid[KEYBOARD_ROWS][KEYBOARD_COLS], char* layer_name)
 		layer_init* initial_layer_to_add )
 {
 
+	keyboard_devices->layer_list =
+			(keymap_list_t*)malloc(sizeof(keymap_list_t));
+	if(keyboard_devices->layer_list == NULL)
+		return km_init_err;
+
 	//TODO bravity check
-	layer_list->layer_count = 1;
-	layer_list->ID_count = 0;
+		keyboard_devices->layer_list->layer_count = 1;
+		keyboard_devices->layer_list->ID_count = 0;
 
 	keymap_layer* layer = (keymap_layer*) malloc (sizeof(keymap_layer));
 	if (layer == NULL)
 		return km_init_err;
 
 	//NEW LAYER PROPERTIES ###
-	layer->ID =  layer_list_get_ID(layer_list);
-	layer->layer_modifier_key_code = initial_layer_to_add->key_code;
+	layer->ID =  layer_list_get_ID(keyboard_devices->layer_list);
+	layer->layer_modifier_key_code = initial_layer_to_add->key;
 
 	layer->name = (char*) malloc ((strlen(initial_layer_to_add->name)+1)*sizeof(char));
 	if (layer->name == NULL)
@@ -68,9 +77,9 @@ keymap_err_TypeDef layer_list_init( keymap_list_t* layer_list,
 	//########################
 
 	//set new layer as head node
-	layer_list->layer_head = (keymap_layer*) layer;
-	layer->next = layer_list->layer_head;
-	layer->prev = layer_list->layer_head;
+	keyboard_devices->layer_list->layer_head = (keymap_layer*) layer;
+	layer->next = keyboard_devices->layer_list->layer_head;
+	layer->prev = keyboard_devices->layer_list->layer_head;
 
 	return km_ok;
 }
@@ -84,7 +93,7 @@ keymap_err_TypeDef layer_list_append_layer( keymap_list_t* layer_list, layer_ini
 		return km_init_err;
 
 	//fill layer#######
-	layer->layer_modifier_key_code = layer_to_add->key_code;
+	layer->layer_modifier_key_code = layer_to_add->key;
 	layer->ID = layer_list_get_ID(layer_list);
 	layer_list->layer_count++;
 

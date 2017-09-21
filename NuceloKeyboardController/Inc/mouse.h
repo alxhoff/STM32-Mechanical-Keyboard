@@ -24,6 +24,7 @@
 #define Y_MAX			255
 #define Y_MID			178
 
+
 typedef struct{
 	const uint8_t id;
 	uint8_t buttons;
@@ -32,22 +33,26 @@ typedef struct{
 	int8_t wheel;
   } mouseHID_t;
 
-typedef struct{
+typedef struct mouse_buf{
 	signed long x;
 	signed long y;
-} mouse_buf;
+} mouse_buf_t;
 
-typedef struct{
+typedef struct mouse_HID_data{
 	mouseHID_t mouse;
 	report_states mouse_state;
+} mouse_HID_data_t;
 
+//typedef struct ADC_HandleTypeDef;
+
+typedef struct mouse_device{
 	const ADC_HandleTypeDef* adc_x;
 	const ADC_HandleTypeDef* adc_y;
 
 	signed long x_cal;
 	signed long y_cal;
 
-	mouse_buf mouse_buf;
-} mouse_HID_data;
+	mouse_buf_t mouse_buf;
+} mouse_device_t;
 
 #endif /* MOUSE_H_ */

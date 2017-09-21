@@ -8,8 +8,8 @@
 #ifndef KEYMAP_H_
 #define KEYMAP_H_
 
+#include <stdio.h>
 #include "HIDClassCommon.h"
-#include "keyboard.h"
 
 #define KEYBOARD_ROWS 4
 #define KEYBOARD_COLS 3
@@ -29,17 +29,16 @@
 #define KEY(SC)	K_##SC
 
 typedef struct macro_table macro_table_t;
-
-
 typedef struct layer_table_entry layer_table_entry;
 typedef struct keymap_layer keymap_layer;
+typedef struct keymap_list keymap_list_t;
 
 typedef uint8_t key_grid_TypeDef[KEYBOARD_ROWS][KEYBOARD_COLS];
 
 typedef struct{
 	const uint8_t grid[KEYBOARD_ROWS][KEYBOARD_COLS];
 
-	uint8_t key_code;
+	uint8_t key;
 
 	char* name;
 } layer_init;
@@ -83,7 +82,7 @@ typedef struct{
 	uint8_t entry_count;
 } layer_table;
 
-typedef struct keymap_list{
+struct keymap_list{
 	//LAYERS
 	keymap_layer* layer_head;
 
@@ -94,10 +93,7 @@ typedef struct keymap_list{
 	layer_table* table;
 
 	uint8_t current_layer;
-
-	//MACROS
-	macro_table_t* macro_table;
-} keymap_list_t;
+};
 
 #define K_ESC			HID_KEYBOARD_SC_ESCAPE
 #define K_1				HID_KEYBOARD_SC_1_AND_EXCLAMATION
