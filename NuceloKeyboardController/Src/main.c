@@ -58,11 +58,13 @@
 
 //hardware devices
 #include "shift.h"
-//#include "mouse.h"
+#include "mouse.h"
 
-
-//#include "fonts.h"
+//LCD
 #include "ssd1306.h"
+
+//LED
+#include "visEffect.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -87,6 +89,8 @@ SemaphoreHandle_t USB_send_lock = NULL;
 AT24Cxx_devices eeprom_devs;
 
 key_devices_t* keyboard_dev;
+
+keyboard_states current_keyboard_state;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -139,20 +143,20 @@ int main(void)
   MX_USART3_UART_Init();
   MX_ETH_Init();
   MX_I2C2_Init();
-  MX_ADC1_Init();
+  //MX_ADC1_Init();
   MX_I2C1_Init();
-  MX_ADC2_Init();
+  //MX_ADC2_Init();
 
   /* USER CODE BEGIN 2 */
-  ssd1306_Init();
-  HAL_Delay(100);
-  ssd1306_Fill(White);
-  ssd1306_SetCursor(23,23);
-  ssd1306_WriteString("hello",Font_11x18, Black);
-  ssd1306_UpdateScreen();
+	ssd1306_Init();
+	HAL_Delay(100);
+	ssd1306_Fill(White);
+	ssd1306_SetCursor(23,23);
+	ssd1306_WriteString("sup",Font_11x18, Black);
+	ssd1306_UpdateScreen();
 
 	visInit();
-	AT24Cxx_init(&eeprom_devs, 7);
+	//AT24Cxx_init(&eeprom_devs, 7);
 
 //	volatile uint8_t data = 20;
 //	volatile AT24Cxx_ERR_TypeDef ret;
@@ -526,7 +530,6 @@ void MouseListenCallback(void const * argument)
 {
 	TickType_t xLastWakeTime = xTaskGetTickCount();
 	const TickType_t xPeriod = 5;
-	const TickType_t xDelay = 5 / portTICK_PERIOD_MS;
 
 	mouse_HID_data_t mouse_data = {
 
@@ -540,12 +543,12 @@ void MouseListenCallback(void const * argument)
   {
 #ifdef ENABLE_MOUSE
 	vTaskDelayUntil(&xLastWakeTime, xPeriod);
-
-	if(ADC_retrieve_values(&mouse_data) == mouse_ok)
-		process_mouse_buf(&mouse_data);
-
-	clear_mouse_report(&mouse_data);
-	process_mouse_flags(&mouse_data);
+//
+//	if(ADC_retrieve_values(&mouse_data) == mouse_ok)
+//		process_mouse_buf(&mouse_data);
+//
+//	clear_mouse_report(&mouse_data);
+//	process_mouse_flags(&mouse_data);
 
 	//ADC_display_values(&mouse_data.mouse_buf.x, &mouse_data.mouse_buf.y);
 #endif
@@ -596,7 +599,7 @@ void KeyboardListenCallback(void const * argument)
 
 	shift_init(&keyboard_dev, &shift_array);
 
-	keymap_err_TypeDef ret;
+	keymap_err_t ret;
 
 	ret = layer_list_init(&keyboard_dev, &keymap_init0);
 
@@ -632,11 +635,11 @@ void KeyboardListenCallback(void const * argument)
   {
 	vTaskDelayUntil(&xLastWakeTime, xPeriod);
 
-	if(scan_key_matrix(keyboard_dev->keyboard_HID, &shift_array) == key_ok)
-		process_key_buf(keyboard_dev->keyboard_HID, keyboard_dev->layer_list);
-
-	clear_keyboard_report(keyboard_dev->keyboard_HID);
-	process_keyboard_flags(keyboard_dev->keyboard_HID);
+//	if(scan_key_matrix(keyboard_dev->keyboard_HID, &shift_array) == key_ok)
+//		process_key_buf(keyboard_dev->keyboard_HID, keyboard_dev->layer_list);
+//
+//	clear_keyboard_report(keyboard_dev->keyboard_HID);
+//	process_keyboard_flags(keyboard_dev->keyboard_HID);
   }
   /* USER CODE END KeyboardListenCallback */
 }

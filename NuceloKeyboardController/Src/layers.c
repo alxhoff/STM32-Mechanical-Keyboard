@@ -7,8 +7,8 @@
 
 #include "layers.h"
 #include "types.h"
+#include "states.h"
 
-keyboard_states current_keyboard_state;
 
 states_err_t state_enter_layer_set()
 {

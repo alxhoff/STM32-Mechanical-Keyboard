@@ -8,9 +8,8 @@
 #ifndef MOUSE_H_
 #define MOUSE_H_
 
-//#include <stdio.h>
-
 #include "states.h"
+#include "error.h"
 #include "stm32f4xx_hal.h"
 
 //CALIBRATION
@@ -55,5 +54,7 @@ typedef struct mouse_device{
 	signed long x_cal;
 	signed long y_cal;
 } mouse_device_t;
+
+key_err_t mouse_init( mouse_HID_data_t* data );
 
 #endif /* MOUSE_H_ */

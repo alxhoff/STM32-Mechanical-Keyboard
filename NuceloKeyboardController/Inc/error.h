@@ -9,6 +9,13 @@
 #define ERROR_H_
 
 typedef enum{
+	states_ok		= 0,
+	states_init_ok	= 0,
+	states_init_err = -1,
+	states_add_err	= -2
+} states_err_t;
+
+typedef enum{
 	shift_ok		= 0,
 	shift_init_err	= 1
 } shift_err_t;
@@ -18,7 +25,7 @@ typedef enum{
 	km_init_err			= -1,
 	km_ID_err			= -2,
 	km_table_init_err	= -3
-} keymap_err_TypeDef;
+} keymap_err_t;
 
 typedef enum key_err_TypeDef{
 	key_ok = 0,
@@ -35,6 +42,6 @@ typedef enum key_err_TypeDef{
 	key_layer_set = -11,
 	key_macro_run = -12,
 	key_macro_set = -13
-} key_err_TypeDef;
+} key_err_t;
 
 #endif /* ERROR_H_ */

@@ -41,7 +41,7 @@ const layer_init keymap_init2 =
 };
 
 //TODO whichspace names
-keymap_err_TypeDef layer_list_init(key_devices_t* keyboard_devices,
+keymap_err_t layer_list_init(key_devices_t* keyboard_devices,
 		//keymap_list_t* layer_list,
 //		uint8_t* grid[KEYBOARD_ROWS][KEYBOARD_COLS], char* layer_name)
 		layer_init* initial_layer_to_add )
@@ -80,7 +80,7 @@ keymap_err_TypeDef layer_list_init(key_devices_t* keyboard_devices,
 	return km_ok;
 }
 
-keymap_err_TypeDef layer_list_append_layer( keymap_list_t* layer_list, layer_init* layer_to_add )
+keymap_err_t layer_list_append_layer( keymap_list_t* layer_list, layer_init* layer_to_add )
 {
 
 	//create layer
@@ -122,7 +122,7 @@ keymap_err_TypeDef layer_list_append_layer( keymap_list_t* layer_list, layer_ini
 //init layer table
 //loop through all entries in the layer list and create assosiation paris
 //between the key_codes and the layer addresses, done using the ID's
-keymap_err_TypeDef layer_table_init ( keymap_list_t* layer_list )
+keymap_err_t layer_table_init ( keymap_list_t* layer_list )
 {
 	//create empty table
 	layer_table* table = (layer_table*) malloc(sizeof(layer_table));
@@ -176,7 +176,7 @@ uint8_t layer_list_get_ID( keymap_list_t* layer_list)
 
 //append layer to layer table with it's corresponding key_code
 //needs to find the key_code - ID assosiation and append to table
-keymap_err_TypeDef layer_table_append ( keymap_list_t* layer_list, layer_table_entry_t* layer)
+keymap_err_t layer_table_append ( keymap_list_t* layer_list, layer_table_entry_t* layer)
 {
 	//get the end of the list
 	//create entry
@@ -230,7 +230,7 @@ keymap_layer_t* layer_table_get_current_layer ( keymap_list_t* layer_list )
 //get an ID number for a layer
 
 //remove last layer from layer_list
-keymap_err_TypeDef layer_list_rem_last ( keymap_list_t* layer_list )
+keymap_err_t layer_list_rem_last ( keymap_list_t* layer_list )
 {
 	keymap_layer_t* end = (keymap_layer_t*) layer_list->layer_head->prev;
 
@@ -272,7 +272,7 @@ keymap_layer_t* layer_list_get_last ( keymap_list_t* layer_list )
 }
 
 //remove layer from layer list with ID
-keymap_err_TypeDef layer_list_rem_layer_w_ID ( keymap_list_t* layer_list, uint8_t ID )
+keymap_err_t layer_list_rem_layer_w_ID ( keymap_list_t* layer_list, uint8_t ID )
 {
 	//find node to be removed
 	keymap_layer_t* rem = layer_list_get_layer_w_ID( layer_list, ID);
@@ -303,7 +303,7 @@ layer_table_entry_t* layer_table_get_second_last (keymap_list_t* layer_list )
 }
 
 //remove last entry from layer table
-keymap_err_TypeDef layer_table_rem_last ( keymap_list_t* layer_list )
+keymap_err_t layer_table_rem_last ( keymap_list_t* layer_list )
 {
 	layer_table_entry_t* last = layer_table_get_last( layer_list );
 	layer_table_entry_t* new_last = layer_table_get_second_last(layer_list);
@@ -316,7 +316,7 @@ keymap_err_TypeDef layer_table_rem_last ( keymap_list_t* layer_list )
 }
 
 //removes a layer table entry with a certain ID
-keymap_err_TypeDef layer_table_rem_layer_w_ID ( keymap_list_t* layer_list, uint8_t ID )
+keymap_err_t layer_table_rem_layer_w_ID ( keymap_list_t* layer_list, uint8_t ID )
 {
 	layer_table_entry_t* next;
 	layer_table_entry_t* prev;
