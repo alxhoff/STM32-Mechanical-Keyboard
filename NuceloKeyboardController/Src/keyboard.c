@@ -9,10 +9,12 @@
 #include "keyboard.h"
 #include "states.h"
 #include "datatypes.h"
+#include "extern.h"
 
 
 
-key_err_TypeDef keyboard_init(key_devices_t* keyboard_devices, GPIO_TypeDef* row_ports[KEYBOARD_ROWS], uint16_t row_pins[KEYBOARD_ROWS])
+key_err_TypeDef keyboard_init(key_devices_t* keyboard_devices,
+		GPIO_TypeDef* row_ports[KEYBOARD_ROWS], uint16_t row_pins[KEYBOARD_ROWS])
 //keyboard_HID_data* HID_reports)
 {
 	//set up GPIO
@@ -41,20 +43,20 @@ key_err_TypeDef keyboard_init(key_devices_t* keyboard_devices, GPIO_TypeDef* row
 	GPIO_InitTypeDef GPIO_InitStruct;
 
 	//INIT COLS - output
-	for(int i=0; i<KEYBOARD_ROWS; i++){
-		GPIO_InitStruct.Pin = row_pins[i];
-		GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-		GPIO_InitStruct.Pull = GPIO_NOPULL;
-		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-		HAL_GPIO_Init(row_ports[i], &GPIO_InitStruct);
-	}
+//	for(int i=0; i<KEYBOARD_COLS; i++){
+//		GPIO_InitStruct.Pin = col_pins[i];
+//		GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+//		GPIO_InitStruct.Pull = GPIO_NOPULL;
+//		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+//		HAL_GPIO_Init(col_ports[i], &GPIO_InitStruct);
+//	}
 
 	//INIT ROWS - input
-	for(int i=0; i<KEYBOARD_COLS; i++){
-		GPIO_InitStruct.Pin = col_pins[i];
+	for(int i=0; i<KEYBOARD_ROWS; i++){
+		GPIO_InitStruct.Pin = row_pins[i];
 		GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
 		GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-		HAL_GPIO_Init(col_ports[i], &GPIO_InitStruct);
+		HAL_GPIO_Init(row_ports[i], &GPIO_InitStruct);
 	}
 
 	keyboard_devices = (key_devices_t*) malloc(sizeof(key_devices_t));
@@ -67,9 +69,9 @@ key_err_TypeDef keyboard_init(key_devices_t* keyboard_devices, GPIO_TypeDef* row
 	if(keyboard_devices->keyboard_HID == NULL)
 		return init_err;
 
-	keyboard_devices->keyboard_HID->keyboard.id = 1;
+	keyboard_devices->keyboard_HID->keyboard_report.id = 1;
 	keyboard_devices->keyboard_HID->keyboard_state = inactive;
-	keyboard_devices->keyboard_HID->media.id = 2;
+	keyboard_devices->keyboard_HID->media_report.id = 2;
 	keyboard_devices->keyboard_HID->media_state = inactive;
 
 	keyboard_devices->keyboard_HID->out_buf.key_buf.count = 0;

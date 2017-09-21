@@ -12,6 +12,7 @@
 #include "stm32f4xx_hal.h"
 #include "cmsis_os.h"
 #include "usb_device.h"
+#include "keyboard_config.h"
 
 extern GPIO_TypeDef* col_ports[KEYBOARD_COLS];
 extern GPIO_TypeDef* row_ports[KEYBOARD_ROWS];

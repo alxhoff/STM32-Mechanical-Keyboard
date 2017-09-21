@@ -531,9 +531,8 @@ void MouseListenCallback(void const * argument)
 	const TickType_t xDelay = 5 / portTICK_PERIOD_MS;
 
 	mouse_HID_data_t mouse_data = {
-			.adc_x = &hadc2,
-			.adc_y = &hadc1,
-			.mouse = {
+
+			.mouse_HID = {
 					.id = 3
 			}
 	};
@@ -597,7 +596,7 @@ void KeyboardListenCallback(void const * argument)
 		 .latch_clock_init		= 1
 	 };
 
-	shift_init(&keyboard_dev, &shift_array)
+	shift_init(&keyboard_dev, &shift_array);
 
 	keymap_err_TypeDef ret;
 

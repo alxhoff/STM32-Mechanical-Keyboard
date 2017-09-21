@@ -12,7 +12,7 @@
 #include "ssd1306.h"
 #include "stm32f4xx_hal.h"
 
-key_err_TypeDef mouse_init( mouse_HID_data* data ){
+key_err_TypeDef mouse_init( mouse_HID_data_t* data ){
 
 	data->mouse_buf.x=0;
 	data->mouse_buf.y=0;
@@ -23,22 +23,22 @@ key_err_TypeDef mouse_init( mouse_HID_data* data ){
 	return mouse_ok;
 }
 
-key_err_TypeDef ADC_retrieve_values( mouse_HID_data* data )
+key_err_TypeDef ADC_retrieve_values( mouse_device_t* mouse, mouse_HID_data_t* data )
 {
-	if(HAL_ADC_Start(data->adc_x) != HAL_OK)
+	if(HAL_ADC_Start(mouse->adc_x) != HAL_OK)
 		return adc_err;
 
-	if(HAL_ADC_Start(data->adc_y) != HAL_OK)
+	if(HAL_ADC_Start(mouse->adc_y) != HAL_OK)
 		return adc_err;
 
-	if(HAL_ADC_PollForConversion(data->adc_x, 50) != HAL_OK)
+	if(HAL_ADC_PollForConversion(mouse->adc_x, 50) != HAL_OK)
 		return adc_err;
 
-	if(HAL_ADC_PollForConversion(data->adc_y, 50) != HAL_OK)
+	if(HAL_ADC_PollForConversion(mouse->adc_y, 50) != HAL_OK)
 		return adc_err;
 
-	data->mouse_buf.x = ((signed long)HAL_ADC_GetValue(data->adc_x) >> 4);
-	data->mouse_buf.y = ((signed long)HAL_ADC_GetValue(data->adc_y) >> 4);
+	data->mouse_buf.x = ((signed long)HAL_ADC_GetValue(mouse->adc_x) >> 4);
+	data->mouse_buf.y = ((signed long)HAL_ADC_GetValue(mouse->adc_y) >> 4);
 
 	if((data->mouse_buf.x < 187 && data->mouse_buf.x > 147) && (data->mouse_buf.y < 187 && data->mouse_buf.y > 147))
 			return no_mouse_mov;
@@ -64,25 +64,25 @@ void ADC_display_values(signed long* x, signed long* y)
 	ssd1306_UpdateScreen();
 }
 
-key_err_TypeDef calibrate_mouse( mouse_HID_data* data )
+key_err_TypeDef calibrate_mouse( mouse_HID_data_t* data )
 {
 	//TODO
 
 	return key_ok;
 }
 
-key_err_TypeDef clear_mouse_report ( mouse_HID_data* data )
+key_err_TypeDef clear_mouse_report ( mouse_HID_data_t* data )
 {
 	if(data->mouse_state == clearing || data->mouse_state == active){
-		data->mouse.buttons=0;
-		data->mouse.x=0;
-		data->mouse.y=0;
-		data->mouse.wheel=0;
+		data->mouse_HID.buttons=0;
+		data->mouse_HID.x=0;
+		data->mouse_HID.y=0;
+		data->mouse_HID.wheel=0;
 	}
 	return mouse_ok;
 }
 
-key_err_TypeDef process_mouse_buf ( mouse_HID_data* data )
+key_err_TypeDef process_mouse_buf ( mouse_HID_data_t* data )
 {
 	//TODO MOUSE DYNAMICS - exponential
 
@@ -108,23 +108,23 @@ key_err_TypeDef process_mouse_buf ( mouse_HID_data* data )
 	return mouse_ok;
 }
 
-key_err_TypeDef prepare_mouse_report ( mouse_HID_data* data )
+key_err_TypeDef prepare_mouse_report ( mouse_HID_data_t* data )
 {
 	//basic mouse control
-	data->mouse.x = (uint8_t)data->mouse_buf.x;
-	data->mouse.y = -1 * (uint8_t) data->mouse_buf.y;
+	data->mouse_HID.x = (uint8_t) data->mouse_buf.x;
+	data->mouse_HID.y = -1 * (uint8_t) data->mouse_buf.y;
 
 	return mouse_ok;
 }
 
-key_err_TypeDef send_mouse_report ( mouse_HID_data* data )
+key_err_TypeDef send_mouse_report ( mouse_HID_data_t* data )
 {
-	USBD_HID_SendReport(&hUsbDeviceFS, &data->mouse, sizeof(mouseHID_t));
+	USBD_HID_SendReport(&hUsbDeviceFS, &data->mouse_HID, sizeof(mouseHID_t));
 	data->mouse_state = clearing;
 	return mouse_ok;
 }
 
-key_err_TypeDef process_mouse_flags ( mouse_HID_data* data )
+key_err_TypeDef process_mouse_flags ( mouse_HID_data_t* data )
 {
 	if(data->mouse_state == active){
 		if(xSemaphoreTake( USB_send_lock, (TickType_t) portMAX_DELAY) == pdTRUE){

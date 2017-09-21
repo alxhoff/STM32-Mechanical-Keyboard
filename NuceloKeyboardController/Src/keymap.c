@@ -6,10 +6,11 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "keymap.h"
 #include "HIDClassCommon.h"
-
 
 const layer_init keymap_init0 =
 {
@@ -18,7 +19,7 @@ const layer_init keymap_init0 =
 					   4, 5, 6, \
 					   1, RSHIFT, MACRO_R, \
 					   MACRO_S),
-	   .key_code = 0x66,
+	   .key = 0x66,
 	   .name = "Initial_layer"
 };
 
@@ -29,7 +30,7 @@ const layer_init keymap_init1 =
 					   f, e, d, \
 					   g, h, i, \
 					   LAYER),
-		.key_code = HID_KEYBOARD_SC_RIGHT_CONTROL,
+		.key = HID_KEYBOARD_SC_RIGHT_CONTROL,
 		.name = "Second_layer"
 };
 
@@ -40,7 +41,7 @@ const layer_init keymap_init2 =
 					   m, n, o, \
 					   o, q, r, \
 					   LAYER),
-		.key_code = HID_KEYBOARD_SC_LEFT_GUI,
+		.key = HID_KEYBOARD_SC_LEFT_GUI,
 		.name = "Third_layer"
 };
 

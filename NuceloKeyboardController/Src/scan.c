@@ -9,12 +9,15 @@
 #include "extern.h"
 #include "process.h"
 #include "lookup.h"
+#include "types.h"
+#include "error.h"
 #include "SN54HC595.h"
+#include "keyboard.h"
 
 /*
  * functions to be called to initiate a scan of the keyboard matrix
  */
-key_err_TypeDef scan_key_matrix(keyboard_HID_data_t* HID_reports, shift_array_t* shift_array)
+key_err_TypeDef scan_key_matrix(keyboard_device_t* keyboard_dev, keyboard_HID_data_t* HID_reports, shift_array_t* shift_array)
 {
 
 	//reset keypress buffer
@@ -32,7 +35,7 @@ key_err_TypeDef scan_key_matrix(keyboard_HID_data_t* HID_reports, shift_array_t*
 		shift_array->output(shift_array, 1);
 
 		for(uint8_t col=0;col<KEYBOARD_COLS;col++){
-			if(HAL_GPIO_ReadPin(col_ports[col], col_pins[col])){
+			if(HAL_GPIO_ReadPin(keyboard_dev->col_ports[col], keyboard_dev->col_pins[col])){
 				//key is pressed
 				HID_reports->key_buf.buffer[HID_reports->key_buf.index].col=col;
 				HID_reports->key_buf.buffer[HID_reports->key_buf.index].row=row;
@@ -51,7 +54,7 @@ key_err_TypeDef scan_key_matrix(keyboard_HID_data_t* HID_reports, shift_array_t*
 	return key_ok;
 }
 
-key_code scan_get_single_key( keymap_list_t* layer_list )
+key_code scan_get_single_key( keyboard_device_t* keyboard_dev, keymap_list_t* layer_list )
 {
 	key_code ret = 0;
 	HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
@@ -59,14 +62,14 @@ key_code scan_get_single_key( keymap_list_t* layer_list )
 	while(ret == 0){
 		for(uint8_t row=0;row<KEYBOARD_ROWS;row++){
 			//Set current column high so that rows can be read
-			HAL_GPIO_WritePin(row_ports[row],row_pins[row], GPIO_PIN_SET);
+			HAL_GPIO_WritePin(keyboard_dev->row_ports[row],keyboard_dev->row_pins[row], GPIO_PIN_SET);
 			for(uint8_t col=0;col<KEYBOARD_COLS;col++){
-				if(HAL_GPIO_ReadPin(col_ports[col], col_pins[col])){
+				if(HAL_GPIO_ReadPin(keyboard_dev->col_ports[col], keyboard_dev->col_pins[col])){
 					ret = process_single_key( layer_list, col, row);
 					//display_int_on_screen(col, row);
 				}
 			}
-			HAL_GPIO_WritePin(row_ports[row],row_pins[row], GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(keyboard_dev->row_ports[row],keyboard_dev->row_pins[row], GPIO_PIN_RESET);
 			HAL_Delay(1);
 		}
 
@@ -77,7 +80,7 @@ key_code scan_get_single_key( keymap_list_t* layer_list )
 	return ret;
 }
 
-char* scan_get_input_seq( keymap_list_t* list )
+char* scan_get_input_seq( keyboard_device_t* keyboard_dev, keymap_list_t* list )
 {
 	static char* input_str = "";
 	static char input_char = 0;
@@ -100,10 +103,10 @@ char* scan_get_input_seq( keymap_list_t* list )
 	while(!finished){
 		//FOR
 		for(uint8_t row=0;row<KEYBOARD_ROWS;row++){
-			HAL_GPIO_WritePin(row_ports[row],row_pins[row], GPIO_PIN_SET);
+			HAL_GPIO_WritePin(keyboard_dev->row_ports[row],keyboard_dev->row_pins[row], GPIO_PIN_SET);
 			for(uint8_t col=0;col<KEYBOARD_COLS;col++){
 
-				button_input[row][col] = !HAL_GPIO_ReadPin(col_ports[col], col_pins[col]);
+				button_input[row][col] = !HAL_GPIO_ReadPin(keyboard_dev->col_ports[col], keyboard_dev->col_pins[col]);
 
 				if(button_input[row][col] != button_last_state[row][col])
 					button_last_time[row][col] = xTaskGetTickCount();
@@ -146,7 +149,7 @@ char* scan_get_input_seq( keymap_list_t* list )
 				}
 				button_last_state[row][col] = button_input[row][col];
 			}
-			HAL_GPIO_WritePin(row_ports[row],row_pins[row], GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(keyboard_dev->row_ports[row],keyboard_dev->row_pins[row], GPIO_PIN_RESET);
 			HAL_Delay(1);
 		}
 	}

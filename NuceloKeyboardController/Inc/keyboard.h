@@ -9,39 +9,14 @@
 #define KEYBOARD_H_
 
 
-#include "main.h"
-#include "stm32f4xx.h"
-#include "cmsis_os.h"
+//#include "main.h"
+//#include "stm32f4xx.h"
+//#include "cmsis_os.h"
+#include "datatypes.h"
+#include "error.h"
+#include "states.h"
 
-//KEYBOARD SIZE
-#define KEYBOARD_ROWS 4
-#define KEYBOARD_COLS 3
-
-//MICRO PORTS AND PINS
-	//COLS
-
-#define COLPORT(Col)		COL_PORT_##Col
-#define COLPIN(Col)			COL_PIN_##Col
-
-#define ROWPORT(Row)		ROW_PORT_##Row
-#define ROWPIN(Row)			ROW_PIN_##Row
-
-#define COL_PORT_0 			GPIOF
-#define COL_PIN_0  			GPIO_PIN_8
-#define COL_PORT_1			GPIOF
-#define COL_PIN_1			GPIO_PIN_7
-#define COL_PORT_2			GPIOF
-#define COL_PIN_2			GPIO_PIN_9
-
-
-#define ROW_PORT_0			GPIOF
-#define ROW_PIN_0			ROW0_Pin
-#define ROW_PORT_1			GPIOF
-#define ROW_PIN_1			ROW1_Pin
-#define ROW_PORT_2			GPIOF
-#define ROW_PIN_2			ROW2_Pin
-#define ROW_PORT_3			GPIOF
-#define ROW_PIN_3			ROW3_Pin
+typedef struct key_devices key_devices_t;
 
 typedef struct keyboardHID{
       uint8_t id;
@@ -87,19 +62,13 @@ typedef struct{
 	uint8_t send_flag;
 } send_buffer;
 
-typedef enum{
-	inactive,
-	active,
-	clearing
-} report_states;
-
 typedef struct keyboard_HID_data{
 	uint8_t process_key_buf;
 
-	keyboardHID_t keyboard;
+	keyboardHID_t keyboard_report;
 	report_states keyboard_state;
 
-	mediaHID_t media;
+	mediaHID_t media_report;
 	report_states media_state;
 
 	send_buffer out_buf;
@@ -112,30 +81,11 @@ typedef struct keyboard_HID_data{
 	keypress_buffer key_buf;
 } keyboard_HID_data_t;
 
-
-
 typedef enum{
 	keyboard,
 	media,
 	mouse
 } report_type;
-
-typedef enum key_err_TypeDef{
-	key_ok = 0,
-	adc_err = -1,
-	process_err = -2,
-	init_err = -3,
-	send_err = -4,
-	empty_buf = -5,
-	no_flags = -6,
-	reset_err = -7,
-	no_mouse_mov = -8,
-	mouse_ok = -9,
-	key_enter_set = -10,
-	key_layer_set = -11,
-	key_macro_run = -12,
-	key_macro_set = -13
-} key_err_TypeDef;
 
 typedef struct keyboard_device{
 	uint16_t row_pins[KEYBOARD_ROWS];
@@ -146,15 +96,12 @@ typedef struct keyboard_device{
 } keyboard_device_t;
 
 
-extern uint16_t col_pins[KEYBOARD_COLS];
-extern uint16_t row_pins[KEYBOARD_ROWS];
-
 extern key key_buf[20];
 extern uint8_t keypress_buffer_index;
 extern send_buffer keys_to_send;
 extern six_key_buffer approved_keys;
 
-key_err_TypeDef keyboard_init( keyboard_HID_data_t* HID_reports );
+key_err_TypeDef keyboard_init(key_devices_t* keyboard_devices, GPIO_TypeDef* row_ports[KEYBOARD_ROWS], uint16_t row_pins[KEYBOARD_ROWS]);
 void clear_keyboard_report(  keyboard_HID_data_t* HID_reports);
 
 #endif /* KEYBOARD_H_ */

@@ -23,6 +23,12 @@ typedef enum{
 	macro_run
 } keyboard_states;
 
+typedef enum{
+	inactive,
+	active,
+	clearing
+} report_states;
+
 extern keyboard_states current_keyboard_state;
 
 #endif /* STATES_H_ */

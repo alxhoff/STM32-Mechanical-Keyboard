@@ -9,7 +9,10 @@
 #define KEYMAP_H_
 
 #include <stdio.h>
+
+#include "datatypes.h"
 #include "HIDClassCommon.h"
+#include "error.h"
 
 #define KEYBOARD_ROWS 4
 #define KEYBOARD_COLS 3
@@ -42,13 +45,6 @@ typedef struct{
 
 	char* name;
 } layer_init;
-
-typedef enum{
-	km_ok				= 0,
-	km_init_err			= -1,
-	km_ID_err			= -2,
-	km_table_init_err	= -3
-} keymap_err_TypeDef;
 
 struct keymap_layer{
 //	key_grid_TypeDef* grid;
@@ -166,7 +162,7 @@ struct keymap_list{
 #define K_PLAY			HID_KEYBOARD_SC_MEDIA_PLAY
 
 //prototypes
-keymap_err_TypeDef layer_list_init( keymap_list_t* layer_list, layer_init* initial_layer_to_add );
+keymap_err_TypeDef layer_list_init(key_devices_t* keyboard_devices, layer_init* initial_layer_to_add );
 keymap_err_TypeDef layer_list_append_layer( keymap_list_t* layer_list, layer_init* layer_to_add );
 uint8_t layer_list_get_ID( keymap_list_t* layer_list );
 keymap_layer* layer_list_get_last ( keymap_list_t* layer_list );

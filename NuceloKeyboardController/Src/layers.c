@@ -8,6 +8,7 @@
 #include "layers.h"
 #include "keymap.h"
 #include "states.h"
+#include "types.h"
 
 keyboard_states current_keyboard_state;
 
