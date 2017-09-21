@@ -53,12 +53,14 @@
 
 /* USER CODE BEGIN Includes */
 //#include "visEffect.h"
-#include "AT24Cxx_stm32_hal.h"
+//#include "AT24Cxx_stm32_hal.h"
+//layers & init
+#include "keymap.h"
 #include "macro.h"
 
 //hardware devices
 #include "shift.h"
-#include "mouse.h"
+//#include "mouse.h"
 
 //LCD
 #include "ssd1306.h"
@@ -86,7 +88,7 @@ osThreadId KeyboardListenHandle;
 osThreadId ADCListenHandle;
 SemaphoreHandle_t USB_send_lock = NULL;
 
-AT24Cxx_devices eeprom_devs;
+//AT24Cxx_devices eeprom_devs;
 
 key_devices_t* keyboard_dev;
 
@@ -528,21 +530,21 @@ static void MX_GPIO_Init(void)
 /* ADCListenCallback function */
 void MouseListenCallback(void const * argument)
 {
-	TickType_t xLastWakeTime = xTaskGetTickCount();
-	const TickType_t xPeriod = 5;
-
-	mouse_HID_data_t mouse_data = {
-
-			.mouse_HID = {
-					.id = 3
-			}
-	};
-	mouse_init(&mouse_data);
-  /* Infinite loop */
+//	TickType_t xLastWakeTime = xTaskGetTickCount();
+//	const TickType_t xPeriod = 5;
+//
+//	mouse_HID_data_t mouse_data = {
+//
+//			.mouse_HID = {
+//					.id = 3
+//			}
+//	};
+//	mouse_init(&mouse_data);
+//  /* Infinite loop */
   for(;;)
   {
-#ifdef ENABLE_MOUSE
-	vTaskDelayUntil(&xLastWakeTime, xPeriod);
+//#ifdef ENABLE_MOUSE
+//	vTaskDelayUntil(&xLastWakeTime, xPeriod);
 //
 //	if(ADC_retrieve_values(&mouse_data) == mouse_ok)
 //		process_mouse_buf(&mouse_data);
@@ -551,7 +553,7 @@ void MouseListenCallback(void const * argument)
 //	process_mouse_flags(&mouse_data);
 
 	//ADC_display_values(&mouse_data.mouse_buf.x, &mouse_data.mouse_buf.y);
-#endif
+//#endif
 //	vTaskDelay(xDelay);
   }
   /* USER CODE END KeyboardListenCallback */
@@ -597,43 +599,43 @@ void KeyboardListenCallback(void const * argument)
 		 .latch_clock_init		= 1
 	 };
 
-	shift_init(&keyboard_dev, &shift_array);
+	shift_init(keyboard_dev, &shift_array);
 
 	keymap_err_t ret;
 
-	ret = layer_list_init(&keyboard_dev, &keymap_init0);
+	ret = layer_list_init(keyboard_dev, &keymap_init0);
 
-	ret = layer_list_append_layer(&keyboard_dev->layer_list, &keymap_init1);
+	ret = layer_list_append_layer(keyboard_dev->layer_list, &keymap_init1);
 
-	ret = layer_list_append_layer(&keyboard_dev->layer_list, &keymap_init2);
+	ret = layer_list_append_layer(keyboard_dev->layer_list, &keymap_init2);
 
-
-
+//
+//
 	ret = layer_table_init(&keyboard_dev->layer_list);
-
-	TickType_t xLastWakeTime = xTaskGetTickCount();
-	const TickType_t xPeriod = 20;
-
-	GPIO_TypeDef* col_ports[] = {COL_PORT_0, COL_PORT_1, COL_PORT_2};
-	uint16_t col_pins[] = {COL_PIN_0, COL_PIN_1, COL_PIN_2};
-
-	keyboard_init(&keyboard_dev, &col_ports, &col_pins);
-
-
-	//macros
-	macro_init(&keyboard_dev);
-
-	macro_entry_t test_macro = {
-			.key_code = 0x24,
-			.keypress_string = "pew pew this is a macro and it can use all DA SYMBOLZZZ !@#$%^*()_+",
-	};
-
-	macro_table_add_entry(keyboard_dev->macro_table, &test_macro);
+//
+//	TickType_t xLastWakeTime = xTaskGetTickCount();
+//	const TickType_t xPeriod = 20;
+//
+//	GPIO_TypeDef* col_ports[] = {COL_PORT_0, COL_PORT_1, COL_PORT_2};
+//	uint16_t col_pins[] = {COL_PIN_0, COL_PIN_1, COL_PIN_2};
+//
+//	keyboard_init(&keyboard_dev, &col_ports, &col_pins);
+//
+//
+//	//macros
+//	macro_init(&keyboard_dev);
+//
+//	macro_entry_t test_macro = {
+//			.key_code = 0x24,
+//			.keypress_string = "pew pew this is a macro and it can use all DA SYMBOLZZZ !@#$%^*()_+",
+//	};
+//
+//	macro_table_add_entry(keyboard_dev->macro_table, &test_macro);
 
   /* Infinite loop */
   for(;;)
   {
-	vTaskDelayUntil(&xLastWakeTime, xPeriod);
+//	vTaskDelayUntil(&xLastWakeTime, xPeriod);
 
 //	if(scan_key_matrix(keyboard_dev->keyboard_HID, &shift_array) == key_ok)
 //		process_key_buf(keyboard_dev->keyboard_HID, keyboard_dev->layer_list);

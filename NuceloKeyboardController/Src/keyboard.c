@@ -12,7 +12,6 @@
 #include "states.h"
 #include "ssd1306.h"
 
-
 key_err_t keyboard_init(key_devices_t* keyboard_devices,
 		GPIO_TypeDef* row_ports[KEYBOARD_ROWS], uint16_t row_pins[KEYBOARD_ROWS])
 //keyboard_HID_data* HID_reports)

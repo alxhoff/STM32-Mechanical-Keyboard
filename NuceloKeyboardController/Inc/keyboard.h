@@ -14,8 +14,6 @@
 #include "states.h"
 #include "keyboard_config.h"
 
-typedef struct key_devices key_devices_t;
-
 typedef struct keyboardHID{
       uint8_t id;
       uint8_t modifiers;

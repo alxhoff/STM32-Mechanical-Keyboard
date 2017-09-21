@@ -46,8 +46,10 @@ struct key_devices{
 	shift_array_t* shift_array;
 
 	//LCD
+
+	uint8_t initialized;
 };
 
-key_err_t keyboard_devices_init(key_devices_t* key_devs);
+int8_t keyboard_devices_init(key_devices_t** key_devs);
 
 #endif /* DATATYPES_H_ */
