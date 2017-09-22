@@ -42,8 +42,6 @@ const layer_init keymap_init2 =
 
 //TODO whichspace names
 keymap_err_t layer_list_init(key_devices_t* keyboard_devices,
-		//keymap_list_t* layer_list,
-//		uint8_t* grid[KEYBOARD_ROWS][KEYBOARD_COLS], char* layer_name)
 		layer_init* initial_layer_to_add )
 {
 
@@ -72,10 +70,15 @@ keymap_err_t layer_list_init(key_devices_t* keyboard_devices,
 	memcpy(&layer->grid, &initial_layer_to_add->grid, KEYBOARD_ROWS * KEYBOARD_COLS);
 	//########################
 
+	//set new layer as current layer
+	keyboard_devices->layer_list->current_layer = 0;
+
 	//set new layer as head node
 	keyboard_devices->layer_list->layer_head = (keymap_layer_t*) layer;
 	layer->next = keyboard_devices->layer_list->layer_head;
 	layer->prev = keyboard_devices->layer_list->layer_head;
+
+
 
 	return km_ok;
 }
@@ -206,7 +209,8 @@ keymap_layer_t* layer_table_get_layer_w_ID( keymap_list_t* layer_list, uint8_t I
 	layer_table_entry_t* head = layer_list->table->layer_head;
 
 	while(head->ID != ID){
-		if(head->next == layer_list->table->layer_head){
+		//TODO CHECK IF THIS IS ONLY NULL
+		if(head->next == layer_list->table->layer_head || head->next == NULL){
 			return NULL;
 		}
 		head = head->next;
@@ -217,9 +221,6 @@ keymap_layer_t* layer_table_get_layer_w_ID( keymap_list_t* layer_list, uint8_t I
 
 keymap_layer_t* layer_table_get_current_layer ( keymap_list_t* layer_list )
 {
-	//get layer from layer table with current layer ID
-//	keymap_layer_t* return_layer = layer_table_get_layer_w_ID(layer_list, layer_list->current_layer);
-//	return return_layer;
 	return layer_table_get_layer_w_ID(layer_list, layer_list->current_layer);
 }
 
