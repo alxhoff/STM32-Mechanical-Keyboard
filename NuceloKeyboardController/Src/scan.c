@@ -23,6 +23,7 @@ key_err_t scan_key_matrix(keyboard_device_t* keyboard_dev, keyboard_HID_data_t* 
 	HID_reports->key_buf.index = 0;
 
 	uint8_t row_mask = 0x00;
+
 	shift_array->set_byte(shift_array, 0, row_mask);
 	shift_array->output(shift_array, 1);
 

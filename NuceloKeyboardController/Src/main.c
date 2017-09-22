@@ -611,15 +611,14 @@ void KeyboardListenCallback(void const * argument)
 
 	shift_init(keyboard_devs, &shift_array);
 
-	keymap_err_t ret;
 
-	ret = layer_list_init(keyboard_devs, &keymap_init0);
+	layer_list_init(keyboard_devs, &keymap_init0);
 
-	ret = layer_list_append_layer(keyboard_devs->layer_list, &keymap_init1);
+	layer_list_append_layer(keyboard_devs->layer_list, &keymap_init1);
 
-	ret = layer_list_append_layer(keyboard_devs->layer_list, &keymap_init2);
+	layer_list_append_layer(keyboard_devs->layer_list, &keymap_init2);
 
-	ret = layer_table_init(keyboard_devs->layer_list);
+	layer_table_init(keyboard_devs->layer_list);
 
 	macro_init(keyboard_devs);
 
@@ -635,7 +634,7 @@ void KeyboardListenCallback(void const * argument)
   {
 	vTaskDelayUntil(&xLastWakeTime, xPeriod);
 
-	if(scan_key_matrix(keyboard_devs->keyboard, keyboard_devs->keyboard_HID, &shift_array) == key_ok)
+	if(scan_key_matrix(keyboard_devs->keyboard, keyboard_devs->keyboard_HID, keyboard_devs->shift_array) == key_ok)
 		process_key_buf(keyboard_devs->keyboard_HID, keyboard_devs->layer_list);
 
 	clear_keyboard_report(keyboard_devs->keyboard_HID);

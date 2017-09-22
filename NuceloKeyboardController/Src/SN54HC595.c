@@ -5,6 +5,8 @@
  *      Author: alxhoff
  */
 
+#include <stdlib.h>
+
 #include "stm32f4xx_hal.h"
 #include "SN54HC595.h"
 
@@ -264,9 +266,7 @@ void SN54HC595_init_obj(shift_array_t* self)
 
 	reset_latch_self(self);
 
-	uint8_t* data = (uint8_t*)malloc(sizeof(uint8_t)* self->dev_count);
-
-	self->out_buf = data;
+	self->out_buf = (uint8_t*)calloc(1, sizeof(uint8_t)* self->dev_count);
 
 	self->out_buf[0] = 0xFF;
 
