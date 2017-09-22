@@ -57,9 +57,11 @@
 //layers & init
 #include "keymap.h"
 #include "macro.h"
+#include "scan.h"
 
 //hardware devices
 #include "shift.h"
+#include "keyboard.h"
 //#include "mouse.h"
 
 //LCD
@@ -90,7 +92,7 @@ SemaphoreHandle_t USB_send_lock = NULL;
 
 //AT24Cxx_devices eeprom_devs;
 
-key_devices_t* keyboard_dev;
+key_devices_t* keyboard_devs;
 
 keyboard_states current_keyboard_state;
 /* USER CODE END PV */
@@ -145,9 +147,9 @@ int main(void)
   MX_USART3_UART_Init();
   MX_ETH_Init();
   MX_I2C2_Init();
-  //MX_ADC1_Init();
+  MX_ADC1_Init();
   MX_I2C1_Init();
-  //MX_ADC2_Init();
+  MX_ADC2_Init();
 
   /* USER CODE BEGIN 2 */
 	ssd1306_Init();
@@ -587,12 +589,12 @@ void KeyboardListenCallback(void const * argument)
 
 	USB_send_lock = xSemaphoreCreateMutex();
 
-	keyboard_devices_init(&keyboard_dev);
+	keyboard_devices_init(&keyboard_devs);
 
 	GPIO_TypeDef* col_ports[] = {COL_PORT_0, COL_PORT_1, COL_PORT_2};
 	uint16_t col_pins[] = {COL_PIN_0, COL_PIN_1, COL_PIN_2};
 
-	keyboard_init(keyboard_dev, col_ports, col_pins);
+	keyboard_init(keyboard_devs, col_ports, col_pins);
 
 	shift_array_t shift_array = {
 		 .dev_count				= 1,
@@ -607,37 +609,37 @@ void KeyboardListenCallback(void const * argument)
 		 .latch_clock_init		= 1
 	 };
 
-	shift_init(keyboard_dev, &shift_array);
+	shift_init(keyboard_devs, &shift_array);
 
 	keymap_err_t ret;
 
-	ret = layer_list_init(keyboard_dev, &keymap_init0);
+	ret = layer_list_init(keyboard_devs, &keymap_init0);
 
-	ret = layer_list_append_layer(keyboard_dev->layer_list, &keymap_init1);
+	ret = layer_list_append_layer(keyboard_devs->layer_list, &keymap_init1);
 
-	ret = layer_list_append_layer(keyboard_dev->layer_list, &keymap_init2);
+	ret = layer_list_append_layer(keyboard_devs->layer_list, &keymap_init2);
 
-	ret = layer_table_init(keyboard_dev->layer_list);
+	ret = layer_table_init(keyboard_devs->layer_list);
 
-	macro_init(keyboard_dev);
+	macro_init(keyboard_devs);
 
 	macro_entry_t test_macro = {
 			.key_code = 0x24,
 			.keypress_string = "pew pew this is a macro and it can use all DA SYMBOLZZZ !@#$%^*()_+",
 	};
 
-	macro_table_add_entry(keyboard_dev->macro_table, &test_macro);
+	macro_table_add_entry(keyboard_devs->macro_table, &test_macro);
 
   /* Infinite loop */
   for(;;)
   {
 	vTaskDelayUntil(&xLastWakeTime, xPeriod);
 
-	if(scan_key_matrix(keyboard_dev->keyboard_HID, &shift_array) == key_ok)
-		process_key_buf(keyboard_dev->keyboard_HID, keyboard_dev->layer_list);
-//
-//	clear_keyboard_report(keyboard_dev->keyboard_HID);
-//	process_keyboard_flags(keyboard_dev->keyboard_HID);
+	if(scan_key_matrix(keyboard_devs->keyboard, keyboard_devs->keyboard_HID, &shift_array) == key_ok)
+		process_key_buf(keyboard_devs->keyboard_HID, keyboard_devs->layer_list);
+
+	clear_keyboard_report(keyboard_devs->keyboard_HID);
+	process_keyboard_flags(keyboard_devs->keyboard_HID);
   }
   /* USER CODE END KeyboardListenCallback */
 }

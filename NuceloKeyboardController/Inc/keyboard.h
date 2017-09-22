@@ -95,6 +95,8 @@ extern six_key_buffer approved_keys;
 
 key_err_t keyboard_init(key_devices_t* keyboard_devices,
 		GPIO_TypeDef* row_ports[KEYBOARD_ROWS], uint16_t row_pins[KEYBOARD_ROWS]);
-void clear_keyboard_report(  keyboard_HID_data_t* HID_reports);
+key_err_t process_key_buf(keyboard_HID_data_t* data, keymap_list_t* layer_list);
+key_err_t process_keyboard_flags ( keyboard_HID_data_t* data );
+void clear_keyboard_report(  keyboard_HID_data_t* data );
 
 #endif /* KEYBOARD_H_ */

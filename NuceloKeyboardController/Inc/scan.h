@@ -10,7 +10,13 @@
 
 #define DEBOUNCE_DELAY 20
 
-//key_code scan_get_single_key( keymap_list_t* layer_list );
-//char* scan_get_input_seq( keymap_list_t* list );
+#include "error.h"
+#include "keyboard.h"
+#include "types.h"
+
+key_err_t scan_key_matrix(keyboard_device_t* keyboard_dev,
+		keyboard_HID_data_t* HID_reports, shift_array_t* shift_array);
+key_code scan_get_single_key( keyboard_device_t* keyboard_dev, keymap_list_t* layer_list );
+
 
 #endif /* SCAN_H_ */
