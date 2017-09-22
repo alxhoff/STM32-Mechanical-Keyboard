@@ -145,16 +145,59 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
-  MX_GPIO_Init();
-  MX_USART3_UART_Init();
-  MX_ETH_Init();
-  MX_I2C2_Init();
-  MX_ADC1_Init();
-  MX_I2C1_Init();
-  MX_ADC2_Init();
+	MX_GPIO_Init();
+	MX_USART3_UART_Init();
+	MX_ETH_Init();
+	MX_I2C2_Init();
+	MX_ADC1_Init();
+	MX_I2C1_Init();
+	MX_ADC2_Init();
 
   /* USER CODE BEGIN 2 */
-	ssd1306_Init();
+
+	keyboard_devices_init(&keyboard_devs);
+
+	GPIO_TypeDef* col_ports[] = {COL_PORT_0, COL_PORT_1, COL_PORT_2};
+	uint16_t col_pins[] = {COL_PIN_0, COL_PIN_1, COL_PIN_2};
+
+	keyboard_init(keyboard_devs, col_ports, col_pins);
+
+	//TODO STANDARDIZE DEVICE INIT
+	shift_array_t shift_array = {
+		 .dev_count				= 1,
+		 .ser_in_pin 			= GPIO_PIN_15,	//GPIO PINS FOR SHIFT ARRAY
+		 .ser_in_port 			= GPIOB,
+		 .ser_in_clock_init 	= 1,
+		 .ser_clk_pin 			= GPIO_PIN_15,
+		 .ser_clk_port 			= GPIOA,
+		 .ser_clk_clock_init 	= 1,
+		 .latch_pin 			= GPIO_PIN_12,
+		 .latch_port 			= GPIOB,
+		 .latch_clock_init		= 1
+	 };
+
+	shift_init(keyboard_devs, &shift_array);
+
+
+	layer_list_init(keyboard_devs, &keymap_init0);
+
+	layer_list_append_layer(keyboard_devs->layer_list, &keymap_init1);
+
+	layer_list_append_layer(keyboard_devs->layer_list, &keymap_init2);
+
+	layer_table_init(keyboard_devs->layer_list);
+
+	macro_init(keyboard_devs);
+
+	macro_entry_t test_macro = {
+			.key_code = 0x24,
+			.keypress_string = "pew pew this is a macro and it can use all DA SYMBOLZZZ !@#$%^*()_+",
+	};
+
+	macro_table_add_entry(keyboard_devs->macro_table, &test_macro);
+
+	keyboard_devs->LCD = ssd1306_init
+
 	HAL_Delay(100);
 	ssd1306_Fill(White);
 	ssd1306_SetCursor(23,23);
@@ -582,7 +625,7 @@ void CLIListenCallback(void const * argument)
 	for(;;){
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);
 
-		screen_render_two_line(&CLI_screen);
+//		screen_render_two_line(&CLI_screen);
 	}
 }
 
@@ -612,46 +655,6 @@ void KeyboardListenCallback(void const * argument)
 	const TickType_t xPeriod = 20;
 
 	USB_send_lock = xSemaphoreCreateMutex();
-
-	keyboard_devices_init(&keyboard_devs);
-
-	GPIO_TypeDef* col_ports[] = {COL_PORT_0, COL_PORT_1, COL_PORT_2};
-	uint16_t col_pins[] = {COL_PIN_0, COL_PIN_1, COL_PIN_2};
-
-	keyboard_init(keyboard_devs, col_ports, col_pins);
-
-	shift_array_t shift_array = {
-		 .dev_count				= 1,
-		 .ser_in_pin 			= GPIO_PIN_15,	//GPIO PINS FOR SHIFT ARRAY
-		 .ser_in_port 			= GPIOB,
-		 .ser_in_clock_init 	= 1,
-		 .ser_clk_pin 			= GPIO_PIN_15,
-		 .ser_clk_port 			= GPIOA,
-		 .ser_clk_clock_init 	= 1,
-		 .latch_pin 			= GPIO_PIN_12,
-		 .latch_port 			= GPIOB,
-		 .latch_clock_init		= 1
-	 };
-
-	shift_init(keyboard_devs, &shift_array);
-
-
-	layer_list_init(keyboard_devs, &keymap_init0);
-
-	layer_list_append_layer(keyboard_devs->layer_list, &keymap_init1);
-
-	layer_list_append_layer(keyboard_devs->layer_list, &keymap_init2);
-
-	layer_table_init(keyboard_devs->layer_list);
-
-	macro_init(keyboard_devs);
-
-	macro_entry_t test_macro = {
-			.key_code = 0x24,
-			.keypress_string = "pew pew this is a macro and it can use all DA SYMBOLZZZ !@#$%^*()_+",
-	};
-
-	macro_table_add_entry(keyboard_devs->macro_table, &test_macro);
 
   /* Infinite loop */
   for(;;)

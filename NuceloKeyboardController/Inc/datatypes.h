@@ -46,6 +46,7 @@ struct key_devices{
 	shift_array_t* shift_array;
 
 	//LCD
+	SSD1306_device_t* LCD;
 
 	uint8_t initialized;
 };

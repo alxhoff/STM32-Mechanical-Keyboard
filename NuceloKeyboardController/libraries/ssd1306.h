@@ -17,48 +17,52 @@
 #ifndef ssd1306
 #define ssd1306
 
-// i2c port naam in main programma gegenereerd door cube
-#define SSD1306_I2C_PORT		hi2c1
-// I2C address 
 #define SSD1306_I2C_ADDR        0x78
-// SSD1306 width in pixels
+
+//DEFAULTS
+#define SSD1306_I2C_PORT		hi2c1
 #define SSD1306_WIDTH           128
-// SSD1306 LCD height in pixels
 #define SSD1306_HEIGHT          64
+#define SSD1306_BACKGROUND		0
 
 
-//
-//	Enum voor de kleuren van het scherm Black en White
-//
 typedef enum {
 	Black = 0x00, /*!< Black color, no pixel */
 	White = 0x01  /*!< Pixel is set. Color depends on LCD */
-} SSD1306_COLOR;
+} SSD1306_colour_t;
 
-//
-//	Struct om wijzigingen bij te houden
-//
-typedef struct {
-	uint16_t CurrentX;
-	uint16_t CurrentY;
-	uint8_t Inverted;
-	uint8_t Initialized;
-} SSD1306_t;
+typedef struct SSD1306_device SSD1306_device_t;
+struct SSD1306_device{
+	uint16_t x;
+	uint16_t y;
 
-//	De i2c poort staat in de main
-extern I2C_HandleTypeDef SSD1306_I2C_PORT;
+	uint8_t inverted;
+	uint8_t initialized;
 
-//
-//	De functies definities van de functies die gebruikt kunnen worden
-//
-uint8_t ssd1306_Init(void);
-void ssd1306_Fill(SSD1306_COLOR color);
-void ssd1306_UpdateScreen(void);
-void ssd1306_DrawPixel(uint8_t x, uint8_t y, SSD1306_COLOR color);
-char ssd1306_WriteChar(char ch, FontDef Font, SSD1306_COLOR color);
-char ssd1306_WriteString(char* str, FontDef Font, SSD1306_COLOR color);
-void ssd1306_SetCursor(uint8_t x, uint8_t y);
+	SSD1306_colour_t background;
 
-static void ssd1306_WriteCommand(uint8_t command);
+	uint8_t width;
+	uint8_t height;
+
+	uint8_t buffer [SSD1306_WIDTH * SSD1306_HEIGHT / 8];
+
+	I2C_HandleTypeDef* port;
+
+	HAL_StatusTypeDef (*command)(SSD1306_device_t*, uint8_t);
+	HAL_StatusTypeDef (*clear)(SSD1306_device_t*);
+	HAL_StatusTypeDef (*update)(SSD1306_device_t*);
+	HAL_StatusTypeDef (*fill)(SSD1306_device_t*, SSD1306_colour_t);
+};
+
+SSD1306_device_t* ssd1306_init(I2C_HandleTypeDef* i2c_port, uint8_t width,
+		uint8_t height, SSD1306_colour_t background_colour);
+HAL_StatusTypeDef ssd1306_fill(SSD1306_device_t* self, SSD1306_colour_t color);
+HAL_StatusTypeDef ssd1306_update_screen(SSD1306_device_t* self);
+HAL_StatusTypeDef ssd1306_clear(SSD1306_device_t* self);
+HAL_StatusTypeDef ssd1306_write_command(SSD1306_device_t* self, uint8_t command);
+void ssd1306_draw_pixel(SSD1306_device_t* self, uint8_t x, uint8_t y, SSD1306_colour_t colour);
+char ssd1306_write_char(SSD1306_device_t* self, char ch, FontDef Font, SSD1306_colour_t color);
+char ssd1306_write_string(SSD1306_device_t* self, char* str, FontDef Font, SSD1306_colour_t color);
+void ssd1306_set_cursor(SSD1306_device_t* self, uint8_t x, uint8_t y);
 
 #endif
