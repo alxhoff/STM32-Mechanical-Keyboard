@@ -8,9 +8,11 @@
 #ifndef SHIFT_H_
 #define SHIFT_H_
 
-
 #include "SN54HC595.h"
 #include "datatypes.h"
+
+#define GET_SHIFT_DEVICE	\
+	keyboard_devs->shift_array
 
 shift_err_t shift_init(key_devices_t* keyboard_devices, shift_array_t* shift_dev);
 

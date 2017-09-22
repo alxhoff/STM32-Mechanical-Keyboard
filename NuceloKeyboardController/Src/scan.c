@@ -22,7 +22,7 @@ key_err_t scan_key_matrix(keyboard_device_t* keyboard_dev, keyboard_HID_data_t* 
 	//reset keypress buffer
 	HID_reports->key_buf.index = 0;
 
-	uint8_t row_mask = 0x00;
+	static uint8_t row_mask = 0x00;
 
 	shift_array->set_byte(shift_array, 0, row_mask);
 	shift_array->output(shift_array, 1);
@@ -57,19 +57,27 @@ key_err_t scan_key_matrix(keyboard_device_t* keyboard_dev, keyboard_HID_data_t* 
 key_code scan_get_single_key( keyboard_device_t* keyboard_dev, keymap_list_t* layer_list )
 {
 	key_code ret = 0;
+	static uint8_t row_mask = 0x00;
 	HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
+
 	//TODO FLASH STUFF
 	while(ret == 0){
 		for(uint8_t row=0;row<KEYBOARD_ROWS;row++){
 			//Set current column high so that rows can be read
-			HAL_GPIO_WritePin(keyboard_dev->row_ports[row],keyboard_dev->row_pins[row], GPIO_PIN_SET);
+//			HAL_GPIO_WritePin(keyboard_dev->row_ports[row],keyboard_dev->row_pins[row], GPIO_PIN_SET);
+			row_mask = (1<<(7-row));
+			GET_SHIFT_DEVICE->set_byte(GET_SHIFT_DEVICE, 0, row_mask);
+			GET_SHIFT_DEVICE->output(GET_SHIFT_DEVICE, 1);
+
 			for(uint8_t col=0;col<KEYBOARD_COLS;col++){
 				if(HAL_GPIO_ReadPin(keyboard_dev->col_ports[col], keyboard_dev->col_pins[col])){
 					ret = process_single_key( layer_list, col, row);
 					//display_int_on_screen(col, row);
 				}
 			}
-			HAL_GPIO_WritePin(keyboard_dev->row_ports[row],keyboard_dev->row_pins[row], GPIO_PIN_RESET);
+//			HAL_GPIO_WritePin(keyboard_dev->row_ports[row],keyboard_dev->row_pins[row], GPIO_PIN_RESET);
+			GET_SHIFT_DEVICE->set_byte(GET_SHIFT_DEVICE, 0, 0x00);
+			GET_SHIFT_DEVICE->output(GET_SHIFT_DEVICE, 1);
 			HAL_Delay(1);
 		}
 	}
