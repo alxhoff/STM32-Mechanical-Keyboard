@@ -125,16 +125,12 @@ keymap_err_t layer_list_append_layer( keymap_list_t* layer_list, layer_init* lay
 keymap_err_t layer_table_init ( keymap_list_t* layer_list )
 {
 	//create empty table
-	layer_table* table = (layer_table*) malloc(sizeof(layer_table));
-	if(table == NULL)
+	layer_list->table = (layer_table*)calloc(1, sizeof(layer_table));
+	if(layer_list->table == NULL)
 		return km_table_init_err;
 
 	//no table entries yet
-	table->layer_head = NULL;
-	table->entry_count = 0;
-
-	//assign table to table list
-	layer_list->table = table;
+	layer_list->table->entry_count = 0;
 
 	//loop through all layers in layer list and create entries
 	keymap_layer_t* layer_list_head = layer_list->layer_head;
@@ -143,7 +139,7 @@ keymap_err_t layer_table_init ( keymap_list_t* layer_list )
 	uint8_t done = 0;
 	while(!done){
 		//create layer table entry associating ID's to keycodes
-		layer_table_entry_t* new_entry = (layer_table_entry_t*) malloc(sizeof(layer_table_entry_t));
+		layer_table_entry_t* new_entry = (layer_table_entry_t*)calloc(1, sizeof(layer_table_entry_t));
 		if(new_entry == NULL)
 			return km_table_init_err;
 
@@ -151,12 +147,13 @@ keymap_err_t layer_table_init ( keymap_list_t* layer_list )
 		new_entry->key_code = layer_list_head->layer_modifier_key_code;
 		new_entry->layer = layer_list_head;
 		new_entry->grid = &layer_list_head->grid;
+		// how to access -> int lol = (*new_entry->grid)[1][1];
 		new_entry->next = NULL;
 
 		//if first entry, set head
-		if(table->entry_count == 0){
-			table->layer_head = new_entry;
-			table->entry_count++;
+		if(layer_list->table->entry_count == 0){
+			layer_list->table->layer_head = new_entry;
+			layer_list->table->entry_count++;
 		}
 		else
 			layer_table_append( layer_list, new_entry);

@@ -29,14 +29,4 @@
 #define COL_PORT_2			GPIOF
 #define COL_PIN_2			GPIO_PIN_9
 
-
-#define ROW_PORT_0			GPIOF
-#define ROW_PIN_0			ROW0_Pin
-#define ROW_PORT_1			GPIOF
-#define ROW_PIN_1			ROW1_Pin
-#define ROW_PORT_2			GPIOF
-#define ROW_PIN_2			ROW2_Pin
-#define ROW_PORT_3			GPIOF
-#define ROW_PIN_3			ROW3_Pin
-
 #endif /* KEYBOARD_CONFIG_H_ */

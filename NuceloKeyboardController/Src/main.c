@@ -582,9 +582,17 @@ void StartDefaultTask(void const * argument)
 void KeyboardListenCallback(void const * argument)
 {
   /* USER CODE BEGIN KeyboardListenCallback */
+	TickType_t xLastWakeTime = xTaskGetTickCount();
+	const TickType_t xPeriod = 20;
+
 	USB_send_lock = xSemaphoreCreateMutex();
 
 	keyboard_devices_init(&keyboard_dev);
+
+	GPIO_TypeDef* col_ports[] = {COL_PORT_0, COL_PORT_1, COL_PORT_2};
+	uint16_t col_pins[] = {COL_PIN_0, COL_PIN_1, COL_PIN_2};
+
+	keyboard_init(keyboard_dev, col_ports, col_pins);
 
 	shift_array_t shift_array = {
 		 .dev_count				= 1,
@@ -609,36 +617,24 @@ void KeyboardListenCallback(void const * argument)
 
 	ret = layer_list_append_layer(keyboard_dev->layer_list, &keymap_init2);
 
-//
-//
-	ret = layer_table_init(&keyboard_dev->layer_list);
-//
-//	TickType_t xLastWakeTime = xTaskGetTickCount();
-//	const TickType_t xPeriod = 20;
-//
-//	GPIO_TypeDef* col_ports[] = {COL_PORT_0, COL_PORT_1, COL_PORT_2};
-//	uint16_t col_pins[] = {COL_PIN_0, COL_PIN_1, COL_PIN_2};
-//
-//	keyboard_init(&keyboard_dev, &col_ports, &col_pins);
-//
-//
-//	//macros
-//	macro_init(&keyboard_dev);
-//
-//	macro_entry_t test_macro = {
-//			.key_code = 0x24,
-//			.keypress_string = "pew pew this is a macro and it can use all DA SYMBOLZZZ !@#$%^*()_+",
-//	};
-//
-//	macro_table_add_entry(keyboard_dev->macro_table, &test_macro);
+	ret = layer_table_init(keyboard_dev->layer_list);
+
+	macro_init(keyboard_dev);
+
+	macro_entry_t test_macro = {
+			.key_code = 0x24,
+			.keypress_string = "pew pew this is a macro and it can use all DA SYMBOLZZZ !@#$%^*()_+",
+	};
+
+	macro_table_add_entry(keyboard_dev->macro_table, &test_macro);
 
   /* Infinite loop */
   for(;;)
   {
-//	vTaskDelayUntil(&xLastWakeTime, xPeriod);
+	vTaskDelayUntil(&xLastWakeTime, xPeriod);
 
-//	if(scan_key_matrix(keyboard_dev->keyboard_HID, &shift_array) == key_ok)
-//		process_key_buf(keyboard_dev->keyboard_HID, keyboard_dev->layer_list);
+	if(scan_key_matrix(keyboard_dev->keyboard_HID, &shift_array) == key_ok)
+		process_key_buf(keyboard_dev->keyboard_HID, keyboard_dev->layer_list);
 //
 //	clear_keyboard_report(keyboard_dev->keyboard_HID);
 //	process_keyboard_flags(keyboard_dev->keyboard_HID);

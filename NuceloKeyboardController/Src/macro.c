@@ -63,12 +63,10 @@ states_err_t state_macro_run( keymap_list_t* layer_list )
 
 states_err_t macro_init( key_devices_t* key_devs )
 {
-	key_devs->macro_table = (macro_table_t*) malloc(sizeof(macro_table_t));
+	key_devs->macro_table = (macro_table_t*) calloc(1, sizeof(macro_table_t));
 	if(key_devs->macro_table == NULL)
 		return states_init_err;
 
-	key_devs->macro_table->count = 0;
-	key_devs->macro_table->head = NULL;
 	return states_init_ok;
 }
 

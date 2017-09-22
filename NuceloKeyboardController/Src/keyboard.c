@@ -13,7 +13,7 @@
 #include "ssd1306.h"
 
 key_err_t keyboard_init(key_devices_t* keyboard_devices,
-		GPIO_TypeDef* row_ports[KEYBOARD_ROWS], uint16_t row_pins[KEYBOARD_ROWS])
+		GPIO_TypeDef* col_ports[KEYBOARD_ROWS], uint16_t col_pins[KEYBOARD_ROWS])
 //keyboard_HID_data* HID_reports)
 {
 	//set up GPIO
@@ -29,15 +29,15 @@ key_err_t keyboard_init(key_devices_t* keyboard_devices,
 //			sizeof(uint8_t) * KEYBOARD_COLS);
 
 	keyboard_devices->keyboard =
-			(keyboard_device_t*)malloc(sizeof(keyboard_device_t));
+			(keyboard_device_t*)calloc(1, sizeof(keyboard_device_t));
 	if(keyboard_devices->keyboard == NULL)
 		return init_err;
 
-	memcpy(keyboard_devices->keyboard->row_ports, row_ports,
+	memcpy(keyboard_devices->keyboard->col_ports, col_ports,
 				sizeof(GPIO_TypeDef*) * KEYBOARD_ROWS);
 
-	memcpy(keyboard_devices->keyboard->row_pins, row_pins,
-				sizeof(uint8_t) * KEYBOARD_ROWS);
+	memcpy(keyboard_devices->keyboard->col_pins, col_pins,
+				sizeof(uint16_t) * KEYBOARD_ROWS);
 
 	GPIO_InitTypeDef GPIO_InitStruct;
 
@@ -52,19 +52,15 @@ key_err_t keyboard_init(key_devices_t* keyboard_devices,
 
 	//INIT ROWS - input
 	for(int i=0; i<KEYBOARD_ROWS; i++){
-		GPIO_InitStruct.Pin = row_pins[i];
+		GPIO_InitStruct.Pin = col_pins[i];
 		GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
 		GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-		HAL_GPIO_Init(row_ports[i], &GPIO_InitStruct);
+		HAL_GPIO_Init(col_ports[i], &GPIO_InitStruct);
 	}
-
-	keyboard_devices = (key_devices_t*) malloc(sizeof(key_devices_t));
-	if(keyboard_devices == NULL)
-		return init_err;
 
 	//HID DATA
 	keyboard_devices->keyboard_HID =
-			(keyboard_HID_data_t*)malloc(sizeof(keyboard_HID_data_t));
+			(keyboard_HID_data_t*)calloc(1, sizeof(keyboard_HID_data_t));
 	if(keyboard_devices->keyboard_HID == NULL)
 		return init_err;
 
