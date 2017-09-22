@@ -71,8 +71,6 @@ key_code scan_get_single_key( keyboard_device_t* keyboard_dev, keymap_list_t* la
 			HAL_GPIO_WritePin(keyboard_dev->row_ports[row],keyboard_dev->row_pins[row], GPIO_PIN_RESET);
 			HAL_Delay(1);
 		}
-
-
 	}
 	HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
 	vTaskDelay(100);
@@ -127,12 +125,12 @@ char* scan_get_input_seq( keyboard_device_t* keyboard_dev, keymap_list_t* list )
 								}
 								//modifier
 								if(input_char == 0xE1 || input_char == 0xE5){
-									shift_modifier |= (1 << input_char - 0xE0);
+									shift_modifier |= (1 << (input_char - 0xE0));
 								}else{
 									if((shift_modifier & (1<<1)) || (shift_modifier & (1<<5)))
-										lookup_str = lookup_char[input_char].modified;
+										lookup_str = lookup_char[(uint8_t)input_char].modified;
 									else
-										lookup_str = lookup_char[input_char].unmodified;
+										lookup_str = lookup_char[(uint8_t)input_char].unmodified;
 									strncpy(&input_str[str_size], lookup_str, strlen(lookup_str));
 									str_size+=strlen(lookup_str);
 								}

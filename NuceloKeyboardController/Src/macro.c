@@ -27,11 +27,11 @@ states_err_t state_exit_macro_set()
 
 states_err_t state_macro_set( keymap_list_t* layer_list )
 {
-	key_code macro_key = scan_get_single_key( keyboard_devs, layer_list );
+	key_code macro_key = scan_get_single_key( keyboard_devs->keyboard, layer_list );
 	//TODO LIGHTS
-	macro_entry_t* new_macro = macro_allocate_new_macro( layer_list );
+	macro_entry_t* new_macro = macro_allocate_new_macro( keyboard_devs->macro_table );
 	new_macro->key_code = macro_key; //GOOD
-	new_macro->keypress_string = scan_get_input_seq( layer_list );
+	new_macro->keypress_string = scan_get_input_seq( keyboard_devs->keyboard, layer_list );
 
 	state_exit_macro_set();
 	return states_ok;
@@ -53,10 +53,10 @@ states_err_t state_exit_macro_run()
 
 states_err_t state_macro_run( keymap_list_t* layer_list )
 {
-	key_code macro_key = scan_get_single_key( keyboard_devs, layer_list );
+	key_code macro_key = scan_get_single_key( keyboard_devs->keyboard, layer_list );
 	static macro_entry_t* cur_macro;
-	cur_macro = macro_table_get_w_key_code( layer_list, macro_key );
-	macro_execute_macro(layer_list,cur_macro);
+	cur_macro = macro_table_get_w_key_code( keyboard_devs->macro_table, macro_key );
+	macro_execute_macro( keyboard_devs->macro_table, cur_macro );
 	state_exit_macro_run();
 
 	return states_ok;
