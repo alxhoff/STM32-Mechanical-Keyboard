@@ -68,6 +68,8 @@ SSD1306_device_t* ssd1306_init(SSD1306_device_init_t* init_dev_vals)
 	init_dev->clear = &ssd1306_clear;
 	init_dev->update = &ssd1306_update_screen;
 	init_dev->fill = &ssd1306_fill;
+	init_dev->string = &ssd1306_write_string;
+	init_dev->cursor = &ssd1306_set_cursor;
 
 	init_dev->port = init_dev_vals->port;
 
@@ -75,6 +77,7 @@ SSD1306_device_t* ssd1306_init(SSD1306_device_init_t* init_dev_vals)
 	init_dev->height = init_dev_vals->height;
 
 	init_dev->background = init_dev_vals->background;
+	init_dev->font = init_dev_vals->font;
 
 	/* Init LCD */
 	ssd1306_write_command(init_dev, 0xAE); //display off
@@ -106,7 +109,7 @@ SSD1306_device_t* ssd1306_init(SSD1306_device_init_t* init_dev_vals)
 	ssd1306_write_command(init_dev, 0x14); //
 	ssd1306_write_command(init_dev, 0xAF); //--turn on SSD1306 panel
 	
-	ssd1306_fill(init_dev, Black);
+	ssd1306_fill(init_dev, init_dev->background);
 	
 	ssd1306_update_screen(init_dev);
 	
@@ -174,11 +177,16 @@ char ssd1306_write_char(SSD1306_device_t* self, char ch, FontDef Font, SSD1306_c
 }
 
 
-char ssd1306_write_string(SSD1306_device_t* self, char* str, FontDef Font, SSD1306_colour_t color)
+char ssd1306_write_string(SSD1306_device_t* self, char* str)
 {
+	SSD1306_colour_t colour = 0x00;
+	if(self->background == 0x00)
+		colour = 0x01;
+	else
+		colour = 0x00;
 	while (*str) 
 	{
-		if (ssd1306_write_char(self, *str, Font, color) != *str)
+		if (ssd1306_write_char(self, *str, *self->font, colour) != *str)
 		{
 			return *str;
 		}

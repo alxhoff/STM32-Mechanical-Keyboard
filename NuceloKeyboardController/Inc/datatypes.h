@@ -13,6 +13,10 @@
 #include "error.h"
 //#include "mouse.h"
 
+//MACROS
+//LCD
+
+
 typedef struct keyboard_device keyboard_device_t;
 typedef struct keyboard_HID_data keyboard_HID_data_t;
 typedef struct keymap_list keymap_list_t;

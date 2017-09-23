@@ -25,6 +25,11 @@
 #define SSD1306_HEIGHT          64
 #define SSD1306_BACKGROUND		0
 
+#define GET_LCD keyboard_devs->LCD
+#define LCD_CLEAR keyboard_devs->LCD->clear(keyboard_devs->LCD)
+#define LCD_SET_CURSOR(x,y) keyboard_devs->LCD->cursor(keyboard_devs->LCD, x, y)
+#define LCD_WRITE_STRING(input) keyboard_devs->LCD->string(keyboard_devs->LCD, input)
+#define LCD_UPDATE keyboard_devs->LCD->update(keyboard_devs->LCD)
 
 typedef enum {
 	Black = 0x00, /*!< Black color, no pixel */
@@ -41,6 +46,8 @@ struct SSD1306_device{
 
 	SSD1306_colour_t background;
 
+	FontDef* font;
+
 	uint8_t width;
 	uint8_t height;
 
@@ -52,10 +59,14 @@ struct SSD1306_device{
 	HAL_StatusTypeDef (*clear)(SSD1306_device_t*);
 	HAL_StatusTypeDef (*update)(SSD1306_device_t*);
 	HAL_StatusTypeDef (*fill)(SSD1306_device_t*, SSD1306_colour_t);
+	HAL_StatusTypeDef (*string)(SSD1306_device_t*, char*);
+	void (*cursor)(SSD1306_device_t*, uint8_t, uint8_t);
 };
 
 typedef struct SSD1306_device_init{
 	SSD1306_colour_t background;
+
+	FontDef* font;
 
 	uint8_t width;
 	uint8_t height;
@@ -70,7 +81,7 @@ HAL_StatusTypeDef ssd1306_clear(SSD1306_device_t* self);
 HAL_StatusTypeDef ssd1306_write_command(SSD1306_device_t* self, uint8_t command);
 void ssd1306_draw_pixel(SSD1306_device_t* self, uint8_t x, uint8_t y, SSD1306_colour_t colour);
 char ssd1306_write_char(SSD1306_device_t* self, char ch, FontDef Font, SSD1306_colour_t color);
-char ssd1306_write_string(SSD1306_device_t* self, char* str, FontDef Font, SSD1306_colour_t color);
+char ssd1306_write_string(SSD1306_device_t* self, char* str);
 void ssd1306_set_cursor(SSD1306_device_t* self, uint8_t x, uint8_t y);
 
 #endif

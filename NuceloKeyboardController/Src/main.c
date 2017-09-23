@@ -178,7 +178,6 @@ int main(void)
 
 	shift_init(keyboard_devs, &shift_array);
 
-
 	layer_list_init(keyboard_devs, &keymap_init0);
 
 	layer_list_append_layer(keyboard_devs->layer_list, &keymap_init1);
@@ -196,16 +195,22 @@ int main(void)
 
 	macro_table_add_entry(keyboard_devs->macro_table, &test_macro);
 
-	SSD1306_device_init_t ssd1306_init_dev = {
+	SSD1306_device_init_t LCD_init_dev = {
 			.background = White,
 			.width = 128,
 			.height = 64,
-			.port = &hi2c1
+			.port = &hi2c1,
+			.font = &Font_11x18,
 	};
 
-	keyboard_devs->LCD = ssd1306_init(&ssd1306_init_dev);
+	keyboard_devs->LCD = ssd1306_init(&LCD_init_dev);
 
 	HAL_Delay(100);
+
+	LCD_CLEAR;
+	LCD_SET_CURSOR(23,23);
+	LCD_WRITE_STRING("sup");
+	LCD_UPDATE;
 //	ssd1306_Fill(White);
 //	ssd1306_SetCursor(23,23);
 //	ssd1306_WriteString("sup",Font_11x18, Black);
