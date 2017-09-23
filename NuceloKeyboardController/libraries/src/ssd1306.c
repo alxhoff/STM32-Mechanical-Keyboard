@@ -1,3 +1,29 @@
+/**
+ * @author  Alexander Hoffman
+ * @email   alxhoff@gmail.com
+ * @website http://alexhoffman.info
+ * @license GNU GPL v3
+ * @brief
+ *
+@verbatim
+   ----------------------------------------------------------------------
+    Copyright (C) Alexander Hoffman, 2017
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+   ----------------------------------------------------------------------
+@endverbatim
+ */
 
 #include <stdlib.h>
 
@@ -54,11 +80,92 @@ HAL_StatusTypeDef ssd1306_update_screen(SSD1306_device_t* self)
 	return HAL_OK;
 }
 
+HAL_StatusTypeDef ssd1306_draw_pixel(SSD1306_device_t* self, uint8_t x, uint8_t y, SSD1306_colour_t colour)
+{
+	if (x >= self->width || y >= self->height)
+	{
+		return HAL_ERROR;
+	}
+
+	if (colour == White)
+	{
+		self->buffer[x + (y / 8) * self->width] |= 1 << (y % 8);
+	} 
+	else 
+	{
+		self->buffer[x + (y / 8) * self->width] &= ~(1 << (y % 8));
+	}
+
+	return HAL_OK;
+}
+
+HAL_StatusTypeDef ssd1306_write_char(SSD1306_device_t* self, char ch, FontDef Font, SSD1306_colour_t color)
+{
+	uint32_t i, b, j;
+	
+	if (self->width <= (self->x + Font.FontWidth) ||
+		self->height <= (self->y + Font.FontHeight))
+	{
+		return 0;
+	}
+	
+	for (i = 0; i < Font.FontHeight; i++)
+	{
+		b = Font.data[(ch - 32) * Font.FontHeight + i];
+		for (j = 0; j < Font.FontWidth; j++)
+		{
+			if ((b << j) & 0x8000) 
+			{
+				if(ssd1306_draw_pixel(self, self->x + j, (self->y + i),
+						(SSD1306_colour_t) color) != HAL_OK)
+					return HAL_ERROR;
+			} 
+			else 
+			{
+				if(ssd1306_draw_pixel(self, self->x + j, (self->y + i),
+						(SSD1306_colour_t)!color) != HAL_OK)
+					return HAL_ERROR;
+			}
+		}
+	}
+	
+	self->x += Font.FontWidth;
+	
+	return HAL_OK;
+}
+
+
+HAL_StatusTypeDef ssd1306_write_string(SSD1306_device_t* self, char* str)
+{
+	SSD1306_colour_t colour = 0x00;
+	if(self->background == 0x00)
+		colour = 0x01;
+	else
+		colour = 0x00;
+	while (*str) 
+	{
+		if (ssd1306_write_char(self, *str, *self->font, colour) != HAL_OK)
+		{
+			return HAL_ERROR;
+		}
+		
+		str++;
+	}
+	
+	return HAL_OK;
+}
+
+
+void ssd1306_set_cursor(SSD1306_device_t* self, uint8_t x, uint8_t y)
+{
+	self->x = x;
+	self->y = y;
+}
 
 SSD1306_device_t* ssd1306_init(SSD1306_device_init_t* init_dev_vals)
-{	
+{
 	HAL_Delay(100);
-	
+
 	SSD1306_device_t* init_dev = (SSD1306_device_t*)calloc(1, sizeof(SSD1306_device_t));
 
 	if(init_dev == NULL) return NULL;
@@ -81,7 +188,7 @@ SSD1306_device_t* ssd1306_init(SSD1306_device_init_t* init_dev_vals)
 
 	/* Init LCD */
 	ssd1306_write_command(init_dev, 0xAE); //display off
-	ssd1306_write_command(init_dev, 0x20); //Set Memory Addressing Mode
+	ssd1306_write_command(init_dev, 0x20); //memory addressing mode
 	ssd1306_write_command(init_dev, 0x10); //00,Horizontal Addressing Mode;01,Vertical Addressing Mode;10,Page Addressing Mode (RESET);11,Invalid
 	ssd1306_write_command(init_dev, 0xB0); //Set Page Start Address for Page Addressing Mode,0-7
 	ssd1306_write_command(init_dev, 0xC8); //Set COM Output Scan Direction
@@ -108,98 +215,15 @@ SSD1306_device_t* ssd1306_init(SSD1306_device_init_t* init_dev_vals)
 	ssd1306_write_command(init_dev, 0x8D); //--set DC-DC enable
 	ssd1306_write_command(init_dev, 0x14); //
 	ssd1306_write_command(init_dev, 0xAF); //--turn on SSD1306 panel
-	
+
 	ssd1306_fill(init_dev, init_dev->background);
-	
+
 	ssd1306_update_screen(init_dev);
-	
+
 	init_dev->x = 0;
 	init_dev->y = 0;
-	
+
 	init_dev->initialized = 1;
-	
+
 	return init_dev;
-}
-
-
-void ssd1306_draw_pixel(SSD1306_device_t* self, uint8_t x, uint8_t y, SSD1306_colour_t colour)
-{
-	if (x >= self->width || y >= self->height)
-	{
-		return;
-	}
-	
-	if (self->inverted)
-	{
-		colour = (SSD1306_colour_t)!colour;
-	}
-	
-	if (colour == White)
-	{
-		self->buffer[x + (y / 8) * SSD1306_WIDTH] |= 1 << (y % 8);
-	} 
-	else 
-	{
-		self->buffer[x + (y / 8) * SSD1306_WIDTH] &= ~(1 << (y % 8));
-	}
-}
-
-
-char ssd1306_write_char(SSD1306_device_t* self, char ch, FontDef Font, SSD1306_colour_t color)
-{
-	uint32_t i, b, j;
-	
-	if (self->width <= (self->x + Font.FontWidth) ||
-		self->height <= (self->y + Font.FontHeight))
-	{
-		return 0;
-	}
-	
-	for (i = 0; i < Font.FontHeight; i++)
-	{
-		b = Font.data[(ch - 32) * Font.FontHeight + i];
-		for (j = 0; j < Font.FontWidth; j++)
-		{
-			if ((b << j) & 0x8000) 
-			{
-				ssd1306_draw_pixel(self, self->x + j, (self->y + i), (SSD1306_colour_t) color);
-			} 
-			else 
-			{
-				ssd1306_draw_pixel(self, self->x + j, (self->y + i), (SSD1306_colour_t)!color);
-			}
-		}
-	}
-	
-	self->x += Font.FontWidth;
-	
-	return ch;
-}
-
-
-char ssd1306_write_string(SSD1306_device_t* self, char* str)
-{
-	SSD1306_colour_t colour = 0x00;
-	if(self->background == 0x00)
-		colour = 0x01;
-	else
-		colour = 0x00;
-	while (*str) 
-	{
-		if (ssd1306_write_char(self, *str, *self->font, colour) != *str)
-		{
-			return *str;
-		}
-		
-		str++;
-	}
-	
-	return *str;
-}
-
-
-void ssd1306_set_cursor(SSD1306_device_t* self, uint8_t x, uint8_t y)
-{
-	self->x = x;
-	self->y = y;
 }

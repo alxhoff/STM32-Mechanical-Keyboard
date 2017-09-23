@@ -1,18 +1,35 @@
+/**
+ * @author  Alexander Hoffman
+ * @email   alxhoff@gmail.com
+ * @website http://alexhoffman.info
+ * @license GNU GPL v3
+ * @brief   STM32 HAL library for LCD screens using the SSD1306 controller
+ *
+@verbatim
+   ----------------------------------------------------------------------
+    Copyright (C) Alexander Hoffman, 2017
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+   ----------------------------------------------------------------------
+@endverbatim
+ */
+
+//TODO MAKE BUFFER INTO POINTER SO #defines can be removed
+//TODO add functionality described in datasheet
 
 #include "stm32f4xx_hal.h"
 #include "fonts.h"
-
-//	Deze library is door Olivier Van den Eede 2016 geschreven en aangepast voor gebruik met
-//	Stm32 microcontrollers en maakt gebruik van de HAL-i2c library's.
-//
-//	Deze library is gemaakt om gebruik te kunnen maken van een ssd1306 gestuurd oled display.
-//	Voor het gebruik moeten zeker de onderstaande defines juist ingesteld worden.
-//	Zoals de gebruikte i2c poort en de groote van het scherm.
-//
-//	De library maakt gebruik van 2 files (fonts.c/h) Hierin staan 3 fonts beschreven.
-//	Deze fonts kunnen zo gebruikt worden: 	- Font_7x10
-//											- Font_11x18
-//											- Font_16x26
 
 #ifndef ssd1306
 #define ssd1306
@@ -41,7 +58,6 @@ struct SSD1306_device{
 	uint16_t x;
 	uint16_t y;
 
-	uint8_t inverted;
 	uint8_t initialized;
 
 	SSD1306_colour_t background;
@@ -79,9 +95,11 @@ HAL_StatusTypeDef ssd1306_fill(SSD1306_device_t* self, SSD1306_colour_t color);
 HAL_StatusTypeDef ssd1306_update_screen(SSD1306_device_t* self);
 HAL_StatusTypeDef ssd1306_clear(SSD1306_device_t* self);
 HAL_StatusTypeDef ssd1306_write_command(SSD1306_device_t* self, uint8_t command);
-void ssd1306_draw_pixel(SSD1306_device_t* self, uint8_t x, uint8_t y, SSD1306_colour_t colour);
-char ssd1306_write_char(SSD1306_device_t* self, char ch, FontDef Font, SSD1306_colour_t color);
-char ssd1306_write_string(SSD1306_device_t* self, char* str);
+HAL_StatusTypeDef ssd1306_draw_pixel(SSD1306_device_t* self,
+		uint8_t x, uint8_t y, SSD1306_colour_t colour);
+HAL_StatusTypeDef ssd1306_write_char(SSD1306_device_t* self,
+		char ch, FontDef Font, SSD1306_colour_t color);
+HAL_StatusTypeDef ssd1306_write_string(SSD1306_device_t* self, char* str);
 void ssd1306_set_cursor(SSD1306_device_t* self, uint8_t x, uint8_t y);
 
 #endif
