@@ -55,8 +55,7 @@ HAL_StatusTypeDef ssd1306_update_screen(SSD1306_device_t* self)
 }
 
 
-SSD1306_device_t* ssd1306_init(I2C_HandleTypeDef* i2c_port,
-		uint8_t width, uint8_t height, SSD1306_colour_t background_colour)
+SSD1306_device_t* ssd1306_init(SSD1306_device_init_t* init_dev_vals)
 {	
 	HAL_Delay(100);
 	
@@ -70,10 +69,12 @@ SSD1306_device_t* ssd1306_init(I2C_HandleTypeDef* i2c_port,
 	init_dev->update = &ssd1306_update_screen;
 	init_dev->fill = &ssd1306_fill;
 
-	init_dev->port = i2c_port;
+	init_dev->port = init_dev_vals->port;
 
-	init_dev->width = width;
-	init_dev->height = height;
+	init_dev->width = init_dev_vals->width;
+	init_dev->height = init_dev_vals->height;
+
+	init_dev->background = init_dev_vals->background;
 
 	/* Init LCD */
 	ssd1306_write_command(init_dev, 0xAE); //display off

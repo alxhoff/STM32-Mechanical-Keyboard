@@ -196,13 +196,20 @@ int main(void)
 
 	macro_table_add_entry(keyboard_devs->macro_table, &test_macro);
 
-	keyboard_devs->LCD = ssd1306_init
+	SSD1306_device_init_t ssd1306_init_dev = {
+			.background = White,
+			.width = 128,
+			.height = 64,
+			.port = &hi2c1
+	};
+
+	keyboard_devs->LCD = ssd1306_init(&ssd1306_init_dev);
 
 	HAL_Delay(100);
-	ssd1306_Fill(White);
-	ssd1306_SetCursor(23,23);
-	ssd1306_WriteString("sup",Font_11x18, Black);
-	ssd1306_UpdateScreen();
+//	ssd1306_Fill(White);
+//	ssd1306_SetCursor(23,23);
+//	ssd1306_WriteString("sup",Font_11x18, Black);
+//	ssd1306_UpdateScreen();
 
 	visInit();
 	//AT24Cxx_init(&eeprom_devs, 7);

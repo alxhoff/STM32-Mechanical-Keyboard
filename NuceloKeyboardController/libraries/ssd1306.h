@@ -54,8 +54,16 @@ struct SSD1306_device{
 	HAL_StatusTypeDef (*fill)(SSD1306_device_t*, SSD1306_colour_t);
 };
 
-SSD1306_device_t* ssd1306_init(I2C_HandleTypeDef* i2c_port, uint8_t width,
-		uint8_t height, SSD1306_colour_t background_colour);
+typedef struct SSD1306_device_init{
+	SSD1306_colour_t background;
+
+	uint8_t width;
+	uint8_t height;
+
+	I2C_HandleTypeDef* port;
+}SSD1306_device_init_t;
+
+SSD1306_device_t* ssd1306_init(SSD1306_device_init_t* init_dev_vals);
 HAL_StatusTypeDef ssd1306_fill(SSD1306_device_t* self, SSD1306_colour_t color);
 HAL_StatusTypeDef ssd1306_update_screen(SSD1306_device_t* self);
 HAL_StatusTypeDef ssd1306_clear(SSD1306_device_t* self);

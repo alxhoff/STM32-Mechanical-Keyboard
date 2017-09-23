@@ -20,6 +20,7 @@ typedef struct macro_table macro_table_t;
 typedef struct shift_array shift_array_t;
 typedef struct mouse_device mouse_device_t;
 typedef struct mouse_HID_data mouse_HID_data_t;
+typedef struct SSD1306_device SSD1306_device_t;
 
 typedef struct key_devices key_devices_t;
 
