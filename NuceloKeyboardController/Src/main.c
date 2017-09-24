@@ -221,12 +221,10 @@ int main(void)
 			.y_offset = 3,
 			.LCD_dev = keyboard_devs->LCD,
 			.font = keyboard_devs->LCD->font,
-			.message = "teststring"
+			.message = "123456789again123456789"
 	};
 
 	keyboard_devs->screen = screen_init(&CLI_test_init);
-
-	keyboard_devs->screen->update(keyboard_devs->screen);
 
 	visInit();
 	//AT24Cxx_init(&eeprom_devs, 7);
@@ -640,8 +638,7 @@ void CLIListenCallback(void const * argument)
 
 	for(;;){
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);
-
-//		screen_render_two_line(&CLI_screen);
+		keyboard_devs->screen->update(keyboard_devs->screen);
 	}
 }
 

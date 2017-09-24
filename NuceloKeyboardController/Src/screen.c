@@ -54,7 +54,7 @@ void ADC_display_values(signed long* x, signed long* y)
 
 screen_err_t screen_update(screen_t* screen)
 {
-	screen->LCD_dev->clear(screen->LCD_dev);
+	screen->LCD_dev->fill(screen->LCD_dev, screen->LCD_dev->background);
 
 	uint8_t x_position = screen->x_offset;
 	uint8_t y_position;
