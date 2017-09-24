@@ -60,6 +60,7 @@ HAL_StatusTypeDef ssd1306_draw_cursor(screen_t* self)
 	uint32_t i, b, j;
 
 	char ch = '_';
+//	self->LCD_dev->clear(self->LCD_dev);
 
 	//TODO cursor check
 	if (self->LCD_dev->width <= (self->LCD_dev->x + self->font->FontWidth)
@@ -67,6 +68,9 @@ HAL_StatusTypeDef ssd1306_draw_cursor(screen_t* self)
 	{
 		return HAL_ERROR;
 	}
+
+	//cursor position
+
 
 	if(self->cursor_on){
 		for (i = 0; i < self->font->FontHeight; i++)
@@ -76,16 +80,16 @@ HAL_StatusTypeDef ssd1306_draw_cursor(screen_t* self)
 			{
 				if ((b << j) & 0x8000)
 				{
-					if (ssd1306_draw_pixel(self,
-							((self->cursor_x * self->font->FontWidth) + j),
+					if (ssd1306_draw_pixel(self->LCD_dev,
+							((self->cursor_x * self->font->FontWidth + self->x_offset) + j),
 							((self->cursor_y * self->font->FontWidth) + i),
 							!self->LCD_dev->background) != HAL_OK)
 						return HAL_ERROR;
 				}
 				else
 				{
-					if (ssd1306_draw_pixel(self,
-							((self->cursor_x * self->font->FontWidth) + j),
+					if (ssd1306_draw_pixel(self->LCD_dev,
+							((self->cursor_x * self->font->FontWidth + self->x_offset) + j),
 							((self->cursor_y * self->font->FontWidth) + i),
 							self->LCD_dev->background) != HAL_OK)
 						return HAL_ERROR;
@@ -114,6 +118,7 @@ screen_err_t screen_update(screen_t* screen)
 
 		screen->LCD_dev->string(screen->LCD_dev, screen->buffers[i]);
 	}
+	ssd1306_draw_cursor(screen);
 
 	screen->LCD_dev->update(screen->LCD_dev);
 
