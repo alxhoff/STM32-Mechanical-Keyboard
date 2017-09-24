@@ -75,7 +75,6 @@ HAL_StatusTypeDef ssd1306_update_screen(SSD1306_device_t* self)
 			&self->buffer[self->width * i], self->width,100) != HAL_OK)
 			return HAL_ERROR;
 
-//		HAL_I2C_Mem_Write(&hi2c1,SSD1306_I2C_ADDR,0x40,1,&SSD1306_Buffer[SSD1306_WIDTH * i],SSD1306_WIDTH,100);
 	}
 	return HAL_OK;
 }

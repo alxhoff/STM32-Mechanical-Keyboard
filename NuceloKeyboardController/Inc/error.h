@@ -27,7 +27,7 @@ typedef enum{
 	km_table_init_err	= -3
 } keymap_err_t;
 
-typedef enum key_err_TypeDef{
+typedef enum {
 	key_ok = 0,
 	adc_err = -1,
 	process_err = -2,
@@ -43,5 +43,10 @@ typedef enum key_err_TypeDef{
 	key_macro_run = -12,
 	key_macro_set = -13
 } key_err_t;
+
+typedef enum {
+	screen_ok		= 0,
+	screen_init_err	= -1
+} screen_err_t;
 
 #endif /* ERROR_H_ */

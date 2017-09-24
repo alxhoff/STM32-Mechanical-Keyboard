@@ -8,29 +8,57 @@
 #ifndef SCREEN_H_
 #define SCREEN_H_
 
+#include "error.h"
 #include "fonts.h"
 #include "ssd1306.h"
 
-typedef struct screen screen_t;
+typedef struct screen_init{
+	uint8_t rows;
+	uint8_t cols;
 
+	uint8_t row_height;
+	uint8_t x_offset;
+	uint8_t y_offset;
+
+	char* message;
+
+	SSD1306_device_t* LCD_dev;
+
+	FontDef* font;
+} screen_init_t;
+
+typedef struct screen screen_t;
 struct screen{
-	char line1_buf[12];
-	char line2_buf[12];
-	char line3_buf[12];
+	char* line1_buf;
+	char* line2_buf;
+	char* line3_buf;
 
 	char* line1_long;
 	char* line2_long;
 	char* line3_long;
 
+	char** buffers;
+
 	uint8_t rows;
 	uint8_t cols;
+
+	uint8_t row_height;
+
+	uint8_t x_offset;
+	uint8_t y_offset;
 
 	uint8_t cursor_x;
 	uint8_t cursor_y;
 
 	FontDef* font;
+
+	SSD1306_device_t* LCD_dev;
+
+	screen_err_t (*update)(screen_t*);
 };
 
 void screen_render_two_line();
+void ADC_display_values(signed long* x, signed long* y);
+screen_t* screen_init(screen_init_t* init_values);
 
 #endif /* SCREEN_H_ */

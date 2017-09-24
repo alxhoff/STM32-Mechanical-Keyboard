@@ -62,7 +62,6 @@
 //hardware devices
 #include "shift.h"
 #include "keyboard.h"
-//#include "mouse.h"
 
 //LCD
 #include "ssd1306.h"
@@ -190,7 +189,8 @@ int main(void)
 
 	macro_entry_t test_macro = {
 			.key_code = 0x24,
-			.keypress_string = "pew pew this is a macro and it can use all DA SYMBOLZZZ !@#$%^*()_+",
+			.keypress_string = "pew pew this is a macro and it "
+					"can use all DA SYMBOLZZZ !@#$%^*()_+",
 	};
 
 	macro_table_add_entry(keyboard_devs->macro_table, &test_macro);
@@ -211,10 +211,22 @@ int main(void)
 	LCD_SET_CURSOR(23,23);
 	LCD_WRITE_STRING("sup");
 	LCD_UPDATE;
-//	ssd1306_Fill(White);
-//	ssd1306_SetCursor(23,23);
-//	ssd1306_WriteString("sup",Font_11x18, Black);
-//	ssd1306_UpdateScreen();
+
+	//CLI
+	screen_init_t CLI_test_init = {
+			.rows = 3,
+			.cols = 11,
+			.row_height = 20,
+			.x_offset = 3,
+			.y_offset = 3,
+			.LCD_dev = keyboard_devs->LCD,
+			.font = keyboard_devs->LCD->font,
+			.message = "teststring"
+	};
+
+	keyboard_devs->screen = screen_init(&CLI_test_init);
+
+	keyboard_devs->screen->update(keyboard_devs->screen);
 
 	visInit();
 	//AT24Cxx_init(&eeprom_devs, 7);
@@ -626,14 +638,6 @@ void CLIListenCallback(void const * argument)
 	TickType_t xLastWakeTime = xTaskGetTickCount();
 	const TickType_t xPeriod = 20;
 
-	screen_t CLI_screen = {
-			.line1_long = "hello thisisateststring",
-			.line2_long = "thisis the second line",
-			.line3_long = "thisis the third",
-			.cursor_x = 4,
-			.font = &Font_11x18
-	};
-
 	for(;;){
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);
 
@@ -673,7 +677,8 @@ void KeyboardListenCallback(void const * argument)
   {
 	vTaskDelayUntil(&xLastWakeTime, xPeriod);
 
-	if(scan_key_matrix(keyboard_devs->keyboard, keyboard_devs->keyboard_HID, keyboard_devs->shift_array) == key_ok)
+	if(scan_key_matrix(keyboard_devs->keyboard, keyboard_devs->keyboard_HID,
+			   keyboard_devs->shift_array) == 0)
 		process_key_buf(keyboard_devs->keyboard_HID, keyboard_devs->layer_list);
 
 	clear_keyboard_report(keyboard_devs->keyboard_HID);

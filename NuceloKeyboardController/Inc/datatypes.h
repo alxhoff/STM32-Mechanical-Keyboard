@@ -25,6 +25,7 @@ typedef struct shift_array shift_array_t;
 typedef struct mouse_device mouse_device_t;
 typedef struct mouse_HID_data mouse_HID_data_t;
 typedef struct SSD1306_device SSD1306_device_t;
+typedef struct screen screen_t;
 
 typedef struct key_devices key_devices_t;
 
@@ -52,6 +53,9 @@ struct key_devices{
 
 	//LCD
 	SSD1306_device_t* LCD;
+
+	//LCD contents
+	screen_t* screen;
 
 	uint8_t initialized;
 };
