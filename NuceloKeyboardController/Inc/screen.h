@@ -8,6 +8,9 @@
 #ifndef SCREEN_H_
 #define SCREEN_H_
 
+#include "FreeRTOS.h"
+#include "timers.h"
+
 #include "error.h"
 #include "fonts.h"
 #include "ssd1306.h"
@@ -19,6 +22,8 @@ typedef struct screen_init{
 	uint8_t row_height;
 	uint8_t x_offset;
 	uint8_t y_offset;
+
+	uint8_t cursor_period;
 
 	char* message;
 
@@ -49,6 +54,11 @@ struct screen{
 
 	uint8_t cursor_x;
 	uint8_t cursor_y;
+	uint8_t cursor_on;
+	TimerHandle_t cursor_timer;
+	uint8_t cursor_period;
+
+	void (*cursor_callback)(screen_t*);
 
 	FontDef* font;
 

@@ -76,6 +76,13 @@ screen_err_t screen_update(screen_t* screen)
 	return screen_ok;
 }
 
+//TODO can this be done without global?
+void screen_cursor_callback(screen_t* screen)
+{
+  screen->cursor_on = !screen->cursor_on;
+}
+
+
 screen_t* screen_init(screen_init_t* init_values)
 {
 	screen_t* init_dev = (screen_t*)calloc(1, sizeof(screen_t));
@@ -97,6 +104,8 @@ screen_t* screen_init(screen_init_t* init_values)
 
 	init_dev->cursor_x = 0;
 	init_dev->cursor_y = 0;
+	init_dev->cursor_on = 0;
+	init_dev->cursor_period = init_values->cursor_period;
 
 	//buffers
 	if(init_values->cols <= 0 || init_values->rows <= 0)
@@ -114,6 +123,16 @@ screen_t* screen_init(screen_init_t* init_values)
 	strcpy(init_dev->buffers[0], init_values->message);
 
 	init_dev->update = &screen_update;
+	init_dev->cursor_callback = &screen_cursor_callback;
+
+	//timer init
+	init_dev->cursor_timer = xTimerCreate(
+	    "Cursor Timer",
+	    pdMS_TO_TICKS(init_dev->cursor_on),
+	    1,
+	    (void*) 0,
+	    init_dev->cursor_callback(init_dev)
+	);
 
 	return init_dev;
 }

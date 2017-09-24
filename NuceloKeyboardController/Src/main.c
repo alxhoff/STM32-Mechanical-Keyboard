@@ -144,13 +144,13 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
-	MX_GPIO_Init();
-	MX_USART3_UART_Init();
-	MX_ETH_Init();
-	MX_I2C2_Init();
-	MX_ADC1_Init();
-	MX_I2C1_Init();
-	MX_ADC2_Init();
+  MX_GPIO_Init();
+  MX_USART3_UART_Init();
+  MX_ETH_Init();
+  MX_I2C2_Init();
+  MX_ADC1_Init();
+  MX_I2C1_Init();
+  MX_ADC2_Init();
 
   /* USER CODE BEGIN 2 */
 
@@ -221,7 +221,8 @@ int main(void)
 			.y_offset = 3,
 			.LCD_dev = keyboard_devs->LCD,
 			.font = keyboard_devs->LCD->font,
-			.message = "123456789again123456789"
+			.message = "123456789again123456789",
+			.cursor_period = 500,
 	};
 
 	keyboard_devs->screen = screen_init(&CLI_test_init);
@@ -628,9 +629,8 @@ void MouseListenCallback(void const * argument)
 //#endif
 //	vTaskDelay(xDelay);
   }
-  /* USER CODE END KeyboardListenCallback */
 }
-/* USER CODE END 4 */
+
 void CLIListenCallback(void const * argument)
 {
 	TickType_t xLastWakeTime = xTaskGetTickCount();
@@ -641,6 +641,7 @@ void CLIListenCallback(void const * argument)
 		keyboard_devs->screen->update(keyboard_devs->screen);
 	}
 }
+/* USER CODE END 4 */
 
 /* StartDefaultTask function */
 void StartDefaultTask(void const * argument)

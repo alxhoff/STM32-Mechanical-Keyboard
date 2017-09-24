@@ -113,6 +113,12 @@
 #define configUSE_CO_ROUTINES                    0
 #define configMAX_CO_ROUTINE_PRIORITIES          ( 2 )
 
+/* Software timer definitions. */
+#define configUSE_TIMERS                         1
+#define configTIMER_TASK_PRIORITY                ( 4 )
+#define configTIMER_QUEUE_LENGTH                 10
+#define configTIMER_TASK_STACK_DEPTH             256
+
 /* Set the following definitions to 1 to include the API function, or zero
 to exclude the API function. */
 #define INCLUDE_vTaskPrioritySet            1
@@ -165,7 +171,8 @@ standard names. */
 /* #define xPortSysTickHandler SysTick_Handler */
 
 /* USER CODE BEGIN Defines */   	      
-/* Section where parameter definitions can be added (for instance, to override default ones in FreeRTOS.h) */
+/* Section where parameter defintions can be added (for instance, to override default ones in FreeRTOS.h) */
+
 /* USER CODE END Defines */ 
 
 #endif /* FREERTOS_CONFIG_H */
