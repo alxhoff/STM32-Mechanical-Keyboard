@@ -15,7 +15,8 @@
 #include "fonts.h"
 #include "ssd1306.h"
 
-typedef struct screen_init{
+typedef struct screen_init
+{
 	uint8_t rows;
 	uint8_t cols;
 
@@ -23,7 +24,7 @@ typedef struct screen_init{
 	uint8_t x_offset;
 	uint8_t y_offset;
 
-	uint8_t cursor_period;
+	int cursor_period;
 
 	char* message;
 
@@ -33,7 +34,8 @@ typedef struct screen_init{
 } screen_init_t;
 
 typedef struct screen screen_t;
-struct screen{
+struct screen
+{
 	char* line1_buf;
 	char* line2_buf;
 	char* line3_buf;
@@ -56,15 +58,16 @@ struct screen{
 	uint8_t cursor_y;
 	uint8_t cursor_on;
 	TimerHandle_t cursor_timer;
-	uint8_t cursor_period;
+	int cursor_period;
 
-	void (*cursor_callback)(screen_t*);
+	void (*cursor_callback)(TimerHandle_t);
 
 	FontDef* font;
 
 	SSD1306_device_t* LCD_dev;
 
 	screen_err_t (*update)(screen_t*);
+	HAL_StatusTypeDef (*draw_cursor)(screen_t*);
 };
 
 void screen_render_two_line();

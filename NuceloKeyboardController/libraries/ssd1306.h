@@ -98,7 +98,7 @@ HAL_StatusTypeDef ssd1306_write_command(SSD1306_device_t* self, uint8_t command)
 HAL_StatusTypeDef ssd1306_draw_pixel(SSD1306_device_t* self,
 		uint8_t x, uint8_t y, SSD1306_colour_t colour);
 HAL_StatusTypeDef ssd1306_write_char(SSD1306_device_t* self,
-		char ch, FontDef Font, SSD1306_colour_t color);
+		char ch, SSD1306_colour_t color);
 HAL_StatusTypeDef ssd1306_write_string(SSD1306_device_t* self, char* str);
 void ssd1306_set_cursor(SSD1306_device_t* self, uint8_t x, uint8_t y);
 

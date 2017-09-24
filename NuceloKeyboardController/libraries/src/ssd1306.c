@@ -5,24 +5,24 @@
  * @license GNU GPL v3
  * @brief
  *
-@verbatim
-   ----------------------------------------------------------------------
-    Copyright (C) Alexander Hoffman, 2017
+ @verbatim
+ ----------------------------------------------------------------------
+ Copyright (C) Alexander Hoffman, 2017
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    any later version.
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-   ----------------------------------------------------------------------
-@endverbatim
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ----------------------------------------------------------------------
+ @endverbatim
  */
 
 #include <stdlib.h>
@@ -31,7 +31,8 @@
 
 HAL_StatusTypeDef ssd1306_write_command(SSD1306_device_t* self, uint8_t command)
 {
-	if(HAL_I2C_Mem_Write(self->port,SSD1306_I2C_ADDR,0x00,1,&command,1,10) != HAL_OK)
+	if (HAL_I2C_Mem_Write(self->port, SSD1306_I2C_ADDR, 0x00, 1, &command, 1,
+			10) != HAL_OK)
 		return HAL_ERROR;
 
 	return HAL_OK;
@@ -41,11 +42,12 @@ HAL_StatusTypeDef ssd1306_clear(SSD1306_device_t* self)
 {
 	uint32_t i;
 
-	for(i = 0; i < sizeof(self->buffer); i++)
+	for (i = 0; i < sizeof(self->buffer); i++)
 	{
 		self->buffer[i] = (self->background == Black) ? 0x00 : 0xFF;
 	}
-	if(ssd1306_update_screen(self) != HAL_OK) return HAL_ERROR;
+	if (ssd1306_update_screen(self) != HAL_OK)
+		return HAL_ERROR;
 
 	return HAL_OK;
 }
@@ -54,7 +56,7 @@ HAL_StatusTypeDef ssd1306_fill(SSD1306_device_t* self, SSD1306_colour_t color)
 {
 	uint32_t i;
 
-	for(i = 0; i < sizeof(self->buffer); i++)
+	for (i = 0; i < sizeof(self->buffer); i++)
 	{
 		self->buffer[i] = (color == Black) ? 0x00 : 0xFF;
 	}
@@ -66,20 +68,22 @@ HAL_StatusTypeDef ssd1306_update_screen(SSD1306_device_t* self)
 {
 	uint8_t i;
 
-	for (i = 0; i < 8; i++) {
+	for (i = 0; i < 8; i++)
+	{
 		ssd1306_write_command(self, 0xB0 + i);
 		ssd1306_write_command(self, 0x00);
 		ssd1306_write_command(self, 0x10);
 
-		if(HAL_I2C_Mem_Write(self->port,SSD1306_I2C_ADDR,0x40,1,
-			&self->buffer[self->width * i], self->width,100) != HAL_OK)
+		if (HAL_I2C_Mem_Write(self->port, SSD1306_I2C_ADDR, 0x40, 1,
+				&self->buffer[self->width * i], self->width, 100) != HAL_OK)
 			return HAL_ERROR;
 
 	}
 	return HAL_OK;
 }
 
-HAL_StatusTypeDef ssd1306_draw_pixel(SSD1306_device_t* self, uint8_t x, uint8_t y, SSD1306_colour_t colour)
+HAL_StatusTypeDef ssd1306_draw_pixel(SSD1306_device_t* self, uint8_t x,
+		uint8_t y, SSD1306_colour_t colour)
 {
 	if (x >= self->width || y >= self->height)
 	{
@@ -89,8 +93,8 @@ HAL_StatusTypeDef ssd1306_draw_pixel(SSD1306_device_t* self, uint8_t x, uint8_t 
 	if (colour == White)
 	{
 		self->buffer[x + (y / 8) * self->width] |= 1 << (y % 8);
-	} 
-	else 
+	}
+	else
 	{
 		self->buffer[x + (y / 8) * self->width] &= ~(1 << (y % 8));
 	}
@@ -98,62 +102,63 @@ HAL_StatusTypeDef ssd1306_draw_pixel(SSD1306_device_t* self, uint8_t x, uint8_t 
 	return HAL_OK;
 }
 
-HAL_StatusTypeDef ssd1306_write_char(SSD1306_device_t* self, char ch, FontDef Font, SSD1306_colour_t color)
+HAL_StatusTypeDef ssd1306_write_char(SSD1306_device_t* self, char ch,
+		SSD1306_colour_t color)
 {
 	uint32_t i, b, j;
-	
-	if (self->width <= (self->x + Font.FontWidth) ||
-		self->height <= (self->y + Font.FontHeight))
+
+	if (self->width <= (self->x + self->font->FontWidth)
+				|| self->height <= (self->y + self->font->FontHeight))
 	{
-		return 0;
+		return HAL_ERROR;
 	}
-	
-	for (i = 0; i < Font.FontHeight; i++)
+
+	for (i = 0; i < self->font->FontHeight; i++)
 	{
-		b = Font.data[(ch - 32) * Font.FontHeight + i];
-		for (j = 0; j < Font.FontWidth; j++)
+		b = self->font->data[(ch - 32) * self->font->FontHeight + i];
+		for (j = 0; j < self->font->FontWidth; j++)
 		{
-			if ((b << j) & 0x8000) 
+			if ((b << j) & 0x8000)
 			{
-				if(ssd1306_draw_pixel(self, self->x + j, (self->y + i),
+				if (ssd1306_draw_pixel(self, self->x + j, (self->y + i),
 						(SSD1306_colour_t) color) != HAL_OK)
 					return HAL_ERROR;
-			} 
-			else 
+			}
+			else
 			{
-				if(ssd1306_draw_pixel(self, self->x + j, (self->y + i),
-						(SSD1306_colour_t)!color) != HAL_OK)
+				if (ssd1306_draw_pixel(self, self->x + j, (self->y + i),
+						(SSD1306_colour_t) !color) != HAL_OK)
 					return HAL_ERROR;
 			}
 		}
 	}
-	
-	self->x += Font.FontWidth;
-	
+
+	self->x += self->font->FontWidth;
+
 	return HAL_OK;
 }
+
 
 
 HAL_StatusTypeDef ssd1306_write_string(SSD1306_device_t* self, char* str)
 {
 	SSD1306_colour_t colour = 0x00;
-	if(self->background == 0x00)
+	if (self->background == 0x00)
 		colour = 0x01;
 	else
 		colour = 0x00;
-	while (*str) 
+	while (*str)
 	{
-		if (ssd1306_write_char(self, *str, *self->font, colour) != HAL_OK)
+		if (ssd1306_write_char(self, *str, colour) != HAL_OK)
 		{
 			return HAL_ERROR;
 		}
-		
+
 		str++;
 	}
-	
+
 	return HAL_OK;
 }
-
 
 void ssd1306_set_cursor(SSD1306_device_t* self, uint8_t x, uint8_t y)
 {
@@ -165,9 +170,11 @@ SSD1306_device_t* ssd1306_init(SSD1306_device_init_t* init_dev_vals)
 {
 	HAL_Delay(100);
 
-	SSD1306_device_t* init_dev = (SSD1306_device_t*)calloc(1, sizeof(SSD1306_device_t));
+	SSD1306_device_t* init_dev = (SSD1306_device_t*) calloc(1,
+			sizeof(SSD1306_device_t));
 
-	if(init_dev == NULL) return NULL;
+	if (init_dev == NULL)
+		return NULL;
 
 	//functions
 	init_dev->command = &ssd1306_write_command;
