@@ -16,7 +16,7 @@
 /*
  * functions to be called to initiate a scan of the keyboard matrix
  */
-key_err_t scan_key_matrix(keyboard_device_t* keyboard_dev, keyboard_HID_data_t* HID_reports, shift_array_t* shift_array)
+int8_t scan_key_matrix(keyboard_device_t* keyboard_dev, keyboard_HID_data_t* HID_reports, shift_array_t* shift_array)
 {
 
 	//reset keypress buffer
@@ -46,9 +46,9 @@ key_err_t scan_key_matrix(keyboard_device_t* keyboard_dev, keyboard_HID_data_t* 
 	}
 
 	if(HID_reports->key_buf.index == 0)
-		return empty_buf;
+		return -EBUFF;
 
-	return key_ok;
+	return 0;
 }
 
 key_code scan_get_single_key( keyboard_device_t* keyboard_dev, keymap_list_t* layer_list )
@@ -78,7 +78,8 @@ key_code scan_get_single_key( keyboard_device_t* keyboard_dev, keymap_list_t* la
 	return ret;
 }
 
-char* scan_get_input_seq( keyboard_device_t* keyboard_dev, keymap_list_t* list )
+char* scan_get_input_seq( keyboard_device_t* keyboard_dev,
+		keymap_list_t* list, char exit_char )
 {
 	static char* input_str = "";
 	static char input_char = 0;
@@ -100,7 +101,6 @@ char* scan_get_input_seq( keyboard_device_t* keyboard_dev, keymap_list_t* list )
 	keymap_layer_t* current_layer = layer_table_get_current_layer(list);
 
 	while(!finished){
-		//FOR
 		for(uint8_t row=0;row<KEYBOARD_ROWS;row++){
 
 			row_mask = (1<<(7-row));
@@ -124,7 +124,8 @@ char* scan_get_input_seq( keyboard_device_t* keyboard_dev, keymap_list_t* list )
 							}
 							input_char = current_layer->grid[row][col];
 							if(input_char != 0){
-								if(input_char == KEY(MACRO_S)){
+//								}
+								if(input_char == exit_char){
 									finished = 1;
 									break;
 								}

@@ -14,5 +14,6 @@
 
 int8_t state_enter_CLI();
 int8_t state_CLI();
+int8_t CLI_process_key(char input);
 
 #endif /* CLI_H_ */

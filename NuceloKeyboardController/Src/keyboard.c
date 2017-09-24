@@ -14,19 +14,7 @@
 
 int8_t keyboard_init(key_devices_t* keyboard_devices,
 		GPIO_TypeDef* col_ports[KEYBOARD_ROWS], uint16_t col_pins[KEYBOARD_ROWS])
-//keyboard_HID_data* HID_reports)
 {
-	//set up GPIO
-//	GPIO_TypeDef* col_ports[] = {COL_PORT_0, COL_PORT_1, COL_PORT_2};
-//	uint16_t col_pins[] = {COL_PIN_0, COL_PIN_1, COL_PIN_2};
-//	GPIO_TypeDef* row_ports[] ={ROW_PORT_0, ROW_PORT_1, ROW_PORT_2, ROW_PORT_3};
-//	uint16_t row_pins[] = {ROW_PIN_0, ROW_PIN_1, ROW_PIN_2, ROW_PIN_3};
-
-//	memcpy(keyboard_devices->keyboard->col_ports, col_ports,
-//			sizeof(GPIO_TypeDef*) * KEYBOARD_COLS);
-//
-//	memcpy(keyboard_devices->keyboard->col_pins, col_pins,
-//			sizeof(uint8_t) * KEYBOARD_COLS);
 
 	keyboard_devices->keyboard =
 			(keyboard_device_t*)calloc(1, sizeof(keyboard_device_t));
@@ -40,15 +28,6 @@ int8_t keyboard_init(key_devices_t* keyboard_devices,
 				sizeof(uint16_t) * KEYBOARD_ROWS);
 
 	GPIO_InitTypeDef GPIO_InitStruct;
-
-	//INIT COLS - output
-//	for(int i=0; i<KEYBOARD_COLS; i++){
-//		GPIO_InitStruct.Pin = col_pins[i];
-//		GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-//		GPIO_InitStruct.Pull = GPIO_NOPULL;
-//		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-//		HAL_GPIO_Init(col_ports[i], &GPIO_InitStruct);
-//	}
 
 	//INIT ROWS - input
 	for(int i=0; i<KEYBOARD_ROWS; i++){
@@ -98,6 +77,7 @@ int8_t process_key_buf(keyboard_HID_data_t* data, keymap_list_t* layer_list)
 	data->shortlist_keys.count = 0;
 
 	//clear modifiers
+
 	data->out_buf.mod_buf = 0x00;
 
 	if(current_keyboard_state == layer_set) goto set_layer;

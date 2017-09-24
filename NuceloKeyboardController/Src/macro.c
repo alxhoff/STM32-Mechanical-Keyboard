@@ -33,7 +33,9 @@ int8_t state_macro_set( keymap_list_t* layer_list )
 	//TODO LIGHTS
 	macro_entry_t* new_macro = macro_allocate_new_macro( keyboard_devs->macro_table );
 	new_macro->key_code = macro_key; //GOOD
-	new_macro->keypress_string = scan_get_input_seq( keyboard_devs->keyboard, layer_list );
+	new_macro->keypress_string =
+			scan_get_input_seq( keyboard_devs->keyboard,
+					keyboard_devs->layer_list, KEY(MACRO_S) );
 
 	state_exit_macro_set();
 

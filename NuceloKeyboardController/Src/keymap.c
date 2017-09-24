@@ -5,13 +5,16 @@
  *      Author: alxhoff
  */
 
+#include <string.h>
+#include <stdlib.h>
+
 #include "keymap.h"
 
 const layer_init keymap_init0 =
 {
 		.grid =
 				KEYMAP(7, 8, 9, \
-					   4, 5, 6, \
+					   4, 5, ENTER, \
 					   CLI, RSHIFT, MACRO_R, \
 					   MACRO_S),
 	   .key = 0x66,
@@ -21,9 +24,9 @@ const layer_init keymap_init0 =
 const layer_init keymap_init1 =
 {
 		.grid =
-				KEYMAP(a, b, c, \
-					   f, e, d, \
-					   g, h, i, \
+				KEYMAP(A, B, C, \
+					   F, E, D, \
+					   G, H, I, \
 					   LAYER),
 		.key = HID_KEYBOARD_SC_RIGHT_CONTROL,
 		.name = "Second_layer"
@@ -32,9 +35,9 @@ const layer_init keymap_init1 =
 const layer_init keymap_init2 =
 {
 		.grid =
-				KEYMAP(j, k, k, \
-					   m, n, o, \
-					   o, q, r, \
+				KEYMAP(J, K, L, \
+					   M, N, O, \
+					   O, Q, R, \
 					   LAYER),
 		.key = HID_KEYBOARD_SC_LEFT_GUI,
 		.name = "Third_layer"
@@ -238,7 +241,7 @@ keymap_err_t layer_list_rem_last ( keymap_list_t* layer_list )
 	layer_list->layer_head->prev = (keymap_layer_t*) end->prev;
 
 	//set second last's next to head
-	keymap_layer_t* second_last =(keymap_layer_t*)  end->prev;
+	keymap_layer_t* second_last =(keymap_layer_t*) end->prev;
 	second_last = layer_list->layer_head;
 
 	//free old struct
