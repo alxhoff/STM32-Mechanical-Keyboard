@@ -113,7 +113,7 @@ screen_t* screen_init(screen_init_t* init_values)
 
 	strcpy(init_dev->buffers[0], init_values->message);
 
-	init_dev->update = & screen_update;
+	init_dev->update = &screen_update;
 
 	return init_dev;
 }
