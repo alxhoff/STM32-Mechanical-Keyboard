@@ -55,7 +55,6 @@ key_code scan_get_single_key( keyboard_device_t* keyboard_dev, keymap_list_t* la
 {
 	key_code ret = 0;
 	static uint8_t row_mask = 0x00;
-	HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
 
 	//TODO FLASH STUFF
 	while(ret == 0){
@@ -75,7 +74,6 @@ key_code scan_get_single_key( keyboard_device_t* keyboard_dev, keymap_list_t* la
 			GET_SHIFT_DEVICE->output(GET_SHIFT_DEVICE, 1);
 		}
 	}
-	HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
 	vTaskDelay(100);
 	return ret;
 }

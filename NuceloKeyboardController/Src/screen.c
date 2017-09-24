@@ -60,7 +60,6 @@ HAL_StatusTypeDef ssd1306_draw_cursor(screen_t* self)
 	uint32_t i, b, j;
 
 	char ch = '_';
-//	self->LCD_dev->clear(self->LCD_dev);
 
 	//TODO cursor check
 	if (self->LCD_dev->width <= (self->LCD_dev->x + self->font->FontWidth)
@@ -70,6 +69,7 @@ HAL_StatusTypeDef ssd1306_draw_cursor(screen_t* self)
 	}
 
 	//cursor position
+	self->cursor_x = 3;
 	uint8_t cursor_x = self->x_offset + self->font->FontWidth * self->cursor_x;
 	uint8_t cursor_y =
 			self->LCD_dev->height - (self->y_offset + self->font->FontHeight);

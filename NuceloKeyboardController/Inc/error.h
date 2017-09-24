@@ -31,7 +31,7 @@ typedef enum {
 	key_ok = 0,
 	adc_err = -1,
 	process_err = -2,
-	init_err = -3,
+	key_init_err = -3,
 	send_err = -4,
 	empty_buf = -5,
 	no_flags = -6,
@@ -48,5 +48,11 @@ typedef enum {
 	screen_ok		= 0,
 	screen_init_err	= -1
 } screen_err_t;
+
+typedef enum {
+	ENOMEM 			= 1,
+	EUSB			= 2,
+	EBUFF			= 3,
+} err_codes_t;
 
 #endif /* ERROR_H_ */

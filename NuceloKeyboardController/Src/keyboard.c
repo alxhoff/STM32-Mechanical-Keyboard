@@ -5,14 +5,14 @@
  *      Author: alxhoff
  */
 
-#include "keyboard.h"
 #include "extern.h"
+#include "macro.h"
+#include "CLI.h"
 #include "layers.h"
 #include "types.h"
-#include "states.h"
 #include "ssd1306.h"
 
-key_err_t keyboard_init(key_devices_t* keyboard_devices,
+int8_t keyboard_init(key_devices_t* keyboard_devices,
 		GPIO_TypeDef* col_ports[KEYBOARD_ROWS], uint16_t col_pins[KEYBOARD_ROWS])
 //keyboard_HID_data* HID_reports)
 {
@@ -31,7 +31,7 @@ key_err_t keyboard_init(key_devices_t* keyboard_devices,
 	keyboard_devices->keyboard =
 			(keyboard_device_t*)calloc(1, sizeof(keyboard_device_t));
 	if(keyboard_devices->keyboard == NULL)
-		return init_err;
+		return key_init_err;
 
 	memcpy(keyboard_devices->keyboard->col_ports, col_ports,
 				sizeof(GPIO_TypeDef*) * KEYBOARD_ROWS);
@@ -62,7 +62,7 @@ key_err_t keyboard_init(key_devices_t* keyboard_devices,
 	keyboard_devices->keyboard_HID =
 			(keyboard_HID_data_t*)calloc(1, sizeof(keyboard_HID_data_t));
 	if(keyboard_devices->keyboard_HID == NULL)
-		return init_err;
+		return key_init_err;
 
 	keyboard_devices->keyboard_HID->keyboard_report.id = 1;
 	keyboard_devices->keyboard_HID->keyboard_state = inactive;
@@ -83,13 +83,13 @@ key_err_t keyboard_init(key_devices_t* keyboard_devices,
 
 	current_keyboard_state = typing;
 
-	return key_ok;
+	return 0;
 }
 
-key_err_t process_key_buf(keyboard_HID_data_t* data, keymap_list_t* layer_list)
+int8_t process_key_buf(keyboard_HID_data_t* data, keymap_list_t* layer_list)
 {
 	if(data->key_buf.index == 0){
-		return empty_buf;
+		return -EBUFF;
 	}
 
 	//reset buffers
@@ -100,14 +100,13 @@ key_err_t process_key_buf(keyboard_HID_data_t* data, keymap_list_t* layer_list)
 	//clear modifiers
 	data->out_buf.mod_buf = 0x00;
 
-	if(current_keyboard_state == layer_set)
-		goto set_layer;
+	if(current_keyboard_state == layer_set) goto set_layer;
 
-	if(current_keyboard_state == macro_run)
-		goto macro_run;
+	if(current_keyboard_state == macro_run) goto macro_run;
 
-	if(current_keyboard_state == macro_set)
-		goto macro_set;
+	if(current_keyboard_state == macro_set)	goto macro_set;
+
+	if(current_keyboard_state == CLI) goto CLI;
 
 	//get current layer
 	keymap_layer_t* current_layer = layer_table_get_current_layer(layer_list);
@@ -131,6 +130,10 @@ key_err_t process_key_buf(keyboard_HID_data_t* data, keymap_list_t* layer_list)
 		//MACRO_SET
 		if(data->key_buf.buffer[i].key_code == HID_KEYBOARD_SC_MACRO_SET_FUNCTION)
 			goto state_change_macro_set;
+
+		//CLI
+		if(data->key_buf.buffer[i].key_code == HID_KEYBOARD_SC_CLI_FUNCTION)
+			goto state_change_CLI;
 
 		//MODIFIER
 		if(data->key_buf.buffer[i].key_code >= 0xE0 && data->key_buf.buffer[i].key_code <= 0xE7){
@@ -186,16 +189,19 @@ key_err_t process_key_buf(keyboard_HID_data_t* data, keymap_list_t* layer_list)
 	//prepare for sending
 	data->prev_report_len = data->out_buf.key_buf.count;
 
-	return key_ok;
+	return 0;
 	state_change_layer: state_enter_layer_set();
 	set_layer: state_layer_set( layer_list );
-	return key_layer_set;
+	return 0;
 	state_change_macro_run: state_enter_macro_run();
 	macro_run: state_macro_run( layer_list );
-	return key_macro_run;
+	return 0;
 	state_change_macro_set: state_enter_macro_set();
 	macro_set: state_macro_set( layer_list );
-	return key_macro_set;
+	return 0;
+	state_change_CLI: state_enter_CLI();
+	CLI: state_CLI();
+	return 0;
 }
 
 signed int reset_buffer(six_key_buffer* buffer_to_reset)
@@ -223,7 +229,7 @@ void clear_keyboard_report(  keyboard_HID_data_t* data )
 }
 
 //TODO int -> uint8_t for loops
-key_err_t keyboard_prepare_report( keyboard_HID_data_t* data )
+int8_t keyboard_prepare_report( keyboard_HID_data_t* data )
 {
 	for(int i = 0; i < data->out_buf.key_buf.count; i++){
 		*(&data->keyboard_report.key1 + i * sizeof(uint8_t)) = data->out_buf.key_buf.keys[i].key_code;
@@ -236,18 +242,18 @@ key_err_t keyboard_prepare_report( keyboard_HID_data_t* data )
 
 	data->keyboard_report.modifiers = data->out_buf.mod_buf;
 
-	return key_ok;
+	return 0;
 }
 
-key_err_t media_prepare_report( keyboard_HID_data_t* data )
+int8_t media_prepare_report( keyboard_HID_data_t* data )
 {
 	for(int i = 0; i < data->out_buf.med_buf.count; i++)
 		data->media_report.keys = data->out_buf.med_buf.key.key_code;
 
-	return key_ok;
+	return 0;
 }
 
-key_err_t send_keyboard_report( keyboard_HID_data_t* data, report_type type )
+int8_t send_keyboard_report( keyboard_HID_data_t* data, report_type type )
 {
 	switch(type){
 	case keyboard:
@@ -256,7 +262,7 @@ key_err_t send_keyboard_report( keyboard_HID_data_t* data, report_type type )
 			data->keyboard_state = clearing;
 			xSemaphoreGive(USB_send_lock);
 		}
-		return key_ok;
+		return 0;
 		break;
 	case media:
 		if(xSemaphoreTake( USB_send_lock, (TickType_t) portMAX_DELAY) == pdTRUE){
@@ -264,16 +270,16 @@ key_err_t send_keyboard_report( keyboard_HID_data_t* data, report_type type )
 			data->media_state = clearing;
 			xSemaphoreGive(USB_send_lock);
 		}
-		return key_ok;
+		return 0;
 		break;
 	case mouse:
 	default:
-		return send_err;
+		return -EUSB;
 	}
-	return key_ok;
+	return 0;
 }
 
-key_err_t process_keyboard_flags ( keyboard_HID_data_t* data )
+int8_t process_keyboard_flags ( keyboard_HID_data_t* data )
 {
 	if(data->keyboard_state == active){
 		keyboard_prepare_report(data);
@@ -293,7 +299,7 @@ key_err_t process_keyboard_flags ( keyboard_HID_data_t* data )
 		data->media_state = inactive;
 	}
 
-	return key_ok;
+	return 0;
 }
 
 uint8_t process_single_key( keymap_list_t* layer_list, uint8_t col, uint8_t row )

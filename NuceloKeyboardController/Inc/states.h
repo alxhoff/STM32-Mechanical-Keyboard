@@ -14,7 +14,8 @@ typedef enum{
 	typing,
 	layer_set,
 	macro_set,
-	macro_run
+	macro_run,
+	CLI
 } keyboard_states;
 
 typedef enum{

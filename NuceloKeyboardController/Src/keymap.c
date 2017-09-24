@@ -12,7 +12,7 @@ const layer_init keymap_init0 =
 		.grid =
 				KEYMAP(7, 8, 9, \
 					   4, 5, 6, \
-					   1, RSHIFT, MACRO_R, \
+					   CLI, RSHIFT, MACRO_R, \
 					   MACRO_S),
 	   .key = 0x66,
 	   .name = "Initial_layer"
@@ -62,7 +62,8 @@ keymap_err_t layer_list_init(key_devices_t* keyboard_devices,
 	layer->ID =  layer_list_get_ID(keyboard_devices->layer_list);
 	layer->layer_modifier_key_code = initial_layer_to_add->key;
 
-	layer->name = (char*) malloc ((strlen(initial_layer_to_add->name)+1)*sizeof(char));
+	layer->name = (char*) malloc
+			((strlen(initial_layer_to_add->name)+1)*sizeof(char));
 	if (layer->name == NULL)
 			return km_init_err;
 	strcpy(layer->name, initial_layer_to_add->name);
@@ -83,7 +84,8 @@ keymap_err_t layer_list_init(key_devices_t* keyboard_devices,
 	return km_ok;
 }
 
-keymap_err_t layer_list_append_layer( keymap_list_t* layer_list, layer_init* layer_to_add )
+keymap_err_t layer_list_append_layer( keymap_list_t* layer_list,
+		layer_init* layer_to_add )
 {
 
 	//create layer

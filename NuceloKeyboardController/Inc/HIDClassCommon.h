@@ -332,12 +332,13 @@
 		#define HID_KEYBOARD_SC_MEDIA_SLEEP                       0xF8
 		#define HID_KEYBOARD_SC_MEDIA_LOCK                        0xF9
 		#define HID_KEYBOARD_SC_MEDIA_RELOAD                      0xFA
-		#define HID_KEYBOARD_SC_MEDIA_CALCULATOR                  0xFB
+		//#define HID_KEYBOARD_SC_MEDIA_CALCULATOR                  0xFB
 		//@}
 
 		#define HID_KEYBOARD_SC_LAYER_FUNCTION					  0xFF
 		#define HID_KEYBOARD_SC_MACRO_RUN_FUNCTION				  0xFE
 		#define	HID_KEYBOARD_SC_MACRO_SET_FUNCTION				  0xFC
+		#define HID_KEYBOARD_SC_CLI_FUNCTION					  0xFB
 		/** \name Common HID Device Report Descriptors */
 		//@{
 		/** \hideinitializer
