@@ -14,7 +14,7 @@ const layer_init keymap_init0 =
 {
 		.grid =
 				KEYMAP(7, 8, 9, \
-					   4, 5, ENTER, \
+					   LEFT, 5, RIGHT, \
 					   CLI, RSHIFT, MACRO_R, \
 					   MACRO_S),
 	   .key = 0x66,

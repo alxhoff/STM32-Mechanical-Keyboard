@@ -69,7 +69,7 @@ HAL_StatusTypeDef ssd1306_draw_cursor(screen_t* self)
 	}
 
 	//cursor position
-	self->cursor_x = 3;
+//	self->cursor_x = 3;
 	uint8_t cursor_x = self->x_offset + self->font->FontWidth * self->cursor_x;
 	uint8_t cursor_y =
 			self->LCD_dev->height - (self->y_offset + self->font->FontHeight);

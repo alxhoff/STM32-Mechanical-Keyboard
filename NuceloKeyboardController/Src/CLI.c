@@ -6,6 +6,7 @@
  */
 
 #include "CLI.h"
+#include "screen.h"
 #include "scan.h"
 #include "keymap.h"
 #include "extern.h"
@@ -34,10 +35,10 @@ int8_t state_CLI()
 				keyboard_devs->layer_list);
 
 		//process character
+		CLI_process_key(input);
 
 	}while(current_keyboard_state == CLI);
 	//process command
-	CLI_process_key(input);
 
 	state_exit_CLI();
 
@@ -52,9 +53,22 @@ int8_t CLI_process_line()
 	return 0;
 }
 
-int8_t CLI_process_arrows()
+int8_t CLI_process_arrows(uint8_t left)
 {
-
+	if(left){
+		if(GET_SCREEN->cursor_x > 0){ //middle
+			GET_SCREEN->cursor_x--;
+		}else{ //edge
+			;
+		}
+	}
+	else{ //RIGHT
+		if(GET_SCREEN->cursor_x < (GET_LCD->width - 2)){ //middle
+			GET_SCREEN->cursor_x++;
+		}else{ //edge
+			;
+		}
+	}
 	return 0;
 }
 
@@ -81,12 +95,12 @@ int8_t CLI_process_key(char input)
 	//arrow key -> move cursor
 	//right
 	if(input == 0x4F){
-
+		CLI_process_arrows(0);
 		return 0;
 	}
 	//left
 	if(input == 0x50){
-
+		CLI_process_arrows(1);
 		return 0;
 	}
 	//character -> modify screen string
