@@ -206,7 +206,7 @@ int main(void)
 	screen_init_t CLI_test_init =
 	{ .rows = 3, .cols = 11, .row_height = 20, .x_offset = 3, .y_offset = 3,
 			.LCD_dev = keyboard_devs->LCD, .font = keyboard_devs->LCD->font,
-			.message = "_123456789again123456789", .cursor_period = 750, };
+			.message = "A123456789again123456789", .cursor_period = 750, };
 
 	keyboard_devs->screen = screen_init(&CLI_test_init);
 

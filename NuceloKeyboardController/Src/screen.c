@@ -70,6 +70,9 @@ HAL_StatusTypeDef ssd1306_draw_cursor(screen_t* self)
 	}
 
 	//cursor position
+	uint8_t cursor_x = self->x_offset + self->font->FontWidth * self->cursor_x;
+	uint8_t cursor_y =
+			self->LCD_dev->height - (self->y_offset + self->font->FontHeight);
 
 
 	if(self->cursor_on){
@@ -81,16 +84,20 @@ HAL_StatusTypeDef ssd1306_draw_cursor(screen_t* self)
 				if ((b << j) & 0x8000)
 				{
 					if (ssd1306_draw_pixel(self->LCD_dev,
-							((self->cursor_x * self->font->FontWidth + self->x_offset) + j),
-							((self->cursor_y * self->font->FontWidth) + i),
+//							((self->cursor_x * self->font->FontWidth + self->x_offset) + j),
+//							((self->cursor_y * self->font->FontWidth) + i),
+							cursor_x + j,
+							cursor_y + i,
 							!self->LCD_dev->background) != HAL_OK)
 						return HAL_ERROR;
 				}
 				else
 				{
 					if (ssd1306_draw_pixel(self->LCD_dev,
-							((self->cursor_x * self->font->FontWidth + self->x_offset) + j),
-							((self->cursor_y * self->font->FontWidth) + i),
+//							((self->cursor_x * self->font->FontWidth + self->x_offset) + j),
+//							((self->cursor_y * self->font->FontWidth) + i),
+							cursor_x + j,
+							cursor_y + i,
 							self->LCD_dev->background) != HAL_OK)
 						return HAL_ERROR;
 				}
