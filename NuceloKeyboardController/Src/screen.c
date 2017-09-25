@@ -178,7 +178,7 @@ screen_t* screen_init(screen_init_t* init_values)
 
 	//welcome message
 	init_dev->buffers[0] = realloc(init_dev->buffers[0],
-			sizeof(init_values->message) + 1);
+			strlen(init_values->message) + 1);
 
 	if (init_dev->buffers[0] == NULL)
 		return NULL;
