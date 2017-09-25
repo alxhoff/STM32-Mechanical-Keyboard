@@ -632,7 +632,7 @@ void CLIListenCallback(void const * argument)
 	{
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);
 		keyboard_devs->screen->update(keyboard_devs->screen);
-		keyboard_devs->screen->draw_cursor(keyboard_devs->screen);
+//		keyboard_devs->screen->draw_cursor(keyboard_devs->screen);
 	}
 }
 /* USER CODE END 4 */

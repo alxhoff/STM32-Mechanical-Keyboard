@@ -84,8 +84,6 @@ HAL_StatusTypeDef ssd1306_draw_cursor(screen_t* self)
 				if ((b << j) & 0x8000)
 				{
 					if (ssd1306_draw_pixel(self->LCD_dev,
-//							((self->cursor_x * self->font->FontWidth + self->x_offset) + j),
-//							((self->cursor_y * self->font->FontWidth) + i),
 							cursor_x + j,
 							cursor_y + i,
 							!self->LCD_dev->background) != HAL_OK)
@@ -94,8 +92,6 @@ HAL_StatusTypeDef ssd1306_draw_cursor(screen_t* self)
 				else
 				{
 					if (ssd1306_draw_pixel(self->LCD_dev,
-//							((self->cursor_x * self->font->FontWidth + self->x_offset) + j),
-//							((self->cursor_y * self->font->FontWidth) + i),
 							cursor_x + j,
 							cursor_y + i,
 							self->LCD_dev->background) != HAL_OK)
@@ -117,13 +113,20 @@ screen_err_t screen_update(screen_t* screen)
 
 	for (uint8_t i = 0; i < screen->rows; i++)
 	{
-
 		y_position = screen->LCD_dev->height
-				- (screen->y_offset + (screen->font->FontHeight * (i + 1)));
+						- (screen->y_offset + (screen->font->FontHeight * (i + 1)));
+		if(i == 0){
+			screen->LCD_dev->string(screen->LCD_dev,
+					(char*)screen->buffers[i] + screen->x_buff_shift);
+			screen->LCD_dev->cursor(screen->LCD_dev, x_position, y_position);
 
-		screen->LCD_dev->cursor(screen->LCD_dev, x_position, y_position);
+			goto skip_end;
+		}
+
 
 		screen->LCD_dev->string(screen->LCD_dev, screen->buffers[i]);
+
+		skip_end: ;
 	}
 	ssd1306_draw_cursor(screen);
 
@@ -139,8 +142,7 @@ void screen_cursor_callback(TimerHandle_t xTimer)
 	HAL_GPIO_TogglePin(LD3_GPIO_Port, LD3_Pin);
 }
 
-screen_t*
-screen_init(screen_init_t* init_values)
+screen_t* screen_init(screen_init_t* init_values)
 {
 	screen_t* init_dev = (screen_t*) calloc(1, sizeof(screen_t));
 
@@ -160,9 +162,10 @@ screen_init(screen_init_t* init_values)
 	init_dev->x_offset = init_values->x_offset;
 	init_dev->y_offset = init_values->y_offset;
 
-	init_dev->cursor_x = 0;
-	init_dev->cursor_y = 0;
-	init_dev->cursor_on = 0;
+//	init_dev->cursor_x = 0;
+//	init_dev->cursor_y = 0;
+//	init_dev->cursor_on = 0;
+//	init_dev->x_buff_shift = 3;
 	init_dev->cursor_period = init_values->cursor_period;
 
 	//buffers

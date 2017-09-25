@@ -61,7 +61,6 @@ keymap_err_t layer_list_init(key_devices_t* keyboard_devices,
 	if (layer == NULL)
 		return km_init_err;
 
-	//NEW LAYER PROPERTIES ###
 	layer->ID =  layer_list_get_ID(keyboard_devices->layer_list);
 	layer->layer_modifier_key_code = initial_layer_to_add->key;
 
@@ -72,17 +71,12 @@ keymap_err_t layer_list_init(key_devices_t* keyboard_devices,
 	strcpy(layer->name, initial_layer_to_add->name);
 
 	memcpy(&layer->grid, &initial_layer_to_add->grid, KEYBOARD_ROWS * KEYBOARD_COLS);
-	//########################
 
-	//set new layer as current layer
 	keyboard_devices->layer_list->current_layer = 0;
 
-	//set new layer as head node
 	keyboard_devices->layer_list->layer_head = (keymap_layer_t*) layer;
 	layer->next = keyboard_devices->layer_list->layer_head;
 	layer->prev = keyboard_devices->layer_list->layer_head;
-
-
 
 	return km_ok;
 }

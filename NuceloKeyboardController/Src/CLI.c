@@ -55,18 +55,27 @@ int8_t CLI_process_line()
 
 int8_t CLI_process_arrows(uint8_t left)
 {
+	//if (string length - x buff shift) - screen width > 0
+				// then move
+
 	if(left){
-		if(GET_SCREEN->cursor_x > 0){ //middle
+		if(GET_SCREEN->cursor_x > 0 &&
+				GET_SCREEN->cursor_x <= (GET_LCD->width - 2)){ //middle
 			GET_SCREEN->cursor_x--;
 		}else{ //edge
-			;
+			if(GET_SCREEN->x_buff_shift > 0)
+				GET_SCREEN->x_buff_shift--;
 		}
 	}
 	else{ //RIGHT
-		if(GET_SCREEN->cursor_x < (GET_LCD->width - 2)){ //middle
+		if(GET_SCREEN->cursor_x >= 0 &&
+				GET_SCREEN->cursor_x < (GET_SCREEN->cols - 2)){ //middle
 			GET_SCREEN->cursor_x++;
 		}else{ //edge
-			;
+			//TODO check x_buff_shift?
+			if((strlen(keyboard_devs->screen->buffers[0] + GET_SCREEN->x_buff_shift)
+							- GET_LCD->width) > 0)
+				GET_SCREEN->x_buff_shift++;
 		}
 	}
 	return 0;

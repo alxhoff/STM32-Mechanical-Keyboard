@@ -54,8 +54,10 @@ struct screen
 
 	uint8_t row_height;
 
-	uint8_t x_offset;
-	uint8_t y_offset;
+	uint16_t x_offset;
+	uint16_t x_buff_shift;
+	uint16_t y_offset;
+	uint16_t y_buff_shift;
 
 	uint8_t cursor_x;
 	uint8_t cursor_y;
