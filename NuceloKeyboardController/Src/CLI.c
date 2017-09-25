@@ -10,6 +10,7 @@
 #include "scan.h"
 #include "keymap.h"
 #include "extern.h"
+#include "lookup.h"
 
 int8_t state_enter_CLI()
 {
@@ -81,8 +82,26 @@ int8_t CLI_process_arrows(uint8_t left)
 	return 0;
 }
 
-int8_t CLI_process_character()
+int8_t CLI_process_character(char input)
 {
+	//insert character at x buff offset
+	//copy characters after buffer to temp buffer
+	uint16_t offset = GET_SCREEN->x_buff_shift + GET_SCREEN->cursor_x;
+
+	char buffer[strlen(GET_SCREEN->buffers[0]) - offset];
+
+	//copy back portion of string into buffer
+	strcpy(buffer, GET_SCREEN->buffers[0]+ offset);
+
+	//expand buffer
+	realloc(GET_SCREEN->buffers[0], strlen(GET_SCREEN->buffers[0]) + 1);
+
+	if(GET_SCREEN->buffers[0] == NULL) return -ENOMEM;
+
+	//reconstruct buffer
+	*(GET_SCREEN->buffers[0] + offset) = input;
+
+	strcpy(GET_SCREEN->buffers[0] + offset + 1, buffer);
 
 	return 0;
 }
@@ -114,11 +133,16 @@ int8_t CLI_process_key(char input)
 	}
 	//character -> modify screen string
 	if( (input >= KEY(A) && input <= KEY(0)) ||		//A-Z + 1-0
-			(input >= KEY(SPACE) && input <= KEY(SLASH)) ||	// symbols
-			input == KEY(BSPC) || input == KEY(DEL) // backspace + delete
+			(input >= KEY(SPACE) && input <= KEY(SLASH))	// symbols
 			){
+		//TODO MODIFIERS MAYBE?
+		CLI_process_character(*lookup_char[(uint8_t)input].unmodified);
 
+		return 0;
+	}
 
+	if( input == KEY(BSPC) || input == KEY(DEL) )
+	{
 
 		return 0;
 	}
