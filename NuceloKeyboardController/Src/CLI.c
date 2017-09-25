@@ -29,10 +29,10 @@ int8_t state_CLI()
 {
 	//get input until enter is pressed
 	HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
-
+	key_code_w_mod_t input = {0};
 	do{
 		//get a character of input
-		char input = scan_get_single_key(keyboard_devs->keyboard,
+		input = scan_get_single_key_w_mod(keyboard_devs->keyboard,
 				keyboard_devs->layer_list);
 
 		//process character
@@ -106,42 +106,46 @@ int8_t CLI_process_character(char input)
 	return 0;
 }
 
-int8_t CLI_process_key(char input)
+int8_t CLI_process_key(key_code_w_mod_t input)
 {
 	//possible inputs
 	//CLI key -> exit
-	if(input == KEY(CLI)){
+	if(input.key_code == KEY(CLI)){
 		current_keyboard_state = typing;
 		return 0;
 	}
 	//enter key -> process line
-	if(input == KEY(ENTER)){
+	if(input.key_code == KEY(ENTER)){
 		//process line function
 
 		return 0;
 	}
 	//arrow key -> move cursor
 	//right
-	if(input == 0x4F){
+	if(input.key_code == 0x4F){
 		CLI_process_arrows(0);
 		return 0;
 	}
 	//left
-	if(input == 0x50){
+	if(input.key_code == 0x50){
 		CLI_process_arrows(1);
 		return 0;
 	}
 	//character -> modify screen string
-	if( (input >= KEY(A) && input <= KEY(0)) ||		//A-Z + 1-0
-			(input >= KEY(SPACE) && input <= KEY(SLASH))	// symbols
+	if( (input.key_code >= KEY(A) && input.key_code <= KEY(0)) ||		//A-Z + 1-0
+			(input.key_code >= KEY(SPACE) && input.key_code <= KEY(SLASH))	// symbols
 			){
 		//TODO MODIFIERS MAYBE?
-		CLI_process_character(*lookup_char[(uint8_t)input].unmodified);
+		if(input.modifier)
+			CLI_process_character(*lookup_char[(uint8_t)input.key_code].modified);
+		else
+			CLI_process_character(*lookup_char[(uint8_t)input.key_code].unmodified);
+
 
 		return 0;
 	}
 
-	if( input == KEY(BSPC) || input == KEY(DEL) )
+	if( input.key_code == KEY(BSPC) || input.key_code == KEY(DEL) )
 	{
 
 		return 0;

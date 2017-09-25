@@ -10,6 +10,11 @@
 
 typedef uint8_t key_code;
 
+typedef struct key_code_w_mod{
+	uint8_t key_code;
+	uint8_t modifier;
+} key_code_w_mod_t;
+
 typedef enum{
 	keyboard,
 	media,

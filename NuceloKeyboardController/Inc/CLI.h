@@ -11,9 +11,10 @@
 #include <stdio.h>
 
 #include "states.h"
+#include "types.h"
 
 int8_t state_enter_CLI();
 int8_t state_CLI();
-int8_t CLI_process_key(char input);
+int8_t CLI_process_key(key_code_w_mod_t input);
 
 #endif /* CLI_H_ */
