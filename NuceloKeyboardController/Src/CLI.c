@@ -22,6 +22,7 @@ int8_t state_enter_CLI()
 int8_t state_exit_CLI()
 {
 	current_keyboard_state = typing;
+	vTaskDelay(200);
 	return 0;
 }
 

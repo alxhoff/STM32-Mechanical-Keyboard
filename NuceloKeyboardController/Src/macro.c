@@ -22,6 +22,7 @@ int8_t state_enter_macro_set()
 int8_t state_exit_macro_set()
 {
 	current_keyboard_state = typing;
+	vTaskDelay(200);
 	return 0;
 }
 
