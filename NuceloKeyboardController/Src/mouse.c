@@ -6,6 +6,7 @@
  */
 
 #include "mouse.h"
+#include "error.h"
 #include "extern.h"
 
 key_err_t mouse_init( mouse_HID_data_t* data )
@@ -14,39 +15,39 @@ key_err_t mouse_init( mouse_HID_data_t* data )
 	data->mouse_buf.y=0;
 	data->mouse_state=inactive;
 
-	return mouse_ok;
+	return 0;
 }
 
 key_err_t ADC_retrieve_values( mouse_device_t* mouse, mouse_HID_data_t* data )
 {
 	if(HAL_ADC_Start(mouse->adc_x) != HAL_OK)
-		return adc_err;
+		return -EADC;
 
 	if(HAL_ADC_Start(mouse->adc_y) != HAL_OK)
-		return adc_err;
+		return -EADC;
 
 	if(HAL_ADC_PollForConversion(mouse->adc_x, 50) != HAL_OK)
-		return adc_err;
+		return -EADC;
 
 	if(HAL_ADC_PollForConversion(mouse->adc_y, 50) != HAL_OK)
-		return adc_err;
+		return -EADC;
 
 	data->mouse_buf.x = ((signed long)HAL_ADC_GetValue(mouse->adc_x) >> 4);
 	data->mouse_buf.y = ((signed long)HAL_ADC_GetValue(mouse->adc_y) >> 4);
 
 	if((data->mouse_buf.x < 187 && data->mouse_buf.x > 147) && (data->mouse_buf.y < 187 && data->mouse_buf.y > 147))
-			return no_mouse_mov;
+			return -EBUFF;
 
 	data->mouse_state = active;
 
-	return mouse_ok;
+	return 0;
 }
 
 key_err_t calibrate_mouse( mouse_HID_data_t* data )
 {
 	//TODO
 
-	return key_ok;
+	return 0;
 }
 
 key_err_t clear_mouse_report ( mouse_HID_data_t* data )
@@ -57,7 +58,7 @@ key_err_t clear_mouse_report ( mouse_HID_data_t* data )
 		data->mouse_HID.y=0;
 		data->mouse_HID.wheel=0;
 	}
-	return mouse_ok;
+	return 0;
 }
 
 key_err_t process_mouse_buf ( mouse_HID_data_t* data )
@@ -83,7 +84,7 @@ key_err_t process_mouse_buf ( mouse_HID_data_t* data )
 	if(data->mouse_buf.y < 20 && data->mouse_buf.y > -20)
 		data->mouse_buf.y = 0;
 
-	return mouse_ok;
+	return 0;
 }
 
 key_err_t prepare_mouse_report ( mouse_HID_data_t* data )
@@ -92,14 +93,14 @@ key_err_t prepare_mouse_report ( mouse_HID_data_t* data )
 	data->mouse_HID.x = (uint8_t) data->mouse_buf.x;
 	data->mouse_HID.y = -1 * (uint8_t) data->mouse_buf.y;
 
-	return mouse_ok;
+	return 0;
 }
 
 key_err_t send_mouse_report ( mouse_HID_data_t* data )
 {
 	USBD_HID_SendReport(&hUsbDeviceFS, &data->mouse_HID, sizeof(mouseHID_t));
 	data->mouse_state = clearing;
-	return mouse_ok;
+	return 0;
 }
 
 key_err_t process_mouse_flags ( mouse_HID_data_t* data )
@@ -121,5 +122,5 @@ key_err_t process_mouse_flags ( mouse_HID_data_t* data )
 			xSemaphoreGive(USB_send_lock);
 		}
 	}
-	return mouse_ok;
+	return 0;
 }

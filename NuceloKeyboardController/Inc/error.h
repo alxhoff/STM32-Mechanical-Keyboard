@@ -53,6 +53,7 @@ typedef enum {
 	ENOMEM 			= 1,
 	EUSB			= 2,
 	EBUFF			= 3,
+	EADC			= 4,
 } err_codes_t;
 
 #endif /* ERROR_H_ */
