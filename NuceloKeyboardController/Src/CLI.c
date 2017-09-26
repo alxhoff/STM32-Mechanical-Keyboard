@@ -5,6 +5,8 @@
  *      Author: alxhoff
  */
 
+#include <stdint.h>
+
 #include "CLI.h"
 #include "screen.h"
 #include "scan.h"
