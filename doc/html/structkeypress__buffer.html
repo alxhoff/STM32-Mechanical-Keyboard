@@ -67,24 +67,30 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>Keypress input buffer used to store keystroke input from keyboard.  
+ <a href="structkeypress__buffer.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="keyboard_8h_source.html">keyboard.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:abeb0c8921d058d71e557dff4e64a7e9e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structkey.html">key</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structkeypress__buffer.html#abeb0c8921d058d71e557dff4e64a7e9e">buffer</a> [20]</td></tr>
-<tr class="separator:abeb0c8921d058d71e557dff4e64a7e9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d8585162eb9fe3f4e73753553e20bac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="keyboard_8h.html#aa504c5d09bf7cea600b72b6003a8772c">single_key_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structkeypress__buffer.html#a0d8585162eb9fe3f4e73753553e20bac">buffer</a> [<a class="el" href="keyboard_8h.html#ac2b728463ae48d3aa61340a61be68225">SCAN_KEY_BUFFER_LENGTH</a>]</td></tr>
+<tr class="separator:a0d8585162eb9fe3f4e73753553e20bac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa65a87852d890d7f8068122b36205e2d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structkeypress__buffer.html#aa65a87852d890d7f8068122b36205e2d">index</a></td></tr>
 <tr class="separator:aa65a87852d890d7f8068122b36205e2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="abeb0c8921d058d71e557dff4e64a7e9e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abeb0c8921d058d71e557dff4e64a7e9e">&#9670;&nbsp;</a></span>buffer</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Keypress input buffer used to store keystroke input from keyboard. </p>
+<p>When the keyboard is initially scanned, all keys that were found to be pressed are stored in the keypress buffer before being processed. The key presses are saved as row and col values, not key_codes. </p>
+</div><h2 class="groupheader">Member Data Documentation</h2>
+<a id="a0d8585162eb9fe3f4e73753553e20bac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d8585162eb9fe3f4e73753553e20bac">&#9670;&nbsp;</a></span>buffer</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structkey.html">key</a> keypress_buffer::buffer[20]</td>
+          <td class="memname"><a class="el" href="keyboard_8h.html#aa504c5d09bf7cea600b72b6003a8772c">single_key_t</a> keypress_buffer::buffer[<a class="el" href="keyboard_8h.html#ac2b728463ae48d3aa61340a61be68225">SCAN_KEY_BUFFER_LENGTH</a>]</td>
         </tr>
       </table>
 </div><div class="memdoc">

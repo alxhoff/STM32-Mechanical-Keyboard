@@ -13,7 +13,7 @@ var searchData=
   ['set_5fbyte',['set_byte',['../structshift__array.html#aee5df34cb4bb958851f405943a5b199a',1,'shift_array']]],
   ['set_5fdata',['set_data',['../structshift__array.html#a76f5623e40afe246c1fade4b2d5318cc',1,'shift_array']]],
   ['shift_5farray',['shift_array',['../structkey__devices.html#a2d89c37a95b62f18c39802dcd775849a',1,'key_devices']]],
-  ['shortlist_5fkeys',['shortlist_keys',['../structkeyboard__HID__data.html#a984ec97a0da585ce6818a3860748eb36',1,'keyboard_HID_data']]],
+  ['shortlist_5fkeys',['shortlist_keys',['../structkeyboard__HID__data.html#ad16a61decda61e908979f614f4052a1b',1,'keyboard_HID_data']]],
   ['sr_5fclr_5fclock_5finit',['sr_clr_clock_init',['../structshift__array.html#a906114429befc76d97f5373724f223e8',1,'shift_array']]],
   ['sr_5fclr_5fconnected',['sr_clr_connected',['../structshift__array.html#a2e0fca29bc32e2c98785e5b5dd29fba3',1,'shift_array']]],
   ['sr_5fclr_5fpin',['sr_clr_pin',['../structshift__array.html#a21f42e62dd6e25baaf1286ec354bbac6',1,'shift_array']]],

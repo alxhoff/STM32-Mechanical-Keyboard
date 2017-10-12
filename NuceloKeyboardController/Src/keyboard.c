@@ -1,8 +1,8 @@
-/*
- * keyboard.c
- *
- *  Created on: Aug 14, 2017
- *      Author: alxhoff
+/**
+ * @file keyboard.c
+ * @author Alex Hoffman
+ * @date 11 October 2017
+ * @brief Data types and functions for performing classical keyboard functions
  */
 
 #include "extern.h"
@@ -13,7 +13,7 @@
 #include "ssd1306.h"
 
 int8_t keyboard_init(key_devices_t* keyboard_devices,
-		GPIO_TypeDef* col_ports[KEYBOARD_ROWS], uint16_t col_pins[KEYBOARD_ROWS])
+		GPIO_TypeDef* row_ports[KEYBOARD_ROWS], uint16_t row_pins[KEYBOARD_ROWS])
 {
 
 	keyboard_devices->keyboard =
@@ -21,20 +21,20 @@ int8_t keyboard_init(key_devices_t* keyboard_devices,
 	if(keyboard_devices->keyboard == NULL)
 		return key_init_err;
 
-	memcpy(keyboard_devices->keyboard->col_ports, col_ports,
+	memcpy(keyboard_devices->keyboard->col_ports, row_ports,
 				sizeof(GPIO_TypeDef*) * KEYBOARD_ROWS);
 
-	memcpy(keyboard_devices->keyboard->col_pins, col_pins,
+	memcpy(keyboard_devices->keyboard->col_pins, row_pins,
 				sizeof(uint16_t) * KEYBOARD_ROWS);
 
 	GPIO_InitTypeDef GPIO_InitStruct;
 
 	//INIT ROWS - input
-	for(int i=0; i<KEYBOARD_ROWS; i++){
-		GPIO_InitStruct.Pin = col_pins[i];
+	for(uint8_t i=0; i<KEYBOARD_ROWS; i++){
+		GPIO_InitStruct.Pin = row_pins[i];
 		GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
 		GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-		HAL_GPIO_Init(col_ports[i], &GPIO_InitStruct);
+		HAL_GPIO_Init(row_ports[i], &GPIO_InitStruct);
 	}
 
 	//HID DATA
@@ -93,7 +93,7 @@ int8_t process_key_buf(keyboard_HID_data_t* data, keymap_list_t* layer_list)
 
 	//TODO PUT INTO STATE FUNCTIONS
 	//iterate through buffer and translate
-	for(int i=0;i<data->key_buf.index;i++){
+	for(uint8_t i=0;i<data->key_buf.index;i++){
 		//TODO capslock
 		//get character
 		data->key_buf.buffer[i].key_code =
@@ -184,38 +184,22 @@ int8_t process_key_buf(keyboard_HID_data_t* data, keymap_list_t* layer_list)
 	return 0;
 }
 
-signed int reset_buffer(six_key_buffer* buffer_to_reset)
+signed int reset_buffer(six_key_buffer_t* buffer_to_reset)
 {
 	buffer_to_reset->count=0;
-	for(int i=0;i<6;i++){
+	for(uint8_t i=0;i<6;i++){
 		buffer_to_reset->keys[i].key_code = 0;
 	}
 	return 0;
 }
 
-void clear_keyboard_report(  keyboard_HID_data_t* data )
-{
-	if(data->keyboard_state == clearing || data->keyboard_state == active){
-		data->keyboard_report.key1 = 0;
-		data->keyboard_report.key2 = 0;
-		data->keyboard_report.key3 = 0;
-		data->keyboard_report.key4 = 0;
-		data->keyboard_report.key5 = 0;
-		data->keyboard_report.key6 = 0;
-		data->keyboard_report.modifiers = 0;
-	}
-	if(data->keyboard_state == clearing || data->keyboard_state == active)
-		data->media_report.keys = 0;
-}
-
-//TODO int -> uint8_t for loops
 int8_t keyboard_prepare_report( keyboard_HID_data_t* data )
 {
-	for(int i = 0; i < data->out_buf.key_buf.count; i++){
+	for(uint8_t i = 0; i < data->out_buf.key_buf.count; i++){
 		*(&data->keyboard_report.key1 + i * sizeof(uint8_t)) = data->out_buf.key_buf.keys[i].key_code;
 		data->prev_keys[i] = *(&data->keyboard_report.key1 + i * sizeof(uint8_t));
 	}
-	for(int i = data->out_buf.key_buf.count; i<6 ; i++){
+	for(uint8_t i = data->out_buf.key_buf.count; i<6 ; i++){
 		*(&data->keyboard_report.key1 + i * sizeof(uint8_t)) = 0x00;
 		data->prev_keys[i] = *(&data->keyboard_report.key1 + i * sizeof(uint8_t));
 	}
@@ -227,7 +211,7 @@ int8_t keyboard_prepare_report( keyboard_HID_data_t* data )
 
 int8_t media_prepare_report( keyboard_HID_data_t* data )
 {
-	for(int i = 0; i < data->out_buf.med_buf.count; i++)
+	for(uint8_t i = 0; i < data->out_buf.med_buf.count; i++)
 		data->media_report.keys = data->out_buf.med_buf.key.key_code;
 
 	return 0;
@@ -269,7 +253,6 @@ int8_t process_keyboard_flags ( keyboard_HID_data_t* data )
 		send_keyboard_report(data, keyboard);
 		data->keyboard_state = inactive;
 	}
-
 	if(data->media_state == active){
 		media_prepare_report(data);
 		send_keyboard_report(data, media);
@@ -278,7 +261,6 @@ int8_t process_keyboard_flags ( keyboard_HID_data_t* data )
 		send_keyboard_report(data, media);
 		data->media_state = inactive;
 	}
-
 	return 0;
 }
 
@@ -290,6 +272,21 @@ uint8_t process_single_key( keymap_list_t* layer_list, uint8_t col, uint8_t row 
 		return ret;
 	else
 		return 0;
+}
+
+void clear_keyboard_report(  keyboard_HID_data_t* data )
+{
+	if(data->keyboard_state == clearing || data->keyboard_state == active){
+		data->keyboard_report.key1 = 0;
+		data->keyboard_report.key2 = 0;
+		data->keyboard_report.key3 = 0;
+		data->keyboard_report.key4 = 0;
+		data->keyboard_report.key5 = 0;
+		data->keyboard_report.key6 = 0;
+		data->keyboard_report.modifiers = 0;
+	}
+	if(data->keyboard_state == clearing || data->keyboard_state == active)
+		data->media_report.keys = 0;
 }
 
 void display_int_on_screen(uint8_t col, uint8_t row)

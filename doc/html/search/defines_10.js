@@ -1,6 +1,7 @@
 var searchData=
 [
   ['sc',['SC',['../lookup_8h.html#a5c334383d944550107f2a3df34dbe3e1',1,'lookup.h']]],
+  ['scan_5fkey_5fbuffer_5flength',['SCAN_KEY_BUFFER_LENGTH',['../keyboard_8h.html#ac2b728463ae48d3aa61340a61be68225',1,'keyboard.h']]],
   ['ser_5fclk_5fclock',['SER_CLK_CLOCK',['../SN54HC595_8h.html#aad169a429e5ef0818f71eb5fe23a87da',1,'SN54HC595.h']]],
   ['ser_5fclk_5fpin',['SER_CLK_PIN',['../SN54HC595_8h.html#a658677654b69826cb3055d18e8f32dc4',1,'SN54HC595.h']]],
   ['ser_5fclk_5fport',['SER_CLK_PORT',['../SN54HC595_8h.html#ac95aabd11f7e6bb2da25170c688280f0',1,'SN54HC595.h']]],

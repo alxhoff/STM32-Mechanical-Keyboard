@@ -2,33 +2,43 @@
 \label{structsend__buffer}\index{send\+\_\+buffer@{send\+\_\+buffer}}
 
 
+Output buffers for the total keyboard H\+ID data, media and keyboard.  
+
+
+
+
 {\ttfamily \#include $<$keyboard.\+h$>$}
 
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{structsix__key__buffer}{six\+\_\+key\+\_\+buffer} \hyperlink{structsend__buffer_ad39820475ee9397a3ea9152c167364f0}{key\+\_\+buf}
+\hyperlink{keyboard_8h_ade7751d5843483b986b63a84a5ea6963}{six\+\_\+key\+\_\+buffer\+\_\+t} \hyperlink{structsend__buffer_a271ff7b0f2d2269b081d21576f388046}{key\+\_\+buf}
 \item 
 uint8\+\_\+t \hyperlink{structsend__buffer_a1ed1ea0b6d0ffbe2af4f8aff77cd5d56}{mod\+\_\+buf}
 \item 
-\hyperlink{structone__key__buffer}{one\+\_\+key\+\_\+buffer} \hyperlink{structsend__buffer_a2b3d51316974a1c39169664fa13b502b}{med\+\_\+buf}
+\hyperlink{keyboard_8h_aba6323f912601b5a724db813a53fdcfe}{one\+\_\+key\+\_\+buffer\+\_\+t} \hyperlink{structsend__buffer_a50a00b397fd66c2f36dc607e82a51daf}{med\+\_\+buf}
 \item 
 uint8\+\_\+t \hyperlink{structsend__buffer_a2584076f9d2f17205d4625411b0d5808}{send\+\_\+flag}
 \end{DoxyCompactItemize}
 
 
+\subsection{Detailed Description}
+Output buffers for the total keyboard H\+ID data, media and keyboard. 
+
+The send buffer is used to buffer the final output data for the keyboard\textquotesingle{}s keypresses, media keys and modifier byte. Its readiness for transmission is indicated by the send\+\_\+flag. 
+
 \subsection{Member Data Documentation}
-\mbox{\Hypertarget{structsend__buffer_ad39820475ee9397a3ea9152c167364f0}\label{structsend__buffer_ad39820475ee9397a3ea9152c167364f0}} 
+\mbox{\Hypertarget{structsend__buffer_a271ff7b0f2d2269b081d21576f388046}\label{structsend__buffer_a271ff7b0f2d2269b081d21576f388046}} 
 \index{send\+\_\+buffer@{send\+\_\+buffer}!key\+\_\+buf@{key\+\_\+buf}}
 \index{key\+\_\+buf@{key\+\_\+buf}!send\+\_\+buffer@{send\+\_\+buffer}}
 \subsubsection{\texorpdfstring{key\+\_\+buf}{key\_buf}}
-{\footnotesize\ttfamily \hyperlink{structsix__key__buffer}{six\+\_\+key\+\_\+buffer} send\+\_\+buffer\+::key\+\_\+buf}
+{\footnotesize\ttfamily \hyperlink{keyboard_8h_ade7751d5843483b986b63a84a5ea6963}{six\+\_\+key\+\_\+buffer\+\_\+t} send\+\_\+buffer\+::key\+\_\+buf}
 
-\mbox{\Hypertarget{structsend__buffer_a2b3d51316974a1c39169664fa13b502b}\label{structsend__buffer_a2b3d51316974a1c39169664fa13b502b}} 
+\mbox{\Hypertarget{structsend__buffer_a50a00b397fd66c2f36dc607e82a51daf}\label{structsend__buffer_a50a00b397fd66c2f36dc607e82a51daf}} 
 \index{send\+\_\+buffer@{send\+\_\+buffer}!med\+\_\+buf@{med\+\_\+buf}}
 \index{med\+\_\+buf@{med\+\_\+buf}!send\+\_\+buffer@{send\+\_\+buffer}}
 \subsubsection{\texorpdfstring{med\+\_\+buf}{med\_buf}}
-{\footnotesize\ttfamily \hyperlink{structone__key__buffer}{one\+\_\+key\+\_\+buffer} send\+\_\+buffer\+::med\+\_\+buf}
+{\footnotesize\ttfamily \hyperlink{keyboard_8h_aba6323f912601b5a724db813a53fdcfe}{one\+\_\+key\+\_\+buffer\+\_\+t} send\+\_\+buffer\+::med\+\_\+buf}
 
 \mbox{\Hypertarget{structsend__buffer_a1ed1ea0b6d0ffbe2af4f8aff77cd5d56}\label{structsend__buffer_a1ed1ea0b6d0ffbe2af4f8aff77cd5d56}} 
 \index{send\+\_\+buffer@{send\+\_\+buffer}!mod\+\_\+buf@{mod\+\_\+buf}}

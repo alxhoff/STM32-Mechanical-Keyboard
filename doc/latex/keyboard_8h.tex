@@ -1,5 +1,10 @@
 \hypertarget{keyboard_8h}{}\section{/home/alxhoff/git/\+Embedded/stm32-\/mech-\/keyboard/\+Nucelo\+Keyboard\+Controller/\+Inc/keyboard.h File Reference}
 \label{keyboard_8h}\index{/home/alxhoff/git/\+Embedded/stm32-\/mech-\/keyboard/\+Nucelo\+Keyboard\+Controller/\+Inc/keyboard.\+h@{/home/alxhoff/git/\+Embedded/stm32-\/mech-\/keyboard/\+Nucelo\+Keyboard\+Controller/\+Inc/keyboard.\+h}}
+
+
+Data types and functions for performing classical keyboard functions.  
+
+
 {\ttfamily \#include \char`\"{}stm32f4xx\+\_\+hal.\+h\char`\"{}}\newline
 {\ttfamily \#include \char`\"{}datatypes.\+h\char`\"{}}\newline
 {\ttfamily \#include \char`\"{}states.\+h\char`\"{}}\newline
@@ -8,30 +13,45 @@
 \begin{DoxyCompactItemize}
 \item 
 struct \hyperlink{structkeyboardHID}{keyboard\+H\+ID}
+\begin{DoxyCompactList}\small\item\em Keyboard H\+ID report. \end{DoxyCompactList}\item 
+struct \hyperlink{structmediaHID}{media\+H\+ID}
 \item 
-struct \hyperlink{structmediaHIDg}{media\+H\+I\+Dg}
-\item 
-struct \hyperlink{structkey}{key}
-\item 
+struct \hyperlink{structsingle__key}{single\+\_\+key}
+\begin{DoxyCompactList}\small\item\em Represents a single keyboard key. \end{DoxyCompactList}\item 
 struct \hyperlink{structkeypress__buffer}{keypress\+\_\+buffer}
-\item 
+\begin{DoxyCompactList}\small\item\em Keypress input buffer used to store keystroke input from keyboard. \end{DoxyCompactList}\item 
 struct \hyperlink{structsix__key__buffer}{six\+\_\+key\+\_\+buffer}
-\item 
+\begin{DoxyCompactList}\small\item\em A six key buffer used to buffer keyboard H\+ID reports. \end{DoxyCompactList}\item 
 struct \hyperlink{structone__key__buffer}{one\+\_\+key\+\_\+buffer}
-\item 
+\begin{DoxyCompactList}\small\item\em Single key buffer. \end{DoxyCompactList}\item 
 struct \hyperlink{structsend__buffer}{send\+\_\+buffer}
-\item 
+\begin{DoxyCompactList}\small\item\em Output buffers for the total keyboard H\+ID data, media and keyboard. \end{DoxyCompactList}\item 
 struct \hyperlink{structkeyboard__HID__data}{keyboard\+\_\+\+H\+I\+D\+\_\+data}
-\item 
+\begin{DoxyCompactList}\small\item\em Stores all the H\+ID data required for the keyboard. \end{DoxyCompactList}\item 
 struct \hyperlink{structkeyboard__device}{keyboard\+\_\+device}
+\begin{DoxyCompactList}\small\item\em Stores the G\+P\+IO interface information. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{keyboard_8h_ac2b728463ae48d3aa61340a61be68225}{S\+C\+A\+N\+\_\+\+K\+E\+Y\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+L\+E\+N\+G\+TH}~20
 \end{DoxyCompactItemize}
 \subsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
-typedef struct \hyperlink{structkeyboardHID}{keyboard\+H\+ID} \hyperlink{keyboard_8h_ae363bda14329c2fd40dea1b02411741a}{keyboard\+H\+I\+D\+\_\+t}
-\item 
-typedef struct \hyperlink{structmediaHIDg}{media\+H\+I\+Dg} \hyperlink{keyboard_8h_aeca50d10ea64df413e422cf38eab9cd9}{media\+H\+I\+D\+\_\+t}
-\item 
+typedef struct \hyperlink{structkeyboardHID}{keyboard\+H\+ID} \hyperlink{keyboard_8h_ae1e2d2809df85854a9c34195cd7be87b}{keyboard\+H\+I\+D\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Typedef of \hyperlink{structkeyboardHID}{keyboard\+H\+ID}. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{structmediaHID}{media\+H\+ID} \hyperlink{keyboard_8h_a863aa6aa64424c7553e59386523412fe}{media\+H\+I\+D\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Typedef of \hyperlink{structmediaHIDg}{media\+H\+I\+Dg}. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{structsingle__key}{single\+\_\+key} \hyperlink{keyboard_8h_aa504c5d09bf7cea600b72b6003a8772c}{single\+\_\+key\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Typedef of \hyperlink{structsingle__key}{single\+\_\+key}. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{structkeypress__buffer}{keypress\+\_\+buffer} \hyperlink{keyboard_8h_ab586bec625b4d7aa91ae837cd567b247}{keypress\+\_\+buffer\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Typedef of \hyperlink{structkeypress__buffer}{keypress\+\_\+buffer}. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{structsix__key__buffer}{six\+\_\+key\+\_\+buffer} \hyperlink{keyboard_8h_ade7751d5843483b986b63a84a5ea6963}{six\+\_\+key\+\_\+buffer\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Typedef of \hyperlink{structsix__key__buffer}{six\+\_\+key\+\_\+buffer}. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{structone__key__buffer}{one\+\_\+key\+\_\+buffer} \hyperlink{keyboard_8h_aba6323f912601b5a724db813a53fdcfe}{one\+\_\+key\+\_\+buffer\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Typedef of \hyperlink{structone__key__buffer}{one\+\_\+key\+\_\+buffer}. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{structsend__buffer}{send\+\_\+buffer} \hyperlink{keyboard_8h_ac075e64fc5b9925d7511d8afb5bdb2d2}{send\+\_\+buffer\+\_\+t}
+\begin{DoxyCompactList}\small\item\em Typedef of \hyperlink{structsend__buffer}{send\+\_\+buffer}. \end{DoxyCompactList}\item 
 typedef struct \hyperlink{structkeyboard__HID__data}{keyboard\+\_\+\+H\+I\+D\+\_\+data} \hyperlink{keyboard_8h_a170270f39b7146a83d668bb94ee275f0}{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t}
 \item 
 typedef struct \hyperlink{structkeyboard__device}{keyboard\+\_\+device} \hyperlink{keyboard_8h_a5a7e75cbef1b69dd1f18126ee9a44390}{keyboard\+\_\+device\+\_\+t}
@@ -40,26 +60,35 @@ typedef struct \hyperlink{structkeyboard__device}{keyboard\+\_\+device} \hyperli
 \begin{DoxyCompactItemize}
 \item 
 int8\+\_\+t \hyperlink{keyboard_8h_a452de650eae4de097b354fffcdd581a5}{keyboard\+\_\+init} (\hyperlink{datatypes_8h_a3f91b8703c531938c9e049363f0211f3}{key\+\_\+devices\+\_\+t} $\ast$keyboard\+\_\+devices, G\+P\+I\+O\+\_\+\+Type\+Def $\ast$\hyperlink{extern_8h_ad9b4d2fea4c7b7d5158d56075c28e9ad}{row\+\_\+ports}\mbox{[}\hyperlink{keymap_8h_ab89c69b09d4ca01020b7c40d9ca2bab8}{K\+E\+Y\+B\+O\+A\+R\+D\+\_\+\+R\+O\+WS}\mbox{]}, uint16\+\_\+t row\+\_\+pins\mbox{[}\hyperlink{keymap_8h_ab89c69b09d4ca01020b7c40d9ca2bab8}{K\+E\+Y\+B\+O\+A\+R\+D\+\_\+\+R\+O\+WS}\mbox{]})
-\item 
-int8\+\_\+t \hyperlink{keyboard_8h_a86312a522a094b1ba780982dcb332590}{process\+\_\+key\+\_\+buf} (\hyperlink{datatypes_8h_ab6ae011601a0fec803428af1f5920fc0}{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t} $\ast$data, \hyperlink{datatypes_8h_ac282a7a696b1d7d36df8c0f4ebce07e7}{keymap\+\_\+list\+\_\+t} $\ast$layer\+\_\+list)
-\item 
-int8\+\_\+t \hyperlink{keyboard_8h_ad24b2fb66a7dd16687de627115aaca8d}{process\+\_\+keyboard\+\_\+flags} (\hyperlink{datatypes_8h_ab6ae011601a0fec803428af1f5920fc0}{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t} $\ast$data)
-\item 
+\begin{DoxyCompactList}\small\item\em Inits the keyboard device and G\+P\+IO pins. \end{DoxyCompactList}\item 
+int8\+\_\+t \hyperlink{keyboard_8h_a86312a522a094b1ba780982dcb332590}{process\+\_\+key\+\_\+buf} (\hyperlink{datatypes_8h_a9539035ff5404f9a5fb4c1985d2f3fcc}{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t} $\ast$data, \hyperlink{datatypes_8h_ac282a7a696b1d7d36df8c0f4ebce07e7}{keymap\+\_\+list\+\_\+t} $\ast$layer\+\_\+list)
+\begin{DoxyCompactList}\small\item\em Processes the input key buffer. \end{DoxyCompactList}\item 
+int8\+\_\+t \hyperlink{keyboard_8h_ad24b2fb66a7dd16687de627115aaca8d}{process\+\_\+keyboard\+\_\+flags} (\hyperlink{datatypes_8h_a9539035ff5404f9a5fb4c1985d2f3fcc}{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t} $\ast$data)
+\begin{DoxyCompactList}\small\item\em Processes any pending H\+ID reports. \end{DoxyCompactList}\item 
 uint8\+\_\+t \hyperlink{keyboard_8h_a442d58541dc886385963c9447895106f}{process\+\_\+single\+\_\+key} (\hyperlink{datatypes_8h_ac282a7a696b1d7d36df8c0f4ebce07e7}{keymap\+\_\+list\+\_\+t} $\ast$layer\+\_\+list, uint8\+\_\+t col, uint8\+\_\+t row)
-\item 
-void \hyperlink{keyboard_8h_a00ff7889fd839635e4a416b8ad53ca58}{clear\+\_\+keyboard\+\_\+report} (\hyperlink{datatypes_8h_ab6ae011601a0fec803428af1f5920fc0}{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t} $\ast$data)
-\end{DoxyCompactItemize}
-\subsection*{Variables}
-\begin{DoxyCompactItemize}
-\item 
-\hyperlink{structkey}{key} \hyperlink{keyboard_8h_a4faf0d14d2e6866ed2996e81ab38db63}{key\+\_\+buf} \mbox{[}20\mbox{]}
-\item 
-uint8\+\_\+t \hyperlink{keyboard_8h_a6ad0fccdab0a781d254d211f830731b0}{keypress\+\_\+buffer\+\_\+index}
-\item 
-\hyperlink{structsend__buffer}{send\+\_\+buffer} \hyperlink{keyboard_8h_a6854bf4ff167f9c99beb892ca696fb48}{keys\+\_\+to\+\_\+send}
-\item 
-\hyperlink{structsix__key__buffer}{six\+\_\+key\+\_\+buffer} \hyperlink{keyboard_8h_a8ca8123d835d25ab1362ef05d49ec75e}{approved\+\_\+keys}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Retrieves the key code for a single key. \end{DoxyCompactList}\item 
+void \hyperlink{keyboard_8h_a00ff7889fd839635e4a416b8ad53ca58}{clear\+\_\+keyboard\+\_\+report} (\hyperlink{datatypes_8h_a9539035ff5404f9a5fb4c1985d2f3fcc}{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t} $\ast$data)
+\begin{DoxyCompactList}\small\item\em Clears the keyboard H\+ID report. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Data types and functions for performing classical keyboard functions. 
+
+\begin{DoxyAuthor}{Author}
+Alex Hoffman 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+11 October 2017 While the keyboard offers more advanced features, the classical keyboard I/O features of the keyboard are implemented within this file 
+\end{DoxyDate}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{keyboard_8h_ac2b728463ae48d3aa61340a61be68225}\label{keyboard_8h_ac2b728463ae48d3aa61340a61be68225}} 
+\index{keyboard.\+h@{keyboard.\+h}!S\+C\+A\+N\+\_\+\+K\+E\+Y\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+L\+E\+N\+G\+TH@{S\+C\+A\+N\+\_\+\+K\+E\+Y\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+L\+E\+N\+G\+TH}}
+\index{S\+C\+A\+N\+\_\+\+K\+E\+Y\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+L\+E\+N\+G\+TH@{S\+C\+A\+N\+\_\+\+K\+E\+Y\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+L\+E\+N\+G\+TH}!keyboard.\+h@{keyboard.\+h}}
+\subsubsection{\texorpdfstring{S\+C\+A\+N\+\_\+\+K\+E\+Y\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+L\+E\+N\+G\+TH}{SCAN\_KEY\_BUFFER\_LENGTH}}
+{\footnotesize\ttfamily \#define S\+C\+A\+N\+\_\+\+K\+E\+Y\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+L\+E\+N\+G\+TH~20}
+
 
 
 \subsection{Typedef Documentation}
@@ -67,25 +96,83 @@ uint8\+\_\+t \hyperlink{keyboard_8h_a6ad0fccdab0a781d254d211f830731b0}{keypress\
 \index{keyboard.\+h@{keyboard.\+h}!keyboard\+\_\+device\+\_\+t@{keyboard\+\_\+device\+\_\+t}}
 \index{keyboard\+\_\+device\+\_\+t@{keyboard\+\_\+device\+\_\+t}!keyboard.\+h@{keyboard.\+h}}
 \subsubsection{\texorpdfstring{keyboard\+\_\+device\+\_\+t}{keyboard\_device\_t}}
-{\footnotesize\ttfamily typedef struct \hyperlink{structkeyboard__device}{keyboard\+\_\+device}  \hyperlink{datatypes_8h_a903f583e3cefd5881572b61025c5416f}{keyboard\+\_\+device\+\_\+t}}
+{\footnotesize\ttfamily typedef struct \hyperlink{structkeyboard__device}{keyboard\+\_\+device}  \hyperlink{datatypes_8h_ad5787d8aae284c464e53e68876e82918}{keyboard\+\_\+device\+\_\+t}}
 
 \mbox{\Hypertarget{keyboard_8h_a170270f39b7146a83d668bb94ee275f0}\label{keyboard_8h_a170270f39b7146a83d668bb94ee275f0}} 
 \index{keyboard.\+h@{keyboard.\+h}!keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t@{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t}}
 \index{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t@{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t}!keyboard.\+h@{keyboard.\+h}}
 \subsubsection{\texorpdfstring{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t}{keyboard\_HID\_data\_t}}
-{\footnotesize\ttfamily typedef struct \hyperlink{structkeyboard__HID__data}{keyboard\+\_\+\+H\+I\+D\+\_\+data}  \hyperlink{datatypes_8h_ab6ae011601a0fec803428af1f5920fc0}{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t}}
+{\footnotesize\ttfamily typedef struct \hyperlink{structkeyboard__HID__data}{keyboard\+\_\+\+H\+I\+D\+\_\+data}  \hyperlink{datatypes_8h_a9539035ff5404f9a5fb4c1985d2f3fcc}{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t}}
 
-\mbox{\Hypertarget{keyboard_8h_ae363bda14329c2fd40dea1b02411741a}\label{keyboard_8h_ae363bda14329c2fd40dea1b02411741a}} 
+\mbox{\Hypertarget{keyboard_8h_ae1e2d2809df85854a9c34195cd7be87b}\label{keyboard_8h_ae1e2d2809df85854a9c34195cd7be87b}} 
 \index{keyboard.\+h@{keyboard.\+h}!keyboard\+H\+I\+D\+\_\+t@{keyboard\+H\+I\+D\+\_\+t}}
 \index{keyboard\+H\+I\+D\+\_\+t@{keyboard\+H\+I\+D\+\_\+t}!keyboard.\+h@{keyboard.\+h}}
 \subsubsection{\texorpdfstring{keyboard\+H\+I\+D\+\_\+t}{keyboardHID\_t}}
-{\footnotesize\ttfamily typedef struct \hyperlink{structkeyboardHID}{keyboard\+H\+ID} \hyperlink{keyboard_8h_ae363bda14329c2fd40dea1b02411741a}{keyboard\+H\+I\+D\+\_\+t}}
+{\footnotesize\ttfamily \hyperlink{keyboard_8h_ae1e2d2809df85854a9c34195cd7be87b}{keyboard\+H\+I\+D\+\_\+t}}
 
-\mbox{\Hypertarget{keyboard_8h_aeca50d10ea64df413e422cf38eab9cd9}\label{keyboard_8h_aeca50d10ea64df413e422cf38eab9cd9}} 
+
+
+Typedef of \hyperlink{structkeyboardHID}{keyboard\+H\+ID}. 
+
+\mbox{\Hypertarget{keyboard_8h_ab586bec625b4d7aa91ae837cd567b247}\label{keyboard_8h_ab586bec625b4d7aa91ae837cd567b247}} 
+\index{keyboard.\+h@{keyboard.\+h}!keypress\+\_\+buffer\+\_\+t@{keypress\+\_\+buffer\+\_\+t}}
+\index{keypress\+\_\+buffer\+\_\+t@{keypress\+\_\+buffer\+\_\+t}!keyboard.\+h@{keyboard.\+h}}
+\subsubsection{\texorpdfstring{keypress\+\_\+buffer\+\_\+t}{keypress\_buffer\_t}}
+{\footnotesize\ttfamily \hyperlink{keyboard_8h_ab586bec625b4d7aa91ae837cd567b247}{keypress\+\_\+buffer\+\_\+t}}
+
+
+
+Typedef of \hyperlink{structkeypress__buffer}{keypress\+\_\+buffer}. 
+
+\mbox{\Hypertarget{keyboard_8h_a863aa6aa64424c7553e59386523412fe}\label{keyboard_8h_a863aa6aa64424c7553e59386523412fe}} 
 \index{keyboard.\+h@{keyboard.\+h}!media\+H\+I\+D\+\_\+t@{media\+H\+I\+D\+\_\+t}}
 \index{media\+H\+I\+D\+\_\+t@{media\+H\+I\+D\+\_\+t}!keyboard.\+h@{keyboard.\+h}}
 \subsubsection{\texorpdfstring{media\+H\+I\+D\+\_\+t}{mediaHID\_t}}
-{\footnotesize\ttfamily typedef struct \hyperlink{structmediaHIDg}{media\+H\+I\+Dg}  \hyperlink{keyboard_8h_aeca50d10ea64df413e422cf38eab9cd9}{media\+H\+I\+D\+\_\+t}}
+{\footnotesize\ttfamily \hyperlink{keyboard_8h_a863aa6aa64424c7553e59386523412fe}{media\+H\+I\+D\+\_\+t}}
+
+
+
+Typedef of \hyperlink{structmediaHIDg}{media\+H\+I\+Dg}. 
+
+\mbox{\Hypertarget{keyboard_8h_aba6323f912601b5a724db813a53fdcfe}\label{keyboard_8h_aba6323f912601b5a724db813a53fdcfe}} 
+\index{keyboard.\+h@{keyboard.\+h}!one\+\_\+key\+\_\+buffer\+\_\+t@{one\+\_\+key\+\_\+buffer\+\_\+t}}
+\index{one\+\_\+key\+\_\+buffer\+\_\+t@{one\+\_\+key\+\_\+buffer\+\_\+t}!keyboard.\+h@{keyboard.\+h}}
+\subsubsection{\texorpdfstring{one\+\_\+key\+\_\+buffer\+\_\+t}{one\_key\_buffer\_t}}
+{\footnotesize\ttfamily \hyperlink{keyboard_8h_aba6323f912601b5a724db813a53fdcfe}{one\+\_\+key\+\_\+buffer\+\_\+t}}
+
+
+
+Typedef of \hyperlink{structone__key__buffer}{one\+\_\+key\+\_\+buffer}. 
+
+\mbox{\Hypertarget{keyboard_8h_ac075e64fc5b9925d7511d8afb5bdb2d2}\label{keyboard_8h_ac075e64fc5b9925d7511d8afb5bdb2d2}} 
+\index{keyboard.\+h@{keyboard.\+h}!send\+\_\+buffer\+\_\+t@{send\+\_\+buffer\+\_\+t}}
+\index{send\+\_\+buffer\+\_\+t@{send\+\_\+buffer\+\_\+t}!keyboard.\+h@{keyboard.\+h}}
+\subsubsection{\texorpdfstring{send\+\_\+buffer\+\_\+t}{send\_buffer\_t}}
+{\footnotesize\ttfamily \hyperlink{keyboard_8h_ac075e64fc5b9925d7511d8afb5bdb2d2}{send\+\_\+buffer\+\_\+t}}
+
+
+
+Typedef of \hyperlink{structsend__buffer}{send\+\_\+buffer}. 
+
+\mbox{\Hypertarget{keyboard_8h_aa504c5d09bf7cea600b72b6003a8772c}\label{keyboard_8h_aa504c5d09bf7cea600b72b6003a8772c}} 
+\index{keyboard.\+h@{keyboard.\+h}!single\+\_\+key\+\_\+t@{single\+\_\+key\+\_\+t}}
+\index{single\+\_\+key\+\_\+t@{single\+\_\+key\+\_\+t}!keyboard.\+h@{keyboard.\+h}}
+\subsubsection{\texorpdfstring{single\+\_\+key\+\_\+t}{single\_key\_t}}
+{\footnotesize\ttfamily \hyperlink{keyboard_8h_aa504c5d09bf7cea600b72b6003a8772c}{single\+\_\+key\+\_\+t}}
+
+
+
+Typedef of \hyperlink{structsingle__key}{single\+\_\+key}. 
+
+\mbox{\Hypertarget{keyboard_8h_ade7751d5843483b986b63a84a5ea6963}\label{keyboard_8h_ade7751d5843483b986b63a84a5ea6963}} 
+\index{keyboard.\+h@{keyboard.\+h}!six\+\_\+key\+\_\+buffer\+\_\+t@{six\+\_\+key\+\_\+buffer\+\_\+t}}
+\index{six\+\_\+key\+\_\+buffer\+\_\+t@{six\+\_\+key\+\_\+buffer\+\_\+t}!keyboard.\+h@{keyboard.\+h}}
+\subsubsection{\texorpdfstring{six\+\_\+key\+\_\+buffer\+\_\+t}{six\_key\_buffer\_t}}
+{\footnotesize\ttfamily \hyperlink{keyboard_8h_ade7751d5843483b986b63a84a5ea6963}{six\+\_\+key\+\_\+buffer\+\_\+t}}
+
+
+
+Typedef of \hyperlink{structsix__key__buffer}{six\+\_\+key\+\_\+buffer}. 
 
 
 
@@ -94,7 +181,11 @@ uint8\+\_\+t \hyperlink{keyboard_8h_a6ad0fccdab0a781d254d211f830731b0}{keypress\
 \index{keyboard.\+h@{keyboard.\+h}!clear\+\_\+keyboard\+\_\+report@{clear\+\_\+keyboard\+\_\+report}}
 \index{clear\+\_\+keyboard\+\_\+report@{clear\+\_\+keyboard\+\_\+report}!keyboard.\+h@{keyboard.\+h}}
 \subsubsection{\texorpdfstring{clear\+\_\+keyboard\+\_\+report()}{clear\_keyboard\_report()}}
-{\footnotesize\ttfamily void clear\+\_\+keyboard\+\_\+report (\begin{DoxyParamCaption}\item[{\hyperlink{datatypes_8h_ab6ae011601a0fec803428af1f5920fc0}{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t} $\ast$}]{data }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void clear\+\_\+keyboard\+\_\+report (\begin{DoxyParamCaption}\item[{\hyperlink{datatypes_8h_a9539035ff5404f9a5fb4c1985d2f3fcc}{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t} $\ast$}]{data }\end{DoxyParamCaption})}
+
+
+
+Clears the keyboard H\+ID report. 
 
 \mbox{\Hypertarget{keyboard_8h_a452de650eae4de097b354fffcdd581a5}\label{keyboard_8h_a452de650eae4de097b354fffcdd581a5}} 
 \index{keyboard.\+h@{keyboard.\+h}!keyboard\+\_\+init@{keyboard\+\_\+init}}
@@ -102,18 +193,66 @@ uint8\+\_\+t \hyperlink{keyboard_8h_a6ad0fccdab0a781d254d211f830731b0}{keypress\
 \subsubsection{\texorpdfstring{keyboard\+\_\+init()}{keyboard\_init()}}
 {\footnotesize\ttfamily int8\+\_\+t keyboard\+\_\+init (\begin{DoxyParamCaption}\item[{\hyperlink{datatypes_8h_a3f91b8703c531938c9e049363f0211f3}{key\+\_\+devices\+\_\+t} $\ast$}]{keyboard\+\_\+devices,  }\item[{G\+P\+I\+O\+\_\+\+Type\+Def $\ast$}]{row\+\_\+ports\mbox{[}\+K\+E\+Y\+B\+O\+A\+R\+D\+\_\+\+R\+O\+W\+S\mbox{]},  }\item[{uint16\+\_\+t}]{row\+\_\+pins\mbox{[}\+K\+E\+Y\+B\+O\+A\+R\+D\+\_\+\+R\+O\+W\+S\mbox{]} }\end{DoxyParamCaption})}
 
+
+
+Inits the keyboard device and G\+P\+IO pins. 
+
+To initialise the keyboard device, this function must be called with the colum G\+P\+IO pins and ports, stored in arrays, passed to it. The G\+P\+IO are initialised and all default values are set.
+
+
+\begin{DoxyParams}{Parameters}
+{\em keyboard\+\_\+devices} & global keyboard devices struct \\
+\hline
+{\em row\+\_\+ports} & array of G\+P\+IO pointers to the row ports \\
+\hline
+{\em row\+\_\+pins} & array of G\+P\+IO pin values \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success 
+\end{DoxyReturn}
 \mbox{\Hypertarget{keyboard_8h_a86312a522a094b1ba780982dcb332590}\label{keyboard_8h_a86312a522a094b1ba780982dcb332590}} 
 \index{keyboard.\+h@{keyboard.\+h}!process\+\_\+key\+\_\+buf@{process\+\_\+key\+\_\+buf}}
 \index{process\+\_\+key\+\_\+buf@{process\+\_\+key\+\_\+buf}!keyboard.\+h@{keyboard.\+h}}
 \subsubsection{\texorpdfstring{process\+\_\+key\+\_\+buf()}{process\_key\_buf()}}
-{\footnotesize\ttfamily int8\+\_\+t process\+\_\+key\+\_\+buf (\begin{DoxyParamCaption}\item[{\hyperlink{datatypes_8h_ab6ae011601a0fec803428af1f5920fc0}{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t} $\ast$}]{data,  }\item[{\hyperlink{datatypes_8h_ac282a7a696b1d7d36df8c0f4ebce07e7}{keymap\+\_\+list\+\_\+t} $\ast$}]{layer\+\_\+list }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int8\+\_\+t process\+\_\+key\+\_\+buf (\begin{DoxyParamCaption}\item[{\hyperlink{datatypes_8h_a9539035ff5404f9a5fb4c1985d2f3fcc}{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t} $\ast$}]{data,  }\item[{\hyperlink{datatypes_8h_ac282a7a696b1d7d36df8c0f4ebce07e7}{keymap\+\_\+list\+\_\+t} $\ast$}]{layer\+\_\+list }\end{DoxyParamCaption})}
 
+
+
+Processes the input key buffer. 
+
+Once the keyboard scan is complete and the input key buffer has been populated the buffer must be processed. The keyboard state is first handled, going to state code if needed. The buffer is then processed, sorting keys into either modifier keys, media keys or keyboard keys. Once sorted the key codes or bitmasks are retrieved/set. Normal keyboard button presses are first compared against the last H\+ID report as repeating keys get priority in the the next H\+ID report as they represent keys being held down. Keys not in the previous H\+ID report are shortlisted such that after all keys have been converted into key codes the H\+ID report can be filled with shortlisted keys.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & global keyboard H\+ID data \\
+\hline
+{\em layer\+\_\+list} & layer list used to convert key\+\_\+codes \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success 
+\end{DoxyReturn}
 \mbox{\Hypertarget{keyboard_8h_ad24b2fb66a7dd16687de627115aaca8d}\label{keyboard_8h_ad24b2fb66a7dd16687de627115aaca8d}} 
 \index{keyboard.\+h@{keyboard.\+h}!process\+\_\+keyboard\+\_\+flags@{process\+\_\+keyboard\+\_\+flags}}
 \index{process\+\_\+keyboard\+\_\+flags@{process\+\_\+keyboard\+\_\+flags}!keyboard.\+h@{keyboard.\+h}}
 \subsubsection{\texorpdfstring{process\+\_\+keyboard\+\_\+flags()}{process\_keyboard\_flags()}}
-{\footnotesize\ttfamily int8\+\_\+t process\+\_\+keyboard\+\_\+flags (\begin{DoxyParamCaption}\item[{\hyperlink{datatypes_8h_ab6ae011601a0fec803428af1f5920fc0}{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t} $\ast$}]{data }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int8\+\_\+t process\+\_\+keyboard\+\_\+flags (\begin{DoxyParamCaption}\item[{\hyperlink{datatypes_8h_a9539035ff5404f9a5fb4c1985d2f3fcc}{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t} $\ast$}]{data }\end{DoxyParamCaption})}
 
+
+
+Processes any pending H\+ID reports. 
+
+Once a H\+ID report is pending the keyboard state/media state will be set to active, if the state is such then the current pending report is sent. If there is not report pending but one was just sent and empty report is sent. This corresponds to the state \char`\"{}clearing\char`\"{}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & global keyboard H\+ID data \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success 
+\end{DoxyReturn}
 \mbox{\Hypertarget{keyboard_8h_a442d58541dc886385963c9447895106f}\label{keyboard_8h_a442d58541dc886385963c9447895106f}} 
 \index{keyboard.\+h@{keyboard.\+h}!process\+\_\+single\+\_\+key@{process\+\_\+single\+\_\+key}}
 \index{process\+\_\+single\+\_\+key@{process\+\_\+single\+\_\+key}!keyboard.\+h@{keyboard.\+h}}
@@ -122,28 +261,19 @@ uint8\+\_\+t \hyperlink{keyboard_8h_a6ad0fccdab0a781d254d211f830731b0}{keypress\
 
 
 
-\subsection{Variable Documentation}
-\mbox{\Hypertarget{keyboard_8h_a8ca8123d835d25ab1362ef05d49ec75e}\label{keyboard_8h_a8ca8123d835d25ab1362ef05d49ec75e}} 
-\index{keyboard.\+h@{keyboard.\+h}!approved\+\_\+keys@{approved\+\_\+keys}}
-\index{approved\+\_\+keys@{approved\+\_\+keys}!keyboard.\+h@{keyboard.\+h}}
-\subsubsection{\texorpdfstring{approved\+\_\+keys}{approved\_keys}}
-{\footnotesize\ttfamily \hyperlink{structsix__key__buffer}{six\+\_\+key\+\_\+buffer} approved\+\_\+keys}
+Retrieves the key code for a single key. 
 
-\mbox{\Hypertarget{keyboard_8h_a4faf0d14d2e6866ed2996e81ab38db63}\label{keyboard_8h_a4faf0d14d2e6866ed2996e81ab38db63}} 
-\index{keyboard.\+h@{keyboard.\+h}!key\+\_\+buf@{key\+\_\+buf}}
-\index{key\+\_\+buf@{key\+\_\+buf}!keyboard.\+h@{keyboard.\+h}}
-\subsubsection{\texorpdfstring{key\+\_\+buf}{key\_buf}}
-{\footnotesize\ttfamily \hyperlink{structkey}{key} key\+\_\+buf\mbox{[}20\mbox{]}}
+The key code retrieved is taken from the most underlying layer.
 
-\mbox{\Hypertarget{keyboard_8h_a6ad0fccdab0a781d254d211f830731b0}\label{keyboard_8h_a6ad0fccdab0a781d254d211f830731b0}} 
-\index{keyboard.\+h@{keyboard.\+h}!keypress\+\_\+buffer\+\_\+index@{keypress\+\_\+buffer\+\_\+index}}
-\index{keypress\+\_\+buffer\+\_\+index@{keypress\+\_\+buffer\+\_\+index}!keyboard.\+h@{keyboard.\+h}}
-\subsubsection{\texorpdfstring{keypress\+\_\+buffer\+\_\+index}{keypress\_buffer\_index}}
-{\footnotesize\ttfamily uint8\+\_\+t keypress\+\_\+buffer\+\_\+index}
 
-\mbox{\Hypertarget{keyboard_8h_a6854bf4ff167f9c99beb892ca696fb48}\label{keyboard_8h_a6854bf4ff167f9c99beb892ca696fb48}} 
-\index{keyboard.\+h@{keyboard.\+h}!keys\+\_\+to\+\_\+send@{keys\+\_\+to\+\_\+send}}
-\index{keys\+\_\+to\+\_\+send@{keys\+\_\+to\+\_\+send}!keyboard.\+h@{keyboard.\+h}}
-\subsubsection{\texorpdfstring{keys\+\_\+to\+\_\+send}{keys\_to\_send}}
-{\footnotesize\ttfamily \hyperlink{structsend__buffer}{send\+\_\+buffer} keys\+\_\+to\+\_\+send}
-
+\begin{DoxyParams}{Parameters}
+{\em layer\+\_\+list} & layer list to be used to extracting the key code \\
+\hline
+{\em col} & column of the key \\
+\hline
+{\em row} & row of the key \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+key code of the key from the most underlying layer 
+\end{DoxyReturn}

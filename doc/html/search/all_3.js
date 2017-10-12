@@ -20,7 +20,7 @@ var searchData=
   ['clock_5fenable',['CLOCK_ENABLE',['../SN54HC595_8h.html#ad1f9a62fbc67b94b01ea7e3cf385a029',1,'SN54HC595.h']]],
   ['clock_5fswitch',['CLOCK_SWITCH',['../SN54HC595_8h.html#aa2291724980b7b9e24c0c5efb161d1a9',1,'SN54HC595.h']]],
   ['cmsis',['CMSIS',['../group__CMSIS.html',1,'']]],
-  ['col',['col',['../structkey.html#a9b24ae59293fde52b58a7a4ced950760',1,'key']]],
+  ['col',['col',['../structsingle__key.html#a246a23103a0616c1c92fee6c921d6cf6',1,'single_key']]],
   ['col0_5fgpio_5fport',['COL0_GPIO_Port',['../main_8h.html#a7bdcadd1366be3c9e7564e5ab7e9c706',1,'main.h']]],
   ['col0_5fpin',['COL0_Pin',['../main_8h.html#ae0cad6797aee9be3d19dd52bfe272498',1,'main.h']]],
   ['col1_5fgpio_5fport',['COL1_GPIO_Port',['../main_8h.html#aa97c9ef67ff47bf8ec6c3789641b572d',1,'main.h']]],

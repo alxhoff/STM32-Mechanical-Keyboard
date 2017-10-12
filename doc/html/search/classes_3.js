@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['key',['key',['../structkey.html',1,'']]],
   ['key_5fcode_5fw_5fmod',['key_code_w_mod',['../structkey__code__w__mod.html',1,'']]],
   ['key_5fdevices',['key_devices',['../structkey__devices.html',1,'']]],
   ['keyboard_5fdevice',['keyboard_device',['../structkeyboard__device.html',1,'']]],

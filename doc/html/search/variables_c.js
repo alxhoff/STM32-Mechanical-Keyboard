@@ -1,7 +1,7 @@
 var searchData=
 [
   ['macro_5ftable',['macro_table',['../structkey__devices.html#a9f7692e28c20c214b10d8a495d39332a',1,'key_devices']]],
-  ['med_5fbuf',['med_buf',['../structsend__buffer.html#a2b3d51316974a1c39169664fa13b502b',1,'send_buffer']]],
+  ['med_5fbuf',['med_buf',['../structsend__buffer.html#a50a00b397fd66c2f36dc607e82a51daf',1,'send_buffer']]],
   ['media_5freport',['media_report',['../structkeyboard__HID__data.html#aeaf1a6f8022be4e979a747412abc5d20',1,'keyboard_HID_data']]],
   ['media_5fstate',['media_state',['../structkeyboard__HID__data.html#a93abdb2e65e86baa42983d4e25dfcfe3',1,'keyboard_HID_data']]],
   ['message',['message',['../structscreen__init.html#a18d6e9f7b76f4ffaaf2385b620e3e64e',1,'screen_init']]],

@@ -2,6 +2,11 @@
 \label{structkeyboard__HID__data}\index{keyboard\+\_\+\+H\+I\+D\+\_\+data@{keyboard\+\_\+\+H\+I\+D\+\_\+data}}
 
 
+Stores all the H\+ID data required for the keyboard.  
+
+
+
+
 {\ttfamily \#include $<$keyboard.\+h$>$}
 
 \subsection*{Public Attributes}
@@ -9,38 +14,43 @@
 \item 
 uint8\+\_\+t \hyperlink{structkeyboard__HID__data_ac6ff0934ffaa8af4a7357fa9c262f610}{process\+\_\+key\+\_\+buf}
 \item 
-\hyperlink{keyboard_8h_ae363bda14329c2fd40dea1b02411741a}{keyboard\+H\+I\+D\+\_\+t} \hyperlink{structkeyboard__HID__data_a00c66ed8ebc503cf1266ff8261f64d0c}{keyboard\+\_\+report}
+\hyperlink{keyboard_8h_ae1e2d2809df85854a9c34195cd7be87b}{keyboard\+H\+I\+D\+\_\+t} \hyperlink{structkeyboard__HID__data_a00c66ed8ebc503cf1266ff8261f64d0c}{keyboard\+\_\+report}
 \item 
 \hyperlink{states_8h_a97ae098857b45ee4ac9f7ae3a41a7aff}{report\+\_\+states} \hyperlink{structkeyboard__HID__data_a5cc61600ba30d39b829d21187d97c74c}{keyboard\+\_\+state}
 \item 
-\hyperlink{keyboard_8h_aeca50d10ea64df413e422cf38eab9cd9}{media\+H\+I\+D\+\_\+t} \hyperlink{structkeyboard__HID__data_aeaf1a6f8022be4e979a747412abc5d20}{media\+\_\+report}
+\hyperlink{keyboard_8h_a863aa6aa64424c7553e59386523412fe}{media\+H\+I\+D\+\_\+t} \hyperlink{structkeyboard__HID__data_aeaf1a6f8022be4e979a747412abc5d20}{media\+\_\+report}
 \item 
 \hyperlink{states_8h_a97ae098857b45ee4ac9f7ae3a41a7aff}{report\+\_\+states} \hyperlink{structkeyboard__HID__data_a93abdb2e65e86baa42983d4e25dfcfe3}{media\+\_\+state}
 \item 
-\hyperlink{structsend__buffer}{send\+\_\+buffer} \hyperlink{structkeyboard__HID__data_a2ae73fbdabbfa5bb56f3c97f3a361780}{out\+\_\+buf}
+\hyperlink{keyboard_8h_ac075e64fc5b9925d7511d8afb5bdb2d2}{send\+\_\+buffer\+\_\+t} \hyperlink{structkeyboard__HID__data_a06a382dbb1ae17ec5fbb37d159ba2d53}{out\+\_\+buf}
 \item 
-\hyperlink{structsix__key__buffer}{six\+\_\+key\+\_\+buffer} \hyperlink{structkeyboard__HID__data_a984ec97a0da585ce6818a3860748eb36}{shortlist\+\_\+keys}
+\hyperlink{keyboard_8h_ade7751d5843483b986b63a84a5ea6963}{six\+\_\+key\+\_\+buffer\+\_\+t} \hyperlink{structkeyboard__HID__data_ad16a61decda61e908979f614f4052a1b}{shortlist\+\_\+keys}
 \item 
 uint8\+\_\+t \hyperlink{structkeyboard__HID__data_aa9ecfbfca2446bbfbeffbb0ac5d9f157}{prev\+\_\+report\+\_\+len}
 \item 
 uint8\+\_\+t \hyperlink{structkeyboard__HID__data_a3b701758e410ae765778b87007821d42}{prev\+\_\+keys} \mbox{[}6\mbox{]}
 \item 
-\hyperlink{structkeypress__buffer}{keypress\+\_\+buffer} \hyperlink{structkeyboard__HID__data_aa889358beccd6c8bd16c58b7f277b94a}{key\+\_\+buf}
+\hyperlink{keyboard_8h_ab586bec625b4d7aa91ae837cd567b247}{keypress\+\_\+buffer\+\_\+t} \hyperlink{structkeyboard__HID__data_a7f833c96a3af819be19cd72b5a92e39a}{key\+\_\+buf}
 \end{DoxyCompactItemize}
 
 
+\subsection{Detailed Description}
+Stores all the H\+ID data required for the keyboard. 
+
+Contains all buffers and flags required for the gathering and transmission of the keyboard\textquotesingle{}s H\+ID reports. 
+
 \subsection{Member Data Documentation}
-\mbox{\Hypertarget{structkeyboard__HID__data_aa889358beccd6c8bd16c58b7f277b94a}\label{structkeyboard__HID__data_aa889358beccd6c8bd16c58b7f277b94a}} 
+\mbox{\Hypertarget{structkeyboard__HID__data_a7f833c96a3af819be19cd72b5a92e39a}\label{structkeyboard__HID__data_a7f833c96a3af819be19cd72b5a92e39a}} 
 \index{keyboard\+\_\+\+H\+I\+D\+\_\+data@{keyboard\+\_\+\+H\+I\+D\+\_\+data}!key\+\_\+buf@{key\+\_\+buf}}
 \index{key\+\_\+buf@{key\+\_\+buf}!keyboard\+\_\+\+H\+I\+D\+\_\+data@{keyboard\+\_\+\+H\+I\+D\+\_\+data}}
 \subsubsection{\texorpdfstring{key\+\_\+buf}{key\_buf}}
-{\footnotesize\ttfamily \hyperlink{structkeypress__buffer}{keypress\+\_\+buffer} keyboard\+\_\+\+H\+I\+D\+\_\+data\+::key\+\_\+buf}
+{\footnotesize\ttfamily \hyperlink{keyboard_8h_ab586bec625b4d7aa91ae837cd567b247}{keypress\+\_\+buffer\+\_\+t} keyboard\+\_\+\+H\+I\+D\+\_\+data\+::key\+\_\+buf}
 
 \mbox{\Hypertarget{structkeyboard__HID__data_a00c66ed8ebc503cf1266ff8261f64d0c}\label{structkeyboard__HID__data_a00c66ed8ebc503cf1266ff8261f64d0c}} 
 \index{keyboard\+\_\+\+H\+I\+D\+\_\+data@{keyboard\+\_\+\+H\+I\+D\+\_\+data}!keyboard\+\_\+report@{keyboard\+\_\+report}}
 \index{keyboard\+\_\+report@{keyboard\+\_\+report}!keyboard\+\_\+\+H\+I\+D\+\_\+data@{keyboard\+\_\+\+H\+I\+D\+\_\+data}}
 \subsubsection{\texorpdfstring{keyboard\+\_\+report}{keyboard\_report}}
-{\footnotesize\ttfamily \hyperlink{keyboard_8h_ae363bda14329c2fd40dea1b02411741a}{keyboard\+H\+I\+D\+\_\+t} keyboard\+\_\+\+H\+I\+D\+\_\+data\+::keyboard\+\_\+report}
+{\footnotesize\ttfamily \hyperlink{keyboard_8h_ae1e2d2809df85854a9c34195cd7be87b}{keyboard\+H\+I\+D\+\_\+t} keyboard\+\_\+\+H\+I\+D\+\_\+data\+::keyboard\+\_\+report}
 
 \mbox{\Hypertarget{structkeyboard__HID__data_a5cc61600ba30d39b829d21187d97c74c}\label{structkeyboard__HID__data_a5cc61600ba30d39b829d21187d97c74c}} 
 \index{keyboard\+\_\+\+H\+I\+D\+\_\+data@{keyboard\+\_\+\+H\+I\+D\+\_\+data}!keyboard\+\_\+state@{keyboard\+\_\+state}}
@@ -52,7 +62,7 @@ uint8\+\_\+t \hyperlink{structkeyboard__HID__data_a3b701758e410ae765778b87007821
 \index{keyboard\+\_\+\+H\+I\+D\+\_\+data@{keyboard\+\_\+\+H\+I\+D\+\_\+data}!media\+\_\+report@{media\+\_\+report}}
 \index{media\+\_\+report@{media\+\_\+report}!keyboard\+\_\+\+H\+I\+D\+\_\+data@{keyboard\+\_\+\+H\+I\+D\+\_\+data}}
 \subsubsection{\texorpdfstring{media\+\_\+report}{media\_report}}
-{\footnotesize\ttfamily \hyperlink{keyboard_8h_aeca50d10ea64df413e422cf38eab9cd9}{media\+H\+I\+D\+\_\+t} keyboard\+\_\+\+H\+I\+D\+\_\+data\+::media\+\_\+report}
+{\footnotesize\ttfamily \hyperlink{keyboard_8h_a863aa6aa64424c7553e59386523412fe}{media\+H\+I\+D\+\_\+t} keyboard\+\_\+\+H\+I\+D\+\_\+data\+::media\+\_\+report}
 
 \mbox{\Hypertarget{structkeyboard__HID__data_a93abdb2e65e86baa42983d4e25dfcfe3}\label{structkeyboard__HID__data_a93abdb2e65e86baa42983d4e25dfcfe3}} 
 \index{keyboard\+\_\+\+H\+I\+D\+\_\+data@{keyboard\+\_\+\+H\+I\+D\+\_\+data}!media\+\_\+state@{media\+\_\+state}}
@@ -60,11 +70,11 @@ uint8\+\_\+t \hyperlink{structkeyboard__HID__data_a3b701758e410ae765778b87007821
 \subsubsection{\texorpdfstring{media\+\_\+state}{media\_state}}
 {\footnotesize\ttfamily \hyperlink{states_8h_a97ae098857b45ee4ac9f7ae3a41a7aff}{report\+\_\+states} keyboard\+\_\+\+H\+I\+D\+\_\+data\+::media\+\_\+state}
 
-\mbox{\Hypertarget{structkeyboard__HID__data_a2ae73fbdabbfa5bb56f3c97f3a361780}\label{structkeyboard__HID__data_a2ae73fbdabbfa5bb56f3c97f3a361780}} 
+\mbox{\Hypertarget{structkeyboard__HID__data_a06a382dbb1ae17ec5fbb37d159ba2d53}\label{structkeyboard__HID__data_a06a382dbb1ae17ec5fbb37d159ba2d53}} 
 \index{keyboard\+\_\+\+H\+I\+D\+\_\+data@{keyboard\+\_\+\+H\+I\+D\+\_\+data}!out\+\_\+buf@{out\+\_\+buf}}
 \index{out\+\_\+buf@{out\+\_\+buf}!keyboard\+\_\+\+H\+I\+D\+\_\+data@{keyboard\+\_\+\+H\+I\+D\+\_\+data}}
 \subsubsection{\texorpdfstring{out\+\_\+buf}{out\_buf}}
-{\footnotesize\ttfamily \hyperlink{structsend__buffer}{send\+\_\+buffer} keyboard\+\_\+\+H\+I\+D\+\_\+data\+::out\+\_\+buf}
+{\footnotesize\ttfamily \hyperlink{keyboard_8h_ac075e64fc5b9925d7511d8afb5bdb2d2}{send\+\_\+buffer\+\_\+t} keyboard\+\_\+\+H\+I\+D\+\_\+data\+::out\+\_\+buf}
 
 \mbox{\Hypertarget{structkeyboard__HID__data_a3b701758e410ae765778b87007821d42}\label{structkeyboard__HID__data_a3b701758e410ae765778b87007821d42}} 
 \index{keyboard\+\_\+\+H\+I\+D\+\_\+data@{keyboard\+\_\+\+H\+I\+D\+\_\+data}!prev\+\_\+keys@{prev\+\_\+keys}}
@@ -84,11 +94,11 @@ uint8\+\_\+t \hyperlink{structkeyboard__HID__data_a3b701758e410ae765778b87007821
 \subsubsection{\texorpdfstring{process\+\_\+key\+\_\+buf}{process\_key\_buf}}
 {\footnotesize\ttfamily uint8\+\_\+t keyboard\+\_\+\+H\+I\+D\+\_\+data\+::process\+\_\+key\+\_\+buf}
 
-\mbox{\Hypertarget{structkeyboard__HID__data_a984ec97a0da585ce6818a3860748eb36}\label{structkeyboard__HID__data_a984ec97a0da585ce6818a3860748eb36}} 
+\mbox{\Hypertarget{structkeyboard__HID__data_ad16a61decda61e908979f614f4052a1b}\label{structkeyboard__HID__data_ad16a61decda61e908979f614f4052a1b}} 
 \index{keyboard\+\_\+\+H\+I\+D\+\_\+data@{keyboard\+\_\+\+H\+I\+D\+\_\+data}!shortlist\+\_\+keys@{shortlist\+\_\+keys}}
 \index{shortlist\+\_\+keys@{shortlist\+\_\+keys}!keyboard\+\_\+\+H\+I\+D\+\_\+data@{keyboard\+\_\+\+H\+I\+D\+\_\+data}}
 \subsubsection{\texorpdfstring{shortlist\+\_\+keys}{shortlist\_keys}}
-{\footnotesize\ttfamily \hyperlink{structsix__key__buffer}{six\+\_\+key\+\_\+buffer} keyboard\+\_\+\+H\+I\+D\+\_\+data\+::shortlist\+\_\+keys}
+{\footnotesize\ttfamily \hyperlink{keyboard_8h_ade7751d5843483b986b63a84a5ea6963}{six\+\_\+key\+\_\+buffer\+\_\+t} keyboard\+\_\+\+H\+I\+D\+\_\+data\+::shortlist\+\_\+keys}
 
 
 

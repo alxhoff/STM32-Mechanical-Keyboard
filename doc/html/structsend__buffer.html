@@ -67,42 +67,48 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
+<p>Output buffers for the total keyboard HID data, media and keyboard.  
+ <a href="structsend__buffer.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="keyboard_8h_source.html">keyboard.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:ad39820475ee9397a3ea9152c167364f0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsix__key__buffer.html">six_key_buffer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsend__buffer.html#ad39820475ee9397a3ea9152c167364f0">key_buf</a></td></tr>
-<tr class="separator:ad39820475ee9397a3ea9152c167364f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a271ff7b0f2d2269b081d21576f388046"><td class="memItemLeft" align="right" valign="top"><a class="el" href="keyboard_8h.html#ade7751d5843483b986b63a84a5ea6963">six_key_buffer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsend__buffer.html#a271ff7b0f2d2269b081d21576f388046">key_buf</a></td></tr>
+<tr class="separator:a271ff7b0f2d2269b081d21576f388046"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ed1ea0b6d0ffbe2af4f8aff77cd5d56"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsend__buffer.html#a1ed1ea0b6d0ffbe2af4f8aff77cd5d56">mod_buf</a></td></tr>
 <tr class="separator:a1ed1ea0b6d0ffbe2af4f8aff77cd5d56"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2b3d51316974a1c39169664fa13b502b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structone__key__buffer.html">one_key_buffer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsend__buffer.html#a2b3d51316974a1c39169664fa13b502b">med_buf</a></td></tr>
-<tr class="separator:a2b3d51316974a1c39169664fa13b502b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50a00b397fd66c2f36dc607e82a51daf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="keyboard_8h.html#aba6323f912601b5a724db813a53fdcfe">one_key_buffer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsend__buffer.html#a50a00b397fd66c2f36dc607e82a51daf">med_buf</a></td></tr>
+<tr class="separator:a50a00b397fd66c2f36dc607e82a51daf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2584076f9d2f17205d4625411b0d5808"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsend__buffer.html#a2584076f9d2f17205d4625411b0d5808">send_flag</a></td></tr>
 <tr class="separator:a2584076f9d2f17205d4625411b0d5808"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="ad39820475ee9397a3ea9152c167364f0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad39820475ee9397a3ea9152c167364f0">&#9670;&nbsp;</a></span>key_buf</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Output buffers for the total keyboard HID data, media and keyboard. </p>
+<p>The send buffer is used to buffer the final output data for the keyboard's keypresses, media keys and modifier byte. Its readiness for transmission is indicated by the send_flag. </p>
+</div><h2 class="groupheader">Member Data Documentation</h2>
+<a id="a271ff7b0f2d2269b081d21576f388046"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a271ff7b0f2d2269b081d21576f388046">&#9670;&nbsp;</a></span>key_buf</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structsix__key__buffer.html">six_key_buffer</a> send_buffer::key_buf</td>
+          <td class="memname"><a class="el" href="keyboard_8h.html#ade7751d5843483b986b63a84a5ea6963">six_key_buffer_t</a> send_buffer::key_buf</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a2b3d51316974a1c39169664fa13b502b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2b3d51316974a1c39169664fa13b502b">&#9670;&nbsp;</a></span>med_buf</h2>
+<a id="a50a00b397fd66c2f36dc607e82a51daf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50a00b397fd66c2f36dc607e82a51daf">&#9670;&nbsp;</a></span>med_buf</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structone__key__buffer.html">one_key_buffer</a> send_buffer::med_buf</td>
+          <td class="memname"><a class="el" href="keyboard_8h.html#aba6323f912601b5a724db813a53fdcfe">one_key_buffer_t</a> send_buffer::med_buf</td>
         </tr>
       </table>
 </div><div class="memdoc">

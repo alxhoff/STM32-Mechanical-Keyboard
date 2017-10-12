@@ -309,6 +309,7 @@ var searchData=
   ['hid_5fkeyboard_5fsc_5fx',['HID_KEYBOARD_SC_X',['../group__Group__USBClassHIDCommon.html#gafe577624c33b6c7b7a588446a5b93f0a',1,'HIDClassCommon.h']]],
   ['hid_5fkeyboard_5fsc_5fy',['HID_KEYBOARD_SC_Y',['../group__Group__USBClassHIDCommon.html#ga0fc418389375545ecad5fbcc1283fc3d',1,'HIDClassCommon.h']]],
   ['hid_5fkeyboard_5fsc_5fz',['HID_KEYBOARD_SC_Z',['../group__Group__USBClassHIDCommon.html#ga0a4fdb03dbc55812f11d4394ae8aefc7',1,'HIDClassCommon.h']]],
+  ['hid_20keys',['HID keys',['../group__HID__keys.html',1,'']]],
   ['hid_5freport_5fitem_5ffeature',['HID_REPORT_ITEM_Feature',['../group__Group__USBClassHIDCommon.html#gga3c0de6e2f6380c88937a5f09bcbf022ea468b3fdb884153aaefb634c9823f64bb',1,'HIDClassCommon.h']]],
   ['hid_5freport_5fitem_5fin',['HID_REPORT_ITEM_In',['../group__Group__USBClassHIDCommon.html#gga3c0de6e2f6380c88937a5f09bcbf022ea9122306c1e2869a0df68faa45b987424',1,'HIDClassCommon.h']]],
   ['hid_5freport_5fitem_5fout',['HID_REPORT_ITEM_Out',['../group__Group__USBClassHIDCommon.html#gga3c0de6e2f6380c88937a5f09bcbf022ea3b36c06fa6c2f08c8cebe98ff6d49753',1,'HIDClassCommon.h']]],

@@ -12,6 +12,5 @@ var searchData=
   ['alarm2_5fhour',['alarm2_hour',['../structds3231Registers.html#a0124a783121fa60c419018ada6581c86',1,'ds3231Registers']]],
   ['alarm2_5fmin',['alarm2_min',['../structds3231Registers.html#a58ad66ef63f7a321acc65f7663b7ead4',1,'ds3231Registers']]],
   ['alarm_5ftype',['alarm_type',['../structds3231Alarm.html#a7a79c0355f11b11e516534f16db5bf43',1,'ds3231Alarm']]],
-  ['apbpresctable',['APBPrescTable',['../group__STM32F4xx__System__Private__Variables.html#ga5b4f8b768465842cf854a8f993b375e9',1,'system_stm32f4xx.c']]],
-  ['approved_5fkeys',['approved_keys',['../keyboard_8h.html#a8ca8123d835d25ab1362ef05d49ec75e',1,'keyboard.h']]]
+  ['apbpresctable',['APBPrescTable',['../group__STM32F4xx__System__Private__Variables.html#ga5b4f8b768465842cf854a8f993b375e9',1,'system_stm32f4xx.c']]]
 ];

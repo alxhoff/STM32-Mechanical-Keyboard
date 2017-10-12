@@ -69,6 +69,9 @@ $(function() {
 <div class="title">keyboard.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Data types and functions for performing classical keyboard functions.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="extern_8h_source.html">extern.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="macro_8h_source.html">macro.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="CLI_8h_source.html">CLI.h</a>&quot;</code><br />
@@ -78,28 +81,37 @@ $(function() {
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a10036eb216be3f18349ebb8d73fdc825"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="keyboard_8c.html#a10036eb216be3f18349ebb8d73fdc825">keyboard_init</a> (<a class="el" href="datatypes_8h.html#a3f91b8703c531938c9e049363f0211f3">key_devices_t</a> *keyboard_devices, GPIO_TypeDef *<a class="el" href="extern_8h.html#add423ada108f1b34a6898542135b3949">col_ports</a>[<a class="el" href="keymap_8h.html#ab89c69b09d4ca01020b7c40d9ca2bab8">KEYBOARD_ROWS</a>], uint16_t col_pins[<a class="el" href="keymap_8h.html#ab89c69b09d4ca01020b7c40d9ca2bab8">KEYBOARD_ROWS</a>])</td></tr>
-<tr class="separator:a10036eb216be3f18349ebb8d73fdc825"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86312a522a094b1ba780982dcb332590"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="keyboard_8c.html#a86312a522a094b1ba780982dcb332590">process_key_buf</a> (<a class="el" href="datatypes_8h.html#ab6ae011601a0fec803428af1f5920fc0">keyboard_HID_data_t</a> *data, <a class="el" href="datatypes_8h.html#ac282a7a696b1d7d36df8c0f4ebce07e7">keymap_list_t</a> *layer_list)</td></tr>
+<tr class="memitem:a452de650eae4de097b354fffcdd581a5"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="keyboard_8c.html#a452de650eae4de097b354fffcdd581a5">keyboard_init</a> (<a class="el" href="datatypes_8h.html#a3f91b8703c531938c9e049363f0211f3">key_devices_t</a> *keyboard_devices, GPIO_TypeDef *<a class="el" href="extern_8h.html#ad9b4d2fea4c7b7d5158d56075c28e9ad">row_ports</a>[<a class="el" href="keymap_8h.html#ab89c69b09d4ca01020b7c40d9ca2bab8">KEYBOARD_ROWS</a>], uint16_t row_pins[<a class="el" href="keymap_8h.html#ab89c69b09d4ca01020b7c40d9ca2bab8">KEYBOARD_ROWS</a>])</td></tr>
+<tr class="memdesc:a452de650eae4de097b354fffcdd581a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inits the keyboard device and GPIO pins.  <a href="#a452de650eae4de097b354fffcdd581a5">More...</a><br /></td></tr>
+<tr class="separator:a452de650eae4de097b354fffcdd581a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86312a522a094b1ba780982dcb332590"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="keyboard_8c.html#a86312a522a094b1ba780982dcb332590">process_key_buf</a> (<a class="el" href="datatypes_8h.html#a9539035ff5404f9a5fb4c1985d2f3fcc">keyboard_HID_data_t</a> *data, <a class="el" href="datatypes_8h.html#ac282a7a696b1d7d36df8c0f4ebce07e7">keymap_list_t</a> *layer_list)</td></tr>
+<tr class="memdesc:a86312a522a094b1ba780982dcb332590"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes the input key buffer.  <a href="#a86312a522a094b1ba780982dcb332590">More...</a><br /></td></tr>
 <tr class="separator:a86312a522a094b1ba780982dcb332590"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b14a34f5ddb8bcf4ed1e35a8c46085c"><td class="memItemLeft" align="right" valign="top">signed int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="keyboard_8c.html#a5b14a34f5ddb8bcf4ed1e35a8c46085c">reset_buffer</a> (<a class="el" href="structsix__key__buffer.html">six_key_buffer</a> *buffer_to_reset)</td></tr>
-<tr class="separator:a5b14a34f5ddb8bcf4ed1e35a8c46085c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00ff7889fd839635e4a416b8ad53ca58"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="keyboard_8c.html#a00ff7889fd839635e4a416b8ad53ca58">clear_keyboard_report</a> (<a class="el" href="datatypes_8h.html#ab6ae011601a0fec803428af1f5920fc0">keyboard_HID_data_t</a> *data)</td></tr>
-<tr class="separator:a00ff7889fd839635e4a416b8ad53ca58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a84b30eba99a2b8f07440dabe1be53310"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="keyboard_8c.html#a84b30eba99a2b8f07440dabe1be53310">keyboard_prepare_report</a> (<a class="el" href="datatypes_8h.html#ab6ae011601a0fec803428af1f5920fc0">keyboard_HID_data_t</a> *data)</td></tr>
+<tr class="memitem:a3f312e2130f014b83100f1f3e83c8fcd"><td class="memItemLeft" align="right" valign="top">signed int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="keyboard_8c.html#a3f312e2130f014b83100f1f3e83c8fcd">reset_buffer</a> (<a class="el" href="keyboard_8h.html#ade7751d5843483b986b63a84a5ea6963">six_key_buffer_t</a> *buffer_to_reset)</td></tr>
+<tr class="separator:a3f312e2130f014b83100f1f3e83c8fcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84b30eba99a2b8f07440dabe1be53310"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="keyboard_8c.html#a84b30eba99a2b8f07440dabe1be53310">keyboard_prepare_report</a> (<a class="el" href="datatypes_8h.html#a9539035ff5404f9a5fb4c1985d2f3fcc">keyboard_HID_data_t</a> *data)</td></tr>
 <tr class="separator:a84b30eba99a2b8f07440dabe1be53310"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6517d9d406512349dc52b352a3d9b616"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="keyboard_8c.html#a6517d9d406512349dc52b352a3d9b616">media_prepare_report</a> (<a class="el" href="datatypes_8h.html#ab6ae011601a0fec803428af1f5920fc0">keyboard_HID_data_t</a> *data)</td></tr>
+<tr class="memitem:a6517d9d406512349dc52b352a3d9b616"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="keyboard_8c.html#a6517d9d406512349dc52b352a3d9b616">media_prepare_report</a> (<a class="el" href="datatypes_8h.html#a9539035ff5404f9a5fb4c1985d2f3fcc">keyboard_HID_data_t</a> *data)</td></tr>
 <tr class="separator:a6517d9d406512349dc52b352a3d9b616"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f8a62e71e93b249014038308e373815"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="keyboard_8c.html#a3f8a62e71e93b249014038308e373815">send_keyboard_report</a> (<a class="el" href="datatypes_8h.html#ab6ae011601a0fec803428af1f5920fc0">keyboard_HID_data_t</a> *data, <a class="el" href="types_8h.html#a9144d68e926bbc7f3ac0ea704c56082f">report_type</a> type)</td></tr>
+<tr class="memitem:a3f8a62e71e93b249014038308e373815"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="keyboard_8c.html#a3f8a62e71e93b249014038308e373815">send_keyboard_report</a> (<a class="el" href="datatypes_8h.html#a9539035ff5404f9a5fb4c1985d2f3fcc">keyboard_HID_data_t</a> *data, <a class="el" href="types_8h.html#a9144d68e926bbc7f3ac0ea704c56082f">report_type</a> type)</td></tr>
 <tr class="separator:a3f8a62e71e93b249014038308e373815"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad24b2fb66a7dd16687de627115aaca8d"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="keyboard_8c.html#ad24b2fb66a7dd16687de627115aaca8d">process_keyboard_flags</a> (<a class="el" href="datatypes_8h.html#ab6ae011601a0fec803428af1f5920fc0">keyboard_HID_data_t</a> *data)</td></tr>
+<tr class="memitem:ad24b2fb66a7dd16687de627115aaca8d"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="keyboard_8c.html#ad24b2fb66a7dd16687de627115aaca8d">process_keyboard_flags</a> (<a class="el" href="datatypes_8h.html#a9539035ff5404f9a5fb4c1985d2f3fcc">keyboard_HID_data_t</a> *data)</td></tr>
+<tr class="memdesc:ad24b2fb66a7dd16687de627115aaca8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes any pending HID reports.  <a href="#ad24b2fb66a7dd16687de627115aaca8d">More...</a><br /></td></tr>
 <tr class="separator:ad24b2fb66a7dd16687de627115aaca8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a442d58541dc886385963c9447895106f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="keyboard_8c.html#a442d58541dc886385963c9447895106f">process_single_key</a> (<a class="el" href="datatypes_8h.html#ac282a7a696b1d7d36df8c0f4ebce07e7">keymap_list_t</a> *layer_list, uint8_t col, uint8_t row)</td></tr>
+<tr class="memdesc:a442d58541dc886385963c9447895106f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the key code for a single key.  <a href="#a442d58541dc886385963c9447895106f">More...</a><br /></td></tr>
 <tr class="separator:a442d58541dc886385963c9447895106f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00ff7889fd839635e4a416b8ad53ca58"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="keyboard_8c.html#a00ff7889fd839635e4a416b8ad53ca58">clear_keyboard_report</a> (<a class="el" href="datatypes_8h.html#a9539035ff5404f9a5fb4c1985d2f3fcc">keyboard_HID_data_t</a> *data)</td></tr>
+<tr class="memdesc:a00ff7889fd839635e4a416b8ad53ca58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the keyboard HID report.  <a href="#a00ff7889fd839635e4a416b8ad53ca58">More...</a><br /></td></tr>
+<tr class="separator:a00ff7889fd839635e4a416b8ad53ca58"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:affef26063ecc21c97057cdabf4021d08"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="keyboard_8c.html#affef26063ecc21c97057cdabf4021d08">display_int_on_screen</a> (uint8_t col, uint8_t row)</td></tr>
 <tr class="separator:affef26063ecc21c97057cdabf4021d08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Data types and functions for performing classical keyboard functions. </p>
+<dl class="section author"><dt>Author</dt><dd>Alex Hoffman </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>11 October 2017 </dd></dl>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a id="a00ff7889fd839635e4a416b8ad53ca58"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a00ff7889fd839635e4a416b8ad53ca58">&#9670;&nbsp;</a></span>clear_keyboard_report()</h2>
 
@@ -109,12 +121,14 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void clear_keyboard_report </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="datatypes_8h.html#ab6ae011601a0fec803428af1f5920fc0">keyboard_HID_data_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="datatypes_8h.html#a9539035ff5404f9a5fb4c1985d2f3fcc">keyboard_HID_data_t</a> *&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Clears the keyboard HID report. </p>
 
 </div>
 </div>
@@ -146,8 +160,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a10036eb216be3f18349ebb8d73fdc825"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a10036eb216be3f18349ebb8d73fdc825">&#9670;&nbsp;</a></span>keyboard_init()</h2>
+<a id="a452de650eae4de097b354fffcdd581a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a452de650eae4de097b354fffcdd581a5">&#9670;&nbsp;</a></span>keyboard_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -162,13 +176,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">GPIO_TypeDef *&#160;</td>
-          <td class="paramname"><em>col_ports</em>[KEYBOARD_ROWS], </td>
+          <td class="paramname"><em>row_ports</em>[KEYBOARD_ROWS], </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>col_pins</em>[KEYBOARD_ROWS]&#160;</td>
+          <td class="paramname"><em>row_pins</em>[KEYBOARD_ROWS]&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -177,6 +191,18 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Inits the keyboard device and GPIO pins. </p>
+<p>To initialise the keyboard device, this function must be called with the colum GPIO pins and ports, stored in arrays, passed to it. The GPIO are initialised and all default values are set.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">keyboard_devices</td><td>global keyboard devices struct </td></tr>
+    <tr><td class="paramname">row_ports</td><td>array of GPIO pointers to the row ports </td></tr>
+    <tr><td class="paramname">row_pins</td><td>array of GPIO pin values </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on success </dd></dl>
 
 </div>
 </div>
@@ -189,7 +215,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">int8_t keyboard_prepare_report </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="datatypes_8h.html#ab6ae011601a0fec803428af1f5920fc0">keyboard_HID_data_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="datatypes_8h.html#a9539035ff5404f9a5fb4c1985d2f3fcc">keyboard_HID_data_t</a> *&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
           <td></td>
         </tr>
@@ -207,7 +233,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">int8_t media_prepare_report </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="datatypes_8h.html#ab6ae011601a0fec803428af1f5920fc0">keyboard_HID_data_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="datatypes_8h.html#a9539035ff5404f9a5fb4c1985d2f3fcc">keyboard_HID_data_t</a> *&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
           <td></td>
         </tr>
@@ -225,7 +251,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">int8_t process_key_buf </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="datatypes_8h.html#ab6ae011601a0fec803428af1f5920fc0">keyboard_HID_data_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="datatypes_8h.html#a9539035ff5404f9a5fb4c1985d2f3fcc">keyboard_HID_data_t</a> *&#160;</td>
           <td class="paramname"><em>data</em>, </td>
         </tr>
         <tr>
@@ -242,6 +268,17 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Processes the input key buffer. </p>
+<p>Once the keyboard scan is complete and the input key buffer has been populated the buffer must be processed. The keyboard state is first handled, going to state code if needed. The buffer is then processed, sorting keys into either modifier keys, media keys or keyboard keys. Once sorted the key codes or bitmasks are retrieved/set. Normal keyboard button presses are first compared against the last HID report as repeating keys get priority in the the next HID report as they represent keys being held down. Keys not in the previous HID report are shortlisted such that after all keys have been converted into key codes the HID report can be filled with shortlisted keys.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>global keyboard HID data </td></tr>
+    <tr><td class="paramname">layer_list</td><td>layer list used to convert key_codes </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on success </dd></dl>
+
 </div>
 </div>
 <a id="ad24b2fb66a7dd16687de627115aaca8d"></a>
@@ -253,12 +290,22 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">int8_t process_keyboard_flags </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="datatypes_8h.html#ab6ae011601a0fec803428af1f5920fc0">keyboard_HID_data_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="datatypes_8h.html#a9539035ff5404f9a5fb4c1985d2f3fcc">keyboard_HID_data_t</a> *&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Processes any pending HID reports. </p>
+<p>Once a HID report is pending the keyboard state/media state will be set to active, if the state is such then the current pending report is sent. If there is not report pending but one was just sent and empty report is sent. This corresponds to the state "clearing".</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>global keyboard HID data </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on success </dd></dl>
 
 </div>
 </div>
@@ -294,10 +341,22 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Retrieves the key code for a single key. </p>
+<p>The key code retrieved is taken from the most underlying layer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">layer_list</td><td>layer list to be used to extracting the key code </td></tr>
+    <tr><td class="paramname">col</td><td>column of the key </td></tr>
+    <tr><td class="paramname">row</td><td>row of the key </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>key code of the key from the most underlying layer </dd></dl>
+
 </div>
 </div>
-<a id="a5b14a34f5ddb8bcf4ed1e35a8c46085c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5b14a34f5ddb8bcf4ed1e35a8c46085c">&#9670;&nbsp;</a></span>reset_buffer()</h2>
+<a id="a3f312e2130f014b83100f1f3e83c8fcd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f312e2130f014b83100f1f3e83c8fcd">&#9670;&nbsp;</a></span>reset_buffer()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -305,7 +364,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">signed int reset_buffer </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structsix__key__buffer.html">six_key_buffer</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="keyboard_8h.html#ade7751d5843483b986b63a84a5ea6963">six_key_buffer_t</a> *&#160;</td>
           <td class="paramname"><em>buffer_to_reset</em></td><td>)</td>
           <td></td>
         </tr>
@@ -323,7 +382,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">int8_t send_keyboard_report </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="datatypes_8h.html#ab6ae011601a0fec803428af1f5920fc0">keyboard_HID_data_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="datatypes_8h.html#a9539035ff5404f9a5fb4c1985d2f3fcc">keyboard_HID_data_t</a> *&#160;</td>
           <td class="paramname"><em>data</em>, </td>
         </tr>
         <tr>

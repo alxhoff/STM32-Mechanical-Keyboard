@@ -4,7 +4,7 @@ var searchData=
   ['clear',['clear',['../structSSD1306__device.html#aa52b8e4126ce8b86afca1428e410340a',1,'SSD1306_device']]],
   ['clilistenhandle',['CLIListenHandle',['../main_8c.html#a42b46698d55bd4f526ff99e2ccc1b947',1,'main.c']]],
   ['clock_5fdata',['clock_data',['../structshift__array.html#a705e01987c88536fbd23ff1e65842413',1,'shift_array']]],
-  ['col',['col',['../structkey.html#a9b24ae59293fde52b58a7a4ced950760',1,'key']]],
+  ['col',['col',['../structsingle__key.html#a246a23103a0616c1c92fee6c921d6cf6',1,'single_key']]],
   ['col_5fpins',['col_pins',['../structkeyboard__device.html#a6158bcd702e65e7f692b53c0c43958ed',1,'keyboard_device']]],
   ['col_5fports',['col_ports',['../structkeyboard__device.html#ac896175bb4e598e4e62671f2525d93b5',1,'keyboard_device::col_ports()'],['../extern_8h.html#add423ada108f1b34a6898542135b3949',1,'col_ports():&#160;extern.h']]],
   ['cols',['cols',['../structscreen__init.html#a5fe63336ef17a8d163cb312748213ae3',1,'screen_init::cols()'],['../structscreen.html#af7ef9a84e6d1c47dfb367744e5aa5987',1,'screen::cols()']]],
