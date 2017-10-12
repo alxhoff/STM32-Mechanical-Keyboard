@@ -25,6 +25,9 @@
 #include "states.h"
 #include "keyboard_config.h"
 
+/**
+ * @brief Length of input buffer used when scanning the keyboard
+ * */
 #define SCAN_KEY_BUFFER_LENGTH		20
 
 /**
@@ -40,7 +43,7 @@
  *
  * */
 typedef struct keyboardHID{
-      uint8_t id; 			/**< HID report ID for the keyboard must always be 1, as described
+      uint8_t id; 			/**< HID report ID for the keyboard report must always be 1, as described
       	  	  	  	  	  	in the HID descriptor*/
       uint8_t modifiers; 	/**< Byte that send key modifiers. See HIDClassCommon.h for bit details*/
       /** @defgroup HID_keys HID keys
@@ -69,8 +72,9 @@ typedef struct keyboardHID{
    *
    * */
 typedef struct mediaHID{
-    uint8_t id;
-    uint8_t keys;
+    uint8_t id; 			/**< HID report ID for the media report must be 2, as described in
+    						the HID descriptor*/
+    uint8_t keys;			/**< Single media key contained in the media HID report */
   } mediaHID_t;
 
   /**
@@ -87,9 +91,9 @@ typedef struct mediaHID{
    *
    * */
 typedef struct single_key{
-	uint8_t row;
-	uint8_t col;
-	uint8_t key_code;
+	uint8_t row;			/**< Key's row */
+	uint8_t col;			/**< Key's col */
+	uint8_t key_code;		/**< Ket's key code */
 } single_key_t;
 
 /**
@@ -106,8 +110,9 @@ typedef struct single_key{
  *
  * */
 typedef struct keypress_buffer{
-	single_key_t buffer[SCAN_KEY_BUFFER_LENGTH];
-	uint8_t index;
+	single_key_t buffer[SCAN_KEY_BUFFER_LENGTH];	/**< Key buffer */
+	uint8_t index;									/**< Stores the amount of keys currently within
+	 	 	 	 	 	 	 	 	 	 	 	 	 	 the buffer*/
 } keypress_buffer_t;
 
 /**
@@ -124,7 +129,7 @@ typedef struct keypress_buffer{
  * */
 typedef struct six_key_buffer{
 	single_key_t keys[6];
-	uint8_t count;
+	uint8_t count;					/**< Stores the number of keys currently within the buffer */
 } six_key_buffer_t;
 
 /**
@@ -142,7 +147,9 @@ typedef struct six_key_buffer{
  * */
 typedef struct one_key_buffer{
 	single_key_t key;
-	uint8_t count;
+	uint8_t count;					/**< Indicates if the single key is currently loaded or not.
+	 	 	 	 	 	 	 	 	 	 Using a one key buffer without a count can lead to
+	 	 	 	 	 	 	 	 	 	 undefined behaviour*/
 } one_key_buffer_t;
 
 /**
@@ -159,10 +166,10 @@ typedef struct one_key_buffer{
  *
  * */
 typedef struct send_buffer{
-	six_key_buffer_t key_buf;
-	uint8_t mod_buf;
-	one_key_buffer_t med_buf;
-	uint8_t send_flag;
+	six_key_buffer_t key_buf;		/**< Stores the keyboard HID report buffer */
+	uint8_t mod_buf;				/**< Stores the keyboard HID report modifier keys buffer */
+	one_key_buffer_t med_buf;		/**< Stores the media HID report buffer */
+	uint8_t send_flag;				/**< Flag to indicate if the buffers need to be processed */
 } send_buffer_t;
 
 /**
@@ -180,20 +187,21 @@ typedef struct send_buffer{
 typedef struct keyboard_HID_data{
 	uint8_t process_key_buf;
 
-	keyboardHID_t keyboard_report;
-	report_states keyboard_state;
+	keyboardHID_t keyboard_report;		/**< Keyboard HID report */
+	report_states keyboard_state;		/**< State of the keyboard HID report */
 
-	mediaHID_t media_report;
-	report_states media_state;
+	mediaHID_t media_report;			/**< Media HID report */
+	report_states media_state;			/**< State of the media HID report */
 
-	send_buffer_t out_buf;
+	send_buffer_t out_buf;				/**< Buffer populated before the HID report are prepared */
 
-	six_key_buffer_t shortlist_keys;
+	six_key_buffer_t shortlist_keys;	/**< Buffer storing all shortlisted keys from the keyboard
+	 	 	 	 	 	 	 	 	 	 	 scan*/
 
-	uint8_t prev_report_len;
-	uint8_t prev_keys[6];
+	uint8_t prev_report_len;			/**< Length of previous HID report */
+	uint8_t prev_keys[6];				/**< Previous HID report */
 
-	keypress_buffer_t key_buf;
+	keypress_buffer_t key_buf;			/**< Buffer where scanned keys are stored before processing */
 } keyboard_HID_data_t;
 
 /**
@@ -209,11 +217,11 @@ typedef struct keyboard_HID_data{
  *
  * */
 typedef struct keyboard_device{
-	uint16_t row_pins[KEYBOARD_ROWS];
-	GPIO_TypeDef* row_ports[KEYBOARD_ROWS];
+	uint16_t row_pins[KEYBOARD_ROWS];			/**< GPIO pins used by the keyboard rows */
+	GPIO_TypeDef* row_ports[KEYBOARD_ROWS];		/**< GPIO ports used by the keyboard rows */
 
-	uint16_t col_pins[KEYBOARD_COLS];
-	GPIO_TypeDef* col_ports[KEYBOARD_COLS];
+	uint16_t col_pins[KEYBOARD_COLS];			/**< GPIO pins used by the keyboard cols */
+	GPIO_TypeDef* col_ports[KEYBOARD_COLS];		/**< GPIO ports used by the keyboard cols */
 } keyboard_device_t;
 
 /**
