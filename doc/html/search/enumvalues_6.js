@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['hid_5fcscp_5fbootsubclass',['HID_CSCP_BootSubclass',['../group__Group__USBClassHIDCommon.html#ggaa7526aa0408560f6b81dfd4c81c5677eaa8f24a523a6284ce889341da288f939b',1,'HIDClassCommon.h']]],
+  ['hid_5fcscp_5fhidclass',['HID_CSCP_HIDClass',['../group__Group__USBClassHIDCommon.html#ggaa7526aa0408560f6b81dfd4c81c5677ea4f1793700cf843fd6443c7d0498bf93e',1,'HIDClassCommon.h']]],
+  ['hid_5fcscp_5fkeyboardbootprotocol',['HID_CSCP_KeyboardBootProtocol',['../group__Group__USBClassHIDCommon.html#ggaa7526aa0408560f6b81dfd4c81c5677eae3adf89f52598d87b83ee1d6ba2776cb',1,'HIDClassCommon.h']]],
+  ['hid_5fcscp_5fmousebootprotocol',['HID_CSCP_MouseBootProtocol',['../group__Group__USBClassHIDCommon.html#ggaa7526aa0408560f6b81dfd4c81c5677eab102f267cc7895d7027142aae59304b7',1,'HIDClassCommon.h']]],
+  ['hid_5fcscp_5fnonbootprotocol',['HID_CSCP_NonBootProtocol',['../group__Group__USBClassHIDCommon.html#ggaa7526aa0408560f6b81dfd4c81c5677ea9c856526eef416ca96fdca0ac96e624c',1,'HIDClassCommon.h']]],
+  ['hid_5fcscp_5fnonbootsubclass',['HID_CSCP_NonBootSubclass',['../group__Group__USBClassHIDCommon.html#ggaa7526aa0408560f6b81dfd4c81c5677ea7128df452fa6163538dd55dab1d3e774',1,'HIDClassCommon.h']]],
+  ['hid_5fdtype_5fhid',['HID_DTYPE_HID',['../group__Group__USBClassHIDCommon.html#gga0b199ec34e29bbed1353499f82b4d0f0a1f3a35df218d3164cf4162b349a7e304',1,'HIDClassCommon.h']]],
+  ['hid_5fdtype_5freport',['HID_DTYPE_Report',['../group__Group__USBClassHIDCommon.html#gga0b199ec34e29bbed1353499f82b4d0f0a8c9a821dcae98f6b84d2ea292a8b55be',1,'HIDClassCommon.h']]],
+  ['hid_5freport_5fitem_5ffeature',['HID_REPORT_ITEM_Feature',['../group__Group__USBClassHIDCommon.html#gga3c0de6e2f6380c88937a5f09bcbf022ea468b3fdb884153aaefb634c9823f64bb',1,'HIDClassCommon.h']]],
+  ['hid_5freport_5fitem_5fin',['HID_REPORT_ITEM_In',['../group__Group__USBClassHIDCommon.html#gga3c0de6e2f6380c88937a5f09bcbf022ea9122306c1e2869a0df68faa45b987424',1,'HIDClassCommon.h']]],
+  ['hid_5freport_5fitem_5fout',['HID_REPORT_ITEM_Out',['../group__Group__USBClassHIDCommon.html#gga3c0de6e2f6380c88937a5f09bcbf022ea3b36c06fa6c2f08c8cebe98ff6d49753',1,'HIDClassCommon.h']]],
+  ['hid_5freq_5fgetidle',['HID_REQ_GetIdle',['../group__Group__USBClassHIDCommon.html#gga671468f9227bc341d695a5b1cff5ea66ab21c2b2d2d2bc58cbdb85336f4ea2b7e',1,'HIDClassCommon.h']]],
+  ['hid_5freq_5fgetprotocol',['HID_REQ_GetProtocol',['../group__Group__USBClassHIDCommon.html#gga671468f9227bc341d695a5b1cff5ea66a0b78c660081719ac3b2a5d5db3b289e0',1,'HIDClassCommon.h']]],
+  ['hid_5freq_5fgetreport',['HID_REQ_GetReport',['../group__Group__USBClassHIDCommon.html#gga671468f9227bc341d695a5b1cff5ea66a97b0c216f1f626ad770b0baccd4c48b1',1,'HIDClassCommon.h']]],
+  ['hid_5freq_5fsetidle',['HID_REQ_SetIdle',['../group__Group__USBClassHIDCommon.html#gga671468f9227bc341d695a5b1cff5ea66a62c61e2a1597512c197575e505b79b17',1,'HIDClassCommon.h']]],
+  ['hid_5freq_5fsetprotocol',['HID_REQ_SetProtocol',['../group__Group__USBClassHIDCommon.html#gga671468f9227bc341d695a5b1cff5ea66ab6875dcc7b0024e165e30e886c2dadf9',1,'HIDClassCommon.h']]],
+  ['hid_5freq_5fsetreport',['HID_REQ_SetReport',['../group__Group__USBClassHIDCommon.html#gga671468f9227bc341d695a5b1cff5ea66ae99ef929e9fe222dee028de7b1fc76bc',1,'HIDClassCommon.h']]]
+];

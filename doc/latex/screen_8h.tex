@@ -1,0 +1,88 @@
+\hypertarget{screen_8h}{}\section{/home/alxhoff/git/\+Embedded/stm32-\/mech-\/keyboard/\+Nucelo\+Keyboard\+Controller/\+Inc/screen.h File Reference}
+\label{screen_8h}\index{/home/alxhoff/git/\+Embedded/stm32-\/mech-\/keyboard/\+Nucelo\+Keyboard\+Controller/\+Inc/screen.\+h@{/home/alxhoff/git/\+Embedded/stm32-\/mech-\/keyboard/\+Nucelo\+Keyboard\+Controller/\+Inc/screen.\+h}}
+{\ttfamily \#include \char`\"{}Free\+R\+T\+O\+S.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}timers.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}error.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}fonts.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}ssd1306.\+h\char`\"{}}\newline
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structscreen__init}{screen\+\_\+init}
+\item 
+struct \hyperlink{structscreen}{screen}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{screen_8h_ae484c36700ee21f70bb7c6fc4f927301}{G\+E\+T\+\_\+\+S\+C\+R\+E\+EN}~\hyperlink{extern_8h_a86f488905f0e8aa790a9633d2e930f8c}{keyboard\+\_\+devs}-\/$>$\hyperlink{structscreen}{screen}
+\item 
+\#define \hyperlink{screen_8h_a35492a1994899b4ae00520bc7551fa04}{G\+E\+T\+\_\+\+L\+CD}~\hyperlink{extern_8h_a86f488905f0e8aa790a9633d2e930f8c}{keyboard\+\_\+devs}-\/$>$\hyperlink{structscreen}{screen}-\/$>$L\+C\+D\+\_\+dev
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{structscreen__init}{screen\+\_\+init} \hyperlink{screen_8h_ac1bd50cfde80806b873b179ba6e0ff4b}{screen\+\_\+init\+\_\+t}
+\item 
+typedef struct \hyperlink{structscreen}{screen} \hyperlink{screen_8h_a2b884fb4031189ae0bf89d344e558973}{screen\+\_\+t}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{screen_8h_afb3fd01443687429fd45aad24985d85b}{screen\+\_\+render\+\_\+two\+\_\+line} ()
+\item 
+void \hyperlink{screen_8h_af617b47b539c9f787e7236ccbb3a565c}{A\+D\+C\+\_\+display\+\_\+values} (signed long $\ast$x, signed long $\ast$y)
+\item 
+\hyperlink{datatypes_8h_a2b884fb4031189ae0bf89d344e558973}{screen\+\_\+t} $\ast$ \hyperlink{screen_8h_afe648c1ba5ab6c0a212b8a97039a5a5b}{screen\+\_\+init} (\hyperlink{screen_8h_ac1bd50cfde80806b873b179ba6e0ff4b}{screen\+\_\+init\+\_\+t} $\ast$init\+\_\+values)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{screen_8h_a35492a1994899b4ae00520bc7551fa04}\label{screen_8h_a35492a1994899b4ae00520bc7551fa04}} 
+\index{screen.\+h@{screen.\+h}!G\+E\+T\+\_\+\+L\+CD@{G\+E\+T\+\_\+\+L\+CD}}
+\index{G\+E\+T\+\_\+\+L\+CD@{G\+E\+T\+\_\+\+L\+CD}!screen.\+h@{screen.\+h}}
+\subsubsection{\texorpdfstring{G\+E\+T\+\_\+\+L\+CD}{GET\_LCD}}
+{\footnotesize\ttfamily \#define G\+E\+T\+\_\+\+L\+CD~\hyperlink{extern_8h_a86f488905f0e8aa790a9633d2e930f8c}{keyboard\+\_\+devs}-\/$>$\hyperlink{structscreen}{screen}-\/$>$L\+C\+D\+\_\+dev}
+
+\mbox{\Hypertarget{screen_8h_ae484c36700ee21f70bb7c6fc4f927301}\label{screen_8h_ae484c36700ee21f70bb7c6fc4f927301}} 
+\index{screen.\+h@{screen.\+h}!G\+E\+T\+\_\+\+S\+C\+R\+E\+EN@{G\+E\+T\+\_\+\+S\+C\+R\+E\+EN}}
+\index{G\+E\+T\+\_\+\+S\+C\+R\+E\+EN@{G\+E\+T\+\_\+\+S\+C\+R\+E\+EN}!screen.\+h@{screen.\+h}}
+\subsubsection{\texorpdfstring{G\+E\+T\+\_\+\+S\+C\+R\+E\+EN}{GET\_SCREEN}}
+{\footnotesize\ttfamily \#define G\+E\+T\+\_\+\+S\+C\+R\+E\+EN~\hyperlink{extern_8h_a86f488905f0e8aa790a9633d2e930f8c}{keyboard\+\_\+devs}-\/$>$\hyperlink{structscreen}{screen}}
+
+
+
+\subsection{Typedef Documentation}
+\mbox{\Hypertarget{screen_8h_ac1bd50cfde80806b873b179ba6e0ff4b}\label{screen_8h_ac1bd50cfde80806b873b179ba6e0ff4b}} 
+\index{screen.\+h@{screen.\+h}!screen\+\_\+init\+\_\+t@{screen\+\_\+init\+\_\+t}}
+\index{screen\+\_\+init\+\_\+t@{screen\+\_\+init\+\_\+t}!screen.\+h@{screen.\+h}}
+\subsubsection{\texorpdfstring{screen\+\_\+init\+\_\+t}{screen\_init\_t}}
+{\footnotesize\ttfamily typedef struct \hyperlink{structscreen__init}{screen\+\_\+init}  \hyperlink{screen_8h_ac1bd50cfde80806b873b179ba6e0ff4b}{screen\+\_\+init\+\_\+t}}
+
+\mbox{\Hypertarget{screen_8h_a2b884fb4031189ae0bf89d344e558973}\label{screen_8h_a2b884fb4031189ae0bf89d344e558973}} 
+\index{screen.\+h@{screen.\+h}!screen\+\_\+t@{screen\+\_\+t}}
+\index{screen\+\_\+t@{screen\+\_\+t}!screen.\+h@{screen.\+h}}
+\subsubsection{\texorpdfstring{screen\+\_\+t}{screen\_t}}
+{\footnotesize\ttfamily typedef struct \hyperlink{structscreen}{screen} \hyperlink{datatypes_8h_a2b884fb4031189ae0bf89d344e558973}{screen\+\_\+t}}
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{screen_8h_af617b47b539c9f787e7236ccbb3a565c}\label{screen_8h_af617b47b539c9f787e7236ccbb3a565c}} 
+\index{screen.\+h@{screen.\+h}!A\+D\+C\+\_\+display\+\_\+values@{A\+D\+C\+\_\+display\+\_\+values}}
+\index{A\+D\+C\+\_\+display\+\_\+values@{A\+D\+C\+\_\+display\+\_\+values}!screen.\+h@{screen.\+h}}
+\subsubsection{\texorpdfstring{A\+D\+C\+\_\+display\+\_\+values()}{ADC\_display\_values()}}
+{\footnotesize\ttfamily void A\+D\+C\+\_\+display\+\_\+values (\begin{DoxyParamCaption}\item[{signed long $\ast$}]{x,  }\item[{signed long $\ast$}]{y }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{screen_8h_afe648c1ba5ab6c0a212b8a97039a5a5b}\label{screen_8h_afe648c1ba5ab6c0a212b8a97039a5a5b}} 
+\index{screen.\+h@{screen.\+h}!screen\+\_\+init@{screen\+\_\+init}}
+\index{screen\+\_\+init@{screen\+\_\+init}!screen.\+h@{screen.\+h}}
+\subsubsection{\texorpdfstring{screen\+\_\+init()}{screen\_init()}}
+{\footnotesize\ttfamily \hyperlink{datatypes_8h_a2b884fb4031189ae0bf89d344e558973}{screen\+\_\+t}$\ast$ \hyperlink{structscreen__init}{screen\+\_\+init} (\begin{DoxyParamCaption}\item[{\hyperlink{screen_8h_ac1bd50cfde80806b873b179ba6e0ff4b}{screen\+\_\+init\+\_\+t} $\ast$}]{init\+\_\+values }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{screen_8h_afb3fd01443687429fd45aad24985d85b}\label{screen_8h_afb3fd01443687429fd45aad24985d85b}} 
+\index{screen.\+h@{screen.\+h}!screen\+\_\+render\+\_\+two\+\_\+line@{screen\+\_\+render\+\_\+two\+\_\+line}}
+\index{screen\+\_\+render\+\_\+two\+\_\+line@{screen\+\_\+render\+\_\+two\+\_\+line}!screen.\+h@{screen.\+h}}
+\subsubsection{\texorpdfstring{screen\+\_\+render\+\_\+two\+\_\+line()}{screen\_render\_two\_line()}}
+{\footnotesize\ttfamily void screen\+\_\+render\+\_\+two\+\_\+line (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+

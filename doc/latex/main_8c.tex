@@ -1,0 +1,285 @@
+\hypertarget{main_8c}{}\section{/home/alxhoff/git/\+Embedded/stm32-\/mech-\/keyboard/\+Nucelo\+Keyboard\+Controller/\+Src/main.c File Reference}
+\label{main_8c}\index{/home/alxhoff/git/\+Embedded/stm32-\/mech-\/keyboard/\+Nucelo\+Keyboard\+Controller/\+Src/main.\+c@{/home/alxhoff/git/\+Embedded/stm32-\/mech-\/keyboard/\+Nucelo\+Keyboard\+Controller/\+Src/main.\+c}}
+{\ttfamily \#include \char`\"{}main.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}stm32f4xx\+\_\+hal.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}cmsis\+\_\+os.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}usb\+\_\+device.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}keymap.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}macro.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}scan.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}shift.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}keyboard.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}ssd1306.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}screen.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}vis\+Effect.\+h\char`\"{}}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{main_8c_a70af21c671abfcc773614a9a4f63d920}{System\+Clock\+\_\+\+Config} (void)
+\item 
+static void \hyperlink{main_8c_ae89fdd15729ad41a66911190fcbab23a}{M\+X\+\_\+\+G\+P\+I\+O\+\_\+\+Init} (void)
+\item 
+static void \hyperlink{main_8c_a1c98cc38e233c6b46ca2bf9598a5fce8}{M\+X\+\_\+\+U\+S\+A\+R\+T3\+\_\+\+U\+A\+R\+T\+\_\+\+Init} (void)
+\item 
+static void \hyperlink{main_8c_a3a68950ead69b4a7fd8aca513666c7d4}{M\+X\+\_\+\+E\+T\+H\+\_\+\+Init} (void)
+\item 
+static void \hyperlink{main_8c_af71812af4fbb9ebbe0f681165b657433}{M\+X\+\_\+\+I2\+C2\+\_\+\+Init} (void)
+\item 
+static void \hyperlink{main_8c_aaa163e37853e6fc971474824d9f655ca}{M\+X\+\_\+\+A\+D\+C1\+\_\+\+Init} (void)
+\item 
+static void \hyperlink{main_8c_a4230d11f81d0b16e112f1cc3f40cb42f}{M\+X\+\_\+\+I2\+C1\+\_\+\+Init} (void)
+\item 
+static void \hyperlink{main_8c_a4e987f0fdef6459c1a03ca830bac23f5}{M\+X\+\_\+\+A\+D\+C2\+\_\+\+Init} (void)
+\item 
+void \hyperlink{main_8c_a016544463b4842ced7191baf8f449cea}{Start\+Default\+Task} (void const $\ast$argument)
+\item 
+void \hyperlink{main_8c_a4dfb6d97a8da6bd95ff18278a3e55796}{Keyboard\+Listen\+Callback} (void const $\ast$argument)
+\item 
+void \hyperlink{main_8c_a0e5b3151b9972eca1fb2896c2c54f37c}{Mouse\+Listen\+Callback} (void const $\ast$argument)
+\item 
+void \hyperlink{main_8c_a32574da6571058608714067de57e32d5}{C\+L\+I\+Listen\+Callback} (void const $\ast$argument)
+\item 
+int \hyperlink{main_8c_a840291bc02cba5474a4cb46a9b9566fe}{main} (void)
+\item 
+void \hyperlink{main_8c_a829116a51f1db1a72ebd1120f60719d5}{\+\_\+\+Error\+\_\+\+Handler} (char $\ast$file, int line)
+\begin{DoxyCompactList}\small\item\em This function is executed in case of error occurrence. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+A\+D\+C\+\_\+\+Handle\+Type\+Def \hyperlink{main_8c_a22b804736f5648d52f639b2647d4ed13}{hadc1}
+\item 
+A\+D\+C\+\_\+\+Handle\+Type\+Def \hyperlink{main_8c_acd9221f1aa19aebfe0b744947f2daf49}{hadc2}
+\item 
+E\+T\+H\+\_\+\+Handle\+Type\+Def \hyperlink{main_8c_a3605d86556d96074ff098be46eca2837}{heth}
+\item 
+I2\+C\+\_\+\+Handle\+Type\+Def \hyperlink{main_8c_af7b2c26e44dadaaa798a5c3d82914ba7}{hi2c1}
+\item 
+I2\+C\+\_\+\+Handle\+Type\+Def \hyperlink{main_8c_ac379bcc152d860f08b1279fd3e232295}{hi2c2}
+\item 
+U\+A\+R\+T\+\_\+\+Handle\+Type\+Def \hyperlink{main_8c_ab7c63c1b0f65db92b6a4ea19edf957e1}{huart3}
+\item 
+os\+Thread\+Id \hyperlink{main_8c_aa658fe134a5d1309d7a15c8116fa142c}{default\+Task\+Handle}
+\item 
+os\+Thread\+Id \hyperlink{main_8c_a2ca2249538dd23d32771f89dbca98f9c}{Keyboard\+Listen\+Handle}
+\item 
+os\+Thread\+Id \hyperlink{main_8c_a699dd5560578ca6b11851e9c98f702ce}{A\+D\+C\+Listen\+Handle}
+\item 
+os\+Thread\+Id \hyperlink{main_8c_a42b46698d55bd4f526ff99e2ccc1b947}{C\+L\+I\+Listen\+Handle}
+\item 
+Semaphore\+Handle\+\_\+t \hyperlink{main_8c_a938629d1405b165dae0a8b3bdff22449}{U\+S\+B\+\_\+send\+\_\+lock} = N\+U\+LL
+\item 
+\hyperlink{datatypes_8h_a3f91b8703c531938c9e049363f0211f3}{key\+\_\+devices\+\_\+t} $\ast$ \hyperlink{main_8c_a86f488905f0e8aa790a9633d2e930f8c}{keyboard\+\_\+devs}
+\item 
+\hyperlink{states_8h_ae7e99e4a8d8799266ae3f10a4e473583}{keyboard\+\_\+states} \hyperlink{main_8c_ab1c3f05cd023489fd97cc07e6158c425}{current\+\_\+keyboard\+\_\+state}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{main_8c_a829116a51f1db1a72ebd1120f60719d5}\label{main_8c_a829116a51f1db1a72ebd1120f60719d5}} 
+\index{main.\+c@{main.\+c}!\+\_\+\+Error\+\_\+\+Handler@{\+\_\+\+Error\+\_\+\+Handler}}
+\index{\+\_\+\+Error\+\_\+\+Handler@{\+\_\+\+Error\+\_\+\+Handler}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{\+\_\+\+Error\+\_\+\+Handler()}{\_Error\_Handler()}}
+{\footnotesize\ttfamily void \+\_\+\+Error\+\_\+\+Handler (\begin{DoxyParamCaption}\item[{char $\ast$}]{file,  }\item[{int}]{line }\end{DoxyParamCaption})}
+
+
+
+This function is executed in case of error occurrence. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+\mbox{\Hypertarget{main_8c_a32574da6571058608714067de57e32d5}\label{main_8c_a32574da6571058608714067de57e32d5}} 
+\index{main.\+c@{main.\+c}!C\+L\+I\+Listen\+Callback@{C\+L\+I\+Listen\+Callback}}
+\index{C\+L\+I\+Listen\+Callback@{C\+L\+I\+Listen\+Callback}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{C\+L\+I\+Listen\+Callback()}{CLIListenCallback()}}
+{\footnotesize\ttfamily void C\+L\+I\+Listen\+Callback (\begin{DoxyParamCaption}\item[{void const $\ast$}]{argument }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{main_8c_a4dfb6d97a8da6bd95ff18278a3e55796}\label{main_8c_a4dfb6d97a8da6bd95ff18278a3e55796}} 
+\index{main.\+c@{main.\+c}!Keyboard\+Listen\+Callback@{Keyboard\+Listen\+Callback}}
+\index{Keyboard\+Listen\+Callback@{Keyboard\+Listen\+Callback}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{Keyboard\+Listen\+Callback()}{KeyboardListenCallback()}}
+{\footnotesize\ttfamily void Keyboard\+Listen\+Callback (\begin{DoxyParamCaption}\item[{void const $\ast$}]{argument }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{main_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{main_8c_a840291bc02cba5474a4cb46a9b9566fe}} 
+\index{main.\+c@{main.\+c}!main@{main}}
+\index{main@{main}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{main_8c_a0e5b3151b9972eca1fb2896c2c54f37c}\label{main_8c_a0e5b3151b9972eca1fb2896c2c54f37c}} 
+\index{main.\+c@{main.\+c}!Mouse\+Listen\+Callback@{Mouse\+Listen\+Callback}}
+\index{Mouse\+Listen\+Callback@{Mouse\+Listen\+Callback}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{Mouse\+Listen\+Callback()}{MouseListenCallback()}}
+{\footnotesize\ttfamily void Mouse\+Listen\+Callback (\begin{DoxyParamCaption}\item[{void const $\ast$}]{argument }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{main_8c_aaa163e37853e6fc971474824d9f655ca}\label{main_8c_aaa163e37853e6fc971474824d9f655ca}} 
+\index{main.\+c@{main.\+c}!M\+X\+\_\+\+A\+D\+C1\+\_\+\+Init@{M\+X\+\_\+\+A\+D\+C1\+\_\+\+Init}}
+\index{M\+X\+\_\+\+A\+D\+C1\+\_\+\+Init@{M\+X\+\_\+\+A\+D\+C1\+\_\+\+Init}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{M\+X\+\_\+\+A\+D\+C1\+\_\+\+Init()}{MX\_ADC1\_Init()}}
+{\footnotesize\ttfamily static void M\+X\+\_\+\+A\+D\+C1\+\_\+\+Init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Configure the global features of the A\+DC (Clock, Resolution, Data Alignment and number of conversion)
+
+Configure for the selected A\+DC regular channel its corresponding rank in the sequencer and its sample time.\mbox{\Hypertarget{main_8c_a4e987f0fdef6459c1a03ca830bac23f5}\label{main_8c_a4e987f0fdef6459c1a03ca830bac23f5}} 
+\index{main.\+c@{main.\+c}!M\+X\+\_\+\+A\+D\+C2\+\_\+\+Init@{M\+X\+\_\+\+A\+D\+C2\+\_\+\+Init}}
+\index{M\+X\+\_\+\+A\+D\+C2\+\_\+\+Init@{M\+X\+\_\+\+A\+D\+C2\+\_\+\+Init}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{M\+X\+\_\+\+A\+D\+C2\+\_\+\+Init()}{MX\_ADC2\_Init()}}
+{\footnotesize\ttfamily static void M\+X\+\_\+\+A\+D\+C2\+\_\+\+Init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Configure the global features of the A\+DC (Clock, Resolution, Data Alignment and number of conversion)
+
+Configure for the selected A\+DC regular channel its corresponding rank in the sequencer and its sample time.\mbox{\Hypertarget{main_8c_a3a68950ead69b4a7fd8aca513666c7d4}\label{main_8c_a3a68950ead69b4a7fd8aca513666c7d4}} 
+\index{main.\+c@{main.\+c}!M\+X\+\_\+\+E\+T\+H\+\_\+\+Init@{M\+X\+\_\+\+E\+T\+H\+\_\+\+Init}}
+\index{M\+X\+\_\+\+E\+T\+H\+\_\+\+Init@{M\+X\+\_\+\+E\+T\+H\+\_\+\+Init}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{M\+X\+\_\+\+E\+T\+H\+\_\+\+Init()}{MX\_ETH\_Init()}}
+{\footnotesize\ttfamily static void M\+X\+\_\+\+E\+T\+H\+\_\+\+Init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{main_8c_ae89fdd15729ad41a66911190fcbab23a}\label{main_8c_ae89fdd15729ad41a66911190fcbab23a}} 
+\index{main.\+c@{main.\+c}!M\+X\+\_\+\+G\+P\+I\+O\+\_\+\+Init@{M\+X\+\_\+\+G\+P\+I\+O\+\_\+\+Init}}
+\index{M\+X\+\_\+\+G\+P\+I\+O\+\_\+\+Init@{M\+X\+\_\+\+G\+P\+I\+O\+\_\+\+Init}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{M\+X\+\_\+\+G\+P\+I\+O\+\_\+\+Init()}{MX\_GPIO\_Init()}}
+{\footnotesize\ttfamily static void M\+X\+\_\+\+G\+P\+I\+O\+\_\+\+Init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Configure pins as Analog Input Output E\+V\+E\+N\+T\+\_\+\+O\+UT E\+X\+TI \mbox{\Hypertarget{main_8c_a4230d11f81d0b16e112f1cc3f40cb42f}\label{main_8c_a4230d11f81d0b16e112f1cc3f40cb42f}} 
+\index{main.\+c@{main.\+c}!M\+X\+\_\+\+I2\+C1\+\_\+\+Init@{M\+X\+\_\+\+I2\+C1\+\_\+\+Init}}
+\index{M\+X\+\_\+\+I2\+C1\+\_\+\+Init@{M\+X\+\_\+\+I2\+C1\+\_\+\+Init}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{M\+X\+\_\+\+I2\+C1\+\_\+\+Init()}{MX\_I2C1\_Init()}}
+{\footnotesize\ttfamily static void M\+X\+\_\+\+I2\+C1\+\_\+\+Init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{main_8c_af71812af4fbb9ebbe0f681165b657433}\label{main_8c_af71812af4fbb9ebbe0f681165b657433}} 
+\index{main.\+c@{main.\+c}!M\+X\+\_\+\+I2\+C2\+\_\+\+Init@{M\+X\+\_\+\+I2\+C2\+\_\+\+Init}}
+\index{M\+X\+\_\+\+I2\+C2\+\_\+\+Init@{M\+X\+\_\+\+I2\+C2\+\_\+\+Init}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{M\+X\+\_\+\+I2\+C2\+\_\+\+Init()}{MX\_I2C2\_Init()}}
+{\footnotesize\ttfamily static void M\+X\+\_\+\+I2\+C2\+\_\+\+Init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{main_8c_a1c98cc38e233c6b46ca2bf9598a5fce8}\label{main_8c_a1c98cc38e233c6b46ca2bf9598a5fce8}} 
+\index{main.\+c@{main.\+c}!M\+X\+\_\+\+U\+S\+A\+R\+T3\+\_\+\+U\+A\+R\+T\+\_\+\+Init@{M\+X\+\_\+\+U\+S\+A\+R\+T3\+\_\+\+U\+A\+R\+T\+\_\+\+Init}}
+\index{M\+X\+\_\+\+U\+S\+A\+R\+T3\+\_\+\+U\+A\+R\+T\+\_\+\+Init@{M\+X\+\_\+\+U\+S\+A\+R\+T3\+\_\+\+U\+A\+R\+T\+\_\+\+Init}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{M\+X\+\_\+\+U\+S\+A\+R\+T3\+\_\+\+U\+A\+R\+T\+\_\+\+Init()}{MX\_USART3\_UART\_Init()}}
+{\footnotesize\ttfamily static void M\+X\+\_\+\+U\+S\+A\+R\+T3\+\_\+\+U\+A\+R\+T\+\_\+\+Init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{main_8c_a016544463b4842ced7191baf8f449cea}\label{main_8c_a016544463b4842ced7191baf8f449cea}} 
+\index{main.\+c@{main.\+c}!Start\+Default\+Task@{Start\+Default\+Task}}
+\index{Start\+Default\+Task@{Start\+Default\+Task}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{Start\+Default\+Task()}{StartDefaultTask()}}
+{\footnotesize\ttfamily void Start\+Default\+Task (\begin{DoxyParamCaption}\item[{void const $\ast$}]{argument }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{main_8c_a70af21c671abfcc773614a9a4f63d920}\label{main_8c_a70af21c671abfcc773614a9a4f63d920}} 
+\index{main.\+c@{main.\+c}!System\+Clock\+\_\+\+Config@{System\+Clock\+\_\+\+Config}}
+\index{System\+Clock\+\_\+\+Config@{System\+Clock\+\_\+\+Config}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{System\+Clock\+\_\+\+Config()}{SystemClock\_Config()}}
+{\footnotesize\ttfamily void System\+Clock\+\_\+\+Config (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+System Clock Configuration Configure the main internal regulator output voltage
+
+Initializes the C\+PU, A\+HB and A\+PB busses clocks
+
+Initializes the C\+PU, A\+HB and A\+PB busses clocks
+
+Configure the Systick interrupt time
+
+Configure the Systick
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{main_8c_a699dd5560578ca6b11851e9c98f702ce}\label{main_8c_a699dd5560578ca6b11851e9c98f702ce}} 
+\index{main.\+c@{main.\+c}!A\+D\+C\+Listen\+Handle@{A\+D\+C\+Listen\+Handle}}
+\index{A\+D\+C\+Listen\+Handle@{A\+D\+C\+Listen\+Handle}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{A\+D\+C\+Listen\+Handle}{ADCListenHandle}}
+{\footnotesize\ttfamily os\+Thread\+Id A\+D\+C\+Listen\+Handle}
+
+\mbox{\Hypertarget{main_8c_a42b46698d55bd4f526ff99e2ccc1b947}\label{main_8c_a42b46698d55bd4f526ff99e2ccc1b947}} 
+\index{main.\+c@{main.\+c}!C\+L\+I\+Listen\+Handle@{C\+L\+I\+Listen\+Handle}}
+\index{C\+L\+I\+Listen\+Handle@{C\+L\+I\+Listen\+Handle}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{C\+L\+I\+Listen\+Handle}{CLIListenHandle}}
+{\footnotesize\ttfamily os\+Thread\+Id C\+L\+I\+Listen\+Handle}
+
+\mbox{\Hypertarget{main_8c_ab1c3f05cd023489fd97cc07e6158c425}\label{main_8c_ab1c3f05cd023489fd97cc07e6158c425}} 
+\index{main.\+c@{main.\+c}!current\+\_\+keyboard\+\_\+state@{current\+\_\+keyboard\+\_\+state}}
+\index{current\+\_\+keyboard\+\_\+state@{current\+\_\+keyboard\+\_\+state}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{current\+\_\+keyboard\+\_\+state}{current\_keyboard\_state}}
+{\footnotesize\ttfamily \hyperlink{states_8h_ae7e99e4a8d8799266ae3f10a4e473583}{keyboard\+\_\+states} current\+\_\+keyboard\+\_\+state}
+
+\mbox{\Hypertarget{main_8c_aa658fe134a5d1309d7a15c8116fa142c}\label{main_8c_aa658fe134a5d1309d7a15c8116fa142c}} 
+\index{main.\+c@{main.\+c}!default\+Task\+Handle@{default\+Task\+Handle}}
+\index{default\+Task\+Handle@{default\+Task\+Handle}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{default\+Task\+Handle}{defaultTaskHandle}}
+{\footnotesize\ttfamily os\+Thread\+Id default\+Task\+Handle}
+
+\mbox{\Hypertarget{main_8c_a22b804736f5648d52f639b2647d4ed13}\label{main_8c_a22b804736f5648d52f639b2647d4ed13}} 
+\index{main.\+c@{main.\+c}!hadc1@{hadc1}}
+\index{hadc1@{hadc1}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{hadc1}{hadc1}}
+{\footnotesize\ttfamily A\+D\+C\+\_\+\+Handle\+Type\+Def hadc1}
+
+File Name \+: \hyperlink{main_8c}{main.\+c} Description \+: Main program body
+
+This notice applies to any and all portions of this file that are not between comment pairs U\+S\+ER C\+O\+DE B\+E\+G\+IN and U\+S\+ER C\+O\+DE E\+ND. Other portions of this file, whether inserted by the user or by software development tools are owned by their respective copyright owners.
+
+Copyright (c) 2017 S\+T\+Microelectronics International N.\+V. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted, provided that the following conditions are met\+:
+
+
+\begin{DoxyEnumerate}
+\item Redistribution of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+\item Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+\item Neither the name of S\+T\+Microelectronics nor the names of other contributors to this software may be used to endorse or promote products derived from this software without specific written permission.
+\item This software, including modifications and/or derivative works of this software, must execute solely and exclusively on microcontroller or microprocessor devices manufactured by or for S\+T\+Microelectronics.
+\item Redistribution and use of this software other than as permitted under this license is void and will automatically terminate your rights under this license.
+\end{DoxyEnumerate}
+
+T\+H\+IS S\+O\+F\+T\+W\+A\+RE IS P\+R\+O\+V\+I\+D\+ED BY S\+T\+M\+I\+C\+R\+O\+E\+L\+E\+C\+T\+R\+O\+N\+I\+CS A\+ND C\+O\+N\+T\+R\+I\+B\+U\+T\+O\+RS \char`\"{}\+A\+S I\+S\char`\"{} A\+ND A\+NY E\+X\+P\+R\+E\+SS, I\+M\+P\+L\+I\+ED OR S\+T\+A\+T\+U\+T\+O\+RY W\+A\+R\+R\+A\+N\+T\+I\+ES, I\+N\+C\+L\+U\+D\+I\+NG, B\+UT N\+OT L\+I\+M\+I\+T\+ED TO, T\+HE I\+M\+P\+L\+I\+ED W\+A\+R\+R\+A\+N\+T\+I\+ES OF M\+E\+R\+C\+H\+A\+N\+T\+A\+B\+I\+L\+I\+TY, F\+I\+T\+N\+E\+SS F\+OR A P\+A\+R\+T\+I\+C\+U\+L\+AR P\+U\+R\+P\+O\+SE A\+ND N\+O\+N-\/\+I\+N\+F\+R\+I\+N\+G\+E\+M\+E\+NT OF T\+H\+I\+RD P\+A\+R\+TY I\+N\+T\+E\+L\+L\+E\+C\+T\+U\+AL P\+R\+O\+P\+E\+R\+TY R\+I\+G\+H\+TS A\+RE D\+I\+S\+C\+L\+A\+I\+M\+ED TO T\+HE F\+U\+L\+L\+E\+ST E\+X\+T\+E\+NT P\+E\+R\+M\+I\+T\+T\+ED BY L\+AW. IN NO E\+V\+E\+NT S\+H\+A\+LL S\+T\+M\+I\+C\+R\+O\+E\+L\+E\+C\+T\+R\+O\+N\+I\+CS OR C\+O\+N\+T\+R\+I\+B\+U\+T\+O\+RS BE L\+I\+A\+B\+LE F\+OR A\+NY D\+I\+R\+E\+CT, I\+N\+D\+I\+R\+E\+CT, I\+N\+C\+I\+D\+E\+N\+T\+AL, S\+P\+E\+C\+I\+AL, E\+X\+E\+M\+P\+L\+A\+RY, OR C\+O\+N\+S\+E\+Q\+U\+E\+N\+T\+I\+AL D\+A\+M\+A\+G\+ES (I\+N\+C\+L\+U\+D\+I\+NG, B\+UT N\+OT L\+I\+M\+I\+T\+ED TO, P\+R\+O\+C\+U\+R\+E\+M\+E\+NT OF S\+U\+B\+S\+T\+I\+T\+U\+TE G\+O\+O\+DS OR S\+E\+R\+V\+I\+C\+ES; L\+O\+SS OF U\+SE, D\+A\+TA, OR P\+R\+O\+F\+I\+TS; OR B\+U\+S\+I\+N\+E\+SS I\+N\+T\+E\+R\+R\+U\+P\+T\+I\+ON) H\+O\+W\+E\+V\+ER C\+A\+U\+S\+ED A\+ND ON A\+NY T\+H\+E\+O\+RY OF L\+I\+A\+B\+I\+L\+I\+TY, W\+H\+E\+T\+H\+ER IN C\+O\+N\+T\+R\+A\+CT, S\+T\+R\+I\+CT L\+I\+A\+B\+I\+L\+I\+TY, OR T\+O\+RT (I\+N\+C\+L\+U\+D\+I\+NG N\+E\+G\+L\+I\+G\+E\+N\+CE OR O\+T\+H\+E\+R\+W\+I\+SE) A\+R\+I\+S\+I\+NG IN A\+NY W\+AY O\+UT OF T\+HE U\+SE OF T\+H\+IS S\+O\+F\+T\+W\+A\+RE, E\+V\+EN IF A\+D\+V\+I\+S\+ED OF T\+HE P\+O\+S\+S\+I\+B\+I\+L\+I\+TY OF S\+U\+CH D\+A\+M\+A\+GE. \mbox{\Hypertarget{main_8c_acd9221f1aa19aebfe0b744947f2daf49}\label{main_8c_acd9221f1aa19aebfe0b744947f2daf49}} 
+\index{main.\+c@{main.\+c}!hadc2@{hadc2}}
+\index{hadc2@{hadc2}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{hadc2}{hadc2}}
+{\footnotesize\ttfamily A\+D\+C\+\_\+\+Handle\+Type\+Def hadc2}
+
+\mbox{\Hypertarget{main_8c_a3605d86556d96074ff098be46eca2837}\label{main_8c_a3605d86556d96074ff098be46eca2837}} 
+\index{main.\+c@{main.\+c}!heth@{heth}}
+\index{heth@{heth}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{heth}{heth}}
+{\footnotesize\ttfamily E\+T\+H\+\_\+\+Handle\+Type\+Def heth}
+
+\mbox{\Hypertarget{main_8c_af7b2c26e44dadaaa798a5c3d82914ba7}\label{main_8c_af7b2c26e44dadaaa798a5c3d82914ba7}} 
+\index{main.\+c@{main.\+c}!hi2c1@{hi2c1}}
+\index{hi2c1@{hi2c1}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{hi2c1}{hi2c1}}
+{\footnotesize\ttfamily I2\+C\+\_\+\+Handle\+Type\+Def hi2c1}
+
+\mbox{\Hypertarget{main_8c_ac379bcc152d860f08b1279fd3e232295}\label{main_8c_ac379bcc152d860f08b1279fd3e232295}} 
+\index{main.\+c@{main.\+c}!hi2c2@{hi2c2}}
+\index{hi2c2@{hi2c2}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{hi2c2}{hi2c2}}
+{\footnotesize\ttfamily I2\+C\+\_\+\+Handle\+Type\+Def hi2c2}
+
+\mbox{\Hypertarget{main_8c_ab7c63c1b0f65db92b6a4ea19edf957e1}\label{main_8c_ab7c63c1b0f65db92b6a4ea19edf957e1}} 
+\index{main.\+c@{main.\+c}!huart3@{huart3}}
+\index{huart3@{huart3}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{huart3}{huart3}}
+{\footnotesize\ttfamily U\+A\+R\+T\+\_\+\+Handle\+Type\+Def huart3}
+
+\mbox{\Hypertarget{main_8c_a86f488905f0e8aa790a9633d2e930f8c}\label{main_8c_a86f488905f0e8aa790a9633d2e930f8c}} 
+\index{main.\+c@{main.\+c}!keyboard\+\_\+devs@{keyboard\+\_\+devs}}
+\index{keyboard\+\_\+devs@{keyboard\+\_\+devs}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{keyboard\+\_\+devs}{keyboard\_devs}}
+{\footnotesize\ttfamily \hyperlink{datatypes_8h_a3f91b8703c531938c9e049363f0211f3}{key\+\_\+devices\+\_\+t}$\ast$ keyboard\+\_\+devs}
+
+\mbox{\Hypertarget{main_8c_a2ca2249538dd23d32771f89dbca98f9c}\label{main_8c_a2ca2249538dd23d32771f89dbca98f9c}} 
+\index{main.\+c@{main.\+c}!Keyboard\+Listen\+Handle@{Keyboard\+Listen\+Handle}}
+\index{Keyboard\+Listen\+Handle@{Keyboard\+Listen\+Handle}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{Keyboard\+Listen\+Handle}{KeyboardListenHandle}}
+{\footnotesize\ttfamily os\+Thread\+Id Keyboard\+Listen\+Handle}
+
+\mbox{\Hypertarget{main_8c_a938629d1405b165dae0a8b3bdff22449}\label{main_8c_a938629d1405b165dae0a8b3bdff22449}} 
+\index{main.\+c@{main.\+c}!U\+S\+B\+\_\+send\+\_\+lock@{U\+S\+B\+\_\+send\+\_\+lock}}
+\index{U\+S\+B\+\_\+send\+\_\+lock@{U\+S\+B\+\_\+send\+\_\+lock}!main.\+c@{main.\+c}}
+\subsubsection{\texorpdfstring{U\+S\+B\+\_\+send\+\_\+lock}{USB\_send\_lock}}
+{\footnotesize\ttfamily Semaphore\+Handle\+\_\+t U\+S\+B\+\_\+send\+\_\+lock = N\+U\+LL}
+

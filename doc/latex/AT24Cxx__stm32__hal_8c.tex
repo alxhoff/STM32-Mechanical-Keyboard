@@ -1,0 +1,84 @@
+\hypertarget{AT24Cxx__stm32__hal_8c}{}\section{/home/alxhoff/git/\+Embedded/stm32-\/mech-\/keyboard/\+Nucelo\+Keyboard\+Controller/\+Src/\+A\+T24\+Cxx\+\_\+stm32\+\_\+hal.c File Reference}
+\label{AT24Cxx__stm32__hal_8c}\index{/home/alxhoff/git/\+Embedded/stm32-\/mech-\/keyboard/\+Nucelo\+Keyboard\+Controller/\+Src/\+A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c@{/home/alxhoff/git/\+Embedded/stm32-\/mech-\/keyboard/\+Nucelo\+Keyboard\+Controller/\+Src/\+A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c}}
+{\ttfamily \#include \char`\"{}A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}extern.\+h\char`\"{}}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+uint16\+\_\+t \hyperlink{AT24Cxx__stm32__hal_8c_ac57802ce9d1c1eca948458763a1a2d14}{A\+T24\+Cxx\+\_\+get\+\_\+max\+\_\+addr} (\hyperlink{structAT24Cxx__device}{A\+T24\+Cxx\+\_\+device} $\ast$dev)
+\item 
+uint16\+\_\+t \hyperlink{AT24Cxx__stm32__hal_8c_afa2f99166ba03f7dd24628e27476cb4a}{A\+T24\+Cxx\+\_\+get\+\_\+pg\+\_\+size} (\hyperlink{structAT24Cxx__device}{A\+T24\+Cxx\+\_\+device} $\ast$dev)
+\item 
+\hyperlink{AT24Cxx__stm32__hal_8h_a2f03f0bf6e4e7dbf1acb611369db6605}{A\+T24\+Cxx\+\_\+\+E\+R\+R\+\_\+\+Type\+Def} \hyperlink{AT24Cxx__stm32__hal_8c_a2ab090e7d53b7471950bd946cdc30a4f}{A\+T24\+Cxx\+\_\+init} (\hyperlink{structAT24Cxx__devices}{A\+T24\+Cxx\+\_\+devices} $\ast$devices, uint8\+\_\+t init\+\_\+dev\+\_\+addr)
+\item 
+\hyperlink{AT24Cxx__stm32__hal_8h_a2f03f0bf6e4e7dbf1acb611369db6605}{A\+T24\+Cxx\+\_\+\+E\+R\+R\+\_\+\+Type\+Def} \hyperlink{AT24Cxx__stm32__hal_8c_aea5499a1bad1275d12e7e9e1aea534f6}{A\+T24\+Cxx\+\_\+add\+\_\+dev} (\hyperlink{structAT24Cxx__devices}{A\+T24\+Cxx\+\_\+devices} $\ast$devices, uint8\+\_\+t dev\+\_\+addr)
+\item 
+\hyperlink{structAT24Cxx__device}{A\+T24\+Cxx\+\_\+device} $\ast$ \hyperlink{AT24Cxx__stm32__hal_8c_a1929dc96ab0095cf7fb1fce79ded21ef}{A\+T24\+Cxx\+\_\+get\+\_\+dev} (\hyperlink{structAT24Cxx__devices}{A\+T24\+Cxx\+\_\+devices} $\ast$devices, uint8\+\_\+t index)
+\item 
+\hyperlink{AT24Cxx__stm32__hal_8h_a2f03f0bf6e4e7dbf1acb611369db6605}{A\+T24\+Cxx\+\_\+\+E\+R\+R\+\_\+\+Type\+Def} \hyperlink{AT24Cxx__stm32__hal_8c_a92bbb68de3f3ae9445ab537d54d4978a}{A\+T24\+Cxx\+\_\+write\+\_\+byte} (\hyperlink{structAT24Cxx__device}{A\+T24\+Cxx\+\_\+device} $\ast$dev, uint8\+\_\+t $\ast$ret, uint16\+\_\+t mem\+\_\+addr)
+\item 
+\hyperlink{AT24Cxx__stm32__hal_8h_a2f03f0bf6e4e7dbf1acb611369db6605}{A\+T24\+Cxx\+\_\+\+E\+R\+R\+\_\+\+Type\+Def} \hyperlink{AT24Cxx__stm32__hal_8c_ac858d8958bc6d572d736b9073967aaf7}{A\+T24\+Cxx\+\_\+write\+\_\+byte\+\_\+buffer} (\hyperlink{structAT24Cxx__device}{A\+T24\+Cxx\+\_\+device} $\ast$dev, uint16\+\_\+t mem\+\_\+addr, uint8\+\_\+t $\ast$ret\+\_\+buf, uint16\+\_\+t buf\+\_\+length)
+\item 
+\hyperlink{AT24Cxx__stm32__hal_8h_a2f03f0bf6e4e7dbf1acb611369db6605}{A\+T24\+Cxx\+\_\+\+E\+R\+R\+\_\+\+Type\+Def} \hyperlink{AT24Cxx__stm32__hal_8c_a01ea3687ed67d06b6f5dcc74d817ecc8}{A\+T24\+Cxx\+\_\+read\+\_\+byte} (\hyperlink{structAT24Cxx__device}{A\+T24\+Cxx\+\_\+device} $\ast$dev, uint8\+\_\+t $\ast$ret, uint16\+\_\+t mem\+\_\+addr)
+\item 
+\hyperlink{AT24Cxx__stm32__hal_8h_a2f03f0bf6e4e7dbf1acb611369db6605}{A\+T24\+Cxx\+\_\+\+E\+R\+R\+\_\+\+Type\+Def} \hyperlink{AT24Cxx__stm32__hal_8c_ac2332f19f2c79cf02a7a27846b6ea67e}{A\+T24\+Cxx\+\_\+read\+\_\+byte\+\_\+buffer} (\hyperlink{structAT24Cxx__device}{A\+T24\+Cxx\+\_\+device} $\ast$dev, uint16\+\_\+t mem\+\_\+addr, uint8\+\_\+t $\ast$ret\+\_\+buf, uint16\+\_\+t buf\+\_\+len)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{AT24Cxx__stm32__hal_8c_aea5499a1bad1275d12e7e9e1aea534f6}\label{AT24Cxx__stm32__hal_8c_aea5499a1bad1275d12e7e9e1aea534f6}} 
+\index{A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c@{A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c}!A\+T24\+Cxx\+\_\+add\+\_\+dev@{A\+T24\+Cxx\+\_\+add\+\_\+dev}}
+\index{A\+T24\+Cxx\+\_\+add\+\_\+dev@{A\+T24\+Cxx\+\_\+add\+\_\+dev}!A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c@{A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c}}
+\subsubsection{\texorpdfstring{A\+T24\+Cxx\+\_\+add\+\_\+dev()}{AT24Cxx\_add\_dev()}}
+{\footnotesize\ttfamily \hyperlink{AT24Cxx__stm32__hal_8h_a2f03f0bf6e4e7dbf1acb611369db6605}{A\+T24\+Cxx\+\_\+\+E\+R\+R\+\_\+\+Type\+Def} A\+T24\+Cxx\+\_\+add\+\_\+dev (\begin{DoxyParamCaption}\item[{\hyperlink{structAT24Cxx__devices}{A\+T24\+Cxx\+\_\+devices} $\ast$}]{devices,  }\item[{uint8\+\_\+t}]{dev\+\_\+addr }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{AT24Cxx__stm32__hal_8c_a1929dc96ab0095cf7fb1fce79ded21ef}\label{AT24Cxx__stm32__hal_8c_a1929dc96ab0095cf7fb1fce79ded21ef}} 
+\index{A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c@{A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c}!A\+T24\+Cxx\+\_\+get\+\_\+dev@{A\+T24\+Cxx\+\_\+get\+\_\+dev}}
+\index{A\+T24\+Cxx\+\_\+get\+\_\+dev@{A\+T24\+Cxx\+\_\+get\+\_\+dev}!A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c@{A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c}}
+\subsubsection{\texorpdfstring{A\+T24\+Cxx\+\_\+get\+\_\+dev()}{AT24Cxx\_get\_dev()}}
+{\footnotesize\ttfamily \hyperlink{structAT24Cxx__device}{A\+T24\+Cxx\+\_\+device}$\ast$ A\+T24\+Cxx\+\_\+get\+\_\+dev (\begin{DoxyParamCaption}\item[{\hyperlink{structAT24Cxx__devices}{A\+T24\+Cxx\+\_\+devices} $\ast$}]{devices,  }\item[{uint8\+\_\+t}]{index }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{AT24Cxx__stm32__hal_8c_ac57802ce9d1c1eca948458763a1a2d14}\label{AT24Cxx__stm32__hal_8c_ac57802ce9d1c1eca948458763a1a2d14}} 
+\index{A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c@{A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c}!A\+T24\+Cxx\+\_\+get\+\_\+max\+\_\+addr@{A\+T24\+Cxx\+\_\+get\+\_\+max\+\_\+addr}}
+\index{A\+T24\+Cxx\+\_\+get\+\_\+max\+\_\+addr@{A\+T24\+Cxx\+\_\+get\+\_\+max\+\_\+addr}!A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c@{A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c}}
+\subsubsection{\texorpdfstring{A\+T24\+Cxx\+\_\+get\+\_\+max\+\_\+addr()}{AT24Cxx\_get\_max\_addr()}}
+{\footnotesize\ttfamily uint16\+\_\+t A\+T24\+Cxx\+\_\+get\+\_\+max\+\_\+addr (\begin{DoxyParamCaption}\item[{\hyperlink{structAT24Cxx__device}{A\+T24\+Cxx\+\_\+device} $\ast$}]{dev }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{AT24Cxx__stm32__hal_8c_afa2f99166ba03f7dd24628e27476cb4a}\label{AT24Cxx__stm32__hal_8c_afa2f99166ba03f7dd24628e27476cb4a}} 
+\index{A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c@{A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c}!A\+T24\+Cxx\+\_\+get\+\_\+pg\+\_\+size@{A\+T24\+Cxx\+\_\+get\+\_\+pg\+\_\+size}}
+\index{A\+T24\+Cxx\+\_\+get\+\_\+pg\+\_\+size@{A\+T24\+Cxx\+\_\+get\+\_\+pg\+\_\+size}!A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c@{A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c}}
+\subsubsection{\texorpdfstring{A\+T24\+Cxx\+\_\+get\+\_\+pg\+\_\+size()}{AT24Cxx\_get\_pg\_size()}}
+{\footnotesize\ttfamily uint16\+\_\+t A\+T24\+Cxx\+\_\+get\+\_\+pg\+\_\+size (\begin{DoxyParamCaption}\item[{\hyperlink{structAT24Cxx__device}{A\+T24\+Cxx\+\_\+device} $\ast$}]{dev }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{AT24Cxx__stm32__hal_8c_a2ab090e7d53b7471950bd946cdc30a4f}\label{AT24Cxx__stm32__hal_8c_a2ab090e7d53b7471950bd946cdc30a4f}} 
+\index{A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c@{A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c}!A\+T24\+Cxx\+\_\+init@{A\+T24\+Cxx\+\_\+init}}
+\index{A\+T24\+Cxx\+\_\+init@{A\+T24\+Cxx\+\_\+init}!A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c@{A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c}}
+\subsubsection{\texorpdfstring{A\+T24\+Cxx\+\_\+init()}{AT24Cxx\_init()}}
+{\footnotesize\ttfamily \hyperlink{AT24Cxx__stm32__hal_8h_a2f03f0bf6e4e7dbf1acb611369db6605}{A\+T24\+Cxx\+\_\+\+E\+R\+R\+\_\+\+Type\+Def} A\+T24\+Cxx\+\_\+init (\begin{DoxyParamCaption}\item[{\hyperlink{structAT24Cxx__devices}{A\+T24\+Cxx\+\_\+devices} $\ast$}]{devices,  }\item[{uint8\+\_\+t}]{init\+\_\+dev\+\_\+addr }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{AT24Cxx__stm32__hal_8c_a01ea3687ed67d06b6f5dcc74d817ecc8}\label{AT24Cxx__stm32__hal_8c_a01ea3687ed67d06b6f5dcc74d817ecc8}} 
+\index{A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c@{A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c}!A\+T24\+Cxx\+\_\+read\+\_\+byte@{A\+T24\+Cxx\+\_\+read\+\_\+byte}}
+\index{A\+T24\+Cxx\+\_\+read\+\_\+byte@{A\+T24\+Cxx\+\_\+read\+\_\+byte}!A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c@{A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c}}
+\subsubsection{\texorpdfstring{A\+T24\+Cxx\+\_\+read\+\_\+byte()}{AT24Cxx\_read\_byte()}}
+{\footnotesize\ttfamily \hyperlink{AT24Cxx__stm32__hal_8h_a2f03f0bf6e4e7dbf1acb611369db6605}{A\+T24\+Cxx\+\_\+\+E\+R\+R\+\_\+\+Type\+Def} A\+T24\+Cxx\+\_\+read\+\_\+byte (\begin{DoxyParamCaption}\item[{\hyperlink{structAT24Cxx__device}{A\+T24\+Cxx\+\_\+device} $\ast$}]{dev,  }\item[{uint8\+\_\+t $\ast$}]{ret,  }\item[{uint16\+\_\+t}]{mem\+\_\+addr }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{AT24Cxx__stm32__hal_8c_ac2332f19f2c79cf02a7a27846b6ea67e}\label{AT24Cxx__stm32__hal_8c_ac2332f19f2c79cf02a7a27846b6ea67e}} 
+\index{A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c@{A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c}!A\+T24\+Cxx\+\_\+read\+\_\+byte\+\_\+buffer@{A\+T24\+Cxx\+\_\+read\+\_\+byte\+\_\+buffer}}
+\index{A\+T24\+Cxx\+\_\+read\+\_\+byte\+\_\+buffer@{A\+T24\+Cxx\+\_\+read\+\_\+byte\+\_\+buffer}!A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c@{A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c}}
+\subsubsection{\texorpdfstring{A\+T24\+Cxx\+\_\+read\+\_\+byte\+\_\+buffer()}{AT24Cxx\_read\_byte\_buffer()}}
+{\footnotesize\ttfamily \hyperlink{AT24Cxx__stm32__hal_8h_a2f03f0bf6e4e7dbf1acb611369db6605}{A\+T24\+Cxx\+\_\+\+E\+R\+R\+\_\+\+Type\+Def} A\+T24\+Cxx\+\_\+read\+\_\+byte\+\_\+buffer (\begin{DoxyParamCaption}\item[{\hyperlink{structAT24Cxx__device}{A\+T24\+Cxx\+\_\+device} $\ast$}]{dev,  }\item[{uint16\+\_\+t}]{mem\+\_\+addr,  }\item[{uint8\+\_\+t $\ast$}]{ret\+\_\+buf,  }\item[{uint16\+\_\+t}]{buf\+\_\+len }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{AT24Cxx__stm32__hal_8c_a92bbb68de3f3ae9445ab537d54d4978a}\label{AT24Cxx__stm32__hal_8c_a92bbb68de3f3ae9445ab537d54d4978a}} 
+\index{A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c@{A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c}!A\+T24\+Cxx\+\_\+write\+\_\+byte@{A\+T24\+Cxx\+\_\+write\+\_\+byte}}
+\index{A\+T24\+Cxx\+\_\+write\+\_\+byte@{A\+T24\+Cxx\+\_\+write\+\_\+byte}!A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c@{A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c}}
+\subsubsection{\texorpdfstring{A\+T24\+Cxx\+\_\+write\+\_\+byte()}{AT24Cxx\_write\_byte()}}
+{\footnotesize\ttfamily \hyperlink{AT24Cxx__stm32__hal_8h_a2f03f0bf6e4e7dbf1acb611369db6605}{A\+T24\+Cxx\+\_\+\+E\+R\+R\+\_\+\+Type\+Def} A\+T24\+Cxx\+\_\+write\+\_\+byte (\begin{DoxyParamCaption}\item[{\hyperlink{structAT24Cxx__device}{A\+T24\+Cxx\+\_\+device} $\ast$}]{dev,  }\item[{uint8\+\_\+t $\ast$}]{ret,  }\item[{uint16\+\_\+t}]{mem\+\_\+addr }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{AT24Cxx__stm32__hal_8c_ac858d8958bc6d572d736b9073967aaf7}\label{AT24Cxx__stm32__hal_8c_ac858d8958bc6d572d736b9073967aaf7}} 
+\index{A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c@{A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c}!A\+T24\+Cxx\+\_\+write\+\_\+byte\+\_\+buffer@{A\+T24\+Cxx\+\_\+write\+\_\+byte\+\_\+buffer}}
+\index{A\+T24\+Cxx\+\_\+write\+\_\+byte\+\_\+buffer@{A\+T24\+Cxx\+\_\+write\+\_\+byte\+\_\+buffer}!A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c@{A\+T24\+Cxx\+\_\+stm32\+\_\+hal.\+c}}
+\subsubsection{\texorpdfstring{A\+T24\+Cxx\+\_\+write\+\_\+byte\+\_\+buffer()}{AT24Cxx\_write\_byte\_buffer()}}
+{\footnotesize\ttfamily \hyperlink{AT24Cxx__stm32__hal_8h_a2f03f0bf6e4e7dbf1acb611369db6605}{A\+T24\+Cxx\+\_\+\+E\+R\+R\+\_\+\+Type\+Def} A\+T24\+Cxx\+\_\+write\+\_\+byte\+\_\+buffer (\begin{DoxyParamCaption}\item[{\hyperlink{structAT24Cxx__device}{A\+T24\+Cxx\+\_\+device} $\ast$}]{dev,  }\item[{uint16\+\_\+t}]{mem\+\_\+addr,  }\item[{uint8\+\_\+t $\ast$}]{ret\+\_\+buf,  }\item[{uint16\+\_\+t}]{buf\+\_\+length }\end{DoxyParamCaption})}
+

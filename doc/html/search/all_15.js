@@ -1,0 +1,19 @@
+var searchData=
+[
+  ['var_5fgetbit_5fbb',['Var_GetBit_BB',['../ws2812b_8h.html#a928b0e26e3d388bb5bc5f4d4bba2d060',1,'ws2812b.h']]],
+  ['var_5fresetbit_5fbb',['Var_ResetBit_BB',['../ws2812b_8h.html#a231f6941a20f444b80c117a67a615fc7',1,'ws2812b.h']]],
+  ['var_5fsetbit_5fbb',['Var_SetBit_BB',['../ws2812b_8h.html#a76ca9db0ec5277c97ffccfdc66978471',1,'ws2812b.h']]],
+  ['vargetbit',['varGetBit',['../ws2812b_8h.html#a31b3fcddecd29267204a13fd7ed3ae2f',1,'ws2812b.h']]],
+  ['varresetbit',['varResetBit',['../ws2812b_8h.html#a088380ab54e05dec39368cc558ef0dbb',1,'ws2812b.h']]],
+  ['varsetbit',['varSetBit',['../ws2812b_8h.html#ac0be08ac84b1a14c540eb3905f7b3681',1,'ws2812b.h']]],
+  ['vdd_5fvalue',['VDD_VALUE',['../stm32f4xx__hal__conf_8h.html#aae550dad9f96d52cfce5e539adadbbb4',1,'stm32f4xx_hal_conf.h']]],
+  ['vect_5ftab_5foffset',['VECT_TAB_OFFSET',['../group__STM32F4xx__System__Private__Defines.html#ga40e1495541cbb4acbe3f1819bd87a9fe',1,'system_stm32f4xx.c']]],
+  ['visdots',['visDots',['../visEffect_8c.html#a4020b37e7c6f6c73bd535376019e698a',1,'visEffect.c']]],
+  ['viseffect_2ec',['visEffect.c',['../visEffect_8c.html',1,'']]],
+  ['viseffect_2eh',['visEffect.h',['../visEffect_8h.html',1,'']]],
+  ['vishandle',['visHandle',['../visEffect_8c.html#a5d92fb131d38301e1114ef970b291c34',1,'visHandle():&#160;visEffect.c'],['../visEffect_8h.html#a5d92fb131d38301e1114ef970b291c34',1,'visHandle():&#160;visEffect.c']]],
+  ['vishandle2',['visHandle2',['../visEffect_8c.html#a59fc53898e219266baeac0d9e64389fc',1,'visEffect.c']]],
+  ['visinit',['visInit',['../visEffect_8c.html#a79ffab43feec296fd9d503e6226d08dc',1,'visInit():&#160;visEffect.c'],['../visEffect_8h.html#a79ffab43feec296fd9d503e6226d08dc',1,'visInit():&#160;visEffect.c']]],
+  ['visrainbow',['visRainbow',['../visEffect_8c.html#a9a7da913259fae3629686f6e1443449d',1,'visEffect.c']]],
+  ['vportsvchandler',['vPortSVCHandler',['../FreeRTOSConfig_8h.html#ad43047b3ea0a146673e30637488bf754',1,'FreeRTOSConfig.h']]]
+];

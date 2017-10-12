@@ -1,0 +1,266 @@
+\hypertarget{ws2812b_8h}{}\section{/home/alxhoff/git/\+Embedded/stm32-\/mech-\/keyboard/\+Nucelo\+Keyboard\+Controller/\+Inc/ws2812b.h File Reference}
+\label{ws2812b_8h}\index{/home/alxhoff/git/\+Embedded/stm32-\/mech-\/keyboard/\+Nucelo\+Keyboard\+Controller/\+Inc/ws2812b.\+h@{/home/alxhoff/git/\+Embedded/stm32-\/mech-\/keyboard/\+Nucelo\+Keyboard\+Controller/\+Inc/ws2812b.\+h}}
+{\ttfamily \#include \char`\"{}ws2812b.\+h\char`\"{}}\newline
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structWS2812__BufferItem}{W\+S2812\+\_\+\+Buffer\+Item}
+\item 
+struct \hyperlink{structWS2812__Struct}{W\+S2812\+\_\+\+Struct}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{ws2812b_8h_af0829648527b47ab0bc1fe551b231cb3}{W\+S2812\+B\+\_\+\+G\+P\+I\+O\+\_\+\+C\+L\+K\+\_\+\+E\+N\+A\+B\+LE}()~\+\_\+\+\_\+\+H\+A\+L\+\_\+\+R\+C\+C\+\_\+\+G\+P\+I\+O\+E\+\_\+\+C\+L\+K\+\_\+\+E\+N\+A\+B\+LE()
+\item 
+\#define \hyperlink{ws2812b_8h_ad9f37a0451be33634b630fea5e5e4292}{W\+S2812\+B\+\_\+\+P\+O\+RT}~G\+P\+I\+OE
+\item 
+\#define \hyperlink{ws2812b_8h_a44095274c30ec44db83ee5d954ef2079}{W\+S2812\+B\+\_\+\+P\+I\+NS}~(G\+P\+I\+O\+\_\+\+P\+I\+N\+\_\+0 $\vert$ G\+P\+I\+O\+\_\+\+P\+I\+N\+\_\+2 $\vert$ G\+P\+I\+O\+\_\+\+P\+I\+N\+\_\+4 $\vert$ G\+P\+I\+O\+\_\+\+P\+I\+N\+\_\+5)
+\item 
+\#define \hyperlink{ws2812b_8h_a5505712e69de3ded2c569317c75e9139}{W\+S2812\+B\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+L\+E\+DS}~60
+\item 
+\#define \hyperlink{ws2812b_8h_ae073315a6ff566e89bed1ddce72eeaf2}{W\+S2812\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+C\+O\+U\+NT}~4
+\item 
+\#define \hyperlink{ws2812b_8h_ace21ae251c90c597555c7876d0c29e00}{S\+E\+T\+P\+I\+X\+\_\+4}
+\item 
+\#define \hyperlink{ws2812b_8h_af221b8e5f51eca1e53070bd462fff271}{L\+E\+D\+\_\+\+B\+L\+U\+E\+\_\+\+P\+O\+RT}~G\+P\+I\+OD
+\item 
+\#define \hyperlink{ws2812b_8h_a5aec9d3b503fb1a30a21b16c7be86cff}{L\+E\+D\+\_\+\+B\+L\+U\+E\+\_\+\+P\+IN}~G\+P\+I\+O\+\_\+\+P\+I\+N\+\_\+15
+\item 
+\#define \hyperlink{ws2812b_8h_aa0ded3a1f2fd446203c124bdda1e1998}{L\+E\+D\+\_\+\+O\+R\+A\+N\+G\+E\+\_\+\+P\+O\+RT}~G\+P\+I\+OD
+\item 
+\#define \hyperlink{ws2812b_8h_aea00e65d8db15efe130e134943eec5a7}{L\+E\+D\+\_\+\+O\+R\+A\+N\+G\+E\+\_\+\+P\+IN}~G\+P\+I\+O\+\_\+\+P\+I\+N\+\_\+13
+\item 
+\#define \hyperlink{ws2812b_8h_af6fbab7cb5fe18c1bf9602e2d0fd36bc}{W\+S2812\+\_\+\+R\+E\+S\+E\+T\+\_\+\+P\+E\+R\+I\+OD}~50
+\item 
+\#define \hyperlink{ws2812b_8h_ad35c1036b7f001b47306c58a18329400}{R\+A\+M\+\_\+\+B\+A\+SE}~0x20000000
+\item 
+\#define \hyperlink{ws2812b_8h_a8f0e9e4c93d31852dbb07c68b2580004}{R\+A\+M\+\_\+\+B\+B\+\_\+\+B\+A\+SE}~0x22000000
+\item 
+\#define \hyperlink{ws2812b_8h_a231f6941a20f444b80c117a67a615fc7}{Var\+\_\+\+Reset\+Bit\+\_\+\+BB}(Var\+Addr,  Bit\+Number)~($\ast$(volatile uint32\+\_\+t $\ast$) (\hyperlink{ws2812b_8h_a8f0e9e4c93d31852dbb07c68b2580004}{R\+A\+M\+\_\+\+B\+B\+\_\+\+B\+A\+SE} $\vert$ ((Var\+Addr -\/ \hyperlink{ws2812b_8h_ad35c1036b7f001b47306c58a18329400}{R\+A\+M\+\_\+\+B\+A\+SE}) $<$$<$ 5) $\vert$ ((Bit\+Number) $<$$<$ 2)) = 0)
+\item 
+\#define \hyperlink{ws2812b_8h_a76ca9db0ec5277c97ffccfdc66978471}{Var\+\_\+\+Set\+Bit\+\_\+\+BB}(Var\+Addr,  Bit\+Number)~($\ast$(volatile uint32\+\_\+t $\ast$) (\hyperlink{ws2812b_8h_a8f0e9e4c93d31852dbb07c68b2580004}{R\+A\+M\+\_\+\+B\+B\+\_\+\+B\+A\+SE} $\vert$ ((Var\+Addr -\/ \hyperlink{ws2812b_8h_ad35c1036b7f001b47306c58a18329400}{R\+A\+M\+\_\+\+B\+A\+SE}) $<$$<$ 5) $\vert$ ((Bit\+Number) $<$$<$ 2)) = 1)
+\item 
+\#define \hyperlink{ws2812b_8h_a928b0e26e3d388bb5bc5f4d4bba2d060}{Var\+\_\+\+Get\+Bit\+\_\+\+BB}(Var\+Addr,  Bit\+Number)~($\ast$(volatile uint32\+\_\+t $\ast$) (\hyperlink{ws2812b_8h_a8f0e9e4c93d31852dbb07c68b2580004}{R\+A\+M\+\_\+\+B\+B\+\_\+\+B\+A\+SE} $\vert$ ((Var\+Addr -\/ \hyperlink{ws2812b_8h_ad35c1036b7f001b47306c58a18329400}{R\+A\+M\+\_\+\+B\+A\+SE}) $<$$<$ 5) $\vert$ ((Bit\+Number) $<$$<$ 2)))
+\item 
+\#define \hyperlink{ws2812b_8h_a566ed8ed188e642969821534a8c7bf55}{B\+I\+T\+B\+A\+N\+D\+\_\+\+S\+R\+AM}(address,  bit)~( (\+\_\+\+\_\+\+IO uint32\+\_\+t $\ast$) (\hyperlink{ws2812b_8h_a8f0e9e4c93d31852dbb07c68b2580004}{R\+A\+M\+\_\+\+B\+B\+\_\+\+B\+A\+SE} + (((uint32\+\_\+t)address) -\/ \hyperlink{ws2812b_8h_ad35c1036b7f001b47306c58a18329400}{R\+A\+M\+\_\+\+B\+A\+SE}) $\ast$ 32 + (bit) $\ast$ 4))
+\item 
+\#define \hyperlink{ws2812b_8h_ac0be08ac84b1a14c540eb3905f7b3681}{var\+Set\+Bit}(var,  bit)~(\hyperlink{ws2812b_8h_a76ca9db0ec5277c97ffccfdc66978471}{Var\+\_\+\+Set\+Bit\+\_\+\+BB}((uint32\+\_\+t)\&var,bit))
+\item 
+\#define \hyperlink{ws2812b_8h_a088380ab54e05dec39368cc558ef0dbb}{var\+Reset\+Bit}(var,  bit)~(\hyperlink{ws2812b_8h_a231f6941a20f444b80c117a67a615fc7}{Var\+\_\+\+Reset\+Bit\+\_\+\+BB}((uint32\+\_\+t)\&var,bit))
+\item 
+\#define \hyperlink{ws2812b_8h_a31b3fcddecd29267204a13fd7ed3ae2f}{var\+Get\+Bit}(var,  bit)~(\hyperlink{ws2812b_8h_a928b0e26e3d388bb5bc5f4d4bba2d060}{Var\+\_\+\+Get\+Bit\+\_\+\+BB}((uint32\+\_\+t)\&var,bit))
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{structWS2812__BufferItem}{W\+S2812\+\_\+\+Buffer\+Item} \hyperlink{ws2812b_8h_ab7900f60eb5534c00708b1e0b09b7127}{W\+S2812\+\_\+\+Buffer\+Item}
+\item 
+typedef struct \hyperlink{structWS2812__Struct}{W\+S2812\+\_\+\+Struct} \hyperlink{ws2812b_8h_aafbe04ac8fcdac26bb64d6c5ca941a59}{W\+S2812\+\_\+\+Struct}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{ws2812b_8h_a9fb5fc07b94a6b6d2d35e2bbaefaa6e7}{ws2812b\+\_\+init} ()
+\item 
+void \hyperlink{ws2812b_8h_ac60dfce08f348d8a1b335a15d6e349e4}{ws2812b\+\_\+handle} ()
+\item 
+static void \hyperlink{ws2812b_8h_adb584baab5697a3dec85da55214e7f40}{ws2812b\+\_\+set\+\_\+pixel} (uint8\+\_\+t row, uint16\+\_\+t column, uint8\+\_\+t red, uint8\+\_\+t green, uint8\+\_\+t blue)
+\item 
+void \hyperlink{ws2812b_8h_a4826219f65b8f361c9d9fac91a99bf77}{D\+M\+A\+\_\+\+Transfer\+Complete\+Handler} (D\+M\+A\+\_\+\+Handle\+Type\+Def $\ast$Dma\+Handle)
+\item 
+void \hyperlink{ws2812b_8h_a9792ad82ecaf2ab1fcd525230c3025ad}{D\+M\+A\+\_\+\+Transfer\+Half\+Handler} (D\+M\+A\+\_\+\+Handle\+Type\+Def $\ast$Dma\+Handle)
+\item 
+void \hyperlink{ws2812b_8h_aada0d5f0558e89bf994dbbf8016f03e3}{D\+M\+A\+\_\+\+Transfer\+Error} (D\+M\+A\+\_\+\+Handle\+Type\+Def $\ast$Dma\+Handle)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structWS2812__Struct}{W\+S2812\+\_\+\+Struct} \hyperlink{ws2812b_8h_a4166d3f1f608ace44faf4cb9cacc2922}{ws2812b}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{ws2812b_8h_a566ed8ed188e642969821534a8c7bf55}\label{ws2812b_8h_a566ed8ed188e642969821534a8c7bf55}} 
+\index{ws2812b.\+h@{ws2812b.\+h}!B\+I\+T\+B\+A\+N\+D\+\_\+\+S\+R\+AM@{B\+I\+T\+B\+A\+N\+D\+\_\+\+S\+R\+AM}}
+\index{B\+I\+T\+B\+A\+N\+D\+\_\+\+S\+R\+AM@{B\+I\+T\+B\+A\+N\+D\+\_\+\+S\+R\+AM}!ws2812b.\+h@{ws2812b.\+h}}
+\subsubsection{\texorpdfstring{B\+I\+T\+B\+A\+N\+D\+\_\+\+S\+R\+AM}{BITBAND\_SRAM}}
+{\footnotesize\ttfamily \#define B\+I\+T\+B\+A\+N\+D\+\_\+\+S\+R\+AM(\begin{DoxyParamCaption}\item[{}]{address,  }\item[{}]{bit }\end{DoxyParamCaption})~( (\+\_\+\+\_\+\+IO uint32\+\_\+t $\ast$) (\hyperlink{ws2812b_8h_a8f0e9e4c93d31852dbb07c68b2580004}{R\+A\+M\+\_\+\+B\+B\+\_\+\+B\+A\+SE} + (((uint32\+\_\+t)address) -\/ \hyperlink{ws2812b_8h_ad35c1036b7f001b47306c58a18329400}{R\+A\+M\+\_\+\+B\+A\+SE}) $\ast$ 32 + (bit) $\ast$ 4))}
+
+\mbox{\Hypertarget{ws2812b_8h_a5aec9d3b503fb1a30a21b16c7be86cff}\label{ws2812b_8h_a5aec9d3b503fb1a30a21b16c7be86cff}} 
+\index{ws2812b.\+h@{ws2812b.\+h}!L\+E\+D\+\_\+\+B\+L\+U\+E\+\_\+\+P\+IN@{L\+E\+D\+\_\+\+B\+L\+U\+E\+\_\+\+P\+IN}}
+\index{L\+E\+D\+\_\+\+B\+L\+U\+E\+\_\+\+P\+IN@{L\+E\+D\+\_\+\+B\+L\+U\+E\+\_\+\+P\+IN}!ws2812b.\+h@{ws2812b.\+h}}
+\subsubsection{\texorpdfstring{L\+E\+D\+\_\+\+B\+L\+U\+E\+\_\+\+P\+IN}{LED\_BLUE\_PIN}}
+{\footnotesize\ttfamily \#define L\+E\+D\+\_\+\+B\+L\+U\+E\+\_\+\+P\+IN~G\+P\+I\+O\+\_\+\+P\+I\+N\+\_\+15}
+
+\mbox{\Hypertarget{ws2812b_8h_af221b8e5f51eca1e53070bd462fff271}\label{ws2812b_8h_af221b8e5f51eca1e53070bd462fff271}} 
+\index{ws2812b.\+h@{ws2812b.\+h}!L\+E\+D\+\_\+\+B\+L\+U\+E\+\_\+\+P\+O\+RT@{L\+E\+D\+\_\+\+B\+L\+U\+E\+\_\+\+P\+O\+RT}}
+\index{L\+E\+D\+\_\+\+B\+L\+U\+E\+\_\+\+P\+O\+RT@{L\+E\+D\+\_\+\+B\+L\+U\+E\+\_\+\+P\+O\+RT}!ws2812b.\+h@{ws2812b.\+h}}
+\subsubsection{\texorpdfstring{L\+E\+D\+\_\+\+B\+L\+U\+E\+\_\+\+P\+O\+RT}{LED\_BLUE\_PORT}}
+{\footnotesize\ttfamily \#define L\+E\+D\+\_\+\+B\+L\+U\+E\+\_\+\+P\+O\+RT~G\+P\+I\+OD}
+
+\mbox{\Hypertarget{ws2812b_8h_aea00e65d8db15efe130e134943eec5a7}\label{ws2812b_8h_aea00e65d8db15efe130e134943eec5a7}} 
+\index{ws2812b.\+h@{ws2812b.\+h}!L\+E\+D\+\_\+\+O\+R\+A\+N\+G\+E\+\_\+\+P\+IN@{L\+E\+D\+\_\+\+O\+R\+A\+N\+G\+E\+\_\+\+P\+IN}}
+\index{L\+E\+D\+\_\+\+O\+R\+A\+N\+G\+E\+\_\+\+P\+IN@{L\+E\+D\+\_\+\+O\+R\+A\+N\+G\+E\+\_\+\+P\+IN}!ws2812b.\+h@{ws2812b.\+h}}
+\subsubsection{\texorpdfstring{L\+E\+D\+\_\+\+O\+R\+A\+N\+G\+E\+\_\+\+P\+IN}{LED\_ORANGE\_PIN}}
+{\footnotesize\ttfamily \#define L\+E\+D\+\_\+\+O\+R\+A\+N\+G\+E\+\_\+\+P\+IN~G\+P\+I\+O\+\_\+\+P\+I\+N\+\_\+13}
+
+\mbox{\Hypertarget{ws2812b_8h_aa0ded3a1f2fd446203c124bdda1e1998}\label{ws2812b_8h_aa0ded3a1f2fd446203c124bdda1e1998}} 
+\index{ws2812b.\+h@{ws2812b.\+h}!L\+E\+D\+\_\+\+O\+R\+A\+N\+G\+E\+\_\+\+P\+O\+RT@{L\+E\+D\+\_\+\+O\+R\+A\+N\+G\+E\+\_\+\+P\+O\+RT}}
+\index{L\+E\+D\+\_\+\+O\+R\+A\+N\+G\+E\+\_\+\+P\+O\+RT@{L\+E\+D\+\_\+\+O\+R\+A\+N\+G\+E\+\_\+\+P\+O\+RT}!ws2812b.\+h@{ws2812b.\+h}}
+\subsubsection{\texorpdfstring{L\+E\+D\+\_\+\+O\+R\+A\+N\+G\+E\+\_\+\+P\+O\+RT}{LED\_ORANGE\_PORT}}
+{\footnotesize\ttfamily \#define L\+E\+D\+\_\+\+O\+R\+A\+N\+G\+E\+\_\+\+P\+O\+RT~G\+P\+I\+OD}
+
+\mbox{\Hypertarget{ws2812b_8h_ad35c1036b7f001b47306c58a18329400}\label{ws2812b_8h_ad35c1036b7f001b47306c58a18329400}} 
+\index{ws2812b.\+h@{ws2812b.\+h}!R\+A\+M\+\_\+\+B\+A\+SE@{R\+A\+M\+\_\+\+B\+A\+SE}}
+\index{R\+A\+M\+\_\+\+B\+A\+SE@{R\+A\+M\+\_\+\+B\+A\+SE}!ws2812b.\+h@{ws2812b.\+h}}
+\subsubsection{\texorpdfstring{R\+A\+M\+\_\+\+B\+A\+SE}{RAM\_BASE}}
+{\footnotesize\ttfamily \#define R\+A\+M\+\_\+\+B\+A\+SE~0x20000000}
+
+\mbox{\Hypertarget{ws2812b_8h_a8f0e9e4c93d31852dbb07c68b2580004}\label{ws2812b_8h_a8f0e9e4c93d31852dbb07c68b2580004}} 
+\index{ws2812b.\+h@{ws2812b.\+h}!R\+A\+M\+\_\+\+B\+B\+\_\+\+B\+A\+SE@{R\+A\+M\+\_\+\+B\+B\+\_\+\+B\+A\+SE}}
+\index{R\+A\+M\+\_\+\+B\+B\+\_\+\+B\+A\+SE@{R\+A\+M\+\_\+\+B\+B\+\_\+\+B\+A\+SE}!ws2812b.\+h@{ws2812b.\+h}}
+\subsubsection{\texorpdfstring{R\+A\+M\+\_\+\+B\+B\+\_\+\+B\+A\+SE}{RAM\_BB\_BASE}}
+{\footnotesize\ttfamily \#define R\+A\+M\+\_\+\+B\+B\+\_\+\+B\+A\+SE~0x22000000}
+
+\mbox{\Hypertarget{ws2812b_8h_ace21ae251c90c597555c7876d0c29e00}\label{ws2812b_8h_ace21ae251c90c597555c7876d0c29e00}} 
+\index{ws2812b.\+h@{ws2812b.\+h}!S\+E\+T\+P\+I\+X\+\_\+4@{S\+E\+T\+P\+I\+X\+\_\+4}}
+\index{S\+E\+T\+P\+I\+X\+\_\+4@{S\+E\+T\+P\+I\+X\+\_\+4}!ws2812b.\+h@{ws2812b.\+h}}
+\subsubsection{\texorpdfstring{S\+E\+T\+P\+I\+X\+\_\+4}{SETPIX\_4}}
+{\footnotesize\ttfamily \#define S\+E\+T\+P\+I\+X\+\_\+4}
+
+\mbox{\Hypertarget{ws2812b_8h_a928b0e26e3d388bb5bc5f4d4bba2d060}\label{ws2812b_8h_a928b0e26e3d388bb5bc5f4d4bba2d060}} 
+\index{ws2812b.\+h@{ws2812b.\+h}!Var\+\_\+\+Get\+Bit\+\_\+\+BB@{Var\+\_\+\+Get\+Bit\+\_\+\+BB}}
+\index{Var\+\_\+\+Get\+Bit\+\_\+\+BB@{Var\+\_\+\+Get\+Bit\+\_\+\+BB}!ws2812b.\+h@{ws2812b.\+h}}
+\subsubsection{\texorpdfstring{Var\+\_\+\+Get\+Bit\+\_\+\+BB}{Var\_GetBit\_BB}}
+{\footnotesize\ttfamily \#define Var\+\_\+\+Get\+Bit\+\_\+\+BB(\begin{DoxyParamCaption}\item[{}]{Var\+Addr,  }\item[{}]{Bit\+Number }\end{DoxyParamCaption})~($\ast$(volatile uint32\+\_\+t $\ast$) (\hyperlink{ws2812b_8h_a8f0e9e4c93d31852dbb07c68b2580004}{R\+A\+M\+\_\+\+B\+B\+\_\+\+B\+A\+SE} $\vert$ ((Var\+Addr -\/ \hyperlink{ws2812b_8h_ad35c1036b7f001b47306c58a18329400}{R\+A\+M\+\_\+\+B\+A\+SE}) $<$$<$ 5) $\vert$ ((Bit\+Number) $<$$<$ 2)))}
+
+\mbox{\Hypertarget{ws2812b_8h_a231f6941a20f444b80c117a67a615fc7}\label{ws2812b_8h_a231f6941a20f444b80c117a67a615fc7}} 
+\index{ws2812b.\+h@{ws2812b.\+h}!Var\+\_\+\+Reset\+Bit\+\_\+\+BB@{Var\+\_\+\+Reset\+Bit\+\_\+\+BB}}
+\index{Var\+\_\+\+Reset\+Bit\+\_\+\+BB@{Var\+\_\+\+Reset\+Bit\+\_\+\+BB}!ws2812b.\+h@{ws2812b.\+h}}
+\subsubsection{\texorpdfstring{Var\+\_\+\+Reset\+Bit\+\_\+\+BB}{Var\_ResetBit\_BB}}
+{\footnotesize\ttfamily \#define Var\+\_\+\+Reset\+Bit\+\_\+\+BB(\begin{DoxyParamCaption}\item[{}]{Var\+Addr,  }\item[{}]{Bit\+Number }\end{DoxyParamCaption})~($\ast$(volatile uint32\+\_\+t $\ast$) (\hyperlink{ws2812b_8h_a8f0e9e4c93d31852dbb07c68b2580004}{R\+A\+M\+\_\+\+B\+B\+\_\+\+B\+A\+SE} $\vert$ ((Var\+Addr -\/ \hyperlink{ws2812b_8h_ad35c1036b7f001b47306c58a18329400}{R\+A\+M\+\_\+\+B\+A\+SE}) $<$$<$ 5) $\vert$ ((Bit\+Number) $<$$<$ 2)) = 0)}
+
+\mbox{\Hypertarget{ws2812b_8h_a76ca9db0ec5277c97ffccfdc66978471}\label{ws2812b_8h_a76ca9db0ec5277c97ffccfdc66978471}} 
+\index{ws2812b.\+h@{ws2812b.\+h}!Var\+\_\+\+Set\+Bit\+\_\+\+BB@{Var\+\_\+\+Set\+Bit\+\_\+\+BB}}
+\index{Var\+\_\+\+Set\+Bit\+\_\+\+BB@{Var\+\_\+\+Set\+Bit\+\_\+\+BB}!ws2812b.\+h@{ws2812b.\+h}}
+\subsubsection{\texorpdfstring{Var\+\_\+\+Set\+Bit\+\_\+\+BB}{Var\_SetBit\_BB}}
+{\footnotesize\ttfamily \#define Var\+\_\+\+Set\+Bit\+\_\+\+BB(\begin{DoxyParamCaption}\item[{}]{Var\+Addr,  }\item[{}]{Bit\+Number }\end{DoxyParamCaption})~($\ast$(volatile uint32\+\_\+t $\ast$) (\hyperlink{ws2812b_8h_a8f0e9e4c93d31852dbb07c68b2580004}{R\+A\+M\+\_\+\+B\+B\+\_\+\+B\+A\+SE} $\vert$ ((Var\+Addr -\/ \hyperlink{ws2812b_8h_ad35c1036b7f001b47306c58a18329400}{R\+A\+M\+\_\+\+B\+A\+SE}) $<$$<$ 5) $\vert$ ((Bit\+Number) $<$$<$ 2)) = 1)}
+
+\mbox{\Hypertarget{ws2812b_8h_a31b3fcddecd29267204a13fd7ed3ae2f}\label{ws2812b_8h_a31b3fcddecd29267204a13fd7ed3ae2f}} 
+\index{ws2812b.\+h@{ws2812b.\+h}!var\+Get\+Bit@{var\+Get\+Bit}}
+\index{var\+Get\+Bit@{var\+Get\+Bit}!ws2812b.\+h@{ws2812b.\+h}}
+\subsubsection{\texorpdfstring{var\+Get\+Bit}{varGetBit}}
+{\footnotesize\ttfamily \#define var\+Get\+Bit(\begin{DoxyParamCaption}\item[{}]{var,  }\item[{}]{bit }\end{DoxyParamCaption})~(\hyperlink{ws2812b_8h_a928b0e26e3d388bb5bc5f4d4bba2d060}{Var\+\_\+\+Get\+Bit\+\_\+\+BB}((uint32\+\_\+t)\&var,bit))}
+
+\mbox{\Hypertarget{ws2812b_8h_a088380ab54e05dec39368cc558ef0dbb}\label{ws2812b_8h_a088380ab54e05dec39368cc558ef0dbb}} 
+\index{ws2812b.\+h@{ws2812b.\+h}!var\+Reset\+Bit@{var\+Reset\+Bit}}
+\index{var\+Reset\+Bit@{var\+Reset\+Bit}!ws2812b.\+h@{ws2812b.\+h}}
+\subsubsection{\texorpdfstring{var\+Reset\+Bit}{varResetBit}}
+{\footnotesize\ttfamily \#define var\+Reset\+Bit(\begin{DoxyParamCaption}\item[{}]{var,  }\item[{}]{bit }\end{DoxyParamCaption})~(\hyperlink{ws2812b_8h_a231f6941a20f444b80c117a67a615fc7}{Var\+\_\+\+Reset\+Bit\+\_\+\+BB}((uint32\+\_\+t)\&var,bit))}
+
+\mbox{\Hypertarget{ws2812b_8h_ac0be08ac84b1a14c540eb3905f7b3681}\label{ws2812b_8h_ac0be08ac84b1a14c540eb3905f7b3681}} 
+\index{ws2812b.\+h@{ws2812b.\+h}!var\+Set\+Bit@{var\+Set\+Bit}}
+\index{var\+Set\+Bit@{var\+Set\+Bit}!ws2812b.\+h@{ws2812b.\+h}}
+\subsubsection{\texorpdfstring{var\+Set\+Bit}{varSetBit}}
+{\footnotesize\ttfamily \#define var\+Set\+Bit(\begin{DoxyParamCaption}\item[{}]{var,  }\item[{}]{bit }\end{DoxyParamCaption})~(\hyperlink{ws2812b_8h_a76ca9db0ec5277c97ffccfdc66978471}{Var\+\_\+\+Set\+Bit\+\_\+\+BB}((uint32\+\_\+t)\&var,bit))}
+
+\mbox{\Hypertarget{ws2812b_8h_ae073315a6ff566e89bed1ddce72eeaf2}\label{ws2812b_8h_ae073315a6ff566e89bed1ddce72eeaf2}} 
+\index{ws2812b.\+h@{ws2812b.\+h}!W\+S2812\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+C\+O\+U\+NT@{W\+S2812\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+C\+O\+U\+NT}}
+\index{W\+S2812\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+C\+O\+U\+NT@{W\+S2812\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+C\+O\+U\+NT}!ws2812b.\+h@{ws2812b.\+h}}
+\subsubsection{\texorpdfstring{W\+S2812\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+C\+O\+U\+NT}{WS2812\_BUFFER\_COUNT}}
+{\footnotesize\ttfamily \#define W\+S2812\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+C\+O\+U\+NT~4}
+
+\mbox{\Hypertarget{ws2812b_8h_af6fbab7cb5fe18c1bf9602e2d0fd36bc}\label{ws2812b_8h_af6fbab7cb5fe18c1bf9602e2d0fd36bc}} 
+\index{ws2812b.\+h@{ws2812b.\+h}!W\+S2812\+\_\+\+R\+E\+S\+E\+T\+\_\+\+P\+E\+R\+I\+OD@{W\+S2812\+\_\+\+R\+E\+S\+E\+T\+\_\+\+P\+E\+R\+I\+OD}}
+\index{W\+S2812\+\_\+\+R\+E\+S\+E\+T\+\_\+\+P\+E\+R\+I\+OD@{W\+S2812\+\_\+\+R\+E\+S\+E\+T\+\_\+\+P\+E\+R\+I\+OD}!ws2812b.\+h@{ws2812b.\+h}}
+\subsubsection{\texorpdfstring{W\+S2812\+\_\+\+R\+E\+S\+E\+T\+\_\+\+P\+E\+R\+I\+OD}{WS2812\_RESET\_PERIOD}}
+{\footnotesize\ttfamily \#define W\+S2812\+\_\+\+R\+E\+S\+E\+T\+\_\+\+P\+E\+R\+I\+OD~50}
+
+\mbox{\Hypertarget{ws2812b_8h_af0829648527b47ab0bc1fe551b231cb3}\label{ws2812b_8h_af0829648527b47ab0bc1fe551b231cb3}} 
+\index{ws2812b.\+h@{ws2812b.\+h}!W\+S2812\+B\+\_\+\+G\+P\+I\+O\+\_\+\+C\+L\+K\+\_\+\+E\+N\+A\+B\+LE@{W\+S2812\+B\+\_\+\+G\+P\+I\+O\+\_\+\+C\+L\+K\+\_\+\+E\+N\+A\+B\+LE}}
+\index{W\+S2812\+B\+\_\+\+G\+P\+I\+O\+\_\+\+C\+L\+K\+\_\+\+E\+N\+A\+B\+LE@{W\+S2812\+B\+\_\+\+G\+P\+I\+O\+\_\+\+C\+L\+K\+\_\+\+E\+N\+A\+B\+LE}!ws2812b.\+h@{ws2812b.\+h}}
+\subsubsection{\texorpdfstring{W\+S2812\+B\+\_\+\+G\+P\+I\+O\+\_\+\+C\+L\+K\+\_\+\+E\+N\+A\+B\+LE}{WS2812B\_GPIO\_CLK\_ENABLE}}
+{\footnotesize\ttfamily \#define W\+S2812\+B\+\_\+\+G\+P\+I\+O\+\_\+\+C\+L\+K\+\_\+\+E\+N\+A\+B\+LE(\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})~\+\_\+\+\_\+\+H\+A\+L\+\_\+\+R\+C\+C\+\_\+\+G\+P\+I\+O\+E\+\_\+\+C\+L\+K\+\_\+\+E\+N\+A\+B\+LE()}
+
+\mbox{\Hypertarget{ws2812b_8h_a5505712e69de3ded2c569317c75e9139}\label{ws2812b_8h_a5505712e69de3ded2c569317c75e9139}} 
+\index{ws2812b.\+h@{ws2812b.\+h}!W\+S2812\+B\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+L\+E\+DS@{W\+S2812\+B\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+L\+E\+DS}}
+\index{W\+S2812\+B\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+L\+E\+DS@{W\+S2812\+B\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+L\+E\+DS}!ws2812b.\+h@{ws2812b.\+h}}
+\subsubsection{\texorpdfstring{W\+S2812\+B\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+L\+E\+DS}{WS2812B\_NUMBER\_OF\_LEDS}}
+{\footnotesize\ttfamily \#define W\+S2812\+B\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+L\+E\+DS~60}
+
+\mbox{\Hypertarget{ws2812b_8h_a44095274c30ec44db83ee5d954ef2079}\label{ws2812b_8h_a44095274c30ec44db83ee5d954ef2079}} 
+\index{ws2812b.\+h@{ws2812b.\+h}!W\+S2812\+B\+\_\+\+P\+I\+NS@{W\+S2812\+B\+\_\+\+P\+I\+NS}}
+\index{W\+S2812\+B\+\_\+\+P\+I\+NS@{W\+S2812\+B\+\_\+\+P\+I\+NS}!ws2812b.\+h@{ws2812b.\+h}}
+\subsubsection{\texorpdfstring{W\+S2812\+B\+\_\+\+P\+I\+NS}{WS2812B\_PINS}}
+{\footnotesize\ttfamily \#define W\+S2812\+B\+\_\+\+P\+I\+NS~(G\+P\+I\+O\+\_\+\+P\+I\+N\+\_\+0 $\vert$ G\+P\+I\+O\+\_\+\+P\+I\+N\+\_\+2 $\vert$ G\+P\+I\+O\+\_\+\+P\+I\+N\+\_\+4 $\vert$ G\+P\+I\+O\+\_\+\+P\+I\+N\+\_\+5)}
+
+\mbox{\Hypertarget{ws2812b_8h_ad9f37a0451be33634b630fea5e5e4292}\label{ws2812b_8h_ad9f37a0451be33634b630fea5e5e4292}} 
+\index{ws2812b.\+h@{ws2812b.\+h}!W\+S2812\+B\+\_\+\+P\+O\+RT@{W\+S2812\+B\+\_\+\+P\+O\+RT}}
+\index{W\+S2812\+B\+\_\+\+P\+O\+RT@{W\+S2812\+B\+\_\+\+P\+O\+RT}!ws2812b.\+h@{ws2812b.\+h}}
+\subsubsection{\texorpdfstring{W\+S2812\+B\+\_\+\+P\+O\+RT}{WS2812B\_PORT}}
+{\footnotesize\ttfamily \#define W\+S2812\+B\+\_\+\+P\+O\+RT~G\+P\+I\+OE}
+
+
+
+\subsection{Typedef Documentation}
+\mbox{\Hypertarget{ws2812b_8h_ab7900f60eb5534c00708b1e0b09b7127}\label{ws2812b_8h_ab7900f60eb5534c00708b1e0b09b7127}} 
+\index{ws2812b.\+h@{ws2812b.\+h}!W\+S2812\+\_\+\+Buffer\+Item@{W\+S2812\+\_\+\+Buffer\+Item}}
+\index{W\+S2812\+\_\+\+Buffer\+Item@{W\+S2812\+\_\+\+Buffer\+Item}!ws2812b.\+h@{ws2812b.\+h}}
+\subsubsection{\texorpdfstring{W\+S2812\+\_\+\+Buffer\+Item}{WS2812\_BufferItem}}
+{\footnotesize\ttfamily typedef struct \hyperlink{structWS2812__BufferItem}{W\+S2812\+\_\+\+Buffer\+Item}  \hyperlink{structWS2812__BufferItem}{W\+S2812\+\_\+\+Buffer\+Item}}
+
+\mbox{\Hypertarget{ws2812b_8h_aafbe04ac8fcdac26bb64d6c5ca941a59}\label{ws2812b_8h_aafbe04ac8fcdac26bb64d6c5ca941a59}} 
+\index{ws2812b.\+h@{ws2812b.\+h}!W\+S2812\+\_\+\+Struct@{W\+S2812\+\_\+\+Struct}}
+\index{W\+S2812\+\_\+\+Struct@{W\+S2812\+\_\+\+Struct}!ws2812b.\+h@{ws2812b.\+h}}
+\subsubsection{\texorpdfstring{W\+S2812\+\_\+\+Struct}{WS2812\_Struct}}
+{\footnotesize\ttfamily typedef struct \hyperlink{structWS2812__Struct}{W\+S2812\+\_\+\+Struct}  \hyperlink{structWS2812__Struct}{W\+S2812\+\_\+\+Struct}}
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{ws2812b_8h_a4826219f65b8f361c9d9fac91a99bf77}\label{ws2812b_8h_a4826219f65b8f361c9d9fac91a99bf77}} 
+\index{ws2812b.\+h@{ws2812b.\+h}!D\+M\+A\+\_\+\+Transfer\+Complete\+Handler@{D\+M\+A\+\_\+\+Transfer\+Complete\+Handler}}
+\index{D\+M\+A\+\_\+\+Transfer\+Complete\+Handler@{D\+M\+A\+\_\+\+Transfer\+Complete\+Handler}!ws2812b.\+h@{ws2812b.\+h}}
+\subsubsection{\texorpdfstring{D\+M\+A\+\_\+\+Transfer\+Complete\+Handler()}{DMA\_TransferCompleteHandler()}}
+{\footnotesize\ttfamily void D\+M\+A\+\_\+\+Transfer\+Complete\+Handler (\begin{DoxyParamCaption}\item[{D\+M\+A\+\_\+\+Handle\+Type\+Def $\ast$}]{Dma\+Handle }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{ws2812b_8h_aada0d5f0558e89bf994dbbf8016f03e3}\label{ws2812b_8h_aada0d5f0558e89bf994dbbf8016f03e3}} 
+\index{ws2812b.\+h@{ws2812b.\+h}!D\+M\+A\+\_\+\+Transfer\+Error@{D\+M\+A\+\_\+\+Transfer\+Error}}
+\index{D\+M\+A\+\_\+\+Transfer\+Error@{D\+M\+A\+\_\+\+Transfer\+Error}!ws2812b.\+h@{ws2812b.\+h}}
+\subsubsection{\texorpdfstring{D\+M\+A\+\_\+\+Transfer\+Error()}{DMA\_TransferError()}}
+{\footnotesize\ttfamily void D\+M\+A\+\_\+\+Transfer\+Error (\begin{DoxyParamCaption}\item[{D\+M\+A\+\_\+\+Handle\+Type\+Def $\ast$}]{Dma\+Handle }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{ws2812b_8h_a9792ad82ecaf2ab1fcd525230c3025ad}\label{ws2812b_8h_a9792ad82ecaf2ab1fcd525230c3025ad}} 
+\index{ws2812b.\+h@{ws2812b.\+h}!D\+M\+A\+\_\+\+Transfer\+Half\+Handler@{D\+M\+A\+\_\+\+Transfer\+Half\+Handler}}
+\index{D\+M\+A\+\_\+\+Transfer\+Half\+Handler@{D\+M\+A\+\_\+\+Transfer\+Half\+Handler}!ws2812b.\+h@{ws2812b.\+h}}
+\subsubsection{\texorpdfstring{D\+M\+A\+\_\+\+Transfer\+Half\+Handler()}{DMA\_TransferHalfHandler()}}
+{\footnotesize\ttfamily void D\+M\+A\+\_\+\+Transfer\+Half\+Handler (\begin{DoxyParamCaption}\item[{D\+M\+A\+\_\+\+Handle\+Type\+Def $\ast$}]{Dma\+Handle }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{ws2812b_8h_ac60dfce08f348d8a1b335a15d6e349e4}\label{ws2812b_8h_ac60dfce08f348d8a1b335a15d6e349e4}} 
+\index{ws2812b.\+h@{ws2812b.\+h}!ws2812b\+\_\+handle@{ws2812b\+\_\+handle}}
+\index{ws2812b\+\_\+handle@{ws2812b\+\_\+handle}!ws2812b.\+h@{ws2812b.\+h}}
+\subsubsection{\texorpdfstring{ws2812b\+\_\+handle()}{ws2812b\_handle()}}
+{\footnotesize\ttfamily void ws2812b\+\_\+handle (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{ws2812b_8h_a9fb5fc07b94a6b6d2d35e2bbaefaa6e7}\label{ws2812b_8h_a9fb5fc07b94a6b6d2d35e2bbaefaa6e7}} 
+\index{ws2812b.\+h@{ws2812b.\+h}!ws2812b\+\_\+init@{ws2812b\+\_\+init}}
+\index{ws2812b\+\_\+init@{ws2812b\+\_\+init}!ws2812b.\+h@{ws2812b.\+h}}
+\subsubsection{\texorpdfstring{ws2812b\+\_\+init()}{ws2812b\_init()}}
+{\footnotesize\ttfamily void ws2812b\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{ws2812b_8h_adb584baab5697a3dec85da55214e7f40}\label{ws2812b_8h_adb584baab5697a3dec85da55214e7f40}} 
+\index{ws2812b.\+h@{ws2812b.\+h}!ws2812b\+\_\+set\+\_\+pixel@{ws2812b\+\_\+set\+\_\+pixel}}
+\index{ws2812b\+\_\+set\+\_\+pixel@{ws2812b\+\_\+set\+\_\+pixel}!ws2812b.\+h@{ws2812b.\+h}}
+\subsubsection{\texorpdfstring{ws2812b\+\_\+set\+\_\+pixel()}{ws2812b\_set\_pixel()}}
+{\footnotesize\ttfamily static void ws2812b\+\_\+set\+\_\+pixel (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{row,  }\item[{uint16\+\_\+t}]{column,  }\item[{uint8\+\_\+t}]{red,  }\item[{uint8\+\_\+t}]{green,  }\item[{uint8\+\_\+t}]{blue }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{ws2812b_8h_a4166d3f1f608ace44faf4cb9cacc2922}\label{ws2812b_8h_a4166d3f1f608ace44faf4cb9cacc2922}} 
+\index{ws2812b.\+h@{ws2812b.\+h}!ws2812b@{ws2812b}}
+\index{ws2812b@{ws2812b}!ws2812b.\+h@{ws2812b.\+h}}
+\subsubsection{\texorpdfstring{ws2812b}{ws2812b}}
+{\footnotesize\ttfamily \hyperlink{structWS2812__Struct}{W\+S2812\+\_\+\+Struct} ws2812b}
+

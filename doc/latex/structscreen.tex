@@ -1,0 +1,209 @@
+\hypertarget{structscreen}{}\section{screen Struct Reference}
+\label{structscreen}\index{screen@{screen}}
+
+
+{\ttfamily \#include $<$screen.\+h$>$}
+
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \hyperlink{structscreen_a338a29e58e2018c59b64e6acd2e89449}{line1\+\_\+buf}
+\item 
+char $\ast$ \hyperlink{structscreen_abeaf8700f2107c2c0c50d7d351823696}{line2\+\_\+buf}
+\item 
+char $\ast$ \hyperlink{structscreen_a1a8903689c83792331e0fa81729960ec}{line3\+\_\+buf}
+\item 
+char $\ast$ \hyperlink{structscreen_a3d56823f1eaa482f09883a998cccbdb8}{line1\+\_\+long}
+\item 
+char $\ast$ \hyperlink{structscreen_a9084477be09706e8c3324b348c7f5de6}{line2\+\_\+long}
+\item 
+char $\ast$ \hyperlink{structscreen_a0f4b1c229f1c74854626309c773268c9}{line3\+\_\+long}
+\item 
+char $\ast$$\ast$ \hyperlink{structscreen_ac02a9bca6a4f2106231205bfc572f151}{buffers}
+\item 
+uint8\+\_\+t \hyperlink{structscreen_a90634ac7368a38ac485eaf9cf83200d1}{rows}
+\item 
+uint8\+\_\+t \hyperlink{structscreen_af7ef9a84e6d1c47dfb367744e5aa5987}{cols}
+\item 
+uint8\+\_\+t \hyperlink{structscreen_a3c60a06d24993391f6aba53d39cf7658}{row\+\_\+height}
+\item 
+uint16\+\_\+t \hyperlink{structscreen_a081157d1078058d38d2acdbeb48673a7}{x\+\_\+offset}
+\item 
+uint16\+\_\+t \hyperlink{structscreen_adf0865f0795425400e41c1a85c308882}{x\+\_\+buff\+\_\+shift}
+\item 
+uint16\+\_\+t \hyperlink{structscreen_af267e885854662d4da48e2477de499a3}{y\+\_\+offset}
+\item 
+uint16\+\_\+t \hyperlink{structscreen_a834452f927fb3ac5cd361ec2d1f73ca9}{y\+\_\+buff\+\_\+shift}
+\item 
+uint8\+\_\+t \hyperlink{structscreen_ab4c52689141fc0e12ae41e0ca813a9f7}{cursor\+\_\+x}
+\item 
+uint8\+\_\+t \hyperlink{structscreen_a35b48e743c6e7d29462f738dcf8e1b88}{cursor\+\_\+y}
+\item 
+uint8\+\_\+t \hyperlink{structscreen_a1fea383cd8960358d785386ed0af2817}{cursor\+\_\+on}
+\item 
+Timer\+Handle\+\_\+t \hyperlink{structscreen_a2d238f9c1ffd3a9ef8d1a0ddf6ecb33b}{cursor\+\_\+timer}
+\item 
+int \hyperlink{structscreen_a06baf3e2d83a89d05aa48d8f3d3bb1d8}{cursor\+\_\+period}
+\item 
+void($\ast$ \hyperlink{structscreen_a5414b22f4ade781ddc139b3410bd44ff}{cursor\+\_\+callback} )(Timer\+Handle\+\_\+t)
+\item 
+\hyperlink{structFontDef}{Font\+Def} $\ast$ \hyperlink{structscreen_a9b37155d978f898a839ce41ffdcb2bd8}{font}
+\item 
+\hyperlink{datatypes_8h_afa3700e77990b75b3fcc954070aa90fe}{S\+S\+D1306\+\_\+device\+\_\+t} $\ast$ \hyperlink{structscreen_a9d87bded7cd637929a3120634b808d02}{L\+C\+D\+\_\+dev}
+\item 
+\hyperlink{error_8h_aa911bf5be4d96948fc02dd3ed146a126}{screen\+\_\+err\+\_\+t}($\ast$ \hyperlink{structscreen_ac3219fd7f640354be1d7e9e7084e19d9}{update} )(\hyperlink{datatypes_8h_a2b884fb4031189ae0bf89d344e558973}{screen\+\_\+t} $\ast$)
+\item 
+H\+A\+L\+\_\+\+Status\+Type\+Def($\ast$ \hyperlink{structscreen_a764e1a617fb9db3aaa60c9fbacdc273e}{draw\+\_\+cursor} )(\hyperlink{datatypes_8h_a2b884fb4031189ae0bf89d344e558973}{screen\+\_\+t} $\ast$)
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{structscreen_ac02a9bca6a4f2106231205bfc572f151}\label{structscreen_ac02a9bca6a4f2106231205bfc572f151}} 
+\index{screen@{screen}!buffers@{buffers}}
+\index{buffers@{buffers}!screen@{screen}}
+\subsubsection{\texorpdfstring{buffers}{buffers}}
+{\footnotesize\ttfamily char$\ast$$\ast$ screen\+::buffers}
+
+\mbox{\Hypertarget{structscreen_af7ef9a84e6d1c47dfb367744e5aa5987}\label{structscreen_af7ef9a84e6d1c47dfb367744e5aa5987}} 
+\index{screen@{screen}!cols@{cols}}
+\index{cols@{cols}!screen@{screen}}
+\subsubsection{\texorpdfstring{cols}{cols}}
+{\footnotesize\ttfamily uint8\+\_\+t screen\+::cols}
+
+\mbox{\Hypertarget{structscreen_a5414b22f4ade781ddc139b3410bd44ff}\label{structscreen_a5414b22f4ade781ddc139b3410bd44ff}} 
+\index{screen@{screen}!cursor\+\_\+callback@{cursor\+\_\+callback}}
+\index{cursor\+\_\+callback@{cursor\+\_\+callback}!screen@{screen}}
+\subsubsection{\texorpdfstring{cursor\+\_\+callback}{cursor\_callback}}
+{\footnotesize\ttfamily void($\ast$ screen\+::cursor\+\_\+callback) (Timer\+Handle\+\_\+t)}
+
+\mbox{\Hypertarget{structscreen_a1fea383cd8960358d785386ed0af2817}\label{structscreen_a1fea383cd8960358d785386ed0af2817}} 
+\index{screen@{screen}!cursor\+\_\+on@{cursor\+\_\+on}}
+\index{cursor\+\_\+on@{cursor\+\_\+on}!screen@{screen}}
+\subsubsection{\texorpdfstring{cursor\+\_\+on}{cursor\_on}}
+{\footnotesize\ttfamily uint8\+\_\+t screen\+::cursor\+\_\+on}
+
+\mbox{\Hypertarget{structscreen_a06baf3e2d83a89d05aa48d8f3d3bb1d8}\label{structscreen_a06baf3e2d83a89d05aa48d8f3d3bb1d8}} 
+\index{screen@{screen}!cursor\+\_\+period@{cursor\+\_\+period}}
+\index{cursor\+\_\+period@{cursor\+\_\+period}!screen@{screen}}
+\subsubsection{\texorpdfstring{cursor\+\_\+period}{cursor\_period}}
+{\footnotesize\ttfamily int screen\+::cursor\+\_\+period}
+
+\mbox{\Hypertarget{structscreen_a2d238f9c1ffd3a9ef8d1a0ddf6ecb33b}\label{structscreen_a2d238f9c1ffd3a9ef8d1a0ddf6ecb33b}} 
+\index{screen@{screen}!cursor\+\_\+timer@{cursor\+\_\+timer}}
+\index{cursor\+\_\+timer@{cursor\+\_\+timer}!screen@{screen}}
+\subsubsection{\texorpdfstring{cursor\+\_\+timer}{cursor\_timer}}
+{\footnotesize\ttfamily Timer\+Handle\+\_\+t screen\+::cursor\+\_\+timer}
+
+\mbox{\Hypertarget{structscreen_ab4c52689141fc0e12ae41e0ca813a9f7}\label{structscreen_ab4c52689141fc0e12ae41e0ca813a9f7}} 
+\index{screen@{screen}!cursor\+\_\+x@{cursor\+\_\+x}}
+\index{cursor\+\_\+x@{cursor\+\_\+x}!screen@{screen}}
+\subsubsection{\texorpdfstring{cursor\+\_\+x}{cursor\_x}}
+{\footnotesize\ttfamily uint8\+\_\+t screen\+::cursor\+\_\+x}
+
+\mbox{\Hypertarget{structscreen_a35b48e743c6e7d29462f738dcf8e1b88}\label{structscreen_a35b48e743c6e7d29462f738dcf8e1b88}} 
+\index{screen@{screen}!cursor\+\_\+y@{cursor\+\_\+y}}
+\index{cursor\+\_\+y@{cursor\+\_\+y}!screen@{screen}}
+\subsubsection{\texorpdfstring{cursor\+\_\+y}{cursor\_y}}
+{\footnotesize\ttfamily uint8\+\_\+t screen\+::cursor\+\_\+y}
+
+\mbox{\Hypertarget{structscreen_a764e1a617fb9db3aaa60c9fbacdc273e}\label{structscreen_a764e1a617fb9db3aaa60c9fbacdc273e}} 
+\index{screen@{screen}!draw\+\_\+cursor@{draw\+\_\+cursor}}
+\index{draw\+\_\+cursor@{draw\+\_\+cursor}!screen@{screen}}
+\subsubsection{\texorpdfstring{draw\+\_\+cursor}{draw\_cursor}}
+{\footnotesize\ttfamily H\+A\+L\+\_\+\+Status\+Type\+Def($\ast$ screen\+::draw\+\_\+cursor) (\hyperlink{datatypes_8h_a2b884fb4031189ae0bf89d344e558973}{screen\+\_\+t} $\ast$)}
+
+\mbox{\Hypertarget{structscreen_a9b37155d978f898a839ce41ffdcb2bd8}\label{structscreen_a9b37155d978f898a839ce41ffdcb2bd8}} 
+\index{screen@{screen}!font@{font}}
+\index{font@{font}!screen@{screen}}
+\subsubsection{\texorpdfstring{font}{font}}
+{\footnotesize\ttfamily \hyperlink{structFontDef}{Font\+Def}$\ast$ screen\+::font}
+
+\mbox{\Hypertarget{structscreen_a9d87bded7cd637929a3120634b808d02}\label{structscreen_a9d87bded7cd637929a3120634b808d02}} 
+\index{screen@{screen}!L\+C\+D\+\_\+dev@{L\+C\+D\+\_\+dev}}
+\index{L\+C\+D\+\_\+dev@{L\+C\+D\+\_\+dev}!screen@{screen}}
+\subsubsection{\texorpdfstring{L\+C\+D\+\_\+dev}{LCD\_dev}}
+{\footnotesize\ttfamily \hyperlink{datatypes_8h_afa3700e77990b75b3fcc954070aa90fe}{S\+S\+D1306\+\_\+device\+\_\+t}$\ast$ screen\+::\+L\+C\+D\+\_\+dev}
+
+\mbox{\Hypertarget{structscreen_a338a29e58e2018c59b64e6acd2e89449}\label{structscreen_a338a29e58e2018c59b64e6acd2e89449}} 
+\index{screen@{screen}!line1\+\_\+buf@{line1\+\_\+buf}}
+\index{line1\+\_\+buf@{line1\+\_\+buf}!screen@{screen}}
+\subsubsection{\texorpdfstring{line1\+\_\+buf}{line1\_buf}}
+{\footnotesize\ttfamily char$\ast$ screen\+::line1\+\_\+buf}
+
+\mbox{\Hypertarget{structscreen_a3d56823f1eaa482f09883a998cccbdb8}\label{structscreen_a3d56823f1eaa482f09883a998cccbdb8}} 
+\index{screen@{screen}!line1\+\_\+long@{line1\+\_\+long}}
+\index{line1\+\_\+long@{line1\+\_\+long}!screen@{screen}}
+\subsubsection{\texorpdfstring{line1\+\_\+long}{line1\_long}}
+{\footnotesize\ttfamily char$\ast$ screen\+::line1\+\_\+long}
+
+\mbox{\Hypertarget{structscreen_abeaf8700f2107c2c0c50d7d351823696}\label{structscreen_abeaf8700f2107c2c0c50d7d351823696}} 
+\index{screen@{screen}!line2\+\_\+buf@{line2\+\_\+buf}}
+\index{line2\+\_\+buf@{line2\+\_\+buf}!screen@{screen}}
+\subsubsection{\texorpdfstring{line2\+\_\+buf}{line2\_buf}}
+{\footnotesize\ttfamily char$\ast$ screen\+::line2\+\_\+buf}
+
+\mbox{\Hypertarget{structscreen_a9084477be09706e8c3324b348c7f5de6}\label{structscreen_a9084477be09706e8c3324b348c7f5de6}} 
+\index{screen@{screen}!line2\+\_\+long@{line2\+\_\+long}}
+\index{line2\+\_\+long@{line2\+\_\+long}!screen@{screen}}
+\subsubsection{\texorpdfstring{line2\+\_\+long}{line2\_long}}
+{\footnotesize\ttfamily char$\ast$ screen\+::line2\+\_\+long}
+
+\mbox{\Hypertarget{structscreen_a1a8903689c83792331e0fa81729960ec}\label{structscreen_a1a8903689c83792331e0fa81729960ec}} 
+\index{screen@{screen}!line3\+\_\+buf@{line3\+\_\+buf}}
+\index{line3\+\_\+buf@{line3\+\_\+buf}!screen@{screen}}
+\subsubsection{\texorpdfstring{line3\+\_\+buf}{line3\_buf}}
+{\footnotesize\ttfamily char$\ast$ screen\+::line3\+\_\+buf}
+
+\mbox{\Hypertarget{structscreen_a0f4b1c229f1c74854626309c773268c9}\label{structscreen_a0f4b1c229f1c74854626309c773268c9}} 
+\index{screen@{screen}!line3\+\_\+long@{line3\+\_\+long}}
+\index{line3\+\_\+long@{line3\+\_\+long}!screen@{screen}}
+\subsubsection{\texorpdfstring{line3\+\_\+long}{line3\_long}}
+{\footnotesize\ttfamily char$\ast$ screen\+::line3\+\_\+long}
+
+\mbox{\Hypertarget{structscreen_a3c60a06d24993391f6aba53d39cf7658}\label{structscreen_a3c60a06d24993391f6aba53d39cf7658}} 
+\index{screen@{screen}!row\+\_\+height@{row\+\_\+height}}
+\index{row\+\_\+height@{row\+\_\+height}!screen@{screen}}
+\subsubsection{\texorpdfstring{row\+\_\+height}{row\_height}}
+{\footnotesize\ttfamily uint8\+\_\+t screen\+::row\+\_\+height}
+
+\mbox{\Hypertarget{structscreen_a90634ac7368a38ac485eaf9cf83200d1}\label{structscreen_a90634ac7368a38ac485eaf9cf83200d1}} 
+\index{screen@{screen}!rows@{rows}}
+\index{rows@{rows}!screen@{screen}}
+\subsubsection{\texorpdfstring{rows}{rows}}
+{\footnotesize\ttfamily uint8\+\_\+t screen\+::rows}
+
+\mbox{\Hypertarget{structscreen_ac3219fd7f640354be1d7e9e7084e19d9}\label{structscreen_ac3219fd7f640354be1d7e9e7084e19d9}} 
+\index{screen@{screen}!update@{update}}
+\index{update@{update}!screen@{screen}}
+\subsubsection{\texorpdfstring{update}{update}}
+{\footnotesize\ttfamily \hyperlink{error_8h_aa911bf5be4d96948fc02dd3ed146a126}{screen\+\_\+err\+\_\+t}($\ast$ screen\+::update) (\hyperlink{datatypes_8h_a2b884fb4031189ae0bf89d344e558973}{screen\+\_\+t} $\ast$)}
+
+\mbox{\Hypertarget{structscreen_adf0865f0795425400e41c1a85c308882}\label{structscreen_adf0865f0795425400e41c1a85c308882}} 
+\index{screen@{screen}!x\+\_\+buff\+\_\+shift@{x\+\_\+buff\+\_\+shift}}
+\index{x\+\_\+buff\+\_\+shift@{x\+\_\+buff\+\_\+shift}!screen@{screen}}
+\subsubsection{\texorpdfstring{x\+\_\+buff\+\_\+shift}{x\_buff\_shift}}
+{\footnotesize\ttfamily uint16\+\_\+t screen\+::x\+\_\+buff\+\_\+shift}
+
+\mbox{\Hypertarget{structscreen_a081157d1078058d38d2acdbeb48673a7}\label{structscreen_a081157d1078058d38d2acdbeb48673a7}} 
+\index{screen@{screen}!x\+\_\+offset@{x\+\_\+offset}}
+\index{x\+\_\+offset@{x\+\_\+offset}!screen@{screen}}
+\subsubsection{\texorpdfstring{x\+\_\+offset}{x\_offset}}
+{\footnotesize\ttfamily uint16\+\_\+t screen\+::x\+\_\+offset}
+
+\mbox{\Hypertarget{structscreen_a834452f927fb3ac5cd361ec2d1f73ca9}\label{structscreen_a834452f927fb3ac5cd361ec2d1f73ca9}} 
+\index{screen@{screen}!y\+\_\+buff\+\_\+shift@{y\+\_\+buff\+\_\+shift}}
+\index{y\+\_\+buff\+\_\+shift@{y\+\_\+buff\+\_\+shift}!screen@{screen}}
+\subsubsection{\texorpdfstring{y\+\_\+buff\+\_\+shift}{y\_buff\_shift}}
+{\footnotesize\ttfamily uint16\+\_\+t screen\+::y\+\_\+buff\+\_\+shift}
+
+\mbox{\Hypertarget{structscreen_af267e885854662d4da48e2477de499a3}\label{structscreen_af267e885854662d4da48e2477de499a3}} 
+\index{screen@{screen}!y\+\_\+offset@{y\+\_\+offset}}
+\index{y\+\_\+offset@{y\+\_\+offset}!screen@{screen}}
+\subsubsection{\texorpdfstring{y\+\_\+offset}{y\_offset}}
+{\footnotesize\ttfamily uint16\+\_\+t screen\+::y\+\_\+offset}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/alxhoff/git/\+Embedded/stm32-\/mech-\/keyboard/\+Nucelo\+Keyboard\+Controller/\+Inc/\hyperlink{screen_8h}{screen.\+h}\end{DoxyCompactItemize}

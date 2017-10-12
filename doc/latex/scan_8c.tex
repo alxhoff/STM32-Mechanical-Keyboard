@@ -1,0 +1,55 @@
+\hypertarget{scan_8c}{}\section{/home/alxhoff/git/\+Embedded/stm32-\/mech-\/keyboard/\+Nucelo\+Keyboard\+Controller/\+Src/scan.c File Reference}
+\label{scan_8c}\index{/home/alxhoff/git/\+Embedded/stm32-\/mech-\/keyboard/\+Nucelo\+Keyboard\+Controller/\+Src/scan.\+c@{/home/alxhoff/git/\+Embedded/stm32-\/mech-\/keyboard/\+Nucelo\+Keyboard\+Controller/\+Src/scan.\+c}}
+{\ttfamily \#include \char`\"{}keymap.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}keyboard.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}scan.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}extern.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}lookup.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}shift.\+h\char`\"{}}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int8\+\_\+t \hyperlink{scan_8c_ae487492e4ee9e86f27bcc764386842b8}{scan\+\_\+key\+\_\+matrix} (\hyperlink{datatypes_8h_a903f583e3cefd5881572b61025c5416f}{keyboard\+\_\+device\+\_\+t} $\ast$keyboard\+\_\+dev, \hyperlink{datatypes_8h_ab6ae011601a0fec803428af1f5920fc0}{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t} $\ast$H\+I\+D\+\_\+reports, \hyperlink{datatypes_8h_adb530ee69b7a28ad91cf00a7c665a2f5}{shift\+\_\+array\+\_\+t} $\ast$\hyperlink{structshift__array}{shift\+\_\+array})
+\item 
+\hyperlink{types_8h_ab2ec6709cce876f14501785dbb8e89f3}{key\+\_\+code} \hyperlink{scan_8c_a121a60a92d712e7ffd0e739a83b3c390}{scan\+\_\+get\+\_\+single\+\_\+key} (\hyperlink{datatypes_8h_a903f583e3cefd5881572b61025c5416f}{keyboard\+\_\+device\+\_\+t} $\ast$keyboard\+\_\+dev, \hyperlink{datatypes_8h_ac282a7a696b1d7d36df8c0f4ebce07e7}{keymap\+\_\+list\+\_\+t} $\ast$layer\+\_\+list)
+\item 
+\hyperlink{types_8h_a089d78d0d2dff7b379245e1f9f46b510}{key\+\_\+code\+\_\+w\+\_\+mod\+\_\+t} \hyperlink{scan_8c_afb42a950d8c0ac59638b28d024d3a285}{scan\+\_\+get\+\_\+single\+\_\+key\+\_\+w\+\_\+mod} (\hyperlink{datatypes_8h_a903f583e3cefd5881572b61025c5416f}{keyboard\+\_\+device\+\_\+t} $\ast$keyboard\+\_\+dev, \hyperlink{datatypes_8h_ac282a7a696b1d7d36df8c0f4ebce07e7}{keymap\+\_\+list\+\_\+t} $\ast$layer\+\_\+list)
+\item 
+char $\ast$ \hyperlink{scan_8c_a8ccf32f8d94b5c327ab70444df07db75}{scan\+\_\+get\+\_\+single\+\_\+key\+\_\+char} (\hyperlink{datatypes_8h_a903f583e3cefd5881572b61025c5416f}{keyboard\+\_\+device\+\_\+t} $\ast$keyboard\+\_\+dev, \hyperlink{datatypes_8h_ac282a7a696b1d7d36df8c0f4ebce07e7}{keymap\+\_\+list\+\_\+t} $\ast$layer\+\_\+list)
+\item 
+char $\ast$ \hyperlink{scan_8c_ab88fbc2da1b213eed9a50fee76715d29}{scan\+\_\+get\+\_\+input\+\_\+seq} (\hyperlink{datatypes_8h_a903f583e3cefd5881572b61025c5416f}{keyboard\+\_\+device\+\_\+t} $\ast$keyboard\+\_\+dev, \hyperlink{datatypes_8h_ac282a7a696b1d7d36df8c0f4ebce07e7}{keymap\+\_\+list\+\_\+t} $\ast$list, char exit\+\_\+char)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{scan_8c_ab88fbc2da1b213eed9a50fee76715d29}\label{scan_8c_ab88fbc2da1b213eed9a50fee76715d29}} 
+\index{scan.\+c@{scan.\+c}!scan\+\_\+get\+\_\+input\+\_\+seq@{scan\+\_\+get\+\_\+input\+\_\+seq}}
+\index{scan\+\_\+get\+\_\+input\+\_\+seq@{scan\+\_\+get\+\_\+input\+\_\+seq}!scan.\+c@{scan.\+c}}
+\subsubsection{\texorpdfstring{scan\+\_\+get\+\_\+input\+\_\+seq()}{scan\_get\_input\_seq()}}
+{\footnotesize\ttfamily char$\ast$ scan\+\_\+get\+\_\+input\+\_\+seq (\begin{DoxyParamCaption}\item[{\hyperlink{datatypes_8h_a903f583e3cefd5881572b61025c5416f}{keyboard\+\_\+device\+\_\+t} $\ast$}]{keyboard\+\_\+dev,  }\item[{\hyperlink{datatypes_8h_ac282a7a696b1d7d36df8c0f4ebce07e7}{keymap\+\_\+list\+\_\+t} $\ast$}]{list,  }\item[{char}]{exit\+\_\+char }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{scan_8c_a121a60a92d712e7ffd0e739a83b3c390}\label{scan_8c_a121a60a92d712e7ffd0e739a83b3c390}} 
+\index{scan.\+c@{scan.\+c}!scan\+\_\+get\+\_\+single\+\_\+key@{scan\+\_\+get\+\_\+single\+\_\+key}}
+\index{scan\+\_\+get\+\_\+single\+\_\+key@{scan\+\_\+get\+\_\+single\+\_\+key}!scan.\+c@{scan.\+c}}
+\subsubsection{\texorpdfstring{scan\+\_\+get\+\_\+single\+\_\+key()}{scan\_get\_single\_key()}}
+{\footnotesize\ttfamily \hyperlink{types_8h_ab2ec6709cce876f14501785dbb8e89f3}{key\+\_\+code} scan\+\_\+get\+\_\+single\+\_\+key (\begin{DoxyParamCaption}\item[{\hyperlink{datatypes_8h_a903f583e3cefd5881572b61025c5416f}{keyboard\+\_\+device\+\_\+t} $\ast$}]{keyboard\+\_\+dev,  }\item[{\hyperlink{datatypes_8h_ac282a7a696b1d7d36df8c0f4ebce07e7}{keymap\+\_\+list\+\_\+t} $\ast$}]{layer\+\_\+list }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{scan_8c_a8ccf32f8d94b5c327ab70444df07db75}\label{scan_8c_a8ccf32f8d94b5c327ab70444df07db75}} 
+\index{scan.\+c@{scan.\+c}!scan\+\_\+get\+\_\+single\+\_\+key\+\_\+char@{scan\+\_\+get\+\_\+single\+\_\+key\+\_\+char}}
+\index{scan\+\_\+get\+\_\+single\+\_\+key\+\_\+char@{scan\+\_\+get\+\_\+single\+\_\+key\+\_\+char}!scan.\+c@{scan.\+c}}
+\subsubsection{\texorpdfstring{scan\+\_\+get\+\_\+single\+\_\+key\+\_\+char()}{scan\_get\_single\_key\_char()}}
+{\footnotesize\ttfamily char$\ast$ scan\+\_\+get\+\_\+single\+\_\+key\+\_\+char (\begin{DoxyParamCaption}\item[{\hyperlink{datatypes_8h_a903f583e3cefd5881572b61025c5416f}{keyboard\+\_\+device\+\_\+t} $\ast$}]{keyboard\+\_\+dev,  }\item[{\hyperlink{datatypes_8h_ac282a7a696b1d7d36df8c0f4ebce07e7}{keymap\+\_\+list\+\_\+t} $\ast$}]{layer\+\_\+list }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{scan_8c_afb42a950d8c0ac59638b28d024d3a285}\label{scan_8c_afb42a950d8c0ac59638b28d024d3a285}} 
+\index{scan.\+c@{scan.\+c}!scan\+\_\+get\+\_\+single\+\_\+key\+\_\+w\+\_\+mod@{scan\+\_\+get\+\_\+single\+\_\+key\+\_\+w\+\_\+mod}}
+\index{scan\+\_\+get\+\_\+single\+\_\+key\+\_\+w\+\_\+mod@{scan\+\_\+get\+\_\+single\+\_\+key\+\_\+w\+\_\+mod}!scan.\+c@{scan.\+c}}
+\subsubsection{\texorpdfstring{scan\+\_\+get\+\_\+single\+\_\+key\+\_\+w\+\_\+mod()}{scan\_get\_single\_key\_w\_mod()}}
+{\footnotesize\ttfamily \hyperlink{types_8h_a089d78d0d2dff7b379245e1f9f46b510}{key\+\_\+code\+\_\+w\+\_\+mod\+\_\+t} scan\+\_\+get\+\_\+single\+\_\+key\+\_\+w\+\_\+mod (\begin{DoxyParamCaption}\item[{\hyperlink{datatypes_8h_a903f583e3cefd5881572b61025c5416f}{keyboard\+\_\+device\+\_\+t} $\ast$}]{keyboard\+\_\+dev,  }\item[{\hyperlink{datatypes_8h_ac282a7a696b1d7d36df8c0f4ebce07e7}{keymap\+\_\+list\+\_\+t} $\ast$}]{layer\+\_\+list }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{scan_8c_ae487492e4ee9e86f27bcc764386842b8}\label{scan_8c_ae487492e4ee9e86f27bcc764386842b8}} 
+\index{scan.\+c@{scan.\+c}!scan\+\_\+key\+\_\+matrix@{scan\+\_\+key\+\_\+matrix}}
+\index{scan\+\_\+key\+\_\+matrix@{scan\+\_\+key\+\_\+matrix}!scan.\+c@{scan.\+c}}
+\subsubsection{\texorpdfstring{scan\+\_\+key\+\_\+matrix()}{scan\_key\_matrix()}}
+{\footnotesize\ttfamily int8\+\_\+t scan\+\_\+key\+\_\+matrix (\begin{DoxyParamCaption}\item[{\hyperlink{datatypes_8h_a903f583e3cefd5881572b61025c5416f}{keyboard\+\_\+device\+\_\+t} $\ast$}]{keyboard\+\_\+dev,  }\item[{\hyperlink{datatypes_8h_ab6ae011601a0fec803428af1f5920fc0}{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t} $\ast$}]{H\+I\+D\+\_\+reports,  }\item[{\hyperlink{datatypes_8h_adb530ee69b7a28ad91cf00a7c665a2f5}{shift\+\_\+array\+\_\+t} $\ast$}]{shift\+\_\+array }\end{DoxyParamCaption})}
+

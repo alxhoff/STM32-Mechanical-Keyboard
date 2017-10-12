@@ -1,0 +1,149 @@
+\hypertarget{keyboard_8h}{}\section{/home/alxhoff/git/\+Embedded/stm32-\/mech-\/keyboard/\+Nucelo\+Keyboard\+Controller/\+Inc/keyboard.h File Reference}
+\label{keyboard_8h}\index{/home/alxhoff/git/\+Embedded/stm32-\/mech-\/keyboard/\+Nucelo\+Keyboard\+Controller/\+Inc/keyboard.\+h@{/home/alxhoff/git/\+Embedded/stm32-\/mech-\/keyboard/\+Nucelo\+Keyboard\+Controller/\+Inc/keyboard.\+h}}
+{\ttfamily \#include \char`\"{}stm32f4xx\+\_\+hal.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}datatypes.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}states.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}keyboard\+\_\+config.\+h\char`\"{}}\newline
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structkeyboardHID}{keyboard\+H\+ID}
+\item 
+struct \hyperlink{structmediaHIDg}{media\+H\+I\+Dg}
+\item 
+struct \hyperlink{structkey}{key}
+\item 
+struct \hyperlink{structkeypress__buffer}{keypress\+\_\+buffer}
+\item 
+struct \hyperlink{structsix__key__buffer}{six\+\_\+key\+\_\+buffer}
+\item 
+struct \hyperlink{structone__key__buffer}{one\+\_\+key\+\_\+buffer}
+\item 
+struct \hyperlink{structsend__buffer}{send\+\_\+buffer}
+\item 
+struct \hyperlink{structkeyboard__HID__data}{keyboard\+\_\+\+H\+I\+D\+\_\+data}
+\item 
+struct \hyperlink{structkeyboard__device}{keyboard\+\_\+device}
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{structkeyboardHID}{keyboard\+H\+ID} \hyperlink{keyboard_8h_ae363bda14329c2fd40dea1b02411741a}{keyboard\+H\+I\+D\+\_\+t}
+\item 
+typedef struct \hyperlink{structmediaHIDg}{media\+H\+I\+Dg} \hyperlink{keyboard_8h_aeca50d10ea64df413e422cf38eab9cd9}{media\+H\+I\+D\+\_\+t}
+\item 
+typedef struct \hyperlink{structkeyboard__HID__data}{keyboard\+\_\+\+H\+I\+D\+\_\+data} \hyperlink{keyboard_8h_a170270f39b7146a83d668bb94ee275f0}{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t}
+\item 
+typedef struct \hyperlink{structkeyboard__device}{keyboard\+\_\+device} \hyperlink{keyboard_8h_a5a7e75cbef1b69dd1f18126ee9a44390}{keyboard\+\_\+device\+\_\+t}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int8\+\_\+t \hyperlink{keyboard_8h_a452de650eae4de097b354fffcdd581a5}{keyboard\+\_\+init} (\hyperlink{datatypes_8h_a3f91b8703c531938c9e049363f0211f3}{key\+\_\+devices\+\_\+t} $\ast$keyboard\+\_\+devices, G\+P\+I\+O\+\_\+\+Type\+Def $\ast$\hyperlink{extern_8h_ad9b4d2fea4c7b7d5158d56075c28e9ad}{row\+\_\+ports}\mbox{[}\hyperlink{keymap_8h_ab89c69b09d4ca01020b7c40d9ca2bab8}{K\+E\+Y\+B\+O\+A\+R\+D\+\_\+\+R\+O\+WS}\mbox{]}, uint16\+\_\+t row\+\_\+pins\mbox{[}\hyperlink{keymap_8h_ab89c69b09d4ca01020b7c40d9ca2bab8}{K\+E\+Y\+B\+O\+A\+R\+D\+\_\+\+R\+O\+WS}\mbox{]})
+\item 
+int8\+\_\+t \hyperlink{keyboard_8h_a86312a522a094b1ba780982dcb332590}{process\+\_\+key\+\_\+buf} (\hyperlink{datatypes_8h_ab6ae011601a0fec803428af1f5920fc0}{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t} $\ast$data, \hyperlink{datatypes_8h_ac282a7a696b1d7d36df8c0f4ebce07e7}{keymap\+\_\+list\+\_\+t} $\ast$layer\+\_\+list)
+\item 
+int8\+\_\+t \hyperlink{keyboard_8h_ad24b2fb66a7dd16687de627115aaca8d}{process\+\_\+keyboard\+\_\+flags} (\hyperlink{datatypes_8h_ab6ae011601a0fec803428af1f5920fc0}{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t} $\ast$data)
+\item 
+uint8\+\_\+t \hyperlink{keyboard_8h_a442d58541dc886385963c9447895106f}{process\+\_\+single\+\_\+key} (\hyperlink{datatypes_8h_ac282a7a696b1d7d36df8c0f4ebce07e7}{keymap\+\_\+list\+\_\+t} $\ast$layer\+\_\+list, uint8\+\_\+t col, uint8\+\_\+t row)
+\item 
+void \hyperlink{keyboard_8h_a00ff7889fd839635e4a416b8ad53ca58}{clear\+\_\+keyboard\+\_\+report} (\hyperlink{datatypes_8h_ab6ae011601a0fec803428af1f5920fc0}{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t} $\ast$data)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structkey}{key} \hyperlink{keyboard_8h_a4faf0d14d2e6866ed2996e81ab38db63}{key\+\_\+buf} \mbox{[}20\mbox{]}
+\item 
+uint8\+\_\+t \hyperlink{keyboard_8h_a6ad0fccdab0a781d254d211f830731b0}{keypress\+\_\+buffer\+\_\+index}
+\item 
+\hyperlink{structsend__buffer}{send\+\_\+buffer} \hyperlink{keyboard_8h_a6854bf4ff167f9c99beb892ca696fb48}{keys\+\_\+to\+\_\+send}
+\item 
+\hyperlink{structsix__key__buffer}{six\+\_\+key\+\_\+buffer} \hyperlink{keyboard_8h_a8ca8123d835d25ab1362ef05d49ec75e}{approved\+\_\+keys}
+\end{DoxyCompactItemize}
+
+
+\subsection{Typedef Documentation}
+\mbox{\Hypertarget{keyboard_8h_a5a7e75cbef1b69dd1f18126ee9a44390}\label{keyboard_8h_a5a7e75cbef1b69dd1f18126ee9a44390}} 
+\index{keyboard.\+h@{keyboard.\+h}!keyboard\+\_\+device\+\_\+t@{keyboard\+\_\+device\+\_\+t}}
+\index{keyboard\+\_\+device\+\_\+t@{keyboard\+\_\+device\+\_\+t}!keyboard.\+h@{keyboard.\+h}}
+\subsubsection{\texorpdfstring{keyboard\+\_\+device\+\_\+t}{keyboard\_device\_t}}
+{\footnotesize\ttfamily typedef struct \hyperlink{structkeyboard__device}{keyboard\+\_\+device}  \hyperlink{datatypes_8h_a903f583e3cefd5881572b61025c5416f}{keyboard\+\_\+device\+\_\+t}}
+
+\mbox{\Hypertarget{keyboard_8h_a170270f39b7146a83d668bb94ee275f0}\label{keyboard_8h_a170270f39b7146a83d668bb94ee275f0}} 
+\index{keyboard.\+h@{keyboard.\+h}!keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t@{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t}}
+\index{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t@{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t}!keyboard.\+h@{keyboard.\+h}}
+\subsubsection{\texorpdfstring{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t}{keyboard\_HID\_data\_t}}
+{\footnotesize\ttfamily typedef struct \hyperlink{structkeyboard__HID__data}{keyboard\+\_\+\+H\+I\+D\+\_\+data}  \hyperlink{datatypes_8h_ab6ae011601a0fec803428af1f5920fc0}{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t}}
+
+\mbox{\Hypertarget{keyboard_8h_ae363bda14329c2fd40dea1b02411741a}\label{keyboard_8h_ae363bda14329c2fd40dea1b02411741a}} 
+\index{keyboard.\+h@{keyboard.\+h}!keyboard\+H\+I\+D\+\_\+t@{keyboard\+H\+I\+D\+\_\+t}}
+\index{keyboard\+H\+I\+D\+\_\+t@{keyboard\+H\+I\+D\+\_\+t}!keyboard.\+h@{keyboard.\+h}}
+\subsubsection{\texorpdfstring{keyboard\+H\+I\+D\+\_\+t}{keyboardHID\_t}}
+{\footnotesize\ttfamily typedef struct \hyperlink{structkeyboardHID}{keyboard\+H\+ID} \hyperlink{keyboard_8h_ae363bda14329c2fd40dea1b02411741a}{keyboard\+H\+I\+D\+\_\+t}}
+
+\mbox{\Hypertarget{keyboard_8h_aeca50d10ea64df413e422cf38eab9cd9}\label{keyboard_8h_aeca50d10ea64df413e422cf38eab9cd9}} 
+\index{keyboard.\+h@{keyboard.\+h}!media\+H\+I\+D\+\_\+t@{media\+H\+I\+D\+\_\+t}}
+\index{media\+H\+I\+D\+\_\+t@{media\+H\+I\+D\+\_\+t}!keyboard.\+h@{keyboard.\+h}}
+\subsubsection{\texorpdfstring{media\+H\+I\+D\+\_\+t}{mediaHID\_t}}
+{\footnotesize\ttfamily typedef struct \hyperlink{structmediaHIDg}{media\+H\+I\+Dg}  \hyperlink{keyboard_8h_aeca50d10ea64df413e422cf38eab9cd9}{media\+H\+I\+D\+\_\+t}}
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{keyboard_8h_a00ff7889fd839635e4a416b8ad53ca58}\label{keyboard_8h_a00ff7889fd839635e4a416b8ad53ca58}} 
+\index{keyboard.\+h@{keyboard.\+h}!clear\+\_\+keyboard\+\_\+report@{clear\+\_\+keyboard\+\_\+report}}
+\index{clear\+\_\+keyboard\+\_\+report@{clear\+\_\+keyboard\+\_\+report}!keyboard.\+h@{keyboard.\+h}}
+\subsubsection{\texorpdfstring{clear\+\_\+keyboard\+\_\+report()}{clear\_keyboard\_report()}}
+{\footnotesize\ttfamily void clear\+\_\+keyboard\+\_\+report (\begin{DoxyParamCaption}\item[{\hyperlink{datatypes_8h_ab6ae011601a0fec803428af1f5920fc0}{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t} $\ast$}]{data }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{keyboard_8h_a452de650eae4de097b354fffcdd581a5}\label{keyboard_8h_a452de650eae4de097b354fffcdd581a5}} 
+\index{keyboard.\+h@{keyboard.\+h}!keyboard\+\_\+init@{keyboard\+\_\+init}}
+\index{keyboard\+\_\+init@{keyboard\+\_\+init}!keyboard.\+h@{keyboard.\+h}}
+\subsubsection{\texorpdfstring{keyboard\+\_\+init()}{keyboard\_init()}}
+{\footnotesize\ttfamily int8\+\_\+t keyboard\+\_\+init (\begin{DoxyParamCaption}\item[{\hyperlink{datatypes_8h_a3f91b8703c531938c9e049363f0211f3}{key\+\_\+devices\+\_\+t} $\ast$}]{keyboard\+\_\+devices,  }\item[{G\+P\+I\+O\+\_\+\+Type\+Def $\ast$}]{row\+\_\+ports\mbox{[}\+K\+E\+Y\+B\+O\+A\+R\+D\+\_\+\+R\+O\+W\+S\mbox{]},  }\item[{uint16\+\_\+t}]{row\+\_\+pins\mbox{[}\+K\+E\+Y\+B\+O\+A\+R\+D\+\_\+\+R\+O\+W\+S\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{keyboard_8h_a86312a522a094b1ba780982dcb332590}\label{keyboard_8h_a86312a522a094b1ba780982dcb332590}} 
+\index{keyboard.\+h@{keyboard.\+h}!process\+\_\+key\+\_\+buf@{process\+\_\+key\+\_\+buf}}
+\index{process\+\_\+key\+\_\+buf@{process\+\_\+key\+\_\+buf}!keyboard.\+h@{keyboard.\+h}}
+\subsubsection{\texorpdfstring{process\+\_\+key\+\_\+buf()}{process\_key\_buf()}}
+{\footnotesize\ttfamily int8\+\_\+t process\+\_\+key\+\_\+buf (\begin{DoxyParamCaption}\item[{\hyperlink{datatypes_8h_ab6ae011601a0fec803428af1f5920fc0}{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t} $\ast$}]{data,  }\item[{\hyperlink{datatypes_8h_ac282a7a696b1d7d36df8c0f4ebce07e7}{keymap\+\_\+list\+\_\+t} $\ast$}]{layer\+\_\+list }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{keyboard_8h_ad24b2fb66a7dd16687de627115aaca8d}\label{keyboard_8h_ad24b2fb66a7dd16687de627115aaca8d}} 
+\index{keyboard.\+h@{keyboard.\+h}!process\+\_\+keyboard\+\_\+flags@{process\+\_\+keyboard\+\_\+flags}}
+\index{process\+\_\+keyboard\+\_\+flags@{process\+\_\+keyboard\+\_\+flags}!keyboard.\+h@{keyboard.\+h}}
+\subsubsection{\texorpdfstring{process\+\_\+keyboard\+\_\+flags()}{process\_keyboard\_flags()}}
+{\footnotesize\ttfamily int8\+\_\+t process\+\_\+keyboard\+\_\+flags (\begin{DoxyParamCaption}\item[{\hyperlink{datatypes_8h_ab6ae011601a0fec803428af1f5920fc0}{keyboard\+\_\+\+H\+I\+D\+\_\+data\+\_\+t} $\ast$}]{data }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{keyboard_8h_a442d58541dc886385963c9447895106f}\label{keyboard_8h_a442d58541dc886385963c9447895106f}} 
+\index{keyboard.\+h@{keyboard.\+h}!process\+\_\+single\+\_\+key@{process\+\_\+single\+\_\+key}}
+\index{process\+\_\+single\+\_\+key@{process\+\_\+single\+\_\+key}!keyboard.\+h@{keyboard.\+h}}
+\subsubsection{\texorpdfstring{process\+\_\+single\+\_\+key()}{process\_single\_key()}}
+{\footnotesize\ttfamily uint8\+\_\+t process\+\_\+single\+\_\+key (\begin{DoxyParamCaption}\item[{\hyperlink{datatypes_8h_ac282a7a696b1d7d36df8c0f4ebce07e7}{keymap\+\_\+list\+\_\+t} $\ast$}]{layer\+\_\+list,  }\item[{uint8\+\_\+t}]{col,  }\item[{uint8\+\_\+t}]{row }\end{DoxyParamCaption})}
+
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{keyboard_8h_a8ca8123d835d25ab1362ef05d49ec75e}\label{keyboard_8h_a8ca8123d835d25ab1362ef05d49ec75e}} 
+\index{keyboard.\+h@{keyboard.\+h}!approved\+\_\+keys@{approved\+\_\+keys}}
+\index{approved\+\_\+keys@{approved\+\_\+keys}!keyboard.\+h@{keyboard.\+h}}
+\subsubsection{\texorpdfstring{approved\+\_\+keys}{approved\_keys}}
+{\footnotesize\ttfamily \hyperlink{structsix__key__buffer}{six\+\_\+key\+\_\+buffer} approved\+\_\+keys}
+
+\mbox{\Hypertarget{keyboard_8h_a4faf0d14d2e6866ed2996e81ab38db63}\label{keyboard_8h_a4faf0d14d2e6866ed2996e81ab38db63}} 
+\index{keyboard.\+h@{keyboard.\+h}!key\+\_\+buf@{key\+\_\+buf}}
+\index{key\+\_\+buf@{key\+\_\+buf}!keyboard.\+h@{keyboard.\+h}}
+\subsubsection{\texorpdfstring{key\+\_\+buf}{key\_buf}}
+{\footnotesize\ttfamily \hyperlink{structkey}{key} key\+\_\+buf\mbox{[}20\mbox{]}}
+
+\mbox{\Hypertarget{keyboard_8h_a6ad0fccdab0a781d254d211f830731b0}\label{keyboard_8h_a6ad0fccdab0a781d254d211f830731b0}} 
+\index{keyboard.\+h@{keyboard.\+h}!keypress\+\_\+buffer\+\_\+index@{keypress\+\_\+buffer\+\_\+index}}
+\index{keypress\+\_\+buffer\+\_\+index@{keypress\+\_\+buffer\+\_\+index}!keyboard.\+h@{keyboard.\+h}}
+\subsubsection{\texorpdfstring{keypress\+\_\+buffer\+\_\+index}{keypress\_buffer\_index}}
+{\footnotesize\ttfamily uint8\+\_\+t keypress\+\_\+buffer\+\_\+index}
+
+\mbox{\Hypertarget{keyboard_8h_a6854bf4ff167f9c99beb892ca696fb48}\label{keyboard_8h_a6854bf4ff167f9c99beb892ca696fb48}} 
+\index{keyboard.\+h@{keyboard.\+h}!keys\+\_\+to\+\_\+send@{keys\+\_\+to\+\_\+send}}
+\index{keys\+\_\+to\+\_\+send@{keys\+\_\+to\+\_\+send}!keyboard.\+h@{keyboard.\+h}}
+\subsubsection{\texorpdfstring{keys\+\_\+to\+\_\+send}{keys\_to\_send}}
+{\footnotesize\ttfamily \hyperlink{structsend__buffer}{send\+\_\+buffer} keys\+\_\+to\+\_\+send}
+

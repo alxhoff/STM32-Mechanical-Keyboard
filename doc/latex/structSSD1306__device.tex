@@ -1,0 +1,137 @@
+\hypertarget{structSSD1306__device}{}\section{S\+S\+D1306\+\_\+device Struct Reference}
+\label{structSSD1306__device}\index{S\+S\+D1306\+\_\+device@{S\+S\+D1306\+\_\+device}}
+
+
+{\ttfamily \#include $<$ssd1306.\+h$>$}
+
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+uint16\+\_\+t \hyperlink{structSSD1306__device_abbf07db1d4d5f7c247b2a3ef539adbcf}{x}
+\item 
+uint16\+\_\+t \hyperlink{structSSD1306__device_a696e3c8355fd319fc25fa4f711e496df}{y}
+\item 
+uint8\+\_\+t \hyperlink{structSSD1306__device_a92bef284d4e15d42355b42d04ebd0a82}{initialized}
+\item 
+\hyperlink{ssd1306_8h_a9fe094fa88309e2ded9db03d4c2771c6}{S\+S\+D1306\+\_\+colour\+\_\+t} \hyperlink{structSSD1306__device_ad0ea6059e91b7235d2de7c997f7d40e0}{background}
+\item 
+\hyperlink{structFontDef}{Font\+Def} $\ast$ \hyperlink{structSSD1306__device_a53ca4e27cd6fd4ccaf0a723fe1a9d26b}{font}
+\item 
+uint8\+\_\+t \hyperlink{structSSD1306__device_a122564b6310f5013331ef05c1cc2a9d1}{width}
+\item 
+uint8\+\_\+t \hyperlink{structSSD1306__device_a3c404b5a19887501f3624644bf710ecb}{height}
+\item 
+uint8\+\_\+t \hyperlink{structSSD1306__device_a304b1ccffa54fe02798eac9e4d113186}{buffer} \mbox{[}\hyperlink{ssd1306_8h_ae5a2aa8865dd03537b97fd1c9037371b}{S\+S\+D1306\+\_\+\+W\+I\+D\+TH} $\ast$\hyperlink{ssd1306_8h_a4e9409448a0df95c1686670e09b457b7}{S\+S\+D1306\+\_\+\+H\+E\+I\+G\+HT}/8\mbox{]}
+\item 
+I2\+C\+\_\+\+Handle\+Type\+Def $\ast$ \hyperlink{structSSD1306__device_a5434577f7055efeb61703b7b4a7896a7}{port}
+\item 
+H\+A\+L\+\_\+\+Status\+Type\+Def($\ast$ \hyperlink{structSSD1306__device_a00e78b709181f9a47c7be081e90eda4f}{command} )(\hyperlink{datatypes_8h_afa3700e77990b75b3fcc954070aa90fe}{S\+S\+D1306\+\_\+device\+\_\+t} $\ast$, uint8\+\_\+t)
+\item 
+H\+A\+L\+\_\+\+Status\+Type\+Def($\ast$ \hyperlink{structSSD1306__device_aa52b8e4126ce8b86afca1428e410340a}{clear} )(\hyperlink{datatypes_8h_afa3700e77990b75b3fcc954070aa90fe}{S\+S\+D1306\+\_\+device\+\_\+t} $\ast$)
+\item 
+H\+A\+L\+\_\+\+Status\+Type\+Def($\ast$ \hyperlink{structSSD1306__device_a99b7467f867b5422a1c732c4aa66d755}{update} )(\hyperlink{datatypes_8h_afa3700e77990b75b3fcc954070aa90fe}{S\+S\+D1306\+\_\+device\+\_\+t} $\ast$)
+\item 
+H\+A\+L\+\_\+\+Status\+Type\+Def($\ast$ \hyperlink{structSSD1306__device_aab0835f335c720de7250dcf5d9febdbf}{fill} )(\hyperlink{datatypes_8h_afa3700e77990b75b3fcc954070aa90fe}{S\+S\+D1306\+\_\+device\+\_\+t} $\ast$, \hyperlink{ssd1306_8h_a9fe094fa88309e2ded9db03d4c2771c6}{S\+S\+D1306\+\_\+colour\+\_\+t})
+\item 
+H\+A\+L\+\_\+\+Status\+Type\+Def($\ast$ \hyperlink{structSSD1306__device_a5300109afe5d1ee4ab135d660321aff4}{string} )(\hyperlink{datatypes_8h_afa3700e77990b75b3fcc954070aa90fe}{S\+S\+D1306\+\_\+device\+\_\+t} $\ast$, char $\ast$)
+\item 
+void($\ast$ \hyperlink{structSSD1306__device_a66f7cc22a12c45ede50843a63c0754c6}{cursor} )(\hyperlink{datatypes_8h_afa3700e77990b75b3fcc954070aa90fe}{S\+S\+D1306\+\_\+device\+\_\+t} $\ast$, uint8\+\_\+t, uint8\+\_\+t)
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{structSSD1306__device_ad0ea6059e91b7235d2de7c997f7d40e0}\label{structSSD1306__device_ad0ea6059e91b7235d2de7c997f7d40e0}} 
+\index{S\+S\+D1306\+\_\+device@{S\+S\+D1306\+\_\+device}!background@{background}}
+\index{background@{background}!S\+S\+D1306\+\_\+device@{S\+S\+D1306\+\_\+device}}
+\subsubsection{\texorpdfstring{background}{background}}
+{\footnotesize\ttfamily \hyperlink{ssd1306_8h_a9fe094fa88309e2ded9db03d4c2771c6}{S\+S\+D1306\+\_\+colour\+\_\+t} S\+S\+D1306\+\_\+device\+::background}
+
+\mbox{\Hypertarget{structSSD1306__device_a304b1ccffa54fe02798eac9e4d113186}\label{structSSD1306__device_a304b1ccffa54fe02798eac9e4d113186}} 
+\index{S\+S\+D1306\+\_\+device@{S\+S\+D1306\+\_\+device}!buffer@{buffer}}
+\index{buffer@{buffer}!S\+S\+D1306\+\_\+device@{S\+S\+D1306\+\_\+device}}
+\subsubsection{\texorpdfstring{buffer}{buffer}}
+{\footnotesize\ttfamily uint8\+\_\+t S\+S\+D1306\+\_\+device\+::buffer\mbox{[}\hyperlink{ssd1306_8h_ae5a2aa8865dd03537b97fd1c9037371b}{S\+S\+D1306\+\_\+\+W\+I\+D\+TH} $\ast$\hyperlink{ssd1306_8h_a4e9409448a0df95c1686670e09b457b7}{S\+S\+D1306\+\_\+\+H\+E\+I\+G\+HT}/8\mbox{]}}
+
+\mbox{\Hypertarget{structSSD1306__device_aa52b8e4126ce8b86afca1428e410340a}\label{structSSD1306__device_aa52b8e4126ce8b86afca1428e410340a}} 
+\index{S\+S\+D1306\+\_\+device@{S\+S\+D1306\+\_\+device}!clear@{clear}}
+\index{clear@{clear}!S\+S\+D1306\+\_\+device@{S\+S\+D1306\+\_\+device}}
+\subsubsection{\texorpdfstring{clear}{clear}}
+{\footnotesize\ttfamily H\+A\+L\+\_\+\+Status\+Type\+Def($\ast$ S\+S\+D1306\+\_\+device\+::clear) (\hyperlink{datatypes_8h_afa3700e77990b75b3fcc954070aa90fe}{S\+S\+D1306\+\_\+device\+\_\+t} $\ast$)}
+
+\mbox{\Hypertarget{structSSD1306__device_a00e78b709181f9a47c7be081e90eda4f}\label{structSSD1306__device_a00e78b709181f9a47c7be081e90eda4f}} 
+\index{S\+S\+D1306\+\_\+device@{S\+S\+D1306\+\_\+device}!command@{command}}
+\index{command@{command}!S\+S\+D1306\+\_\+device@{S\+S\+D1306\+\_\+device}}
+\subsubsection{\texorpdfstring{command}{command}}
+{\footnotesize\ttfamily H\+A\+L\+\_\+\+Status\+Type\+Def($\ast$ S\+S\+D1306\+\_\+device\+::command) (\hyperlink{datatypes_8h_afa3700e77990b75b3fcc954070aa90fe}{S\+S\+D1306\+\_\+device\+\_\+t} $\ast$, uint8\+\_\+t)}
+
+\mbox{\Hypertarget{structSSD1306__device_a66f7cc22a12c45ede50843a63c0754c6}\label{structSSD1306__device_a66f7cc22a12c45ede50843a63c0754c6}} 
+\index{S\+S\+D1306\+\_\+device@{S\+S\+D1306\+\_\+device}!cursor@{cursor}}
+\index{cursor@{cursor}!S\+S\+D1306\+\_\+device@{S\+S\+D1306\+\_\+device}}
+\subsubsection{\texorpdfstring{cursor}{cursor}}
+{\footnotesize\ttfamily void($\ast$ S\+S\+D1306\+\_\+device\+::cursor) (\hyperlink{datatypes_8h_afa3700e77990b75b3fcc954070aa90fe}{S\+S\+D1306\+\_\+device\+\_\+t} $\ast$, uint8\+\_\+t, uint8\+\_\+t)}
+
+\mbox{\Hypertarget{structSSD1306__device_aab0835f335c720de7250dcf5d9febdbf}\label{structSSD1306__device_aab0835f335c720de7250dcf5d9febdbf}} 
+\index{S\+S\+D1306\+\_\+device@{S\+S\+D1306\+\_\+device}!fill@{fill}}
+\index{fill@{fill}!S\+S\+D1306\+\_\+device@{S\+S\+D1306\+\_\+device}}
+\subsubsection{\texorpdfstring{fill}{fill}}
+{\footnotesize\ttfamily H\+A\+L\+\_\+\+Status\+Type\+Def($\ast$ S\+S\+D1306\+\_\+device\+::fill) (\hyperlink{datatypes_8h_afa3700e77990b75b3fcc954070aa90fe}{S\+S\+D1306\+\_\+device\+\_\+t} $\ast$, \hyperlink{ssd1306_8h_a9fe094fa88309e2ded9db03d4c2771c6}{S\+S\+D1306\+\_\+colour\+\_\+t})}
+
+\mbox{\Hypertarget{structSSD1306__device_a53ca4e27cd6fd4ccaf0a723fe1a9d26b}\label{structSSD1306__device_a53ca4e27cd6fd4ccaf0a723fe1a9d26b}} 
+\index{S\+S\+D1306\+\_\+device@{S\+S\+D1306\+\_\+device}!font@{font}}
+\index{font@{font}!S\+S\+D1306\+\_\+device@{S\+S\+D1306\+\_\+device}}
+\subsubsection{\texorpdfstring{font}{font}}
+{\footnotesize\ttfamily \hyperlink{structFontDef}{Font\+Def}$\ast$ S\+S\+D1306\+\_\+device\+::font}
+
+\mbox{\Hypertarget{structSSD1306__device_a3c404b5a19887501f3624644bf710ecb}\label{structSSD1306__device_a3c404b5a19887501f3624644bf710ecb}} 
+\index{S\+S\+D1306\+\_\+device@{S\+S\+D1306\+\_\+device}!height@{height}}
+\index{height@{height}!S\+S\+D1306\+\_\+device@{S\+S\+D1306\+\_\+device}}
+\subsubsection{\texorpdfstring{height}{height}}
+{\footnotesize\ttfamily uint8\+\_\+t S\+S\+D1306\+\_\+device\+::height}
+
+\mbox{\Hypertarget{structSSD1306__device_a92bef284d4e15d42355b42d04ebd0a82}\label{structSSD1306__device_a92bef284d4e15d42355b42d04ebd0a82}} 
+\index{S\+S\+D1306\+\_\+device@{S\+S\+D1306\+\_\+device}!initialized@{initialized}}
+\index{initialized@{initialized}!S\+S\+D1306\+\_\+device@{S\+S\+D1306\+\_\+device}}
+\subsubsection{\texorpdfstring{initialized}{initialized}}
+{\footnotesize\ttfamily uint8\+\_\+t S\+S\+D1306\+\_\+device\+::initialized}
+
+\mbox{\Hypertarget{structSSD1306__device_a5434577f7055efeb61703b7b4a7896a7}\label{structSSD1306__device_a5434577f7055efeb61703b7b4a7896a7}} 
+\index{S\+S\+D1306\+\_\+device@{S\+S\+D1306\+\_\+device}!port@{port}}
+\index{port@{port}!S\+S\+D1306\+\_\+device@{S\+S\+D1306\+\_\+device}}
+\subsubsection{\texorpdfstring{port}{port}}
+{\footnotesize\ttfamily I2\+C\+\_\+\+Handle\+Type\+Def$\ast$ S\+S\+D1306\+\_\+device\+::port}
+
+\mbox{\Hypertarget{structSSD1306__device_a5300109afe5d1ee4ab135d660321aff4}\label{structSSD1306__device_a5300109afe5d1ee4ab135d660321aff4}} 
+\index{S\+S\+D1306\+\_\+device@{S\+S\+D1306\+\_\+device}!string@{string}}
+\index{string@{string}!S\+S\+D1306\+\_\+device@{S\+S\+D1306\+\_\+device}}
+\subsubsection{\texorpdfstring{string}{string}}
+{\footnotesize\ttfamily H\+A\+L\+\_\+\+Status\+Type\+Def($\ast$ S\+S\+D1306\+\_\+device\+::string) (\hyperlink{datatypes_8h_afa3700e77990b75b3fcc954070aa90fe}{S\+S\+D1306\+\_\+device\+\_\+t} $\ast$, char $\ast$)}
+
+\mbox{\Hypertarget{structSSD1306__device_a99b7467f867b5422a1c732c4aa66d755}\label{structSSD1306__device_a99b7467f867b5422a1c732c4aa66d755}} 
+\index{S\+S\+D1306\+\_\+device@{S\+S\+D1306\+\_\+device}!update@{update}}
+\index{update@{update}!S\+S\+D1306\+\_\+device@{S\+S\+D1306\+\_\+device}}
+\subsubsection{\texorpdfstring{update}{update}}
+{\footnotesize\ttfamily H\+A\+L\+\_\+\+Status\+Type\+Def($\ast$ S\+S\+D1306\+\_\+device\+::update) (\hyperlink{datatypes_8h_afa3700e77990b75b3fcc954070aa90fe}{S\+S\+D1306\+\_\+device\+\_\+t} $\ast$)}
+
+\mbox{\Hypertarget{structSSD1306__device_a122564b6310f5013331ef05c1cc2a9d1}\label{structSSD1306__device_a122564b6310f5013331ef05c1cc2a9d1}} 
+\index{S\+S\+D1306\+\_\+device@{S\+S\+D1306\+\_\+device}!width@{width}}
+\index{width@{width}!S\+S\+D1306\+\_\+device@{S\+S\+D1306\+\_\+device}}
+\subsubsection{\texorpdfstring{width}{width}}
+{\footnotesize\ttfamily uint8\+\_\+t S\+S\+D1306\+\_\+device\+::width}
+
+\mbox{\Hypertarget{structSSD1306__device_abbf07db1d4d5f7c247b2a3ef539adbcf}\label{structSSD1306__device_abbf07db1d4d5f7c247b2a3ef539adbcf}} 
+\index{S\+S\+D1306\+\_\+device@{S\+S\+D1306\+\_\+device}!x@{x}}
+\index{x@{x}!S\+S\+D1306\+\_\+device@{S\+S\+D1306\+\_\+device}}
+\subsubsection{\texorpdfstring{x}{x}}
+{\footnotesize\ttfamily uint16\+\_\+t S\+S\+D1306\+\_\+device\+::x}
+
+\mbox{\Hypertarget{structSSD1306__device_a696e3c8355fd319fc25fa4f711e496df}\label{structSSD1306__device_a696e3c8355fd319fc25fa4f711e496df}} 
+\index{S\+S\+D1306\+\_\+device@{S\+S\+D1306\+\_\+device}!y@{y}}
+\index{y@{y}!S\+S\+D1306\+\_\+device@{S\+S\+D1306\+\_\+device}}
+\subsubsection{\texorpdfstring{y}{y}}
+{\footnotesize\ttfamily uint16\+\_\+t S\+S\+D1306\+\_\+device\+::y}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/alxhoff/git/\+Embedded/stm32-\/mech-\/keyboard/\+Nucelo\+Keyboard\+Controller/\+Inc/\hyperlink{ssd1306_8h}{ssd1306.\+h}\end{DoxyCompactItemize}
