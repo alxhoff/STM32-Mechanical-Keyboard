@@ -1,8 +1,8 @@
-/*
- * scan.c
- *
- *  Created on: Aug 15, 2017
- *      Author: alxhoff
+/**
+ * @file scan.c
+ * @author Alex Hoffman
+ * @date 11 October 2017
+ * @brief Functions used to scan the keyboard for input
  */
 
 #include "keymap.h"
@@ -13,12 +13,8 @@
 #include "types.h"
 #include "shift.h"
 
-/*
- * functions to be called to initiate a scan of the keyboard matrix
- */
 int8_t scan_key_matrix(keyboard_device_t* keyboard_dev, keyboard_HID_data_t* HID_reports, shift_array_t* shift_array)
 {
-
 	//reset keypress buffer
 	HID_reports->key_buf.index = 0;
 
@@ -152,7 +148,7 @@ char* scan_get_single_key_char( keyboard_device_t* keyboard_dev, keymap_list_t* 
 }
 
 char* scan_get_input_seq( keyboard_device_t* keyboard_dev,
-		keymap_list_t* list, char exit_char )
+		keymap_list_t* layer_list, char exit_char )
 {
 	static char* input_str = "";
 	static char input_char = 0;
@@ -171,7 +167,7 @@ char* scan_get_input_seq( keyboard_device_t* keyboard_dev,
 	TickType_t button_last_time[KEYBOARD_ROWS][KEYBOARD_COLS] = {0};
 	TickType_t debounce_delay = pdMS_TO_TICKS(DEBOUNCE_DELAY);
 
-	keymap_layer_t* current_layer = layer_table_get_current_layer(list);
+	keymap_layer_t* current_layer = layer_table_get_current_layer(layer_list);
 
 	while(!finished){
 		for(uint8_t row=0;row<KEYBOARD_ROWS;row++){
