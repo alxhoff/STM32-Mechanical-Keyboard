@@ -30,7 +30,6 @@ uint8_t frameBuffer2[3*60];
 #define Green(c) ((uint8_t)((c >> 8) & 0xFF))
 #define Blue(c) ((uint8_t)(c & 0xFF))
 
-
 uint32_t Wheel(uint8_t WheelPos) {
   WheelPos = 255 - WheelPos;
   if(WheelPos < 85) {
@@ -44,29 +43,34 @@ uint32_t Wheel(uint8_t WheelPos) {
   return newColor(WheelPos * 3, 255 - WheelPos * 3, 0);
 }
 
-
-
-
-void visRainbow(uint8_t *frameBuffer, uint32_t frameBufferSize, uint32_t effectLength)
+void LED_rainbow(key_devices_t* keyboard_devs)
 {
 	uint32_t i;
 	static uint8_t x = 0;
+	static uint32_t timestamp;
 
 	x += 1;
 
 	if(x == 256*5)
 		x = 0;
-
-	for( i = 0; i < frameBufferSize / 3; i++)
+	if(ws2812b.transferComplete)
 	{
-		uint32_t color = Wheel(((i * 256) / effectLength + x) & 0xFF);
+		if(HAL_GetTick() - timestamp > keyboard_devs->LEDs->rainbow_delay)
+		{
+			timestamp = HAL_GetTick();
+			for(uint8_t j = 0; j < KEYBOARD_ROWS; j++){
+				for( i = 0; i < sizeof(keyboard_devs->LEDs->buffers[0]) / 3; i++)
+				{
+					uint32_t color = Wheel(((i * 256) / keyboard_devs->LEDs->rainbow_delay + x) & 0xFF);
 
-		frameBuffer[i*3 + 0] = color & 0xFF;
-		frameBuffer[i*3 + 1] = color >> 8 & 0xFF;
-		frameBuffer[i*3 + 2] = color >> 16 & 0xFF;
+					keyboard_devs->LEDs->buffers[j][i*3 + 0] = color & 0xFF;
+					keyboard_devs->LEDs->buffers[j][i*3 + 1] = color >> 8 & 0xFF;
+					keyboard_devs->LEDs->buffers[j][i*3 + 2] = color >> 16 & 0xFF;
+				}
+			}
+		}
 	}
 }
-
 
 void visDots(uint8_t *frameBuffer, uint32_t frameBufferSize, uint32_t random, uint32_t fadeOutFactor)
 {
@@ -74,14 +78,12 @@ void visDots(uint8_t *frameBuffer, uint32_t frameBufferSize, uint32_t random, ui
 
 	for( i = 0; i < frameBufferSize / 3; i++)
 	{
-
 		if(rand() % random == 0)
 		{
 			frameBuffer[i*3 + 0] = 255;
 			frameBuffer[i*3 + 1] = 255;
 			frameBuffer[i*3 + 2] = 255;
 		}
-
 
 		if(frameBuffer[i*3 + 0] > fadeOutFactor)
 			frameBuffer[i*3 + 0] -= frameBuffer[i*3 + 0]/fadeOutFactor;
@@ -100,20 +102,17 @@ void visDots(uint8_t *frameBuffer, uint32_t frameBufferSize, uint32_t random, ui
 	}
 }
 
-
-// Animate effects
-void visHandle2()
-{
-
-}
-
-
 void visInit(key_devices_t* keyboard_devs)
 {
-
 	uint8_t i;
 
 	keyboard_devs->LEDs = (LED_array_t*) calloc(1, sizeof(LED_array_t));
+
+	keyboard_devs->LEDs->rainbow_delay = 30;
+	keyboard_devs->LEDs->rainbow_effect_length = 15;
+
+	//set effect
+	keyboard_devs->LEDs->update = &LED_rainbow;
 
 	// HELP
 	// Fill the 8 structures to simulate overhead of 8 paralel strips
@@ -126,42 +125,20 @@ void visInit(key_devices_t* keyboard_devs)
 	// If you need more parallel LED strips, increase the WS2812_BUFFER_COUNT value
 	for( i = 0; i < WS2812_BUFFER_COUNT; i++)
 	{
-
-		// Set output channel/pin, GPIO_PIN_0 = 0, for GPIO_PIN_5 = 5 - this has to correspond to WS2812B_PINS
 		ws2812b.item[i].channel = i;
 
 		ws2812b.item[i].frameBufferPointer = keyboard_devs->LEDs->buffers[i];
 		ws2812b.item[i].frameBufferSize = sizeof(keyboard_devs->LEDs->buffers[i]);
 	}
 
-
 	ws2812b_init();
 }
 
-
 void visHandle(key_devices_t* keyboard_devs)
 {
-	static uint32_t timestamp;
-
-	if(ws2812b.transferComplete)
-	{
-		// Update your framebuffer here or swap buffers
-
-		if(HAL_GetTick() - timestamp > 30)
-		{
-			timestamp = HAL_GetTick();
-
-			// Animate next frame, each effect into each output RGB framebuffer
-			visRainbow(keyboard_devs->LEDs->buffers[0], sizeof(frameBuffer), 15);
-			visRainbow(keyboard_devs->LEDs->buffers[1], sizeof(frameBuffer), 15);
-			visRainbow(keyboard_devs->LEDs->buffers[2], sizeof(frameBuffer), 15);
-			visRainbow(keyboard_devs->LEDs->buffers[3], sizeof(frameBuffer), 15);
-
-		}
-		// Signal that buffer is changed and transfer new data
-		ws2812b.startTransfer = 1;
-		ws2812b_handle();
-	}
+	keyboard_devs->LEDs->update(keyboard_devs);
+	ws2812b.startTransfer = 1;
+	ws2812b_handle();
 }
 
 
