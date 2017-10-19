@@ -323,9 +323,6 @@ void DMA_TransferHalfHandler(DMA_HandleTypeDef *DmaHandle)
 
 		ws2812b.repeatCounter++;
 	}
-
-
-
 }
 
 void DMA_TransferCompleteHandler(DMA_HandleTypeDef *DmaHandle)
@@ -382,8 +379,6 @@ void DMA_TransferCompleteHandler(DMA_HandleTypeDef *DmaHandle)
 		ws2812b.repeatCounter++;
 	}
 
-
-
 	#if defined(LED_ORANGE_PORT)
 		LED_ORANGE_PORT->BSRR = LED_ORANGE_PIN << 16;
 	#endif
@@ -421,25 +416,6 @@ void TIM1_UP_TIM10_IRQHandler(void)
 // TIM2 Interrupt Handler gets executed on every TIM2 Update if enabled
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-	/*
-	// I have to wait 50us to generate Treset signal
-	if (ws2812b.timerPeriodCounter < (uint8_t)WS2812_RESET_PERIOD)
-	{
-		// count the number of timer periods
-		ws2812b.timerPeriodCounter++;
-	}
-	else
-	{
-		ws2812b.timerPeriodCounter = 0;
-		__HAL_TIM_DISABLE(&TIM1_handle);
-		TIM1->CR1 = 0; // disable timer
-
-		// disable the TIM2 Update
-		__HAL_TIM_DISABLE_IT(&TIM1_handle, TIM_IT_UPDATE);
-		// set TransferComplete flag
-		ws2812b.transferComplete = 1;
-	}*/
-
     ws2812b.timerPeriodCounter = 0;
     TIM1->CR1 = 0; // disable timer
 
@@ -455,14 +431,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
     // set transfer_complete flag
     ws2812b.transferComplete = 1;
-
 }
-
-
 
 static void ws2812b_set_pixel(uint8_t row, uint16_t column, uint8_t red, uint8_t green, uint8_t blue)
 {
-
 	// Apply gamma
 	red = gammaTable[red];
 	green = gammaTable[green];
@@ -627,23 +599,16 @@ static void ws2812b_set_pixel(uint8_t row, uint16_t column, uint8_t red, uint8_t
 #endif
 }
 
-
 void ws2812b_init()
 {
 	ws2812b_gpio_init();
 
-	/*TIM2_init();
-	DMA_init();*/
-
-
 	DMA2_init();
 	TIM1_init();
-
 
 	// Need to start the first transfer
 	ws2812b.transferComplete = 1;
 }
-
 
 void ws2812b_handle()
 {
@@ -651,5 +616,4 @@ void ws2812b_handle()
 		ws2812b.startTransfer = 0;
 		WS2812_sendbuf();
 	}
-
 }

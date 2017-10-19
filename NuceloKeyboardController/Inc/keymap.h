@@ -10,9 +10,7 @@
 
 #include "datatypes.h"
 #include "HIDClassCommon.h"
-
-#define KEYBOARD_ROWS 4
-#define KEYBOARD_COLS 3
+#include "keyboard_config.h"
 
 #define KEYMAP( \
     K00, K01, K02, \

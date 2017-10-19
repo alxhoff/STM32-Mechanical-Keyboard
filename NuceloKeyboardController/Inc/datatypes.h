@@ -26,6 +26,7 @@ typedef struct mouse_device mouse_device_t;
 typedef struct mouse_HID_data mouse_HID_data_t;
 typedef struct SSD1306_device SSD1306_device_t;
 typedef struct screen screen_t;
+typedef struct LED_array LED_array_t;
 
 typedef struct key_devices key_devices_t;
 
@@ -43,7 +44,6 @@ struct key_devices{
 
 	//usb dev
 
-
 //	//mouse
 	mouse_device_t* mouse;
 	mouse_HID_data_t* mouse_HID;
@@ -56,6 +56,8 @@ struct key_devices{
 
 	//LCD contents
 	screen_t* screen;
+
+	LED_array_t* LEDs;
 
 	uint8_t initialized;
 };

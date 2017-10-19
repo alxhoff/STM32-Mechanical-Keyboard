@@ -13,10 +13,12 @@
 */
 
 #include <stdint.h>
+#include <stdlib.h>
 
 #include "stm32f4xx_hal.h"
+#include "datatypes.h"
 #include "ws2812b.h"
-#include <stdlib.h>
+#include "LEDs.h"
 
 // RGB Framebuffers
 uint8_t frameBuffer[3*60];
@@ -102,25 +104,16 @@ void visDots(uint8_t *frameBuffer, uint32_t frameBufferSize, uint32_t random, ui
 // Animate effects
 void visHandle2()
 {
-	static uint32_t timestamp;
 
-	if(HAL_GetTick() - timestamp > 10)
-	{
-		timestamp = HAL_GetTick();
-
-		// Animate next frame, each effect into each output RGB framebuffer
-		visRainbow(frameBuffer, sizeof(frameBuffer), 15);
-		visRainbow(frameBuffer2, sizeof(frameBuffer), 15);
-
-		//visDots(frameBuffer2, sizeof(frameBuffer2), 50, 40);
-	}
 }
 
 
-void visInit()
+void visInit(key_devices_t* keyboard_devs)
 {
 
 	uint8_t i;
+
+	keyboard_devs->LEDs = (LED_array_t*) calloc(1, sizeof(LED_array_t));
 
 	// HELP
 	// Fill the 8 structures to simulate overhead of 8 paralel strips
@@ -137,18 +130,8 @@ void visInit()
 		// Set output channel/pin, GPIO_PIN_0 = 0, for GPIO_PIN_5 = 5 - this has to correspond to WS2812B_PINS
 		ws2812b.item[i].channel = i;
 
-		// Every even output line has second frameBuffer2 with different effect
-		if(i % 2 == 0)
-		{
-			// Your RGB framebuffer
-			ws2812b.item[i].frameBufferPointer = frameBuffer;
-			// RAW size of framebuffer
-			ws2812b.item[i].frameBufferSize = sizeof(frameBuffer);
-		} else {
-			ws2812b.item[i].frameBufferPointer = frameBuffer2;
-			ws2812b.item[i].frameBufferSize = sizeof(frameBuffer2);
-		}
-
+		ws2812b.item[i].frameBufferPointer = keyboard_devs->LEDs->buffers[i];
+		ws2812b.item[i].frameBufferSize = sizeof(keyboard_devs->LEDs->buffers[i]);
 	}
 
 
@@ -156,14 +139,25 @@ void visInit()
 }
 
 
-void visHandle()
+void visHandle(key_devices_t* keyboard_devs)
 {
+	static uint32_t timestamp;
 
 	if(ws2812b.transferComplete)
 	{
 		// Update your framebuffer here or swap buffers
-		visHandle2();
 
+		if(HAL_GetTick() - timestamp > 30)
+		{
+			timestamp = HAL_GetTick();
+
+			// Animate next frame, each effect into each output RGB framebuffer
+			visRainbow(keyboard_devs->LEDs->buffers[0], sizeof(frameBuffer), 15);
+			visRainbow(keyboard_devs->LEDs->buffers[1], sizeof(frameBuffer), 15);
+			visRainbow(keyboard_devs->LEDs->buffers[2], sizeof(frameBuffer), 15);
+			visRainbow(keyboard_devs->LEDs->buffers[3], sizeof(frameBuffer), 15);
+
+		}
 		// Signal that buffer is changed and transfer new data
 		ws2812b.startTransfer = 1;
 		ws2812b_handle();

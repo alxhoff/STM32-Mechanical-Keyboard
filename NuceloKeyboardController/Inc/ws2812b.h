@@ -15,19 +15,21 @@
 #ifndef WS2812B_H_
 #define WS2812B_H_
 #include "ws2812b.h"
+#include "keyboard_config.h"
 
 // GPIO enable command
 #define WS2812B_GPIO_CLK_ENABLE() __HAL_RCC_GPIOE_CLK_ENABLE()
 // LED output port
 #define WS2812B_PORT GPIOE
 // LED output pins
-#define WS2812B_PINS (GPIO_PIN_0 | GPIO_PIN_2 | GPIO_PIN_4 | GPIO_PIN_5)
+//#define WS2812B_PINS (GPIO_PIN_0 | GPIO_PIN_2 | GPIO_PIN_4 | GPIO_PIN_5)
+#define WS2812B_PINS (GPIO_PIN_0 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_5)
 // How many LEDs are in the series - only valid multiples by two
-#define WS2812B_NUMBER_OF_LEDS 60
+#define WS2812B_NUMBER_OF_LEDS KEYBOARD_COLS
 
 // Number of paralel output LED strips. Each has its own buffer.
 // Supports up to 16 outputs on a single GPIO port
-#define WS2812_BUFFER_COUNT 4
+#define WS2812_BUFFER_COUNT KEYBOARD_ROWS
 
 // Choose one of the bit-juggling setpixel implementation
 // *******************************************************

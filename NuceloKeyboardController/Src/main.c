@@ -210,7 +210,7 @@ int main(void)
 
 	keyboard_devs->screen = screen_init(&CLI_test_init);
 
-	visInit();
+	visInit(keyboard_devs);
 	//AT24Cxx_init(&eeprom_devs, 7);
 
 //	volatile uint8_t data = 20;
@@ -639,7 +639,7 @@ void StartDefaultTask(void const * argument)
 	for (;;)
 	{
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);
-		visHandle();
+		visHandle(keyboard_devs);
 	}
   /* USER CODE END 5 */ 
 }
