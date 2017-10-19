@@ -20,10 +20,6 @@
 #include "ws2812b.h"
 #include "LEDs.h"
 
-// RGB Framebuffers
-uint8_t frameBuffer[3*60];
-uint8_t frameBuffer2[3*60];
-
 // Helper defines
 #define newColor(r, g, b) (((uint32_t)(r) << 16) | ((uint32_t)(g) <<  8) | (b))
 #define Red(c) ((uint8_t)((c >> 16) & 0xFF))
@@ -108,21 +104,13 @@ void visInit(key_devices_t* keyboard_devs)
 
 	keyboard_devs->LEDs = (LED_array_t*) calloc(1, sizeof(LED_array_t));
 
+	//set effect parameters
 	keyboard_devs->LEDs->rainbow_delay = 30;
 	keyboard_devs->LEDs->rainbow_effect_length = 15;
 
 	//set effect
 	keyboard_devs->LEDs->update = &LED_rainbow;
 
-	// HELP
-	// Fill the 8 structures to simulate overhead of 8 paralel strips
-	// The pins are not enabled in the WS2812B init. There are enabled only PC0-3
-	// The 16 channels are possible at 168MHz with 60% IRQ overhead during data TX
-
-	// 4 paralel output LED strips needs 18% overhead during TX
-	// 8 paralel output LED strips overhead is 8us of 30us period which is 28% - see the debug output PD15/13
-
-	// If you need more parallel LED strips, increase the WS2812_BUFFER_COUNT value
 	for( i = 0; i < WS2812_BUFFER_COUNT; i++)
 	{
 		ws2812b.item[i].channel = i;
@@ -140,5 +128,3 @@ void visHandle(key_devices_t* keyboard_devs)
 	ws2812b.startTransfer = 1;
 	ws2812b_handle();
 }
-
-

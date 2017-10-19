@@ -38,7 +38,6 @@
 //#define SETPIX_3	// Like SETPIX_1 but with unrolled loop
 #define SETPIX_4	// Fastest copying using bit-banding
 
-
 // DEBUG OUTPUT
 // ********************
 
@@ -49,7 +48,6 @@
 // Set during full transfer DMA and TIM1 IRQ
 #define LED_ORANGE_PORT GPIOD
 #define LED_ORANGE_PIN GPIO_PIN_13
-
 
 // Public functions
 // ****************
@@ -67,8 +65,6 @@ typedef struct WS2812_BufferItem {
 	uint32_t frameBufferCounter;
 	uint8_t channel;	// digital output pin/channel
 } WS2812_BufferItem;
-
-
 
 typedef struct WS2812_Struct
 {

@@ -78,7 +78,7 @@ TIM_OC_InitTypeDef tim2OC2;
 uint32_t tim_period;
 uint32_t timer_reset_pulse_period;
 
-static void TIM1_init(void)
+static void TIM_init(void)
 {
 	// TIM2 Periph clock enable
 	__HAL_RCC_TIM1_CLK_ENABLE();
@@ -119,27 +119,19 @@ static void TIM1_init(void)
 	tim2OC2.OCNIdleState = TIM_OCNIDLESTATE_RESET;
 	HAL_TIM_PWM_ConfigChannel(&TIM1_handle, &tim2OC2, TIM_CHANNEL_2);
 
-
 	HAL_TIM_Base_Start(&TIM1_handle);
 	HAL_TIM_PWM_Start(&TIM1_handle, TIM_CHANNEL_1);
 
 	__HAL_TIM_DISABLE(&TIM1_handle);
-
 }
-
-
 
 DMA_HandleTypeDef     dmaUpdate;
 DMA_HandleTypeDef     dmaCC1;
 DMA_HandleTypeDef     dmaCC2;
 #define BUFFER_SIZE		(sizeof(ws2812bDmaBitBuffer)/sizeof(uint16_t))
 
-uint32_t dummy;
-
-
-static void DMA2_init(void)
+static void DMA_init(void)
 {
-
 	// TIM2 Update event
 	__HAL_RCC_DMA2_CLK_ENABLE();
 
@@ -158,16 +150,10 @@ static void DMA2_init(void)
 	dmaUpdate.Init.PeriphBurst = DMA_PBURST_SINGLE;
 
 	dmaUpdate.Instance = DMA2_Stream5;
-	//dmaUpdate.XferCpltCallback  = TransferComplete;
-	//dmaUpdate.XferErrorCallback = TransferError;
 
 	HAL_DMA_DeInit(&dmaUpdate);
 	HAL_DMA_Init(&dmaUpdate);
-	//HAL_NVIC_SetPriority(DMA1_Channel2_IRQn, 0, 0);
-	//HAL_NVIC_EnableIRQ(DMA1_Channel2_IRQn);
 	HAL_DMA_Start(&dmaUpdate, (uint32_t)WS2812_IO_High, (uint32_t)(&WS2812B_PORT->BSRR), BUFFER_SIZE);
-	//HAL_DMA_Start(&dmaUpdate, (uint32_t)WS2812_IO_High, (uint32_t)&dummy, BUFFER_SIZE);
-
 
 	// TIM2 CC1 event
 	dmaCC1.Init.Direction = DMA_MEMORY_TO_PERIPH;
@@ -185,16 +171,9 @@ static void DMA2_init(void)
 	dmaCC1.Init.PeriphBurst = DMA_PBURST_SINGLE;
 
 	dmaCC1.Instance = DMA2_Stream1;
-	//dmaUpdate.XferCpltCallback  = TransferComplete;
-	//dmaUpdate.XferErrorCallback = TransferError;
-	//dmaUpdate.XferHalfCpltCallback = TransferHalf;
-	//HAL_NVIC_SetPriority(DMA1_Channel5_IRQn, 0, 0);
-	//HAL_NVIC_EnableIRQ(DMA1_Channel5_IRQn);
 	HAL_DMA_DeInit(&dmaCC1);
 	HAL_DMA_Init(&dmaCC1);
 	HAL_DMA_Start(&dmaCC1, (uint32_t)ws2812bDmaBitBuffer, (uint32_t)(&WS2812B_PORT->BSRR) + 2, BUFFER_SIZE); //BRR
-	//HAL_DMA_Start(&dmaCC1, (uint32_t)ws2812bDmaBitBuffer, (uint32_t)&dummy, BUFFER_SIZE); //BRR
-
 
 	// TIM2 CC2 event
 	dmaCC2.Init.Direction = DMA_MEMORY_TO_PERIPH;
@@ -222,20 +201,10 @@ static void DMA2_init(void)
 	HAL_NVIC_SetPriority(DMA2_Stream2_IRQn, 0, 0);
 	HAL_NVIC_EnableIRQ(DMA2_Stream2_IRQn);
 	HAL_DMA_Start_IT(&dmaCC2, (uint32_t)WS2812_IO_Low, (uint32_t)&WS2812B_PORT->BSRR, BUFFER_SIZE);
-	//HAL_DMA_Start_IT(&dmaCC2, (uint32_t)WS2812_IO_Low, (uint32_t)&dummy, BUFFER_SIZE);
-
-	//__HAL_LINKDMA(&Tim2Handle, hdma,  &dmaCC2);
-
 }
-
-
-
-
-
 
 static void loadNextFramebufferData(WS2812_BufferItem *bItem, uint32_t row)
 {
-
 	uint32_t r = bItem->frameBufferPointer[bItem->frameBufferCounter++];
 	uint32_t g = bItem->frameBufferPointer[bItem->frameBufferCounter++];
 	uint32_t b = bItem->frameBufferPointer[bItem->frameBufferCounter++];
@@ -245,7 +214,6 @@ static void loadNextFramebufferData(WS2812_BufferItem *bItem, uint32_t row)
 
 	ws2812b_set_pixel(bItem->channel, row, r, g, b);
 }
-
 
 // Transmit the framebuffer
 static void WS2812_sendbuf()
@@ -267,8 +235,6 @@ static void WS2812_sendbuf()
 	__HAL_DMA_CLEAR_FLAG(&dmaUpdate, DMA_FLAG_TCIF1_5 | DMA_FLAG_HTIF1_5 | DMA_FLAG_TEIF1_5);
 	__HAL_DMA_CLEAR_FLAG(&dmaCC1, DMA_FLAG_TCIF1_5 | DMA_FLAG_HTIF1_5 | DMA_FLAG_TEIF1_5);
 	__HAL_DMA_CLEAR_FLAG(&dmaCC2, DMA_FLAG_TCIF2_6 | DMA_FLAG_HTIF2_6 | DMA_FLAG_TEIF2_6);
-
-
 
 	// configure the number of bytes to be transferred by the DMA controller
 	dmaUpdate.Instance->NDTR = BUFFER_SIZE;
@@ -294,13 +260,11 @@ static void WS2812_sendbuf()
 	__HAL_TIM_ENABLE(&TIM1_handle);
 }
 
-
 void DMA_TransferError(DMA_HandleTypeDef *DmaHandle)
 {
 	volatile int i = 0;
 	i++;
 }
-
 
 void DMA_TransferHalfHandler(DMA_HandleTypeDef *DmaHandle)
 {
@@ -308,7 +272,6 @@ void DMA_TransferHalfHandler(DMA_HandleTypeDef *DmaHandle)
 	// Is this the last LED?
 	if(ws2812b.repeatCounter == WS2812B_NUMBER_OF_LEDS)
 	 {
-
 		// If this is the last pixel, set the next pixel value to zeros, because
 		// the DMA would not stop exactly at the last bit.
 		ws2812b_set_pixel(0, 0, 0, 0, 0);
@@ -382,7 +345,6 @@ void DMA_TransferCompleteHandler(DMA_HandleTypeDef *DmaHandle)
 	#if defined(LED_ORANGE_PORT)
 		LED_ORANGE_PORT->BSRR = LED_ORANGE_PIN << 16;
 	#endif
-
 }
 
 void DMA2_Stream2_IRQHandler(void)
@@ -440,12 +402,10 @@ static void ws2812b_set_pixel(uint8_t row, uint16_t column, uint8_t red, uint8_t
 	green = gammaTable[green];
 	blue = gammaTable[blue];
 
-
 	uint32_t calcCol = (column*24);
 	uint32_t invRed = ~red;
 	uint32_t invGreen = ~green;
 	uint32_t invBlue = ~blue;
-
 
 #if defined(SETPIX_1)
 	uint8_t i;
@@ -453,7 +413,6 @@ static void ws2812b_set_pixel(uint8_t row, uint16_t column, uint8_t red, uint8_t
 	for (i = 0; i < 8; i++)
 	{
 		// clear the data for pixel
-
 		ws2812bDmaBitBuffer[(calcCol+i)] &= calcClearRow;
 		ws2812bDmaBitBuffer[(calcCol+8+i)] &= calcClearRow;
 		ws2812bDmaBitBuffer[(calcCol+16+i)] &= calcClearRow;
@@ -468,7 +427,6 @@ static void ws2812b_set_pixel(uint8_t row, uint16_t column, uint8_t red, uint8_t
 	for (i = 0; i < 8; i++)
 	{
 		// Set or clear the data for the pixel
-
 		if(((invGreen)<<i) & 0x80)
 			varSetBit(ws2812bDmaBitBuffer[(calcCol+i)], row);
 		else
@@ -483,7 +441,6 @@ static void ws2812b_set_pixel(uint8_t row, uint16_t column, uint8_t red, uint8_t
 			varSetBit(ws2812bDmaBitBuffer[(calcCol+16+i)], row);
 		else
 			varResetBit(ws2812bDmaBitBuffer[(calcCol+16+i)], row);
-
 	}
 #elif defined(SETPIX_3)
 	ws2812bDmaBitBuffer[(calcCol+0)] |= (((((invGreen)<<0) & 0x80)>>7)<<row);
@@ -595,7 +552,6 @@ static void ws2812b_set_pixel(uint8_t row, uint16_t column, uint8_t red, uint8_t
 
 	*bitBand = (invBlue >> 0);
 	bitBand+=16;
-
 #endif
 }
 
@@ -603,8 +559,8 @@ void ws2812b_init()
 {
 	ws2812b_gpio_init();
 
-	DMA2_init();
-	TIM1_init();
+	DMA_init();
+	TIM_init();
 
 	// Need to start the first transfer
 	ws2812b.transferComplete = 1;
