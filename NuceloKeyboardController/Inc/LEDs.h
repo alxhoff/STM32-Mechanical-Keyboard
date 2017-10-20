@@ -18,6 +18,9 @@ typedef struct LED_array{
 	uint8_t rainbow_effect_length;
 	uint8_t rainbow_delay;
 
+	uint32_t dots_fade_out;
+	uint32_t dots_random;
+
 	void (*update)(key_devices_t*);
 } LED_array_t;
 

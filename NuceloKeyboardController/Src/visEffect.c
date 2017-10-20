@@ -68,6 +68,37 @@ void LED_rainbow(key_devices_t* keyboard_devs)
 	}
 }
 
+void LED_dots(key_devices_t* keyboard_devs)
+{
+	for(uint8_t j = 0; j < KEYBOARD_ROWS; j++){
+		for(uint8_t i = 0; i < sizeof(keyboard_devs->LEDs->buffers[0]) / 3; i++){
+			if(rand() % keyboard_devs->LEDs->dots_random == 0){
+				keyboard_devs->LEDs->buffers[j][i*3 + 0] = 255;
+				keyboard_devs->LEDs->buffers[j][i*3 + 1] = 255;
+				keyboard_devs->LEDs->buffers[j][i*3 + 2] = 255;
+			}
+
+			if(keyboard_devs->LEDs->buffers[j][i*3 + 0] > keyboard_devs->LEDs->dots_fade_out)
+				keyboard_devs->LEDs->buffers[j][i*3 + 0] -=
+						keyboard_devs->LEDs->buffers[j][i*3 + 0]/keyboard_devs->LEDs->dots_fade_out;
+			else
+				keyboard_devs->LEDs->buffers[j][i*3 + 0] = 0;
+
+			if(keyboard_devs->LEDs->buffers[j][i*3 + 1] > keyboard_devs->LEDs->dots_fade_out)
+				keyboard_devs->LEDs->buffers[j][i*3 + 1] -=
+						keyboard_devs->LEDs->buffers[j][i*3 + 1]/keyboard_devs->LEDs->dots_fade_out;
+			else
+				keyboard_devs->LEDs->buffers[j][i*3 + 1] = 0;
+
+			if(keyboard_devs->LEDs->buffers[j][i*3 + 2] > keyboard_devs->LEDs->dots_fade_out)
+				keyboard_devs->LEDs->buffers[j][i*3 + 2] -=
+						keyboard_devs->LEDs->buffers[j][i*3 + 2]/keyboard_devs->LEDs->dots_fade_out;
+			else
+				keyboard_devs->LEDs->buffers[j][i*3 + 2] = 0;
+		}
+	}
+}
+
 void visDots(uint8_t *frameBuffer, uint32_t frameBufferSize, uint32_t random, uint32_t fadeOutFactor)
 {
 	uint32_t i;
@@ -108,8 +139,12 @@ void visInit(key_devices_t* keyboard_devs)
 	keyboard_devs->LEDs->rainbow_delay = 30;
 	keyboard_devs->LEDs->rainbow_effect_length = 15;
 
+	keyboard_devs->LEDs->dots_fade_out= 40;
+	keyboard_devs->LEDs->dots_random = 50;
+
 	//set effect
-	keyboard_devs->LEDs->update = &LED_rainbow;
+//	keyboard_devs->LEDs->update = &LED_rainbow;
+	keyboard_devs->LEDs->update = &LED_dots;
 
 	for( i = 0; i < WS2812_BUFFER_COUNT; i++)
 	{
