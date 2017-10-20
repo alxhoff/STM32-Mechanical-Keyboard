@@ -276,8 +276,8 @@ void LED_solid(key_devices_t* keyboard_devs)
 	for(uint8_t j = 0; j < KEYBOARD_ROWS; j++){
 		for(uint8_t i = 0; i < sizeof(keyboard_devs->LEDs->buffers[0]) / 3; i++){
 			keyboard_devs->LEDs->buffers[j][i*3 + 0] = keyboard_devs->LEDs->solid_red;
-			keyboard_devs->LEDs->buffers[j][i*3 + 1] = keyboard_devs->LEDs->solid_green;
-			keyboard_devs->LEDs->buffers[j][i*3 + 2] = keyboard_devs->LEDs->solid_blue;
+			keyboard_devs->LEDs->buffers[j][i*3 + 1] = keyboard_devs->LEDs->solid_blue;
+			keyboard_devs->LEDs->buffers[j][i*3 + 2] = keyboard_devs->LEDs->solid_green;
 		}
 	}
 }
@@ -319,9 +319,12 @@ void visInit(key_devices_t* keyboard_devs)
 	keyboard_devs->LEDs->dots_fade_out= 40;
 	keyboard_devs->LEDs->dots_random = 50;
 
+	keyboard_devs->LEDs->solid_red = 0;
+	keyboard_devs->LEDs->solid_green = 0;
+	keyboard_devs->LEDs->solid_blue = 255;
+
 	//set effect
-	keyboard_devs->LEDs->update = &LED_solid_white;
-//	keyboard_devs->LEDs->update = &LED_dots;
+	keyboard_devs->LEDs->update = &LED_solid;
 
 	for( i = 0; i < WS2812_BUFFER_COUNT; i++)
 	{
