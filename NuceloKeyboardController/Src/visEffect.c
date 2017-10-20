@@ -294,6 +294,18 @@ void LED_solid_white(key_devices_t* keyboard_devs)
 
 }
 
+void LED_off(key_devices_t* keyboard_devs)
+{
+	for(uint8_t j = 0; j < KEYBOARD_ROWS; j++){
+		for(uint8_t i = 0; i < sizeof(keyboard_devs->LEDs->buffers[0]) / 3; i++){
+			keyboard_devs->LEDs->buffers[j][i*3 + 0] = 0;
+			keyboard_devs->LEDs->buffers[j][i*3 + 1] = 0;
+			keyboard_devs->LEDs->buffers[j][i*3 + 2] = 0;
+		}
+	}
+
+}
+
 void visInit(key_devices_t* keyboard_devs)
 {
 	uint8_t i;
