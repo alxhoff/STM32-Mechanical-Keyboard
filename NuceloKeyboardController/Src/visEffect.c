@@ -39,7 +39,178 @@ uint32_t Wheel(uint8_t WheelPos) {
   return newColor(WheelPos * 3, 255 - WheelPos * 3, 0);
 }
 
-void LED_rainbow(key_devices_t* keyboard_devs)
+uint32_t Wheel_snappy_fade_out(uint8_t WheelPos) {
+  WheelPos = WheelPos % 256;
+  if(WheelPos < 85) {
+    return newColor(WheelPos * 3, 0, WheelPos * 3);
+  }
+  if(WheelPos < 170) {
+    WheelPos += 85;
+    return newColor(0, WheelPos * 3, WheelPos * 3);
+  }
+  WheelPos += 170;
+  return newColor(WheelPos * 3, WheelPos * 3, 0);
+}
+
+uint32_t Wheel_snappy_fade_in(uint8_t WheelPos) {
+	  WheelPos = 255 - WheelPos;
+  if(WheelPos < 85) {
+    return newColor(WheelPos * 3, 0, WheelPos * 3);
+  }
+  if(WheelPos < 170) {
+    WheelPos += 85;
+    return newColor(0, WheelPos * 3, WheelPos * 3);
+  }
+  WheelPos += 170;
+  return newColor(WheelPos * 3, WheelPos * 3, 0);
+}
+
+void LED_snappy_rainbow_left_fade_out(key_devices_t* keyboard_devs)
+{
+	uint32_t i;
+	static uint8_t x = 0;
+	static uint32_t timestamp;
+
+	x += 1;
+
+	if(x == 0)
+		x = 256*5;
+	if(ws2812b.transferComplete)
+	{
+		if(HAL_GetTick() - timestamp > keyboard_devs->LEDs->rainbow_delay)
+		{
+			timestamp = HAL_GetTick();
+			for(uint8_t j = 0; j < KEYBOARD_ROWS; j++){
+				for( i = 0; i < sizeof(keyboard_devs->LEDs->buffers[0]) / 3; i++)
+				{
+					uint32_t color = Wheel_snappy_fade_out(((i * 256) / keyboard_devs->LEDs->rainbow_delay - x) & 0xFF);
+
+					keyboard_devs->LEDs->buffers[j][i*3 + 0] = color & 0xFF;
+					keyboard_devs->LEDs->buffers[j][i*3 + 1] = color >> 8 & 0xFF;
+					keyboard_devs->LEDs->buffers[j][i*3 + 2] = color >> 16 & 0xFF;
+				}
+			}
+		}
+	}
+}
+
+void LED_snappy_rainbow_left_fade_in(key_devices_t* keyboard_devs)
+{
+	uint32_t i;
+	static uint8_t x = 0;
+	static uint32_t timestamp;
+
+	x += 1;
+
+	if(x == 0)
+		x = 256*5;
+	if(ws2812b.transferComplete)
+	{
+		if(HAL_GetTick() - timestamp > keyboard_devs->LEDs->rainbow_delay)
+		{
+			timestamp = HAL_GetTick();
+			for(uint8_t j = 0; j < KEYBOARD_ROWS; j++){
+				for( i = 0; i < sizeof(keyboard_devs->LEDs->buffers[0]) / 3; i++)
+				{
+					uint32_t color = Wheel_snappy_fade_in(((i * 256) / keyboard_devs->LEDs->rainbow_delay - x) & 0xFF);
+
+					keyboard_devs->LEDs->buffers[j][i*3 + 0] = color & 0xFF;
+					keyboard_devs->LEDs->buffers[j][i*3 + 1] = color >> 8 & 0xFF;
+					keyboard_devs->LEDs->buffers[j][i*3 + 2] = color >> 16 & 0xFF;
+				}
+			}
+		}
+	}
+}
+
+void LED_snappy_rainbow_right_fade_in(key_devices_t* keyboard_devs)
+{
+	uint32_t i;
+	static uint8_t x = 0;
+	static uint32_t timestamp;
+
+	x += 1;
+
+	if(x == 256*5)
+		x = 0;
+	if(ws2812b.transferComplete)
+	{
+		if(HAL_GetTick() - timestamp > keyboard_devs->LEDs->rainbow_delay)
+		{
+			timestamp = HAL_GetTick();
+			for(uint8_t j = 0; j < KEYBOARD_ROWS; j++){
+				for( i = 0; i < sizeof(keyboard_devs->LEDs->buffers[0]) / 3; i++)
+				{
+					uint32_t color = Wheel_snappy_fade_out(((i * 256) / keyboard_devs->LEDs->rainbow_delay + x) & 0xFF);
+
+					keyboard_devs->LEDs->buffers[j][i*3 + 0] = color & 0xFF;
+					keyboard_devs->LEDs->buffers[j][i*3 + 1] = color >> 8 & 0xFF;
+					keyboard_devs->LEDs->buffers[j][i*3 + 2] = color >> 16 & 0xFF;
+				}
+			}
+		}
+	}
+}
+
+void LED_snappy_rainbow_right_fade_out(key_devices_t* keyboard_devs)
+{
+	uint32_t i;
+	static uint8_t x = 0;
+	static uint32_t timestamp;
+
+	x += 1;
+
+	if(x == 256*5)
+		x = 0;
+	if(ws2812b.transferComplete)
+	{
+		if(HAL_GetTick() - timestamp > keyboard_devs->LEDs->rainbow_delay)
+		{
+			timestamp = HAL_GetTick();
+			for(uint8_t j = 0; j < KEYBOARD_ROWS; j++){
+				for( i = 0; i < sizeof(keyboard_devs->LEDs->buffers[0]) / 3; i++)
+				{
+					uint32_t color = Wheel_snappy_fade_in(((i * 256) / keyboard_devs->LEDs->rainbow_delay + x) & 0xFF);
+
+					keyboard_devs->LEDs->buffers[j][i*3 + 0] = color & 0xFF;
+					keyboard_devs->LEDs->buffers[j][i*3 + 1] = color >> 8 & 0xFF;
+					keyboard_devs->LEDs->buffers[j][i*3 + 2] = color >> 16 & 0xFF;
+				}
+			}
+		}
+	}
+}
+
+void LED_rainbow_right(key_devices_t* keyboard_devs)
+{
+	uint32_t i;
+	static uint8_t x = 0;
+	static uint32_t timestamp;
+
+	x -= 1;
+
+	if(x == 0)
+		x = 256*5;
+	if(ws2812b.transferComplete)
+	{
+		if(HAL_GetTick() - timestamp > keyboard_devs->LEDs->rainbow_delay)
+		{
+			timestamp = HAL_GetTick();
+			for(uint8_t j = 0; j < KEYBOARD_ROWS; j++){
+				for( i = 0; i < sizeof(keyboard_devs->LEDs->buffers[0]) / 3; i++)
+				{
+					uint32_t color = Wheel(((i * 256) / keyboard_devs->LEDs->rainbow_delay + x) & 0xFF);
+
+					keyboard_devs->LEDs->buffers[j][i*3 + 0] = color & 0xFF;
+					keyboard_devs->LEDs->buffers[j][i*3 + 1] = color >> 8 & 0xFF;
+					keyboard_devs->LEDs->buffers[j][i*3 + 2] = color >> 16 & 0xFF;
+				}
+			}
+		}
+	}
+}
+
+void LED_rainbow_left(key_devices_t* keyboard_devs)
 {
 	uint32_t i;
 	static uint8_t x = 0;
@@ -67,6 +238,7 @@ void LED_rainbow(key_devices_t* keyboard_devs)
 		}
 	}
 }
+
 
 void LED_dots(key_devices_t* keyboard_devs)
 {
@@ -99,36 +271,6 @@ void LED_dots(key_devices_t* keyboard_devs)
 	}
 }
 
-void visDots(uint8_t *frameBuffer, uint32_t frameBufferSize, uint32_t random, uint32_t fadeOutFactor)
-{
-	uint32_t i;
-
-	for( i = 0; i < frameBufferSize / 3; i++)
-	{
-		if(rand() % random == 0)
-		{
-			frameBuffer[i*3 + 0] = 255;
-			frameBuffer[i*3 + 1] = 255;
-			frameBuffer[i*3 + 2] = 255;
-		}
-
-		if(frameBuffer[i*3 + 0] > fadeOutFactor)
-			frameBuffer[i*3 + 0] -= frameBuffer[i*3 + 0]/fadeOutFactor;
-		else
-			frameBuffer[i*3 + 0] = 0;
-
-		if(frameBuffer[i*3 + 1] > fadeOutFactor)
-			frameBuffer[i*3 + 1] -= frameBuffer[i*3 + 1]/fadeOutFactor;
-		else
-			frameBuffer[i*3 + 1] = 0;
-
-		if(frameBuffer[i*3 + 2] > fadeOutFactor)
-			frameBuffer[i*3 + 2] -= frameBuffer[i*3 + 2]/fadeOutFactor;
-		else
-			frameBuffer[i*3 + 2] = 0;
-	}
-}
-
 void visInit(key_devices_t* keyboard_devs)
 {
 	uint8_t i;
@@ -136,15 +278,15 @@ void visInit(key_devices_t* keyboard_devs)
 	keyboard_devs->LEDs = (LED_array_t*) calloc(1, sizeof(LED_array_t));
 
 	//set effect parameters
-	keyboard_devs->LEDs->rainbow_delay = 30;
+	keyboard_devs->LEDs->rainbow_delay = 15;
 	keyboard_devs->LEDs->rainbow_effect_length = 15;
 
 	keyboard_devs->LEDs->dots_fade_out= 40;
 	keyboard_devs->LEDs->dots_random = 50;
 
 	//set effect
-//	keyboard_devs->LEDs->update = &LED_rainbow;
-	keyboard_devs->LEDs->update = &LED_dots;
+	keyboard_devs->LEDs->update = &LED_snappy_rainbow_right_fade_out;
+//	keyboard_devs->LEDs->update = &LED_dots;
 
 	for( i = 0; i < WS2812_BUFFER_COUNT; i++)
 	{
