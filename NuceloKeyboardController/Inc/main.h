@@ -51,11 +51,7 @@
   /* Includes ------------------------------------------------------------------*/
 
 /* USER CODE BEGIN Includes */
-//#include "macro.h"
-//#include "mouse.h"
-//#include "keymap.h"
-//#include "keyboard.h"
-//#include "shift.h"
+
 /* USER CODE END Includes */
 
 /* Private define ------------------------------------------------------------*/

@@ -15,6 +15,7 @@
 #ifndef WS2812B_H_
 #define WS2812B_H_
 #include "ws2812b.h"
+#include "cmsis_os.h"
 #include "keyboard_config.h"
 
 // GPIO enable command
@@ -69,6 +70,7 @@ typedef struct WS2812_BufferItem {
 typedef struct WS2812_Struct
 {
 	WS2812_BufferItem item[WS2812_BUFFER_COUNT];
+	SemaphoreHandle_t transferSet;
 	uint8_t transferComplete;
 	uint8_t startTransfer;
 	uint32_t timerPeriodCounter;

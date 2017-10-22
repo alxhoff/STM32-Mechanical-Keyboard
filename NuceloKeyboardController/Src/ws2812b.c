@@ -218,8 +218,8 @@ static void loadNextFramebufferData(WS2812_BufferItem *bItem, uint32_t row)
 // Transmit the framebuffer
 static void WS2812_sendbuf()
 {
-	// transmission complete flag
-	ws2812b.transferComplete = 0;
+//	// transmission complete flag
+//	ws2812b.transferComplete = 0;
 
 	uint32_t i;
 
@@ -258,6 +258,9 @@ static void WS2812_sendbuf()
 
 	// start TIM2
 	__HAL_TIM_ENABLE(&TIM1_handle);
+
+	// transmission complete flag
+	ws2812b.transferComplete = 0;
 }
 
 void DMA_TransferError(DMA_HandleTypeDef *DmaHandle)
@@ -563,6 +566,7 @@ void ws2812b_init()
 	TIM_init();
 
 	// Need to start the first transfer
+	ws2812b.transferSet = xSemaphoreCreateBinary();
 	ws2812b.transferComplete = 1;
 }
 
@@ -571,5 +575,6 @@ void ws2812b_handle()
 	if(ws2812b.startTransfer) {
 		ws2812b.startTransfer = 0;
 		WS2812_sendbuf();
+		xSemaphoreGive(ws2812b.transferSet);
 	}
 }

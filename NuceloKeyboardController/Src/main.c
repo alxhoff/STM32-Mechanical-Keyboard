@@ -52,7 +52,6 @@
 #include "usb_device.h"
 
 /* USER CODE BEGIN Includes */
-//#include "visEffect.h"
 //#include "AT24Cxx_stm32_hal.h"
 //layers & init
 #include "keymap.h"
