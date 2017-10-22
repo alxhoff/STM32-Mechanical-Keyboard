@@ -453,6 +453,7 @@ void LED_count_row(key_devices_t* keyboard_devs)
 	}
 }
 
+//TODO fix reverse and add col directionality
 void LED_count_all(key_devices_t* keyboard_devs)
 {
 	static uint32_t timestamp;
@@ -558,45 +559,41 @@ void LED_matrix(key_devices_t* keyboard_devs)
 	if((HAL_GetTick() - timestamp > keyboard_devs->LEDs->matrix_delay)){
 		timestamp = HAL_GetTick();
 
-//		if( xSemaphoreTake(ws2812b.transferSet, (TickType_t) 10) == pdTRUE){
+		if( xSemaphoreTake(ws2812b.transferSet, (TickType_t) 10) == pdTRUE){
 			for(uint8_t j = KEYBOARD_ROWS -1; j > 0; j--){
-//				memcpy(keyboard_devs->LEDs->buffers[j], keyboard_devs->LEDs->buffers[j-1], sizeof(keyboard_devs->LEDs->buffers[0]));
-//				keyboard_devs->LEDs->buffers[j] = keyboard_devs->LEDs->buffers[j-1];
-//				keyboard_devs->LEDs->buffers[j] = keyboard_devs->LEDs->buffers[j-1];
-//				keyboard_devs->LEDs->buffers[j] = keyboard_devs->LEDs->buffers[j-1][i*3 + 2];
+				memcpy(keyboard_devs->LEDs->buffers[j], keyboard_devs->LEDs->buffers[j-1], sizeof(keyboard_devs->LEDs->buffers[0]));
 			}
-			for(uint8_t i = 0; i < 1; i++){ //sizeof(keyboard_devs->LEDs->buffers[0]) / 3; i++){
-				//shift rows down
+			for(uint8_t i = 0; i < sizeof(keyboard_devs->LEDs->buffers[0]) / 3; i++){
 
+				//create ghost of now second row in first row
+				if(KEYBOARD_ROWS >= 2){
+					//first row
+					keyboard_devs->LEDs->buffers[0][i*3 + 0] |=  (keyboard_devs->LEDs->buffers[1][i*3 + 0] >> keyboard_devs->LEDs->matrix_fade_amount);
+					keyboard_devs->LEDs->buffers[0][i*3 + 1] |=  (keyboard_devs->LEDs->buffers[1][i*3 + 1] >> keyboard_devs->LEDs->matrix_fade_amount);
+					keyboard_devs->LEDs->buffers[0][i*3 + 2] |=  (keyboard_devs->LEDs->buffers[1][i*3 + 2] >> keyboard_devs->LEDs->matrix_fade_amount);
+				}
+				//create ghost of now third row in first row
+//				if(KEYBOARD_ROWS >= 3){
+//					//first row
+//					keyboard_devs->LEDs->buffers[0][i*3 + 0] |=  (keyboard_devs->LEDs->buffers[2][i*3 + 0] >> (2 * keyboard_devs->LEDs->matrix_fade_amount));
+//					keyboard_devs->LEDs->buffers[0][i*3 + 1] |=  (keyboard_devs->LEDs->buffers[2][i*3 + 1] >> (2 * keyboard_devs->LEDs->matrix_fade_amount));
+//					keyboard_devs->LEDs->buffers[0][i*3 + 2] |=  (keyboard_devs->LEDs->buffers[2][i*3 + 2] >> (2 * keyboard_devs->LEDs->matrix_fade_amount));
+//				}
 
-	//			//create ghost of now second row in first row
-	//			if(KEYBOARD_ROWS >= 2){
-	//				//first row
-	//				keyboard_devs->LEDs->buffers[0][i*3 + 0] |=  (keyboard_devs->LEDs->buffers[1][i*3 + 0] >> keyboard_devs->LEDs->matrix_fade_amount);
-	//				keyboard_devs->LEDs->buffers[0][i*3 + 1] |=  (keyboard_devs->LEDs->buffers[1][i*3 + 1] >> keyboard_devs->LEDs->matrix_fade_amount);
-	//				keyboard_devs->LEDs->buffers[0][i*3 + 2] |=  (keyboard_devs->LEDs->buffers[1][i*3 + 2] >> keyboard_devs->LEDs->matrix_fade_amount);
-	//			}
-	//			//create ghost of now third row in first row
-	//			if(KEYBOARD_ROWS >= 3){
-	//				//first row
-	//				keyboard_devs->LEDs->buffers[0][i*3 + 0] |=  (keyboard_devs->LEDs->buffers[2][i*3 + 0] >> (2 * keyboard_devs->LEDs->matrix_fade_amount));
-	//				keyboard_devs->LEDs->buffers[0][i*3 + 1] |=  (keyboard_devs->LEDs->buffers[2][i*3 + 1] >> (2 * keyboard_devs->LEDs->matrix_fade_amount));
-	//				keyboard_devs->LEDs->buffers[0][i*3 + 2] |=  (keyboard_devs->LEDs->buffers[2][i*3 + 2] >> (2 * keyboard_devs->LEDs->matrix_fade_amount));
-	//			}
-
-				//set first row
-	//			if((rand() % 100) < keyboard_devs->LEDs->matrix_probability){
-	//				keyboard_devs->LEDs->buffers[0][i*3 + 0] = keyboard_devs->LEDs->matrix_red ;
-	//				keyboard_devs->LEDs->buffers[0][i*3 + 1] = keyboard_devs->LEDs->matrix_blue;
-	//				keyboard_devs->LEDs->buffers[0][i*3 + 2] = keyboard_devs->LEDs->matrix_green;
-	//			}else{
-	//				keyboard_devs->LEDs->buffers[0][i*3 + 0] = 0;
-	//				keyboard_devs->LEDs->buffers[0][i*3 + 1] = 0;
-	//				keyboard_devs->LEDs->buffers[0][i*3 + 2] = 0;
-	//			}
-
-
-
+//				set first row
+				if((rand() % 100) < keyboard_devs->LEDs->matrix_probability &&
+						!(keyboard_devs->LEDs->buffers[0][i*3 + 0] ||
+								keyboard_devs->LEDs->buffers[0][i*3 + 1] ||
+								keyboard_devs->LEDs->buffers[0][i*3 + 2])){
+					keyboard_devs->LEDs->buffers[0][i*3 + 0] = keyboard_devs->LEDs->matrix_red ;
+					keyboard_devs->LEDs->buffers[0][i*3 + 1] = keyboard_devs->LEDs->matrix_blue;
+					keyboard_devs->LEDs->buffers[0][i*3 + 2] = keyboard_devs->LEDs->matrix_green;
+				}else{
+					keyboard_devs->LEDs->buffers[0][i*3 + 0] = 0;
+					keyboard_devs->LEDs->buffers[0][i*3 + 1] = 0;
+					keyboard_devs->LEDs->buffers[0][i*3 + 2] = 0;
+				}
+			}
 		}
 	}
 }
@@ -631,137 +628,19 @@ void visInit(key_devices_t* keyboard_devs)
 	keyboard_devs->LEDs->count_row_number = 4;
 	keyboard_devs->LEDs->count_delay = 500;
 	keyboard_devs->LEDs->count_row_colour = 0xFFFFFF;
-	keyboard_devs->LEDs->count_row_direction = 0;
-	keyboard_devs->LEDs->count_col_direction = 0;
-
-
-////	//test
-////	for(int i = 0; i < KEYBOARD_COLS; i++){
-////		keyboard_devs->LEDs->buffers[0][i*3 + 0] = 0; //top
-////		keyboard_devs->LEDs->buffers[0][i*3 + 1] = 0;
-////		keyboard_devs->LEDs->buffers[0][i*3 + 2] = 0;
-////
-////		keyboard_devs->LEDs->buffers[1][i*3 + 0] = 0; //not there
-////		keyboard_devs->LEDs->buffers[1][i*3 + 1] = 0;
-////		keyboard_devs->LEDs->buffers[1][i*3 + 2] = 0;
-////
-////		keyboard_devs->LEDs->buffers[2][i*3 + 0] = 255; //2nd and 4th
-////		keyboard_devs->LEDs->buffers[2][i*3 + 1] = 0;
-////		keyboard_devs->LEDs->buffers[2][i*3 + 2] = 0;
-////
-////		keyboard_devs->LEDs->buffers[3][i*3 + 0] = 0; //third
-////		keyboard_devs->LEDs->buffers[3][i*3 + 1] = 0;
-////		keyboard_devs->LEDs->buffers[3][i*3 + 2] = 0;
-////	}
-//
-//	keyboard_devs->LEDs->buffers[2][0] = 255; //2nd and 4th
-//	keyboard_devs->LEDs->buffers[2][1] = 0;
-//	keyboard_devs->LEDs->buffers[2][2] = 0;
-//
-//	keyboard_devs->LEDs->buffers[2][4] = 0; //2nd and 4th
-//	keyboard_devs->LEDs->buffers[2][5] = 255;
-//	keyboard_devs->LEDs->buffers[2][6] = 0;
-//
-//	keyboard_devs->LEDs->buffers[2][7] = 0; //2nd and 4th
-//	keyboard_devs->LEDs->buffers[2][8] = 0;
-//	keyboard_devs->LEDs->buffers[2][9] = 255;
-//
-//	keyboard_devs->LEDs->buffers[2][10] = 255; //2nd and 4th
-//	keyboard_devs->LEDs->buffers[2][11] = 255;
-//	keyboard_devs->LEDs->buffers[2][12] = 255;
-	////
+	keyboard_devs->LEDs->count_row_direction = 1;
+	keyboard_devs->LEDs->count_col_direction = 1;
 
 	//set effect
-	keyboard_devs->LEDs->update = &LED_count_all;
+	keyboard_devs->LEDs->update = &LED_matrix;
 
 	for( i = 0; i < WS2812_BUFFER_COUNT; i++)
 	{
 		ws2812b.item[i].channel = i;
 
 		ws2812b.item[i].frameBufferPointer = keyboard_devs->LEDs->buffers[i];
-//		ws2812b.item[i].frameBufferPointer = test_buff1;
 		ws2812b.item[i].frameBufferSize = sizeof(keyboard_devs->LEDs->buffers[i]);
 	}
-
-//	ws2812b.item[0].channel = 0;
-//	ws2812b.item[0].frameBufferPointer = test_buff1;
-//	ws2812b.item[1].channel = 1;
-//	ws2812b.item[1].frameBufferPointer = test_buff2;
-//	ws2812b.item[2].channel = 2;
-//	ws2812b.item[2].frameBufferPointer = test_buff3;
-//	ws2812b.item[3].channel = 3;
-//	ws2812b.item[3].frameBufferPointer = test_buff4;
-
-//	test_buff1[0] = 255; //2nd and 4th
-//	test_buff1[1] = 0;
-//	test_buff1[2] = 0;
-//
-//	test_buff1[3] = 0; //2nd and 4th
-//	test_buff1[4] = 255;
-//	test_buff1[5] = 0;
-//
-//	test_buff1[6] = 0; //2nd and 4th
-//	test_buff1[7] = 0;
-//	test_buff1[8] = 255;
-//
-//	test_buff1[9] = 255; //2nd and 4th
-//	test_buff1[10] = 255;
-//	test_buff1[11] = 255;
-
-	////
-
-//	test_buff2[0] = 255; //2nd and 4th
-//	test_buff2[1] = 0;
-//	test_buff2[2] = 0;
-//
-//	test_buff2[3] = 0; //2nd and 4th
-//	test_buff2[4] = 255;
-//	test_buff2[5] = 0;
-//
-//	test_buff2[6] = 0; //2nd and 4th
-//	test_buff2[7] = 0;
-//	test_buff2[8] = 255;
-//
-//	test_buff2[9] = 255; //2nd and 4th
-//	test_buff2[10] = 255;
-//	test_buff2[11] = 255;
-
-	////
-
-//	test_buff3[0] = 255; //2nd and 4th
-//	test_buff3[1] = 255;
-//	test_buff3[2] = 255;
-//
-//	test_buff3[3] = 255; //2nd and 4th
-//	test_buff3[4] = 255;
-//	test_buff3[5] = 255;
-//
-//	test_buff3[6] = 255; //2nd and 4th
-//	test_buff3[7] = 255;
-//	test_buff3[8] = 255;
-//
-//	test_buff3[9] = 255; //2nd and 4th
-//	test_buff3[10] = 255;
-//	test_buff3[11] = 255;
-//
-//	////
-//
-//	test_buff4[0] = 255; //2nd and 4th
-//	test_buff4[1] = 0;
-//	test_buff4[2] = 0;
-//
-//	test_buff4[3] = 0; //2nd and 4th
-//	test_buff4[4] = 255;
-//	test_buff4[5] = 0;
-//
-//	test_buff4[6] = 0; //2nd and 4th
-//	test_buff4[7] = 0;
-//	test_buff4[8] = 255;
-//
-//	test_buff4[9] = 255; //2nd and 4th
-//	test_buff4[10] = 0;
-//	test_buff4[11] = 255;
-
 
 	ws2812b_init();
 }
