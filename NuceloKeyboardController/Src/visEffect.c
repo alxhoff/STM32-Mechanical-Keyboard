@@ -271,7 +271,7 @@ void LED_dots(key_devices_t* keyboard_devs)
 	}
 }
 
-void LED_RGB_dots(key_devices_t* keyboard_devs)
+void LED_RGB_dots_fade(key_devices_t* keyboard_devs)
 {
 	for(uint8_t j = 0; j < KEYBOARD_ROWS; j++){
 		for(uint8_t i = 0; i < sizeof(keyboard_devs->LEDs->buffers[0]) / 3; i++){
@@ -300,6 +300,39 @@ void LED_RGB_dots(key_devices_t* keyboard_devs)
 						keyboard_devs->LEDs->buffers[j][i*3 + 2]/keyboard_devs->LEDs->dots_fade_out;
 			else
 				keyboard_devs->LEDs->buffers[j][i*3 + 2] = 0;
+		}
+	}
+}
+
+void LED_RGB_dots_solid(key_devices_t* keyboard_devs)
+{
+	for(uint8_t j = 0; j < KEYBOARD_ROWS; j++){
+		for(uint8_t i = 0; i < sizeof(keyboard_devs->LEDs->buffers[0]) / 3; i++){
+			if(rand() % keyboard_devs->LEDs->dots_random == 0){
+				uint32_t color = Wheel((rand() % 255));
+
+				keyboard_devs->LEDs->buffers[j][i*3 + 0] = color & 0xFF;
+				keyboard_devs->LEDs->buffers[j][i*3 + 1] = color >> 8 & 0xFF;
+				keyboard_devs->LEDs->buffers[j][i*3 + 2] = color >> 16 & 0xFF;
+			}
+
+//			if(keyboard_devs->LEDs->buffers[j][i*3 + 0] > keyboard_devs->LEDs->dots_fade_out)
+//				keyboard_devs->LEDs->buffers[j][i*3 + 0] -=
+//						keyboard_devs->LEDs->buffers[j][i*3 + 0]/keyboard_devs->LEDs->dots_fade_out;
+//			else
+//				keyboard_devs->LEDs->buffers[j][i*3 + 0] = 0;
+//
+//			if(keyboard_devs->LEDs->buffers[j][i*3 + 1] > keyboard_devs->LEDs->dots_fade_out)
+//				keyboard_devs->LEDs->buffers[j][i*3 + 1] -=
+//						keyboard_devs->LEDs->buffers[j][i*3 + 1]/keyboard_devs->LEDs->dots_fade_out;
+//			else
+//				keyboard_devs->LEDs->buffers[j][i*3 + 1] = 0;
+//
+//			if(keyboard_devs->LEDs->buffers[j][i*3 + 2] > keyboard_devs->LEDs->dots_fade_out)
+//				keyboard_devs->LEDs->buffers[j][i*3 + 2] -=
+//						keyboard_devs->LEDs->buffers[j][i*3 + 2]/keyboard_devs->LEDs->dots_fade_out;
+//			else
+//				keyboard_devs->LEDs->buffers[j][i*3 + 2] = 0;
 		}
 	}
 }
@@ -406,7 +439,7 @@ void visInit(key_devices_t* keyboard_devs)
 	keyboard_devs->LEDs->matrix_blue = 0;
 
 	//set effect
-	keyboard_devs->LEDs->update = &LED_RGB_dots;
+	keyboard_devs->LEDs->update = &LED_RGB_dots_solid;
 
 	for( i = 0; i < WS2812_BUFFER_COUNT; i++)
 	{
