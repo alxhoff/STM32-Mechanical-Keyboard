@@ -23,7 +23,7 @@
 // LED output port
 #define WS2812B_PORT GPIOE
 // LED output pins
-#define WS2812B_PINS (GPIO_PIN_0 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4)
+#define WS2812B_PINS (GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3)
 // How many LEDs are in the series - only valid multiples by two
 #define WS2812B_NUMBER_OF_LEDS KEYBOARD_COLS
 
@@ -77,6 +77,13 @@ typedef struct WS2812_Struct
 } WS2812_Struct;
 
 WS2812_Struct ws2812b;
+
+//TEST
+extern uint8_t test_buff1[4*3];
+extern uint8_t test_buff2[4*3];
+extern uint8_t test_buff3[4*3];
+extern uint8_t test_buff4[4*3];
+////
 
 // Bit band stuff
 #define RAM_BASE 0x20000000

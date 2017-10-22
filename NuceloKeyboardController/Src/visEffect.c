@@ -407,13 +407,13 @@ void LED_count_row(key_devices_t* keyboard_devs)
 		timestamp = HAL_GetTick();
 
 		keyboard_devs->LEDs->buffers[keyboard_devs->LEDs->count_row_number]
-				 [keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] * 3 + 0] =
+				 [keyboard_devs->LEDs->count_col_indexs[keyboard_devs->LEDs->count_row_number] * 3 + 0] =
 						 keyboard_devs->LEDs->count_row_colour & 0xFF;
 		keyboard_devs->LEDs->buffers[keyboard_devs->LEDs->count_row_number]
-				 [keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] * 3 + 1] =
+				 [keyboard_devs->LEDs->count_col_indexs[keyboard_devs->LEDs->count_row_number] * 3 + 1] =
 						 keyboard_devs->LEDs->count_row_colour >> 8 & 0xFF;
 		keyboard_devs->LEDs->buffers[keyboard_devs->LEDs->count_row_number]
-				 [keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] * 3 + 2] =
+				 [keyboard_devs->LEDs->count_col_indexs[keyboard_devs->LEDs->count_row_number] * 3 + 2] =
 						 keyboard_devs->LEDs->count_row_colour >> 16 & 0xFF;
 
 
@@ -421,36 +421,124 @@ void LED_count_row(key_devices_t* keyboard_devs)
 
 
 		if(keyboard_devs->LEDs->count_row_direction){
-			if(keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] > 0)
+			if(keyboard_devs->LEDs->count_col_indexs[keyboard_devs->LEDs->count_row_number] > 0)
 				memset(
 					&keyboard_devs->LEDs->buffers[keyboard_devs->LEDs->count_row_number]
-					  [(keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] - 1) * 3]
+					  [(keyboard_devs->LEDs->count_col_indexs[keyboard_devs->LEDs->count_row_number] - 1) * 3]
 													   , 0x00
 													   , sizeof(uint8_t) * 3);
 
-			if(keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] == KEYBOARD_COLS)
-				keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] = 0;
+			if(keyboard_devs->LEDs->count_col_indexs[keyboard_devs->LEDs->count_row_number] == KEYBOARD_COLS)
+				keyboard_devs->LEDs->count_col_indexs[keyboard_devs->LEDs->count_row_number] = 0;
 			else
-				keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number]++;
+				keyboard_devs->LEDs->count_col_indexs[keyboard_devs->LEDs->count_row_number]++;
 		}else{
-			if(keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] == KEYBOARD_COLS)
+			if(keyboard_devs->LEDs->count_col_indexs[keyboard_devs->LEDs->count_row_number] == KEYBOARD_COLS)
 				memset(
 					&keyboard_devs->LEDs->buffers[keyboard_devs->LEDs->count_row_number][0]
 													   , 0x00
 													   , sizeof(uint8_t) * 3);
-			else if(keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] < KEYBOARD_COLS)
+			else if(keyboard_devs->LEDs->count_col_indexs[keyboard_devs->LEDs->count_row_number] < KEYBOARD_COLS)
 				memset(
 					&keyboard_devs->LEDs->buffers[keyboard_devs->LEDs->count_row_number]
-					  [(keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] + 1) * 3]
+					  [(keyboard_devs->LEDs->count_col_indexs[keyboard_devs->LEDs->count_row_number] + 1) * 3]
 													   , 0x00
 													   , sizeof(uint8_t) * 3);
 
-			if(keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] == 0)
-				keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] = KEYBOARD_COLS;
+			if(keyboard_devs->LEDs->count_col_indexs[keyboard_devs->LEDs->count_row_number] == 0)
+				keyboard_devs->LEDs->count_col_indexs[keyboard_devs->LEDs->count_row_number] = KEYBOARD_COLS;
 			else
-				keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number]--;
+				keyboard_devs->LEDs->count_col_indexs[keyboard_devs->LEDs->count_row_number]--;
 		}
 	}
+}
+
+void LED_count_all(key_devices_t* keyboard_devs)
+{
+	static uint32_t timestamp;
+
+	if(HAL_GetTick() - timestamp > keyboard_devs->LEDs->count_delay){
+		timestamp = HAL_GetTick();
+
+		//SET THE NEW POSITION
+		keyboard_devs->LEDs->buffers[keyboard_devs->LEDs->count_row_index]
+				 [keyboard_devs->LEDs->count_col_indexs[keyboard_devs->LEDs->count_row_index] * 3 + 0] =
+						 keyboard_devs->LEDs->count_row_colour & 0xFF;
+		keyboard_devs->LEDs->buffers[keyboard_devs->LEDs->count_row_index]
+				 [keyboard_devs->LEDs->count_col_indexs[keyboard_devs->LEDs->count_row_index] * 3 + 1] =
+						 keyboard_devs->LEDs->count_row_colour >> 8 & 0xFF;
+		keyboard_devs->LEDs->buffers[keyboard_devs->LEDs->count_row_index]
+				 [keyboard_devs->LEDs->count_col_indexs[keyboard_devs->LEDs->count_row_index] * 3 + 2] =
+						 keyboard_devs->LEDs->count_row_colour >> 16 & 0xFF;
+
+		//IF FORWARDS
+		if(keyboard_devs->LEDs->count_row_direction){
+			//IF NOT THE FIRST LED IN A ROW
+			if(keyboard_devs->LEDs->count_col_indexs[keyboard_devs->LEDs->count_row_index] > 0)
+				memset(
+					&keyboard_devs->LEDs->buffers[keyboard_devs->LEDs->count_row_index]
+					  [(keyboard_devs->LEDs->count_col_indexs[keyboard_devs->LEDs->count_row_index] - 1) * 3]
+													   , 0x00
+													   , sizeof(uint8_t) * 3);
+			//ELSE FIRST LED IN A ROW
+			else{
+				//IF FIRST ROW ON KEYBOARD
+				if(keyboard_devs->LEDs->count_row_index == 0)
+					memset(
+						&keyboard_devs->LEDs->buffers[KEYBOARD_ROWS - 1][(KEYBOARD_COLS - 1) * 3]
+														   , 0x00
+														   , sizeof(uint8_t) * 3);
+				else
+					memset(
+						&keyboard_devs->LEDs->buffers[keyboard_devs->LEDs->count_row_index - 1]
+						  [(KEYBOARD_COLS - 1) * 3]
+														   , 0x00
+														   , sizeof(uint8_t) * 3);
+			}
+
+			if(keyboard_devs->LEDs->count_col_indexs[keyboard_devs->LEDs->count_row_index] == KEYBOARD_COLS - 1){
+				keyboard_devs->LEDs->count_col_indexs[keyboard_devs->LEDs->count_row_index] = 0;
+
+				goto handle_row;
+			}
+			else
+				keyboard_devs->LEDs->count_col_indexs[keyboard_devs->LEDs->count_row_index]++;
+
+		}else{
+			if(keyboard_devs->LEDs->count_col_indexs[keyboard_devs->LEDs->count_row_index] == KEYBOARD_COLS - 1)
+				memset(
+					&keyboard_devs->LEDs->buffers[keyboard_devs->LEDs->count_row_index][0]
+													   , 0x00
+													   , sizeof(uint8_t) * 3);
+			else if(keyboard_devs->LEDs->count_col_indexs[keyboard_devs->LEDs->count_row_index] < KEYBOARD_COLS - 1)
+				memset(
+					&keyboard_devs->LEDs->buffers[keyboard_devs->LEDs->count_row_index]
+					  [(keyboard_devs->LEDs->count_col_indexs[keyboard_devs->LEDs->count_row_index] + 1) * 3]
+													   , 0x00
+													   , sizeof(uint8_t) * 3);
+
+			if(keyboard_devs->LEDs->count_col_indexs[keyboard_devs->LEDs->count_row_index] == 0){
+				keyboard_devs->LEDs->count_col_indexs[keyboard_devs->LEDs->count_row_index] = KEYBOARD_COLS - 1;
+
+				goto handle_row;
+			}
+			else
+				keyboard_devs->LEDs->count_col_indexs[keyboard_devs->LEDs->count_row_index]--;
+		}
+	}
+	return;
+	handle_row:
+		if(keyboard_devs->LEDs->count_col_direction){
+			if(keyboard_devs->LEDs->count_row_index == (KEYBOARD_ROWS - 1))
+				keyboard_devs->LEDs->count_row_index = 0;
+			else
+				keyboard_devs->LEDs->count_row_index++;
+		}else{
+			if(keyboard_devs->LEDs->count_row_index == 0)
+				keyboard_devs->LEDs->count_row_index = KEYBOARD_ROWS - 1;
+			else
+				keyboard_devs->LEDs->count_row_index--;
+		}
 }
 
 void LED_matrix(key_devices_t* keyboard_devs)
@@ -530,10 +618,11 @@ void visInit(key_devices_t* keyboard_devs)
 	keyboard_devs->LEDs->set_row_number = 0;
 	keyboard_devs->LEDs->set_row_colour = 0xFFFFFF;
 
-	keyboard_devs->LEDs->count_row_number = 0;
+	keyboard_devs->LEDs->count_row_number = 4;
 	keyboard_devs->LEDs->count_delay = 500;
 	keyboard_devs->LEDs->count_row_colour = 0xFFFFFF;
-	keyboard_devs->LEDs->count_row_direction = 0;
+	keyboard_devs->LEDs->count_row_direction = 1;
+	keyboard_devs->LEDs->count_col_direction = 1;
 
 ////	//test
 ////	for(int i = 0; i < KEYBOARD_COLS; i++){
@@ -572,15 +661,96 @@ void visInit(key_devices_t* keyboard_devs)
 	////
 
 	//set effect
-	keyboard_devs->LEDs->update = &LED_count_row;
+	keyboard_devs->LEDs->update = &LED_count_all;
 
 	for( i = 0; i < WS2812_BUFFER_COUNT; i++)
 	{
 		ws2812b.item[i].channel = i;
 
 		ws2812b.item[i].frameBufferPointer = keyboard_devs->LEDs->buffers[i];
+//		ws2812b.item[i].frameBufferPointer = test_buff1;
 		ws2812b.item[i].frameBufferSize = sizeof(keyboard_devs->LEDs->buffers[i]);
 	}
+
+//	ws2812b.item[0].channel = 0;
+//	ws2812b.item[0].frameBufferPointer = test_buff1;
+//	ws2812b.item[1].channel = 1;
+//	ws2812b.item[1].frameBufferPointer = test_buff2;
+//	ws2812b.item[2].channel = 2;
+//	ws2812b.item[2].frameBufferPointer = test_buff3;
+//	ws2812b.item[3].channel = 3;
+//	ws2812b.item[3].frameBufferPointer = test_buff4;
+
+//	test_buff1[0] = 255; //2nd and 4th
+//	test_buff1[1] = 0;
+//	test_buff1[2] = 0;
+//
+//	test_buff1[3] = 0; //2nd and 4th
+//	test_buff1[4] = 255;
+//	test_buff1[5] = 0;
+//
+//	test_buff1[6] = 0; //2nd and 4th
+//	test_buff1[7] = 0;
+//	test_buff1[8] = 255;
+//
+//	test_buff1[9] = 255; //2nd and 4th
+//	test_buff1[10] = 255;
+//	test_buff1[11] = 255;
+
+	////
+
+//	test_buff2[0] = 255; //2nd and 4th
+//	test_buff2[1] = 0;
+//	test_buff2[2] = 0;
+//
+//	test_buff2[3] = 0; //2nd and 4th
+//	test_buff2[4] = 255;
+//	test_buff2[5] = 0;
+//
+//	test_buff2[6] = 0; //2nd and 4th
+//	test_buff2[7] = 0;
+//	test_buff2[8] = 255;
+//
+//	test_buff2[9] = 255; //2nd and 4th
+//	test_buff2[10] = 255;
+//	test_buff2[11] = 255;
+
+	////
+
+//	test_buff3[0] = 255; //2nd and 4th
+//	test_buff3[1] = 255;
+//	test_buff3[2] = 255;
+//
+//	test_buff3[3] = 255; //2nd and 4th
+//	test_buff3[4] = 255;
+//	test_buff3[5] = 255;
+//
+//	test_buff3[6] = 255; //2nd and 4th
+//	test_buff3[7] = 255;
+//	test_buff3[8] = 255;
+//
+//	test_buff3[9] = 255; //2nd and 4th
+//	test_buff3[10] = 255;
+//	test_buff3[11] = 255;
+//
+//	////
+//
+//	test_buff4[0] = 255; //2nd and 4th
+//	test_buff4[1] = 0;
+//	test_buff4[2] = 0;
+//
+//	test_buff4[3] = 0; //2nd and 4th
+//	test_buff4[4] = 255;
+//	test_buff4[5] = 0;
+//
+//	test_buff4[6] = 0; //2nd and 4th
+//	test_buff4[7] = 0;
+//	test_buff4[8] = 255;
+//
+//	test_buff4[9] = 255; //2nd and 4th
+//	test_buff4[10] = 0;
+//	test_buff4[11] = 255;
+
 
 	ws2812b_init();
 }

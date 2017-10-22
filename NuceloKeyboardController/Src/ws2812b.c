@@ -21,6 +21,13 @@
 
 extern WS2812_Struct ws2812b;
 
+//TEST
+uint8_t test_buff1[4*3];
+uint8_t test_buff2[4*3];
+uint8_t test_buff3[4*3];
+uint8_t test_buff4[4*3];
+////
+
 // Define source arrays for my DMAs
 uint32_t WS2812_IO_High[] =  { WS2812B_PINS };
 uint32_t WS2812_IO_Low[] = {WS2812B_PINS << 16};

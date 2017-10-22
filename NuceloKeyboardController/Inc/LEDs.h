@@ -45,8 +45,10 @@ typedef struct LED_array{
 	uint32_t count_row_number;
 	uint32_t count_delay;
 	uint32_t count_row_colour;
-	uint8_t count_row_indexs[KEYBOARD_ROWS];
+	uint8_t count_col_indexs[KEYBOARD_ROWS];
+	uint8_t count_row_index;
 	uint8_t count_row_direction;
+	uint8_t count_col_direction;
 
 	void (*update)(key_devices_t*);
 } LED_array_t;
