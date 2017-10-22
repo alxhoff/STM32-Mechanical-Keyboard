@@ -41,13 +41,13 @@
 // DEBUG OUTPUT
 // ********************
 
-// Set during DMA Half and Full transfer IRQ to debug how long IRQ is processing
-#define LED_BLUE_PORT GPIOD
-#define LED_BLUE_PIN GPIO_PIN_15
-
-// Set during full transfer DMA and TIM1 IRQ
-#define LED_ORANGE_PORT GPIOD
-#define LED_ORANGE_PIN GPIO_PIN_13
+//// Set during DMA Half and Full transfer IRQ to debug how long IRQ is processing
+//#define LED_BLUE_PORT GPIOD
+//#define LED_BLUE_PIN GPIO_PIN_15
+//
+//// Set during full transfer DMA and TIM1 IRQ
+//#define LED_ORANGE_PORT GPIOD
+//#define LED_ORANGE_PIN GPIO_PIN_13
 
 // Public functions
 // ****************

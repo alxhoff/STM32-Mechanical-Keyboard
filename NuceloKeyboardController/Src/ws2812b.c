@@ -17,6 +17,8 @@
 #include "stm32f4xx_hal.h"
 #include "ws2812b.h"
 
+#define BUFFER_SIZE		(sizeof(ws2812bDmaBitBuffer)/sizeof(uint16_t))
+
 extern WS2812_Struct ws2812b;
 
 // Define source arrays for my DMAs
@@ -25,6 +27,19 @@ uint32_t WS2812_IO_Low[] = {WS2812B_PINS << 16};
 
 // WS2812 framebuffer - buffer for 2 LEDs - two times 24 bits
 uint16_t ws2812bDmaBitBuffer[24 * 2];
+
+DMA_HandleTypeDef     dmaUpdate;
+DMA_HandleTypeDef     dmaCC1;
+DMA_HandleTypeDef     dmaCC2;
+
+
+TIM_HandleTypeDef    TIM1_handle;
+TIM_OC_InitTypeDef tim2OC1;
+TIM_OC_InitTypeDef tim2OC2;
+
+uint32_t tim_period;
+uint32_t timer_reset_pulse_period;
+
 
 // Gamma correction table
 const uint8_t gammaTable[] = {
@@ -70,13 +85,6 @@ static void ws2812b_gpio_init(void)
 		HAL_GPIO_Init(LED_ORANGE_PORT, &GPIO_InitStruct);
 	#endif
 }
-
-TIM_HandleTypeDef    TIM1_handle;
-TIM_OC_InitTypeDef tim2OC1;
-TIM_OC_InitTypeDef tim2OC2;
-
-uint32_t tim_period;
-uint32_t timer_reset_pulse_period;
 
 static void TIM_init(void)
 {
@@ -124,11 +132,6 @@ static void TIM_init(void)
 
 	__HAL_TIM_DISABLE(&TIM1_handle);
 }
-
-DMA_HandleTypeDef     dmaUpdate;
-DMA_HandleTypeDef     dmaCC1;
-DMA_HandleTypeDef     dmaCC2;
-#define BUFFER_SIZE		(sizeof(ws2812bDmaBitBuffer)/sizeof(uint16_t))
 
 static void DMA_init(void)
 {

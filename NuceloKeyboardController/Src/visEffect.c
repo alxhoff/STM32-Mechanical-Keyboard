@@ -257,15 +257,19 @@ void LED_rainbow_down(key_devices_t* keyboard_devs)
 			{
 				timestamp = HAL_GetTick();
 				uint32_t color = Wheel((256 / keyboard_devs->LEDs->rainbow_delay + x) );
+				memcpy(keyboard_devs->LEDs->buffers[3], keyboard_devs->LEDs->buffers[2], sizeof(keyboard_devs->LEDs->buffers[0]));
+				memcpy(keyboard_devs->LEDs->buffers[2], keyboard_devs->LEDs->buffers[1], sizeof(keyboard_devs->LEDs->buffers[0]));
+				memcpy(keyboard_devs->LEDs->buffers[1], keyboard_devs->LEDs->buffers[0], sizeof(keyboard_devs->LEDs->buffers[0]));
 				for( i = 0; i < sizeof(keyboard_devs->LEDs->buffers[0]) / 3; i++)
 				{
 					keyboard_devs->LEDs->buffers[0][i*3 + 0] = color & 0xFF;
 					keyboard_devs->LEDs->buffers[0][i*3 + 1] = color >> 8 & 0xFF;
 					keyboard_devs->LEDs->buffers[0][i*3 + 2] = color >> 16 & 0xFF;
 				}
-				for(uint8_t j = KEYBOARD_ROWS -1; j > 0; j--){
-					memcpy(keyboard_devs->LEDs->buffers[j], keyboard_devs->LEDs->buffers[j-1], sizeof(keyboard_devs->LEDs->buffers[0]));
-				}
+//				for(uint8_t j = KEYBOARD_ROWS - 1; j > 0; j--){
+//					memcpy(keyboard_devs->LEDs->buffers[j], keyboard_devs->LEDs->buffers[j-1], sizeof(keyboard_devs->LEDs->buffers[0]));
+
+//				}
 			}
 		}
 	}
@@ -386,15 +390,56 @@ void LED_off(key_devices_t* keyboard_devs)
 
 void LED_null(key_devices_t* keyboard_devs){}
 
+void LED_set_row(key_devices_t* keyboard_devs)
+{
+	for(uint8_t i = 0; i < sizeof(keyboard_devs->LEDs->buffers[0]) / 3; i++){
+		keyboard_devs->LEDs->buffers[keyboard_devs->LEDs->set_row_number][i*3 + 0] = keyboard_devs->LEDs->set_row_colour & 0xFF;
+		keyboard_devs->LEDs->buffers[keyboard_devs->LEDs->set_row_number][i*3 + 1] = keyboard_devs->LEDs->set_row_colour >> 8 & 0xFF;
+		keyboard_devs->LEDs->buffers[keyboard_devs->LEDs->set_row_number][i*3 + 2] = keyboard_devs->LEDs->set_row_colour >> 16 & 0xFF;
+	}
+}
+
+void LED_count_row(key_devices_t* keyboard_devs)
+{
+	static uint32_t timestamp;
+
+	if(HAL_GetTick() - timestamp > keyboard_devs->LEDs->count_delay){
+		timestamp = HAL_GetTick();
+
+		keyboard_devs->LEDs->buffers[keyboard_devs->LEDs->count_row_number]
+				 [keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] * 3 + 0] =
+						 keyboard_devs->LEDs->count_row_colour & 0xFF;
+		keyboard_devs->LEDs->buffers[keyboard_devs->LEDs->count_row_number]
+				 [keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] * 3 + 1] =
+						 keyboard_devs->LEDs->count_row_colour >> 8 & 0xFF;
+		keyboard_devs->LEDs->buffers[keyboard_devs->LEDs->count_row_number]
+				 [keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] * 3 + 2] =
+						 keyboard_devs->LEDs->count_row_colour >> 16 & 0xFF;
+
+
+		//unset prev row
+		if(keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] > 0)
+			memset(
+					&keyboard_devs->LEDs->buffers[keyboard_devs->LEDs->count_row_number]
+												  [(keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] - 1) * 3]
+												   , 0x00
+												   , sizeof(uint8_t) * 3);
+
+		if(keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] == KEYBOARD_COLS)
+			keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] = 0;
+		else
+			keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number]++;
+	}
+}
+
 void LED_matrix(key_devices_t* keyboard_devs)
 {
 	static uint32_t timestamp;
 
-	if((HAL_GetTick() - timestamp > keyboard_devs->LEDs->matrix_delay) &&
-			(ws2812b.startTransfer == 0) && (ws2812b.transferComplete = 1)){
+	if((HAL_GetTick() - timestamp > keyboard_devs->LEDs->matrix_delay)){
 		timestamp = HAL_GetTick();
 
-		if( xSemaphoreTake(ws2812b.transferSet, (TickType_t) 10) == pdTRUE){
+//		if( xSemaphoreTake(ws2812b.transferSet, (TickType_t) 10) == pdTRUE){
 			for(uint8_t j = KEYBOARD_ROWS -1; j > 0; j--){
 //				memcpy(keyboard_devs->LEDs->buffers[j], keyboard_devs->LEDs->buffers[j-1], sizeof(keyboard_devs->LEDs->buffers[0]));
 //				keyboard_devs->LEDs->buffers[j] = keyboard_devs->LEDs->buffers[j-1];
@@ -432,7 +477,7 @@ void LED_matrix(key_devices_t* keyboard_devs)
 	//			}
 
 
-			}
+
 		}
 	}
 }
@@ -461,27 +506,52 @@ void visInit(key_devices_t* keyboard_devs)
 	keyboard_devs->LEDs->matrix_green = 180;
 	keyboard_devs->LEDs->matrix_blue = 0;
 
-	//test
-	for(int i = 0; i < KEYBOARD_COLS; i++){
-		keyboard_devs->LEDs->buffers[0][i*3 + 0] = 255;
-		keyboard_devs->LEDs->buffers[0][i*3 + 1] = 0;
-		keyboard_devs->LEDs->buffers[0][i*3 + 2] = 0;
+	keyboard_devs->LEDs->set_row_number = 0;
+	keyboard_devs->LEDs->set_row_colour = 0xFFFFFF;
 
-		keyboard_devs->LEDs->buffers[1][i*3 + 0] = 0;
-		keyboard_devs->LEDs->buffers[1][i*3 + 1] = 255;
-		keyboard_devs->LEDs->buffers[1][i*3 + 2] = 0;
+	keyboard_devs->LEDs->count_row_number = 0;
+	keyboard_devs->LEDs->count_delay = 500;
+	keyboard_devs->LEDs->count_row_colour = 0xFFFFFF;
+	keyboard_devs->LEDs->count_row_direction = 1;
 
-		keyboard_devs->LEDs->buffers[2][i*3 + 0] = 0;
-		keyboard_devs->LEDs->buffers[2][i*3 + 1] = 0;
-		keyboard_devs->LEDs->buffers[2][i*3 + 2] = 255;
-
-		keyboard_devs->LEDs->buffers[3][i*3 + 0] = 255;
-		keyboard_devs->LEDs->buffers[3][i*3 + 1] = 0;
-		keyboard_devs->LEDs->buffers[3][i*3 + 2] = 0;
-	}
+////	//test
+////	for(int i = 0; i < KEYBOARD_COLS; i++){
+////		keyboard_devs->LEDs->buffers[0][i*3 + 0] = 0; //top
+////		keyboard_devs->LEDs->buffers[0][i*3 + 1] = 0;
+////		keyboard_devs->LEDs->buffers[0][i*3 + 2] = 0;
+////
+////		keyboard_devs->LEDs->buffers[1][i*3 + 0] = 0; //not there
+////		keyboard_devs->LEDs->buffers[1][i*3 + 1] = 0;
+////		keyboard_devs->LEDs->buffers[1][i*3 + 2] = 0;
+////
+////		keyboard_devs->LEDs->buffers[2][i*3 + 0] = 255; //2nd and 4th
+////		keyboard_devs->LEDs->buffers[2][i*3 + 1] = 0;
+////		keyboard_devs->LEDs->buffers[2][i*3 + 2] = 0;
+////
+////		keyboard_devs->LEDs->buffers[3][i*3 + 0] = 0; //third
+////		keyboard_devs->LEDs->buffers[3][i*3 + 1] = 0;
+////		keyboard_devs->LEDs->buffers[3][i*3 + 2] = 0;
+////	}
+//
+//	keyboard_devs->LEDs->buffers[2][0] = 255; //2nd and 4th
+//	keyboard_devs->LEDs->buffers[2][1] = 0;
+//	keyboard_devs->LEDs->buffers[2][2] = 0;
+//
+//	keyboard_devs->LEDs->buffers[2][4] = 0; //2nd and 4th
+//	keyboard_devs->LEDs->buffers[2][5] = 255;
+//	keyboard_devs->LEDs->buffers[2][6] = 0;
+//
+//	keyboard_devs->LEDs->buffers[2][7] = 0; //2nd and 4th
+//	keyboard_devs->LEDs->buffers[2][8] = 0;
+//	keyboard_devs->LEDs->buffers[2][9] = 255;
+//
+//	keyboard_devs->LEDs->buffers[2][10] = 255; //2nd and 4th
+//	keyboard_devs->LEDs->buffers[2][11] = 255;
+//	keyboard_devs->LEDs->buffers[2][12] = 255;
+	////
 
 	//set effect
-	keyboard_devs->LEDs->update = &LED_dots;
+	keyboard_devs->LEDs->update = &LED_count_row;
 
 	for( i = 0; i < WS2812_BUFFER_COUNT; i++)
 	{
