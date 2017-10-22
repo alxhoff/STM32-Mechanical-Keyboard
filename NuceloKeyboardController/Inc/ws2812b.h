@@ -23,8 +23,7 @@
 // LED output port
 #define WS2812B_PORT GPIOE
 // LED output pins
-//#define WS2812B_PINS (GPIO_PIN_0 | GPIO_PIN_2 | GPIO_PIN_4 | GPIO_PIN_5)
-#define WS2812B_PINS (GPIO_PIN_0 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_5)
+#define WS2812B_PINS (GPIO_PIN_0 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4)
 // How many LEDs are in the series - only valid multiples by two
 #define WS2812B_NUMBER_OF_LEDS KEYBOARD_COLS
 

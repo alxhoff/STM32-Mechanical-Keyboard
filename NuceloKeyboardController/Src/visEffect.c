@@ -384,6 +384,8 @@ void LED_off(key_devices_t* keyboard_devs)
 	}
 }
 
+void LED_null(key_devices_t* keyboard_devs){}
+
 void LED_matrix(key_devices_t* keyboard_devs)
 {
 	static uint32_t timestamp;
@@ -472,10 +474,14 @@ void visInit(key_devices_t* keyboard_devs)
 		keyboard_devs->LEDs->buffers[2][i*3 + 0] = 0;
 		keyboard_devs->LEDs->buffers[2][i*3 + 1] = 0;
 		keyboard_devs->LEDs->buffers[2][i*3 + 2] = 255;
+
+		keyboard_devs->LEDs->buffers[3][i*3 + 0] = 255;
+		keyboard_devs->LEDs->buffers[3][i*3 + 1] = 0;
+		keyboard_devs->LEDs->buffers[3][i*3 + 2] = 0;
 	}
 
 	//set effect
-	keyboard_devs->LEDs->update = &LED_rainbow_down;
+	keyboard_devs->LEDs->update = &LED_dots;
 
 	for( i = 0; i < WS2812_BUFFER_COUNT; i++)
 	{
