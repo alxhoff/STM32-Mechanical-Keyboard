@@ -291,7 +291,6 @@ void LED_solid_white(key_devices_t* keyboard_devs)
 			keyboard_devs->LEDs->buffers[j][i*3 + 2] = 255;
 		}
 	}
-
 }
 
 void LED_off(key_devices_t* keyboard_devs)
@@ -303,7 +302,50 @@ void LED_off(key_devices_t* keyboard_devs)
 			keyboard_devs->LEDs->buffers[j][i*3 + 2] = 0;
 		}
 	}
+}
 
+void LED_matrix(key_devices_t* keyboard_devs)
+{
+	static uint32_t timestamp;
+
+	if(HAL_GetTick() - timestamp > keyboard_devs->LEDs->matrix_delay){
+		timestamp = HAL_GetTick();
+
+		for(uint8_t i = 0; i < sizeof(keyboard_devs->LEDs->buffers[0]) / 3; i++){
+			//shift rows down
+			for(uint8_t j = KEYBOARD_ROWS -1; j >= 1; j--){
+				keyboard_devs->LEDs->buffers[j][i*3 + 0] = keyboard_devs->LEDs->buffers[j-1][i*3 + 0];
+				keyboard_devs->LEDs->buffers[j][i*3 + 1] = keyboard_devs->LEDs->buffers[j-1][i*3 + 1];
+				keyboard_devs->LEDs->buffers[j][i*3 + 2] = keyboard_devs->LEDs->buffers[j-1][i*3 + 2];
+			}
+
+//			//create ghost of now second row in first row
+//			if(KEYBOARD_ROWS >= 2){
+//				//first row
+//				keyboard_devs->LEDs->buffers[0][i*3 + 0] |=  (keyboard_devs->LEDs->buffers[1][i*3 + 0] >> keyboard_devs->LEDs->matrix_fade_amount);
+//				keyboard_devs->LEDs->buffers[0][i*3 + 1] |=  (keyboard_devs->LEDs->buffers[1][i*3 + 1] >> keyboard_devs->LEDs->matrix_fade_amount);
+//				keyboard_devs->LEDs->buffers[0][i*3 + 2] |=  (keyboard_devs->LEDs->buffers[1][i*3 + 2] >> keyboard_devs->LEDs->matrix_fade_amount);
+//			}
+//			//create ghost of now third row in first row
+//			if(KEYBOARD_ROWS >= 3){
+//				//first row
+//				keyboard_devs->LEDs->buffers[0][i*3 + 0] |=  (keyboard_devs->LEDs->buffers[2][i*3 + 0] >> (2 * keyboard_devs->LEDs->matrix_fade_amount));
+//				keyboard_devs->LEDs->buffers[0][i*3 + 1] |=  (keyboard_devs->LEDs->buffers[2][i*3 + 1] >> (2 * keyboard_devs->LEDs->matrix_fade_amount));
+//				keyboard_devs->LEDs->buffers[0][i*3 + 2] |=  (keyboard_devs->LEDs->buffers[2][i*3 + 2] >> (2 * keyboard_devs->LEDs->matrix_fade_amount));
+//			}
+
+			//set first row
+			if((rand() % 100) < keyboard_devs->LEDs->matrix_probability){
+				keyboard_devs->LEDs->buffers[0][i*3 + 0] = keyboard_devs->LEDs->matrix_red ;
+				keyboard_devs->LEDs->buffers[0][i*3 + 1] = keyboard_devs->LEDs->matrix_blue;
+				keyboard_devs->LEDs->buffers[0][i*3 + 2] = keyboard_devs->LEDs->matrix_green;
+			}else{
+				keyboard_devs->LEDs->buffers[0][i*3 + 0] = 0;
+				keyboard_devs->LEDs->buffers[0][i*3 + 1] = 0;
+				keyboard_devs->LEDs->buffers[0][i*3 + 2] = 0;
+			}
+		}
+	}
 }
 
 void visInit(key_devices_t* keyboard_devs)
@@ -323,8 +365,15 @@ void visInit(key_devices_t* keyboard_devs)
 	keyboard_devs->LEDs->solid_green = 0;
 	keyboard_devs->LEDs->solid_blue = 255;
 
+	keyboard_devs->LEDs->matrix_delay = 1000;
+	keyboard_devs->LEDs->matrix_probability = 25;
+	keyboard_devs->LEDs->matrix_fade_amount = 2;
+	keyboard_devs->LEDs->matrix_red = 0;
+	keyboard_devs->LEDs->matrix_green = 180;
+	keyboard_devs->LEDs->matrix_blue = 0;
+
 	//set effect
-	keyboard_devs->LEDs->update = &LED_solid;
+	keyboard_devs->LEDs->update = &LED_matrix;
 
 	for( i = 0; i < WS2812_BUFFER_COUNT; i++)
 	{

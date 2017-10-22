@@ -25,6 +25,13 @@ typedef struct LED_array{
 	uint8_t solid_green;
 	uint8_t solid_blue;
 
+	uint8_t matrix_red;
+	uint8_t matrix_green;
+	uint8_t matrix_blue;
+	uint8_t matrix_probability; //out of 100
+	uint8_t matrix_fade_amount;
+	uint32_t matrix_delay;
+
 	void (*update)(key_devices_t*);
 } LED_array_t;
 
