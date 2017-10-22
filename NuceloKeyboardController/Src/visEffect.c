@@ -418,17 +418,38 @@ void LED_count_row(key_devices_t* keyboard_devs)
 
 
 		//unset prev row
-		if(keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] > 0)
-			memset(
-					&keyboard_devs->LEDs->buffers[keyboard_devs->LEDs->count_row_number]
-												  [(keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] - 1) * 3]
-												   , 0x00
-												   , sizeof(uint8_t) * 3);
 
-		if(keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] == KEYBOARD_COLS)
-			keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] = 0;
-		else
-			keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number]++;
+
+		if(keyboard_devs->LEDs->count_row_direction){
+			if(keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] > 0)
+				memset(
+					&keyboard_devs->LEDs->buffers[keyboard_devs->LEDs->count_row_number]
+					  [(keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] - 1) * 3]
+													   , 0x00
+													   , sizeof(uint8_t) * 3);
+
+			if(keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] == KEYBOARD_COLS)
+				keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] = 0;
+			else
+				keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number]++;
+		}else{
+			if(keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] == KEYBOARD_COLS)
+				memset(
+					&keyboard_devs->LEDs->buffers[keyboard_devs->LEDs->count_row_number][0]
+													   , 0x00
+													   , sizeof(uint8_t) * 3);
+			else if(keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] < KEYBOARD_COLS)
+				memset(
+					&keyboard_devs->LEDs->buffers[keyboard_devs->LEDs->count_row_number]
+					  [(keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] + 1) * 3]
+													   , 0x00
+													   , sizeof(uint8_t) * 3);
+
+			if(keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] == 0)
+				keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number] = KEYBOARD_COLS;
+			else
+				keyboard_devs->LEDs->count_row_indexs[keyboard_devs->LEDs->count_row_number]--;
+		}
 	}
 }
 
@@ -512,7 +533,7 @@ void visInit(key_devices_t* keyboard_devs)
 	keyboard_devs->LEDs->count_row_number = 0;
 	keyboard_devs->LEDs->count_delay = 500;
 	keyboard_devs->LEDs->count_row_colour = 0xFFFFFF;
-	keyboard_devs->LEDs->count_row_direction = 1;
+	keyboard_devs->LEDs->count_row_direction = 0;
 
 ////	//test
 ////	for(int i = 0; i < KEYBOARD_COLS; i++){
