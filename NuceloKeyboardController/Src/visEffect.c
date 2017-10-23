@@ -605,6 +605,8 @@ void visInit(key_devices_t* keyboard_devs)
 
 	keyboard_devs->LEDs = (LED_array_t*) calloc(1, sizeof(LED_array_t));
 
+	keyboard_devs->LEDs->inverted_rows = 1;
+
 	//set effect parameters
 	keyboard_devs->LEDs->rainbow_delay = 15;
 	keyboard_devs->LEDs->rainbow_effect_length = 15;
@@ -633,13 +635,16 @@ void visInit(key_devices_t* keyboard_devs)
 	keyboard_devs->LEDs->count_col_direction = 1;
 
 	//set effect
-	keyboard_devs->LEDs->update = &LED_matrix;
+	keyboard_devs->LEDs->update = &LED_count_all;
 
 	for( i = 0; i < WS2812_BUFFER_COUNT; i++)
 	{
 		ws2812b.item[i].channel = i;
-
-		ws2812b.item[i].frameBufferPointer = keyboard_devs->LEDs->buffers[i];
+		if(keyboard_devs->LEDs->inverted_rows){
+			ws2812b.item[i].frameBufferPointer = keyboard_devs->LEDs->buffers[WS2812_BUFFER_COUNT - i - 1];
+		}else{
+			ws2812b.item[i].frameBufferPointer = keyboard_devs->LEDs->buffers[i];
+		}
 		ws2812b.item[i].frameBufferSize = sizeof(keyboard_devs->LEDs->buffers[i]);
 	}
 

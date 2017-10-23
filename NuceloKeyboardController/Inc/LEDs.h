@@ -21,6 +21,8 @@
 typedef struct LED_array{
 	uint8_t buffers[KEYBOARD_ROWS][LED_ROW_BUFF_LENGTH*3];
 
+	uint8_t inverted_rows;
+
 	//EFFECT PARAMS
 	uint8_t rainbow_effect_length;
 	uint32_t rainbow_delay;
