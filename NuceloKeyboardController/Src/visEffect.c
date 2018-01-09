@@ -635,7 +635,7 @@ void visInit(key_devices_t* keyboard_devs)
 	keyboard_devs->LEDs->count_col_direction = 1;
 
 	//set effect
-	keyboard_devs->LEDs->update = &LED_count_all;
+	keyboard_devs->LEDs->update = &LED_rainbow_left;
 
 	for( i = 0; i < WS2812_BUFFER_COUNT; i++)
 	{

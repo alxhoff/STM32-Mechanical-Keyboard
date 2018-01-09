@@ -19,11 +19,11 @@
 #include "keyboard_config.h"
 
 // GPIO enable command
-#define WS2812B_GPIO_CLK_ENABLE() __HAL_RCC_GPIOE_CLK_ENABLE()
+#define WS2812B_GPIO_CLK_ENABLE() __HAL_RCC_GPIOF_CLK_ENABLE()
 // LED output port
-#define WS2812B_PORT GPIOE
+#define WS2812B_PORT GPIOF
 // LED output pins
-#define WS2812B_PINS (GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3)
+#define WS2812B_PINS (GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4)
 // How many LEDs are in the series - only valid multiples by two
 #define WS2812B_NUMBER_OF_LEDS KEYBOARD_COLS
 
