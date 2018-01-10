@@ -12,6 +12,32 @@
 #include "types.h"
 #include "ssd1306.h"
 
+void keyboard_init_status_LEDs(void){
+
+	  GPIO_InitTypeDef GPIO_InitStruct;
+
+	  /*Configure GPIO pin : PA15 */
+	  GPIO_InitStruct.Pin = CAPS_STATUS_PIN;
+	  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	  GPIO_InitStruct.Pull = GPIO_NOPULL;
+	  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	  HAL_GPIO_Init(CAPS_STATUS_PORT, &GPIO_InitStruct);
+
+	  /*Configure GPIO pin : PA15 */
+	  GPIO_InitStruct.Pin = CLI_STATUS_PIN;
+	  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	  GPIO_InitStruct.Pull = GPIO_NOPULL;
+	  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	  HAL_GPIO_Init(CLI_STATUS_PORT, &GPIO_InitStruct);
+
+	  /*Configure GPIO pin : PA15 */
+	  GPIO_InitStruct.Pin = FUNC_STATUS_PIN;
+	  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	  GPIO_InitStruct.Pull = GPIO_NOPULL;
+	  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	  HAL_GPIO_Init(FUNC_STATUS_PORT, &GPIO_InitStruct);
+}
+
 int8_t keyboard_init(key_devices_t* keyboard_devices,
 		GPIO_TypeDef* row_ports[KEYBOARD_ROWS], uint16_t row_pins[KEYBOARD_ROWS])
 {
@@ -61,6 +87,9 @@ int8_t keyboard_init(key_devices_t* keyboard_devices,
 	keyboard_devices->keyboard_HID->out_buf.med_buf.count = 0;
 
 	current_keyboard_state = typing;
+
+	//status LEDs
+	keyboard_init_status_LEDs();
 
 	return 0;
 }

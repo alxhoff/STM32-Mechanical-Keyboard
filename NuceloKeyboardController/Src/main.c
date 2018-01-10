@@ -161,23 +161,28 @@ int main(void)
 
 	keyboard_init(keyboard_devs, col_ports, col_pins);
 
+	HAL_GPIO_WritePin(CAPS_STATUS_PORT, CAPS_STATUS_PIN, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(CLI_STATUS_PORT, CLI_STATUS_PIN, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(FUNC_STATUS_PORT, FUNC_STATUS_PIN, GPIO_PIN_SET);
+
+
 	//TODO STANDARDIZE DEVICE INIT
 	shift_array_t shift_array =
 			{ .dev_count = 1,
-					.ser_in_pin = GPIO_PIN_1,	//GPIO PINS FOR SHIFT ARRAY
-					.ser_in_port = GPIOB,
+					.ser_in_pin = SHIFT_SER_IN_PIN,	//GPIO PINS FOR SHIFT ARRAY
+					.ser_in_port = SHIFT_SER_IN_PORT,
 					.ser_in_clock_init = 1,
-					.ser_clk_pin = GPIO_PIN_8,
-					.ser_clk_port = GPIOF,
+					.ser_clk_pin = SHIFT_SER_CLK_PIN,
+					.ser_clk_port = SHIFT_SER_CLK_PORT,
 					.ser_clk_clock_init = 1,
-					.latch_pin = GPIO_PIN_3,
-					.latch_port = GPIOE,
+					.latch_pin = SHIFT_LATCH_PIN,
+					.latch_port = SHIFT_LATCH_PORT,
 					.latch_clock_init = 1,
-					.out_ena_pin = 9,
-					.out_ena_port = GPIOF,
+					.out_ena_pin = SHIFT_OUT_ENA_PIN,
+					.out_ena_port = SHIFT_OUT_ENA_PORT,
 					.out_ena_clock_init = 1,
-					.sr_clr_pin = 7,
-					.sr_clr_port = GPIOF,
+					.sr_clr_pin = SHIFT_SER_CLR_PIN,
+					.sr_clr_port = SHIFT_SER_CLR_PORT,
 					.sr_clr_clock_init = 1,
 			};
 
@@ -589,26 +594,7 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PA15 */
-  GPIO_InitStruct.Pin = GPIO_PIN_9;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PA15 */
-  GPIO_InitStruct.Pin = GPIO_PIN_10;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PA15 */
-  GPIO_InitStruct.Pin = GPIO_PIN_11;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   //test
 
@@ -701,9 +687,6 @@ void KeyboardListenCallback(void const * argument)
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);
 
 		HAL_GPIO_WritePin(GPIOF, GPIO_PIN_9, GPIO_PIN_SET);
-		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_9, GPIO_PIN_SET);
-		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_10, GPIO_PIN_SET);
-		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_11, GPIO_PIN_SET);
 
 		if (scan_key_matrix(keyboard_devs->keyboard,
 				keyboard_devs->keyboard_HID, keyboard_devs->shift_array) == 0)
