@@ -23,35 +23,35 @@ void SN54HC595_init()
 	/*Configure serial in */
 	GPIO_InitStruct.Pin = SER_IN_PIN;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 	HAL_GPIO_Init(SER_IN_PORT, &GPIO_InitStruct);
 
 	/*Configure serial clock */
 	GPIO_InitStruct.Pin = SER_CLK_PIN;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 	HAL_GPIO_Init(SER_CLK_PORT, &GPIO_InitStruct);
 
 	/*Configure latch pin */
 	GPIO_InitStruct.Pin = LATCH_PIN;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 	HAL_GPIO_Init(LATCH_PORT, &GPIO_InitStruct);
 
 	/*Configure output enable */
 	GPIO_InitStruct.Pin = OUT_ENA_PIN;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 	HAL_GPIO_Init(OUT_ENA_PORT, &GPIO_InitStruct);
 
 	/*Configure serial clear */
 	GPIO_InitStruct.Pin = SR_CLR_PIN;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 	HAL_GPIO_Init(SR_CLR_PORT, &GPIO_InitStruct);
 

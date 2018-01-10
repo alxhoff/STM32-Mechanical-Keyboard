@@ -686,7 +686,11 @@ void KeyboardListenCallback(void const * argument)
 	{
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);
 
-		HAL_GPIO_WritePin(GPIOF, GPIO_PIN_9, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(SHIFT_SER_IN_PORT, SHIFT_SER_IN_PIN, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(SHIFT_SER_CLK_PORT, SHIFT_SER_CLK_PIN, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(SHIFT_OUT_ENA_PORT, SHIFT_OUT_ENA_PIN, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(SHIFT_SER_CLR_PORT, SHIFT_SER_CLR_PIN, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(SHIFT_LATCH_PORT, SHIFT_LATCH_PIN, GPIO_PIN_SET);
 
 		if (scan_key_matrix(keyboard_devs->keyboard,
 				keyboard_devs->keyboard_HID, keyboard_devs->shift_array) == 0)
