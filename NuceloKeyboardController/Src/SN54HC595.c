@@ -139,18 +139,18 @@ void output_self(shift_array_t* self, uint8_t byte_count)
 {
 	//Set serial clock and latch pin low
 	HAL_GPIO_WritePin(self->ser_clk_port, self->ser_clk_pin, GPIO_PIN_RESET);
-	for(uint8_t i = 0; i < byte_count; i++){
-		for(uint8_t j = 0; j < 8; j++){
-			if(*(self->out_buf + (i * sizeof(uint8_t))) & (1 << j))
+	for(uint8_t i = byte_count; i > 0; i--){
+		for(uint8_t j = 8; j > 0; j--){
+			if(*(self->out_buf + ((i-1) * sizeof(uint8_t))) & (1 << (j-1)))
 				HAL_GPIO_WritePin(self->ser_in_port, self->ser_in_pin, GPIO_PIN_SET);
 			else
 				HAL_GPIO_WritePin(self->ser_in_port, self->ser_in_pin, GPIO_PIN_RESET);
 			//clock bit
 			self->clock_data(self);
 		}
+	}
 	//latch data
 	self->latch(self);
-	}
 }
 
 void output_self_delay(shift_array_t* self, uint8_t byte_count, uint32_t delay)
@@ -190,7 +190,7 @@ void reset_latch_self(shift_array_t* self)
 void set_byte_self(shift_array_t* self, uint8_t byte_index, uint8_t byte)
 {
 	if(byte_index < self->dev_count)
-		self->out_buf[byte_index * sizeof(uint8_t)] = byte;
+		self->out_buf[byte_index] = byte;
 }
 
 void set_data_self(shift_array_t* self, uint8_t* data)
@@ -268,7 +268,10 @@ void SN54HC595_init_obj(shift_array_t* self)
 
 	self->out_buf = (uint8_t*)calloc(1, sizeof(uint8_t)* self->dev_count);
 
-	self->out_buf[0] = 0xFF;
+	for(int i = 0; i < self->dev_count; i++)
+		self->out_buf[i] = 0xFF;
+
+	HAL_GPIO_WritePin(self->sr_clr_port, self->sr_clr_pin, GPIO_PIN_SET);
 
 	self->output = &output_self;
 	self->output_delay = &output_self_delay;

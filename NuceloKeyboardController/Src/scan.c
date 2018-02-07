@@ -13,21 +13,24 @@
 #include "types.h"
 #include "shift.h"
 
-int8_t scan_key_matrix(keyboard_device_t* keyboard_dev, keyboard_HID_data_t* HID_reports, shift_array_t* shift_array)
+int8_t scan_key_matrix(keyboard_device_t* keyboard_dev, keyboard_HID_data_t* HID_reports,
+		shift_array_t* shift_array)
 {
 	//reset keypress buffer
 	HID_reports->key_buf.index = 0;
 
-	static uint8_t row_mask = 0x00;
+	uint8_t row_mask[shift_array->dev_count];
+	for(int i = 0; i<shift_array->dev_count; i++)
+		row_mask[i] = 0x00;
 
-	shift_array->set_byte(shift_array, 0, row_mask);
-	shift_array->output(shift_array, 1);
+	shift_array->set_data(shift_array, row_mask);
+	shift_array->output(shift_array, shift_array->dev_count);
 
 	for(uint8_t row=0;row<KEYBOARD_ROWS;row++){
 		//Set current column high so that rows can be read
-		row_mask = (1<<(7-row));
-		shift_array->set_byte(shift_array, 0, row_mask);
-		shift_array->output(shift_array, 1);
+		row_mask[row/8] = (1<<(row-((row/8)*8)));
+		shift_array->set_byte(shift_array, row/8, row_mask[row/8]);
+		shift_array->output(shift_array, shift_array->dev_count);
 
 		for(uint8_t col=0;col<KEYBOARD_COLS;col++){
 			if(HAL_GPIO_ReadPin(keyboard_dev->col_ports[col], keyboard_dev->col_pins[col])){
@@ -37,6 +40,7 @@ int8_t scan_key_matrix(keyboard_device_t* keyboard_dev, keyboard_HID_data_t* HID
 				HID_reports->key_buf.index++;
 			}
 		}
+		row_mask[row/8] = 0;
 		shift_array->set_byte(shift_array, 0, 0x00);
 		shift_array->output(shift_array, 1);
 	}
@@ -73,7 +77,8 @@ key_code scan_get_single_key( keyboard_device_t* keyboard_dev, keymap_list_t* la
 	return ret;
 }
 
-key_code_w_mod_t scan_get_single_key_w_mod( keyboard_device_t* keyboard_dev, keymap_list_t* layer_list )
+key_code_w_mod_t scan_get_single_key_w_mod( keyboard_device_t* keyboard_dev,
+		keymap_list_t* layer_list )
 {
 	key_code ret = 0;
 	static uint8_t shift_modifier = 0;
