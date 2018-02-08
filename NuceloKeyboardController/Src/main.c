@@ -154,12 +154,12 @@ int main(void)
 
 	keyboard_devices_init(&keyboard_devs);
 
-	GPIO_TypeDef* col_ports[] =
-	{ COL_PORT_0, COL_PORT_1, COL_PORT_2 };
-	uint16_t col_pins[] =
-	{ COL_PIN_0, COL_PIN_1, COL_PIN_2 };
+	GPIO_TypeDef* row_ports[] =
+	{ COL_PORT_0, COL_PORT_1, COL_PORT_2, COL_PORT_3, COL_PORT_4 };
+	uint16_t row_pins[] =
+	{ COL_PIN_0, COL_PIN_1, COL_PIN_2, COL_PIN_3, COL_PIN_4 };
 
-	keyboard_init(keyboard_devs, col_ports, col_pins);
+	keyboard_init(keyboard_devs, row_ports, row_pins);
 
 	HAL_GPIO_WritePin(CAPS_STATUS_PORT, CAPS_STATUS_PIN, GPIO_PIN_SET);
 	HAL_GPIO_WritePin(CLI_STATUS_PORT, CLI_STATUS_PIN, GPIO_PIN_RESET);
