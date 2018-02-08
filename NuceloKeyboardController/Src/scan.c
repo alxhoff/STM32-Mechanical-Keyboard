@@ -33,7 +33,8 @@ int8_t scan_key_matrix(keyboard_device_t* keyboard_dev, keyboard_HID_data_t* HID
 		shift_array->output(shift_array, shift_array->dev_count);
 
 		for(uint8_t col=0;col<KEYBOARD_ROWS;col++){
-			if(HAL_GPIO_ReadPin(keyboard_dev->col_ports[col], keyboard_dev->col_pins[col])){
+			volatile GPIO_PinState tmp = HAL_GPIO_ReadPin(keyboard_dev->col_ports[col], keyboard_dev->col_pins[col]);
+ 			if(HAL_GPIO_ReadPin(keyboard_dev->col_ports[col], keyboard_dev->col_pins[col])){
 				//key is pressed
 				HID_reports->key_buf.buffer[HID_reports->key_buf.index].col=col;
 				HID_reports->key_buf.buffer[HID_reports->key_buf.index].row=row;

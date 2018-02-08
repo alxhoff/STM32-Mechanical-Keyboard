@@ -155,9 +155,9 @@ int main(void)
 	keyboard_devices_init(&keyboard_devs);
 
 	GPIO_TypeDef* row_ports[] =
-	{ COL_PORT_0, COL_PORT_1, COL_PORT_2, COL_PORT_3, COL_PORT_4 };
+	{ ROW_PORT_0, ROW_PORT_1, ROW_PORT_2, ROW_PORT_3, ROW_PORT_4 };
 	uint16_t row_pins[] =
-	{ COL_PIN_0, COL_PIN_1, COL_PIN_2, COL_PIN_3, COL_PIN_4 };
+	{ ROW_PIN_0, ROW_PIN_1, ROW_PIN_2, ROW_PIN_3, ROW_PIN_4 };
 
 	keyboard_init(keyboard_devs, row_ports, row_pins);
 

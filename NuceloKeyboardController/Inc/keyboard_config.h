@@ -16,22 +16,22 @@
 //MICRO PORTS AND PINS
 	//COLS
 
-#define COLPORT(Col)		COL_PORT_##Col
-#define COLPIN(Col)			COL_PIN_##Col
+#define COLPORT(Col)		ROW_PORT_##Col
+#define COLPIN(Col)			ROW_PIN_##Col
 
 #define ROWPORT(Row)		ROW_PORT_##Row
 #define ROWPIN(Row)			ROW_PIN_##Row
 
-#define COL_PORT_0 			GPIOD
-#define COL_PIN_0  			GPIO_PIN_7
-#define COL_PORT_1			GPIOE
-#define COL_PIN_1			GPIO_PIN_0
-#define COL_PORT_2			GPIOB
-#define COL_PIN_2			GPIO_PIN_11
-#define COL_PORT_3			GPIOB
-#define COL_PIN_3			GPIO_PIN_10
-#define COL_PORT_4			GPIOG
-#define COL_PIN_4			GPIO_PIN_9
+#define ROW_PORT_0 			GPIOD
+#define ROW_PIN_0  			GPIO_PIN_7
+#define ROW_PORT_1			GPIOE
+#define ROW_PIN_1			GPIO_PIN_0
+#define ROW_PORT_2			GPIOB
+#define ROW_PIN_2			GPIO_PIN_11
+#define ROW_PORT_3			GPIOB
+#define ROW_PIN_3			GPIO_PIN_10
+#define ROW_PORT_4			GPIOG
+#define ROW_PIN_4			GPIO_PIN_9
 
 #define CAPS_STATUS_PORT	GPIOC
 #define CAPS_STATUS_PIN		GPIO_PIN_9

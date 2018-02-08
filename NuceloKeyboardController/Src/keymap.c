@@ -13,10 +13,11 @@
 const layer_init keymap_init0 =
 {
 		.grid =
-				KEYMAP(7, 8, 9, \
-					   LEFT, 5, RIGHT, \
-					   CLI, RSHIFT, MACRO_R, \
-					   MACRO_S),
+				KEYMAP(	ESC, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, MINS, EQUAL, BSPC, PGUP, \
+						TAB, Q, W, E, R, T, Y, U, I, O, P, LBRC, RBRC, BSLASH, PGDWN, \
+						CAPS, A, S, D, F, G, H, J, K, L, COLON, QUOTE, NO, ENTER, HOME, \
+						LSHIFT, NO, Z, X, C, V, B, N, M, COMMA, DOT, SLASH, RSHIFT, UP, END, \
+						RCRTL, RGUI, RALT, NO, NO, NO, SPACE, NO, NO, NO, LAYER, MACRO_S, LEFT, DOWN, RIGHT),
 	   .key = 0x66,
 	   .name = "Initial_layer"
 };
@@ -24,10 +25,11 @@ const layer_init keymap_init0 =
 const layer_init keymap_init1 =
 {
 		.grid =
-				KEYMAP(A, B, C, \
-					   F, E, D, \
-					   G, H, I, \
-					   LAYER),
+				KEYMAP(	ESC, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, MINS, EQUAL, BSPC, PGUP, \
+				TAB, Q, W, E, R, T, Y, U, I, O, P, LBRC, RBRC, BSLASH, PGDWN, \
+				CAPS, A, S, D, F, G, H, J, K, L, COLON, QUOTE, NO, ENTER, HOME, \
+				LSHIFT, NO, Z, X, C, V, B, N, M, COMMA, DOT, SLASH, RSHIFT, UP, END, \
+				RCRTL, RGUI, RALT, NO, NO, NO, SPACE, NO, NO, NO, LAYER, MACRO_S, LEFT, DOWN, RIGHT),
 		.key = HID_KEYBOARD_SC_RIGHT_CONTROL,
 		.name = "Second_layer"
 };
@@ -35,10 +37,11 @@ const layer_init keymap_init1 =
 const layer_init keymap_init2 =
 {
 		.grid =
-				KEYMAP(J, K, L, \
-					   M, N, O, \
-					   O, Q, R, \
-					   LAYER),
+				KEYMAP(	ESC, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, MINS, EQUAL, BSPC, PGUP, \
+				TAB, Q, W, E, R, T, Y, U, I, O, P, LBRC, RBRC, BSLASH, PGDWN, \
+				CAPS, A, S, D, F, G, H, J, K, L, COLON, QUOTE, NO, ENTER, HOME, \
+				LSHIFT, NO, Z, X, C, V, B, N, M, COMMA, DOT, SLASH, RSHIFT, UP, END, \
+				RCRTL, RGUI, RALT, NO, NO, NO, SPACE, NO, NO, NO, LAYER, MACRO_S, LEFT, DOWN, RIGHT),
 		.key = HID_KEYBOARD_SC_LEFT_GUI,
 		.name = "Third_layer"
 };
