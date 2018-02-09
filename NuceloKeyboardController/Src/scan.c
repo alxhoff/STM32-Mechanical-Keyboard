@@ -31,6 +31,7 @@ int8_t scan_key_matrix(keyboard_device_t* keyboard_dev, keyboard_HID_data_t* HID
 		row_mask[row/8] = (1<<(row-((row/8)*8)));
 		shift_array->set_byte(shift_array, row/8, row_mask[row/8]);
 		shift_array->output(shift_array, shift_array->dev_count);
+		HAL_Delay(1);
 
 		for(uint8_t col=0;col<KEYBOARD_ROWS;col++){
  			if(HAL_GPIO_ReadPin(keyboard_dev->col_ports[col], keyboard_dev->col_pins[col])){
@@ -42,7 +43,7 @@ int8_t scan_key_matrix(keyboard_device_t* keyboard_dev, keyboard_HID_data_t* HID
 		}
 		row_mask[row/8] = 0;
 		shift_array->set_byte(shift_array, 0, 0x00);
-		shift_array->output(shift_array, 1);
+		shift_array->output(shift_array, shift_array->dev_count);
 	}
 
 	if(HID_reports->key_buf.index == 0)
