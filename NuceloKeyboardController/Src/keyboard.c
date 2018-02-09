@@ -126,7 +126,7 @@ int8_t process_key_buf(keyboard_HID_data_t* data, keymap_list_t* layer_list)
 		//TODO capslock
 		//get character
 		data->key_buf.buffer[i].key_code =
-				current_layer->grid[data->key_buf.buffer[i].row][data->key_buf.buffer[i].col];
+				current_layer->grid[data->key_buf.buffer[i].col][data->key_buf.buffer[i].row];
 
 		//LAYER MODIFIER
 		if(data->key_buf.buffer[i].key_code == HID_KEYBOARD_SC_LAYER_FUNCTION)
