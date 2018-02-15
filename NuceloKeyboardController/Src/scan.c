@@ -31,7 +31,8 @@ int8_t scan_key_matrix(keyboard_device_t* keyboard_dev, keyboard_HID_data_t* HID
 		row_mask[row/8] = (1<<(row-((row/8)*8)));
 		shift_array->set_byte(shift_array, row/8, row_mask[row/8]);
 		shift_array->output(shift_array, shift_array->dev_count);
-		HAL_Delay(1);
+//		HAL_Delay(1);
+		vTaskDelay(1);
 
 		for(uint8_t col=0;col<KEYBOARD_ROWS;col++){
  			if(HAL_GPIO_ReadPin(keyboard_dev->col_ports[col], keyboard_dev->col_pins[col])){
@@ -55,25 +56,53 @@ int8_t scan_key_matrix(keyboard_device_t* keyboard_dev, keyboard_HID_data_t* HID
 key_code scan_get_single_key( keyboard_device_t* keyboard_dev, keymap_list_t* layer_list )
 {
 	key_code ret = 0;
-	static uint8_t row_mask = 0x00;
+
+	uint8_t row_mask[GET_SHIFT_DEVICE->dev_count];
+	for(int i = 0; i < GET_SHIFT_DEVICE->dev_count; i++)
+		row_mask[i] = 0x00;
+
+	GET_SHIFT_DEVICE->set_data(GET_SHIFT_DEVICE, row_mask);
+	GET_SHIFT_DEVICE->output(GET_SHIFT_DEVICE, GET_SHIFT_DEVICE->dev_count);
+
+	for(uint8_t row=0;row<KEYBOARD_COLS;row++){
+		//Set current column high so that rows can be read
+		row_mask[row/8] = (1<<(row-((row/8)*8)));
+		GET_SHIFT_DEVICE->set_byte(GET_SHIFT_DEVICE, row/8, row_mask[row/8]);
+		GET_SHIFT_DEVICE->output(GET_SHIFT_DEVICE, GET_SHIFT_DEVICE->dev_count);
+//		HAL_Delay(1);
+		vTaskDelay(1);
+
+		for(uint8_t col=0;col<KEYBOARD_ROWS;col++){
+			//holding here!
+			if(HAL_GPIO_ReadPin(keyboard_dev->col_ports[col], keyboard_dev->col_pins[col])){
+				//key is pressed
+				ret = process_single_key( layer_list, col, row);
+				return ret;
+			}
+		}
+		row_mask[row/8] = 0;
+		GET_SHIFT_DEVICE->set_byte(GET_SHIFT_DEVICE, 0, 0x00);
+		GET_SHIFT_DEVICE->output(GET_SHIFT_DEVICE, GET_SHIFT_DEVICE->dev_count);
+	}
 
 	//TODO FLASH STUFF
-	while(ret == 0){
-		for(uint8_t row=0;row<KEYBOARD_ROWS;row++){
-			//Set current column high so that rows can be read
-			row_mask = (1<<(7-row));
-			GET_SHIFT_DEVICE->set_byte(GET_SHIFT_DEVICE, 0, row_mask);
-			GET_SHIFT_DEVICE->output(GET_SHIFT_DEVICE, 1);
-
-			for(uint8_t col=0;col<KEYBOARD_COLS;col++){
-				if(HAL_GPIO_ReadPin(keyboard_dev->col_ports[col], keyboard_dev->col_pins[col])){
-					ret = process_single_key( layer_list, col, row);
-				}
-			}
-			GET_SHIFT_DEVICE->set_byte(GET_SHIFT_DEVICE, 0, 0x00);
-			GET_SHIFT_DEVICE->output(GET_SHIFT_DEVICE, 1);
-		}
-	}
+//	while(ret == 0){
+//		for(uint8_t row=0;row<KEYBOARD_ROWS;row++){
+//			//Set current column high so that rows can be read
+//			row_mask = (1<<(7-row));
+//			GET_SHIFT_DEVICE->set_byte(GET_SHIFT_DEVICE, 0, row_mask);
+//			GET_SHIFT_DEVICE->output(GET_SHIFT_DEVICE, 1);
+//			vTaskDelay(1);
+//
+//			for(uint8_t col=0;col<KEYBOARD_COLS;col++){
+//				if(HAL_GPIO_ReadPin(keyboard_dev->col_ports[col], keyboard_dev->col_pins[col])){
+//					ret = process_single_key( layer_list, col, row);
+//				}
+//			}
+//			GET_SHIFT_DEVICE->set_byte(GET_SHIFT_DEVICE, 0, 0x00);
+//			GET_SHIFT_DEVICE->output(GET_SHIFT_DEVICE, 1);
+//		}
+//	}
 	vTaskDelay(100);
 	return ret;
 }
