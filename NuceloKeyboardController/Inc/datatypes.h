@@ -30,6 +30,8 @@ typedef struct LED_array LED_array_t;
 
 typedef struct key_devices key_devices_t;
 
+extern key_devices_t* keyboard_devs;
+
 struct key_devices{
 	//keyboard
 
