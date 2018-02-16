@@ -57,8 +57,8 @@ keymap_err_t layer_list_init(key_devices_t* keyboard_devices,
 		return km_init_err;
 
 	//TODO bravity check
-		keyboard_devices->layer_list->layer_count = 1;
-		keyboard_devices->layer_list->ID_count = 0;
+	keyboard_devices->layer_list->layer_count = 1;
+	keyboard_devices->layer_list->ID_count = 0;
 
 	keymap_layer_t* layer = (keymap_layer_t*) malloc (sizeof(keymap_layer_t));
 	if (layer == NULL)
@@ -345,5 +345,17 @@ uint8_t layer_table_get_ID_w_layer ( keymap_list_t* layer_list, keymap_layer_t* 
 
 	return head->ID;
 }
+
+//gets the ID of a layer table entry given it's layer address
+uint8_t layer_table_get_ID_w_key ( keymap_list_t* layer_list, key_code key )
+{
+	keymap_layer_t* head = layer_list->layer_head;
+
+	while(head->layer_modifier_key_code != key)
+		head = head->next;
+
+	return head->ID;
+}
+
 
 

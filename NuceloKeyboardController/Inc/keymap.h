@@ -11,6 +11,7 @@
 #include "datatypes.h"
 #include "HIDClassCommon.h"
 #include "keyboard_config.h"
+#include "types.h"
 
 #define KEYMAP( \
     K00, K01, K02, K03, K04, K05, K06, K07, K08, K09, K10, K11, K12, K13, K14, 	\
@@ -196,6 +197,7 @@ keymap_err_t layer_table_append ( keymap_list_t* layer_list, layer_table_entry_t
 keymap_err_t layer_table_rem_last ( keymap_list_t* layer_list );
 keymap_err_t layer_table_rem_layer_w_ID ( keymap_list_t* layer_list, uint8_t ID );
 uint8_t layer_table_get_ID_w_layer ( keymap_list_t* layer_list, keymap_layer_t* layer );
+uint8_t layer_table_get_ID_w_key ( keymap_list_t* layer_list, key_code key );
 
 extern const layer_init keymap_init0;
 extern const layer_init keymap_init1;
