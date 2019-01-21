@@ -1,0 +1,54 @@
+/*
+ * keyboard_config.h
+ *
+ *  Created on: Aug 14, 2017
+ *      Author: alxhoff
+ */
+
+
+#ifndef KEYBOARD_CONFIG_H_
+#define KEYBOARD_CONFIG_H_
+
+//KEYBOARD SIZE
+#define KEYBOARD_ROWS 5
+#define KEYBOARD_COLS 15
+
+//MICRO PORTS AND PINS
+	//COLS
+
+#define COLPORT(Col)		ROW_PORT_##Col
+#define COLPIN(Col)			ROW_PIN_##Col
+
+#define ROWPORT(Row)		ROW_PORT_##Row
+#define ROWPIN(Row)			ROW_PIN_##Row
+
+#define ROW_PORT_0 			GPIOD
+#define ROW_PIN_0  			GPIO_PIN_7
+#define ROW_PORT_1			GPIOE
+#define ROW_PIN_1			GPIO_PIN_0
+#define ROW_PORT_2			GPIOB
+#define ROW_PIN_2			GPIO_PIN_11
+#define ROW_PORT_3			GPIOB
+#define ROW_PIN_3			GPIO_PIN_10
+#define ROW_PORT_4			GPIOG
+#define ROW_PIN_4			GPIO_PIN_9
+
+#define CAPS_STATUS_PORT	GPIOC
+#define CAPS_STATUS_PIN		GPIO_PIN_9
+#define CLI_STATUS_PORT		GPIOC
+#define CLI_STATUS_PIN		GPIO_PIN_10
+#define FUNC_STATUS_PORT	GPIOC
+#define FUNC_STATUS_PIN		GPIO_PIN_11
+
+#define SHIFT_SER_IN_PORT	GPIOG
+#define SHIFT_SER_IN_PIN	GPIO_PIN_1
+#define SHIFT_SER_CLK_PORT	GPIOE
+#define SHIFT_SER_CLK_PIN	GPIO_PIN_6
+#define SHIFT_LATCH_PORT	GPIOE
+#define SHIFT_LATCH_PIN		GPIO_PIN_3
+#define SHIFT_OUT_ENA_PORT	GPIOE
+#define SHIFT_OUT_ENA_PIN	GPIO_PIN_4
+#define SHIFT_SER_CLR_PORT	GPIOE
+#define SHIFT_SER_CLR_PIN	GPIO_PIN_5
+
+#endif /* KEYBOARD_CONFIG_H_ */
