@@ -2,6 +2,8 @@
   ******************************************************************************
   * @file    stm32f4xx_hal_flash.h
   * @author  MCD Application Team
+  * @version V1.7.1
+  * @date    14-April-2017
   * @brief   Header file of FLASH HAL module.
   ******************************************************************************
   * @attention
@@ -187,7 +189,7 @@ typedef struct
   */
 /**
   * @brief  Set the FLASH Latency.
-  * @param  __LATENCY__ FLASH Latency
+  * @param  __LATENCY__: FLASH Latency
   *         The value of this parameter depend on device used within the same series
   * @retval none
   */ 
@@ -255,7 +257,7 @@ typedef struct
                                           }while(0U)
 /**
   * @brief  Enable the specified FLASH interrupt.
-  * @param  __INTERRUPT__  FLASH interrupt 
+  * @param  __INTERRUPT__ : FLASH interrupt 
   *         This parameter can be any combination of the following values:
   *     @arg FLASH_IT_EOP: End of FLASH Operation Interrupt
   *     @arg FLASH_IT_ERR: Error Interrupt    
@@ -265,7 +267,7 @@ typedef struct
 
 /**
   * @brief  Disable the specified FLASH interrupt.
-  * @param  __INTERRUPT__  FLASH interrupt 
+  * @param  __INTERRUPT__ : FLASH interrupt 
   *         This parameter can be any combination of the following values:
   *     @arg FLASH_IT_EOP: End of FLASH Operation Interrupt
   *     @arg FLASH_IT_ERR: Error Interrupt    
@@ -275,7 +277,7 @@ typedef struct
 
 /**
   * @brief  Get the specified FLASH flag status. 
-  * @param  __FLAG__ specifies the FLASH flags to check.
+  * @param  __FLAG__: specifies the FLASH flags to check.
   *          This parameter can be any combination of the following values:
   *            @arg FLASH_FLAG_EOP   : FLASH End of Operation flag 
   *            @arg FLASH_FLAG_OPERR : FLASH operation Error flag 
@@ -292,7 +294,7 @@ typedef struct
 
 /**
   * @brief  Clear the specified FLASH flags.
-  * @param  __FLAG__ specifies the FLASH flags to clear.
+  * @param  __FLAG__: specifies the FLASH flags to clear.
   *          This parameter can be any combination of the following values:
   *            @arg FLASH_FLAG_EOP   : FLASH End of Operation flag 
   *            @arg FLASH_FLAG_OPERR : FLASH operation Error flag 

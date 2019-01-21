@@ -34,13 +34,13 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: NuceloKeyboardController.elf
+all: V2.0.elf
 
 # Tool invocations
-NuceloKeyboardController.elf: $(OBJS) $(USER_OBJS) ../STM32F429ZITx_FLASH.ld
+V2.0.elf: $(OBJS) $(USER_OBJS) ../STM32F429ZITx_FLASH.ld
 	@echo 'Building target: $@'
 	@echo 'Invoking: MCU GCC Linker'
-	arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F429ZITx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "NuceloKeyboardController.elf" @"objects.list" $(USER_OBJS) $(LIBS) -lm
+	arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F429ZITx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "V2.0.elf" @"objects.list" $(USER_OBJS) $(LIBS) -lm
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build
@@ -52,8 +52,8 @@ clean:
 
 post-build:
 	-@echo 'Generating binary and Printing size information:'
-	arm-none-eabi-objcopy -O binary "NuceloKeyboardController.elf" "NuceloKeyboardController.bin"
-	arm-none-eabi-size "NuceloKeyboardController.elf"
+	arm-none-eabi-objcopy -O binary "V2.0.elf" "V2.0.bin"
+	arm-none-eabi-size "V2.0.elf"
 	-@echo ' '
 
 .PHONY: all clean dependents

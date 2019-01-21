@@ -2,6 +2,8 @@
   ******************************************************************************
   * @file    stm32f4xx_hal_pcd_ex.c
   * @author  MCD Application Team
+  * @version V1.7.1
+  * @date    14-April-2017
   * @brief   PCD HAL module driver.
   *          This file provides firmware functions to manage the following 
   *          functionalities of the USB Peripheral Controller:
@@ -81,9 +83,9 @@
 
 /**
   * @brief  Set Tx FIFO
-  * @param  hpcd PCD handle
-  * @param  fifo The number of Tx fifo
-  * @param  size Fifo size
+  * @param  hpcd: PCD handle
+  * @param  fifo: The number of Tx fifo
+  * @param  size: Fifo size
   * @retval HAL status
   */
 HAL_StatusTypeDef HAL_PCDEx_SetTxFiFo(PCD_HandleTypeDef *hpcd, uint8_t fifo, uint16_t size)
@@ -124,8 +126,8 @@ HAL_StatusTypeDef HAL_PCDEx_SetTxFiFo(PCD_HandleTypeDef *hpcd, uint8_t fifo, uin
 
 /**
   * @brief  Set Rx FIFO
-  * @param  hpcd PCD handle
-  * @param  size Size of Rx fifo
+  * @param  hpcd: PCD handle
+  * @param  size: Size of Rx fifo
   * @retval HAL status
   */
 HAL_StatusTypeDef HAL_PCDEx_SetRxFiFo(PCD_HandleTypeDef *hpcd, uint16_t size)
@@ -139,7 +141,7 @@ HAL_StatusTypeDef HAL_PCDEx_SetRxFiFo(PCD_HandleTypeDef *hpcd, uint16_t size)
     defined(STM32F412Rx) || defined(STM32F412Cx) || defined(STM32F413xx) || defined(STM32F423xx)
 /**
   * @brief  Activate LPM feature
-  * @param  hpcd PCD handle
+  * @param  hpcd: PCD handle
   * @retval HAL status
   */
 HAL_StatusTypeDef HAL_PCDEx_ActivateLPM(PCD_HandleTypeDef *hpcd)
@@ -156,7 +158,7 @@ HAL_StatusTypeDef HAL_PCDEx_ActivateLPM(PCD_HandleTypeDef *hpcd)
 
 /**
   * @brief  Deactivate LPM feature.
-  * @param  hpcd PCD handle
+  * @param  hpcd: PCD handle
   * @retval HAL status
   */
 HAL_StatusTypeDef HAL_PCDEx_DeActivateLPM(PCD_HandleTypeDef *hpcd)
@@ -172,8 +174,8 @@ HAL_StatusTypeDef HAL_PCDEx_DeActivateLPM(PCD_HandleTypeDef *hpcd)
 
 /**
   * @brief  Send LPM message to user layer callback.
-  * @param  hpcd PCD handle
-  * @param  msg LPM message
+  * @param  hpcd: PCD handle
+  * @param  msg: LPM message
   * @retval HAL status
   */
 __weak void HAL_PCDEx_LPM_Callback(PCD_HandleTypeDef *hpcd, PCD_LPM_MsgTypeDef msg)
@@ -187,7 +189,7 @@ __weak void HAL_PCDEx_LPM_Callback(PCD_HandleTypeDef *hpcd, PCD_LPM_MsgTypeDef m
 #if defined(STM32F412Zx) || defined(STM32F412Vx) || defined(STM32F412Rx) || defined(STM32F412Cx) || defined(STM32F413xx) || defined(STM32F423xx)
 /**
   * @brief  HAL_PCDEx_BCD_VBUSDetect : handle BatteryCharging Process
-  * @param  hpcd PCD handle
+  * @param  hpcd: PCD handle
   * @retval HAL status
   */
 void HAL_PCDEx_BCD_VBUSDetect(PCD_HandleTypeDef *hpcd)
@@ -258,7 +260,7 @@ void HAL_PCDEx_BCD_VBUSDetect(PCD_HandleTypeDef *hpcd)
 
 /**
   * @brief  HAL_PCDEx_ActivateBCD : active BatteryCharging feature
-  * @param  hpcd PCD handle
+  * @param  hpcd: PCD handle
   * @retval HAL status
   */
 HAL_StatusTypeDef HAL_PCDEx_ActivateBCD(PCD_HandleTypeDef *hpcd)
@@ -273,7 +275,7 @@ HAL_StatusTypeDef HAL_PCDEx_ActivateBCD(PCD_HandleTypeDef *hpcd)
 
 /**
   * @brief  HAL_PCDEx_DeActivateBCD : de-active BatteryCharging feature
-  * @param  hpcd PCD handle
+  * @param  hpcd: PCD handle
   * @retval HAL status
   */
 HAL_StatusTypeDef HAL_PCDEx_DeActivateBCD(PCD_HandleTypeDef *hpcd)
@@ -286,8 +288,8 @@ HAL_StatusTypeDef HAL_PCDEx_DeActivateBCD(PCD_HandleTypeDef *hpcd)
 
 /**
   * @brief  HAL_PCDEx_BatteryCharging_Callback : Send BatteryCharging message to user layer
-  * @param  hpcd PCD handle
-  * @param  msg LPM message
+  * @param  hpcd: PCD handle
+  * @param  msg: LPM message
   * @retval HAL status
   */
 __weak void HAL_PCDEx_BCD_Callback(PCD_HandleTypeDef *hpcd, PCD_BCD_MsgTypeDef msg)

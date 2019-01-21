@@ -94,7 +94,7 @@ SemaphoreHandle_t USB_send_lock = NULL;
 
 key_devices_t* keyboard_devs;
 
-keyboard_states current_keyboard_state;
+keyboard_states_t current_keyboard_state;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/

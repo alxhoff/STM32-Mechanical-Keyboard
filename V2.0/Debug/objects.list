@@ -52,6 +52,7 @@
 "Src/screen.o"
 "Src/shift.o"
 "Src/ssd1306.o"
+"Src/states.o"
 "Src/stm32f4xx_hal_msp.o"
 "Src/stm32f4xx_it.o"
 "Src/system_stm32f4xx.o"
