@@ -7872,6 +7872,68 @@ Discarded input sections
  .debug_frame   0x0000000000000000       0x50 Src/layers.o
  .ARM.attributes
                 0x0000000000000000       0x34 Src/layers.o
+ .group         0x0000000000000000        0xc Src/list.o
+ .group         0x0000000000000000        0xc Src/list.o
+ .group         0x0000000000000000        0xc Src/list.o
+ .group         0x0000000000000000        0xc Src/list.o
+ .group         0x0000000000000000        0xc Src/list.o
+ .group         0x0000000000000000        0xc Src/list.o
+ .group         0x0000000000000000        0xc Src/list.o
+ .group         0x0000000000000000        0xc Src/list.o
+ .group         0x0000000000000000        0xc Src/list.o
+ .group         0x0000000000000000        0xc Src/list.o
+ .group         0x0000000000000000        0xc Src/list.o
+ .group         0x0000000000000000        0xc Src/list.o
+ .group         0x0000000000000000        0xc Src/list.o
+ .group         0x0000000000000000        0xc Src/list.o
+ .group         0x0000000000000000        0xc Src/list.o
+ .group         0x0000000000000000        0xc Src/list.o
+ .group         0x0000000000000000        0xc Src/list.o
+ .group         0x0000000000000000        0xc Src/list.o
+ .group         0x0000000000000000        0xc Src/list.o
+ .text          0x0000000000000000        0x0 Src/list.o
+ .data          0x0000000000000000        0x0 Src/list.o
+ .bss           0x0000000000000000        0x0 Src/list.o
+ .text.init_list_entry
+                0x0000000000000000       0x1a Src/list.o
+ .text.add_list_entry
+                0x0000000000000000       0x14 Src/list.o
+ .text.remove_list_entry
+                0x0000000000000000       0x38 Src/list.o
+ .text.get_list_entry
+                0x0000000000000000       0x1a Src/list.o
+ .debug_info    0x0000000000000000      0xb00 Src/list.o
+ .debug_abbrev  0x0000000000000000      0x28e Src/list.o
+ .debug_loc     0x0000000000000000      0x191 Src/list.o
+ .debug_aranges
+                0x0000000000000000       0x38 Src/list.o
+ .debug_ranges  0x0000000000000000       0x28 Src/list.o
+ .debug_macro   0x0000000000000000      0x104 Src/list.o
+ .debug_macro   0x0000000000000000      0xaa2 Src/list.o
+ .debug_macro   0x0000000000000000      0x174 Src/list.o
+ .debug_macro   0x0000000000000000       0x18 Src/list.o
+ .debug_macro   0x0000000000000000       0x22 Src/list.o
+ .debug_macro   0x0000000000000000       0x4c Src/list.o
+ .debug_macro   0x0000000000000000       0x94 Src/list.o
+ .debug_macro   0x0000000000000000       0x35 Src/list.o
+ .debug_macro   0x0000000000000000       0x34 Src/list.o
+ .debug_macro   0x0000000000000000       0x16 Src/list.o
+ .debug_macro   0x0000000000000000       0x35 Src/list.o
+ .debug_macro   0x0000000000000000       0x57 Src/list.o
+ .debug_macro   0x0000000000000000       0x52 Src/list.o
+ .debug_macro   0x0000000000000000       0x1f Src/list.o
+ .debug_macro   0x0000000000000000       0x43 Src/list.o
+ .debug_macro   0x0000000000000000       0x20 Src/list.o
+ .debug_macro   0x0000000000000000      0x18e Src/list.o
+ .debug_macro   0x0000000000000000      0x339 Src/list.o
+ .debug_macro   0x0000000000000000       0x16 Src/list.o
+ .debug_macro   0x0000000000000000       0x29 Src/list.o
+ .debug_line    0x0000000000000000      0x2c0 Src/list.o
+ .debug_str     0x0000000000000000     0x6035 Src/list.o
+ .comment       0x0000000000000000       0x1e Src/list.o
+ .debug_frame   0x0000000000000000       0x6c Src/list.o
+ .ARM.attributes
+                0x0000000000000000       0x34 Src/list.o
  .group         0x0000000000000000        0xc Src/lookup.o
  .group         0x0000000000000000        0xc Src/lookup.o
  .group         0x0000000000000000        0xc Src/lookup.o
@@ -11228,6 +11290,7 @@ LOAD Src/freertos.o
 LOAD Src/keyboard.o
 LOAD Src/keymap.o
 LOAD Src/layers.o
+LOAD Src/list.o
 LOAD Src/lookup.o
 LOAD Src/macro.o
 LOAD Src/main.o

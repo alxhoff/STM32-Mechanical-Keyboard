@@ -14,6 +14,7 @@ C_SRCS += \
 ../Src/keyboard.c \
 ../Src/keymap.c \
 ../Src/layers.c \
+../Src/list.c \
 ../Src/lookup.c \
 ../Src/macro.c \
 ../Src/main.c \
@@ -43,6 +44,7 @@ OBJS += \
 ./Src/keyboard.o \
 ./Src/keymap.o \
 ./Src/layers.o \
+./Src/list.o \
 ./Src/lookup.o \
 ./Src/macro.o \
 ./Src/main.o \
@@ -72,6 +74,7 @@ C_DEPS += \
 ./Src/keyboard.d \
 ./Src/keymap.d \
 ./Src/layers.d \
+./Src/list.d \
 ./Src/lookup.d \
 ./Src/macro.d \
 ./Src/main.d \

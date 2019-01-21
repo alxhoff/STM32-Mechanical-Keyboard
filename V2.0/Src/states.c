@@ -25,3 +25,4 @@ unsigned char runFSM(state_machine_t *FSM)
 
 	return 0;
 }
+
