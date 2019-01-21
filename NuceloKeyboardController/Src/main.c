@@ -152,6 +152,12 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
 
+  	  while(1){
+  		  if(HAL_GPIO_ReadPin(USER_Btn_GPIO_Port, USER_Btn_Pin)){
+  			  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
+  		  }
+  	  }
+
 	keyboard_devices_init(&keyboard_devs);
 
 	GPIO_TypeDef* row_ports[] =
