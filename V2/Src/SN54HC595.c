@@ -210,7 +210,7 @@ void latch_self(shift_array_t* self)
 	HAL_GPIO_WritePin(self->latch_port, self->latch_pin, GPIO_PIN_RESET);
 }
 
-void SN54HC595_init_obj(shift_array_t* self)
+void SN54HC595_init_obj(shift_array_t* shift)
 {
 //	//CLOCK ENABLE STUFF
 //	if(self->ser_in_clock_init)
@@ -228,60 +228,60 @@ void SN54HC595_init_obj(shift_array_t* self)
 	GPIO_InitTypeDef GPIO_InitStruct;
 
 	/*Configure serial in */
-	GPIO_InitStruct.Pin = self->ser_in_pin;
+	GPIO_InitStruct.Pin = shift->ser_in_pin;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStruct.Pull = GPIO_NOPULL;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(self->ser_in_port, &GPIO_InitStruct);
+	HAL_GPIO_Init(shift->ser_in_port, &GPIO_InitStruct);
 
 	/*Configure serial clock */
-	GPIO_InitStruct.Pin = self->ser_clk_pin;
+	GPIO_InitStruct.Pin = shift->ser_clk_pin;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStruct.Pull = GPIO_NOPULL;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(self->ser_clk_port, &GPIO_InitStruct);
+	HAL_GPIO_Init(shift->ser_clk_port, &GPIO_InitStruct);
 
 	/*Configure latch pin */
-	GPIO_InitStruct.Pin = self->latch_pin;
+	GPIO_InitStruct.Pin = shift->latch_pin;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStruct.Pull = GPIO_NOPULL;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(self->latch_port, &GPIO_InitStruct);
+	HAL_GPIO_Init(shift->latch_port, &GPIO_InitStruct);
 
 	/*Configure output enable */
-	GPIO_InitStruct.Pin = self->out_ena_pin;
+	GPIO_InitStruct.Pin = shift->out_ena_pin;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStruct.Pull = GPIO_NOPULL;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(self->out_ena_port, &GPIO_InitStruct);
+	HAL_GPIO_Init(shift->out_ena_port, &GPIO_InitStruct);
 
 	/*Configure serial clear */
-	GPIO_InitStruct.Pin = self->sr_clr_pin;
+	GPIO_InitStruct.Pin = shift->sr_clr_pin;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStruct.Pull = GPIO_NOPULL;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(self->sr_clr_port, &GPIO_InitStruct);
+	HAL_GPIO_Init(shift->sr_clr_port, &GPIO_InitStruct);
 
-	enable_self(self);
+	enable_self(shift);
 
-	reset_latch_self(self);
+	reset_latch_self(shift);
 
-	self->out_buf = (uint8_t*)calloc(1, sizeof(uint8_t)* self->dev_count);
+	shift->out_buf = (uint8_t*)calloc(1, sizeof(uint8_t)* shift->dev_count);
 
-	for(int i = 0; i < self->dev_count; i++)
-		self->out_buf[i] = 0xFF;
+	for(int i = 0; i < shift->dev_count; i++)
+		shift->out_buf[i] = 0xFF;
 
-	HAL_GPIO_WritePin(self->sr_clr_port, self->sr_clr_pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(shift->sr_clr_port, shift->sr_clr_pin, GPIO_PIN_SET);
 
-	self->output = &output_self;
-	self->output_delay = &output_self_delay;
-	self->disbale = &disable_self;
-	self->enable = &enable_self;
-	self->reset_latch = &reset_latch_self;
-	self->set_byte = &set_byte_self;
-	self->set_data = &set_data_self;
-	self->clock_data = &clock_data_self;
-	self->latch = &latch_self;
+	shift->output = &output_self;
+	shift->output_delay = &output_self_delay;
+	shift->disbale = &disable_self;
+	shift->enable = &enable_self;
+	shift->reset_latch = &reset_latch_self;
+	shift->set_byte = &set_byte_self;
+	shift->set_data = &set_data_self;
+	shift->clock_data = &clock_data_self;
+	shift->latch = &latch_self;
 }
 
 #endif

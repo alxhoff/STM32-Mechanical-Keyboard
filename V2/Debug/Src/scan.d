@@ -68,7 +68,7 @@ Src/scan.o: ../Src/scan.c \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/usbd_conf.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/lookup.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/types.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/shift.h \
+ /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/devices.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/SN54HC595.h
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keymap.h:
@@ -209,6 +209,6 @@ Src/scan.o: ../Src/scan.c \
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/types.h:
 
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/shift.h:
+/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/devices.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/SN54HC595.h:

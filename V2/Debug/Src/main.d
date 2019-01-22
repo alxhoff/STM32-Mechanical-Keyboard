@@ -67,7 +67,7 @@ Src/main.o: ../Src/main.c \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keyboard.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/states.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/scan.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/shift.h \
+ /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/devices.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/SN54HC595.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keyboard.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/ssd1306.h \
@@ -212,7 +212,7 @@ Src/main.o: ../Src/main.c \
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/scan.h:
 
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/shift.h:
+/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/devices.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/SN54HC595.h:
 

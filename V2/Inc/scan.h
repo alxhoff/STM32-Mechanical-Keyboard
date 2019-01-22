@@ -46,11 +46,10 @@
  *
  * @param keyboard_dev Keyboard device that is to be scanned
  * @param HID_reports HID data structure where the key buffer is to be stored
- * @param shift_array Shift array that is to be used to set the columns high
  * @return 0 on success
  * */
 int8_t scan_key_matrix(keyboard_device_t* keyboard_dev,
-		keyboard_HID_data_t* HID_reports, shift_array_t* shift_array);
+		keyboard_HID_data_t* HID_reports);
 
 /**
  * @brief Gets a single not debounced key input from the keyboad

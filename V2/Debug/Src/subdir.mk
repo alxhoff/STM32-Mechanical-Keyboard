@@ -9,6 +9,7 @@ C_SRCS += \
 ../Src/DS3231_stm32_hal.c \
 ../Src/SN54HC595.c \
 ../Src/datatypes.c \
+../Src/devices.c \
 ../Src/fonts.c \
 ../Src/freertos.c \
 ../Src/keyboard.c \
@@ -21,7 +22,6 @@ C_SRCS += \
 ../Src/mouse.c \
 ../Src/scan.c \
 ../Src/screen.c \
-../Src/shift.c \
 ../Src/ssd1306.c \
 ../Src/states.c \
 ../Src/stm32f4xx_hal_msp.c \
@@ -39,6 +39,7 @@ OBJS += \
 ./Src/DS3231_stm32_hal.o \
 ./Src/SN54HC595.o \
 ./Src/datatypes.o \
+./Src/devices.o \
 ./Src/fonts.o \
 ./Src/freertos.o \
 ./Src/keyboard.o \
@@ -51,7 +52,6 @@ OBJS += \
 ./Src/mouse.o \
 ./Src/scan.o \
 ./Src/screen.o \
-./Src/shift.o \
 ./Src/ssd1306.o \
 ./Src/states.o \
 ./Src/stm32f4xx_hal_msp.o \
@@ -69,6 +69,7 @@ C_DEPS += \
 ./Src/DS3231_stm32_hal.d \
 ./Src/SN54HC595.d \
 ./Src/datatypes.d \
+./Src/devices.d \
 ./Src/fonts.d \
 ./Src/freertos.d \
 ./Src/keyboard.d \
@@ -81,7 +82,6 @@ C_DEPS += \
 ./Src/mouse.d \
 ./Src/scan.d \
 ./Src/screen.d \
-./Src/shift.d \
 ./Src/ssd1306.d \
 ./Src/states.d \
 ./Src/stm32f4xx_hal_msp.d \
