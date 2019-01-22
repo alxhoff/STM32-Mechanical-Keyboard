@@ -6295,7 +6295,6 @@ Discarded input sections
  .group         0x0000000000000000        0xc Src/AT24Cxx_stm32_hal.o
  .group         0x0000000000000000        0xc Src/AT24Cxx_stm32_hal.o
  .group         0x0000000000000000        0xc Src/AT24Cxx_stm32_hal.o
- .group         0x0000000000000000        0xc Src/AT24Cxx_stm32_hal.o
  .text          0x0000000000000000        0x0 Src/AT24Cxx_stm32_hal.o
  .data          0x0000000000000000        0x0 Src/AT24Cxx_stm32_hal.o
  .bss           0x0000000000000000        0x0 Src/AT24Cxx_stm32_hal.o
@@ -6323,7 +6322,7 @@ Discarded input sections
  .debug_aranges
                 0x0000000000000000       0x60 Src/AT24Cxx_stm32_hal.o
  .debug_ranges  0x0000000000000000       0x50 Src/AT24Cxx_stm32_hal.o
- .debug_macro   0x0000000000000000      0x513 Src/AT24Cxx_stm32_hal.o
+ .debug_macro   0x0000000000000000      0x51e Src/AT24Cxx_stm32_hal.o
  .debug_macro   0x0000000000000000      0xaa2 Src/AT24Cxx_stm32_hal.o
  .debug_macro   0x0000000000000000      0x17f Src/AT24Cxx_stm32_hal.o
  .debug_macro   0x0000000000000000      0x1a6 Src/AT24Cxx_stm32_hal.o
@@ -6417,14 +6416,12 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x6b Src/AT24Cxx_stm32_hal.o
  .debug_macro   0x0000000000000000      0x1c3 Src/AT24Cxx_stm32_hal.o
  .debug_macro   0x0000000000000000       0xca Src/AT24Cxx_stm32_hal.o
- .debug_macro   0x0000000000000000       0x10 Src/AT24Cxx_stm32_hal.o
  .debug_line    0x0000000000000000      0xd9a Src/AT24Cxx_stm32_hal.o
  .debug_str     0x0000000000000000    0xe52fd Src/AT24Cxx_stm32_hal.o
  .comment       0x0000000000000000       0x1e Src/AT24Cxx_stm32_hal.o
  .debug_frame   0x0000000000000000      0x14c Src/AT24Cxx_stm32_hal.o
  .ARM.attributes
                 0x0000000000000000       0x34 Src/AT24Cxx_stm32_hal.o
- .group         0x0000000000000000        0xc Src/CLI.o
  .group         0x0000000000000000        0xc Src/CLI.o
  .group         0x0000000000000000        0xc Src/CLI.o
  .group         0x0000000000000000        0xc Src/CLI.o
@@ -6545,7 +6542,7 @@ Discarded input sections
  .debug_aranges
                 0x0000000000000000       0x50 Src/CLI.o
  .debug_ranges  0x0000000000000000       0x40 Src/CLI.o
- .debug_macro   0x0000000000000000      0x565 Src/CLI.o
+ .debug_macro   0x0000000000000000      0x570 Src/CLI.o
  .debug_macro   0x0000000000000000      0xaa2 Src/CLI.o
  .debug_macro   0x0000000000000000       0x22 Src/CLI.o
  .debug_macro   0x0000000000000000       0x8e Src/CLI.o
@@ -6578,7 +6575,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x3d Src/CLI.o
  .debug_macro   0x0000000000000000       0x16 Src/CLI.o
  .debug_macro   0x0000000000000000      0x16f Src/CLI.o
- .debug_macro   0x0000000000000000       0x10 Src/CLI.o
  .debug_macro   0x0000000000000000      0x17f Src/CLI.o
  .debug_macro   0x0000000000000000       0xee Src/CLI.o
  .debug_macro   0x0000000000000000      0x168 Src/CLI.o
@@ -7437,7 +7433,6 @@ Discarded input sections
  .group         0x0000000000000000        0xc Src/keyboard.o
  .group         0x0000000000000000        0xc Src/keyboard.o
  .group         0x0000000000000000        0xc Src/keyboard.o
- .group         0x0000000000000000        0xc Src/keyboard.o
  .text          0x0000000000000000        0x0 Src/keyboard.o
  .data          0x0000000000000000        0x0 Src/keyboard.o
  .bss           0x0000000000000000       0x16 Src/keyboard.o
@@ -7471,7 +7466,7 @@ Discarded input sections
  .debug_aranges
                 0x0000000000000000       0x70 Src/keyboard.o
  .debug_ranges  0x0000000000000000       0x90 Src/keyboard.o
- .debug_macro   0x0000000000000000      0x551 Src/keyboard.o
+ .debug_macro   0x0000000000000000      0x55c Src/keyboard.o
  .debug_macro   0x0000000000000000      0xaa2 Src/keyboard.o
  .debug_macro   0x0000000000000000      0x174 Src/keyboard.o
  .debug_macro   0x0000000000000000       0x22 Src/keyboard.o
@@ -7563,7 +7558,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x6b Src/keyboard.o
  .debug_macro   0x0000000000000000      0x1c3 Src/keyboard.o
  .debug_macro   0x0000000000000000       0xca Src/keyboard.o
- .debug_macro   0x0000000000000000       0x10 Src/keyboard.o
  .debug_macro   0x0000000000000000      0x6db Src/keyboard.o
  .debug_macro   0x0000000000000000      0x24b Src/keyboard.o
  .debug_macro   0x0000000000000000       0x46 Src/keyboard.o
@@ -7774,7 +7768,6 @@ Discarded input sections
  .group         0x0000000000000000        0xc Src/layers.o
  .group         0x0000000000000000        0xc Src/layers.o
  .group         0x0000000000000000        0xc Src/layers.o
- .group         0x0000000000000000        0xc Src/layers.o
  .text          0x0000000000000000        0x0 Src/layers.o
  .data          0x0000000000000000        0x0 Src/layers.o
  .bss           0x0000000000000000        0x0 Src/layers.o
@@ -7790,7 +7783,7 @@ Discarded input sections
  .debug_aranges
                 0x0000000000000000       0x30 Src/layers.o
  .debug_ranges  0x0000000000000000       0x20 Src/layers.o
- .debug_macro   0x0000000000000000      0x3fd Src/layers.o
+ .debug_macro   0x0000000000000000      0x408 Src/layers.o
  .debug_macro   0x0000000000000000      0xaa2 Src/layers.o
  .debug_macro   0x0000000000000000       0x22 Src/layers.o
  .debug_macro   0x0000000000000000       0x4c Src/layers.o
@@ -7824,7 +7817,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x6db Src/layers.o
  .debug_macro   0x0000000000000000       0xca Src/layers.o
  .debug_macro   0x0000000000000000      0x24b Src/layers.o
- .debug_macro   0x0000000000000000       0x10 Src/layers.o
  .debug_macro   0x0000000000000000      0x17f Src/layers.o
  .debug_macro   0x0000000000000000      0x1a6 Src/layers.o
  .debug_macro   0x0000000000000000       0x33 Src/layers.o
@@ -8108,7 +8100,6 @@ Discarded input sections
  .group         0x0000000000000000        0xc Src/macro.o
  .group         0x0000000000000000        0xc Src/macro.o
  .group         0x0000000000000000        0xc Src/macro.o
- .group         0x0000000000000000        0xc Src/macro.o
  .text          0x0000000000000000        0x0 Src/macro.o
  .data          0x0000000000000000        0x8 Src/macro.o
  .bss           0x0000000000000000        0x0 Src/macro.o
@@ -8144,7 +8135,7 @@ Discarded input sections
  .debug_aranges
                 0x0000000000000000       0x80 Src/macro.o
  .debug_ranges  0x0000000000000000       0x88 Src/macro.o
- .debug_macro   0x0000000000000000      0x53f Src/macro.o
+ .debug_macro   0x0000000000000000      0x54a Src/macro.o
  .debug_macro   0x0000000000000000      0xaa2 Src/macro.o
  .debug_macro   0x0000000000000000       0x22 Src/macro.o
  .debug_macro   0x0000000000000000       0x4c Src/macro.o
@@ -8216,7 +8207,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x1df Src/macro.o
  .debug_macro   0x0000000000000000      0x115 Src/macro.o
  .debug_macro   0x0000000000000000      0x12c Src/macro.o
- .debug_macro   0x0000000000000000       0x10 Src/macro.o
  .debug_macro   0x0000000000000000       0xca Src/macro.o
  .debug_macro   0x0000000000000000      0x6db Src/macro.o
  .debug_macro   0x0000000000000000      0x24b Src/macro.o
@@ -8247,7 +8237,6 @@ Discarded input sections
  .debug_frame   0x0000000000000000      0x14c Src/macro.o
  .ARM.attributes
                 0x0000000000000000       0x34 Src/macro.o
- .group         0x0000000000000000        0xc Src/main.o
  .group         0x0000000000000000        0xc Src/main.o
  .group         0x0000000000000000        0xc Src/main.o
  .group         0x0000000000000000        0xc Src/main.o
@@ -8451,11 +8440,8 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x6db Src/main.o
  .debug_macro   0x0000000000000000       0xca Src/main.o
  .debug_macro   0x0000000000000000      0x24b Src/main.o
- .debug_macro   0x0000000000000000       0x10 Src/main.o
  .debug_macro   0x0000000000000000       0x46 Src/main.o
  .debug_macro   0x0000000000000000       0x10 Src/main.o
- .group         0x0000000000000000        0xc Src/mouse.o
- .group         0x0000000000000000        0xc Src/mouse.o
  .group         0x0000000000000000        0xc Src/mouse.o
  .group         0x0000000000000000        0xc Src/mouse.o
  .group         0x0000000000000000        0xc Src/mouse.o
@@ -8573,9 +8559,9 @@ Discarded input sections
  .debug_aranges
                 0x0000000000000000       0x58 Src/mouse.o
  .debug_ranges  0x0000000000000000       0x48 Src/mouse.o
- .debug_macro   0x0000000000000000      0x513 Src/mouse.o
+ .debug_macro   0x0000000000000000      0x51e Src/mouse.o
  .debug_macro   0x0000000000000000      0xaa2 Src/mouse.o
- .debug_macro   0x0000000000000000       0x10 Src/mouse.o
+ .debug_macro   0x0000000000000000      0x174 Src/mouse.o
  .debug_macro   0x0000000000000000      0x17f Src/mouse.o
  .debug_macro   0x0000000000000000      0x1a6 Src/mouse.o
  .debug_macro   0x0000000000000000       0x33 Src/mouse.o
@@ -8597,9 +8583,8 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x35 Src/mouse.o
  .debug_macro   0x0000000000000000       0x34 Src/mouse.o
  .debug_macro   0x0000000000000000       0x16 Src/mouse.o
- .debug_macro   0x0000000000000000       0x97 Src/mouse.o
+ .debug_macro   0x0000000000000000       0x35 Src/mouse.o
  .debug_macro   0x0000000000000000      0x339 Src/mouse.o
- .debug_macro   0x0000000000000000       0xfd Src/mouse.o
  .debug_macro   0x0000000000000000       0x10 Src/mouse.o
  .debug_macro   0x0000000000000000       0x52 Src/mouse.o
  .debug_macro   0x0000000000000000       0x1f Src/mouse.o
@@ -8661,7 +8646,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x19 Src/mouse.o
  .debug_macro   0x0000000000000000       0xcf Src/mouse.o
  .debug_macro   0x0000000000000000       0x16 Src/mouse.o
- .debug_macro   0x0000000000000000       0x35 Src/mouse.o
  .debug_macro   0x0000000000000000       0x16 Src/mouse.o
  .debug_macro   0x0000000000000000       0x29 Src/mouse.o
  .debug_macro   0x0000000000000000       0x16 Src/mouse.o
@@ -8674,7 +8658,6 @@ Discarded input sections
  .debug_frame   0x0000000000000000       0xb4 Src/mouse.o
  .ARM.attributes
                 0x0000000000000000       0x34 Src/mouse.o
- .group         0x0000000000000000        0xc Src/scan.o
  .group         0x0000000000000000        0xc Src/scan.o
  .group         0x0000000000000000        0xc Src/scan.o
  .group         0x0000000000000000        0xc Src/scan.o
@@ -8792,7 +8775,7 @@ Discarded input sections
  .debug_aranges
                 0x0000000000000000       0x40 Src/scan.o
  .debug_ranges  0x0000000000000000       0xe8 Src/scan.o
- .debug_macro   0x0000000000000000      0x556 Src/scan.o
+ .debug_macro   0x0000000000000000      0x561 Src/scan.o
  .debug_macro   0x0000000000000000      0xaa2 Src/scan.o
  .debug_macro   0x0000000000000000       0x22 Src/scan.o
  .debug_macro   0x0000000000000000       0x4c Src/scan.o
@@ -8867,7 +8850,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x1df Src/scan.o
  .debug_macro   0x0000000000000000      0x115 Src/scan.o
  .debug_macro   0x0000000000000000      0x12c Src/scan.o
- .debug_macro   0x0000000000000000       0x10 Src/scan.o
  .debug_macro   0x0000000000000000       0xf4 Src/scan.o
  .debug_macro   0x0000000000000000      0x168 Src/scan.o
  .debug_macro   0x0000000000000000       0xe4 Src/scan.o
@@ -8990,7 +8972,6 @@ Discarded input sections
  .group         0x0000000000000000        0xc Src/screen.o
  .group         0x0000000000000000        0xc Src/screen.o
  .group         0x0000000000000000        0xc Src/screen.o
- .group         0x0000000000000000        0xc Src/screen.o
  .text          0x0000000000000000        0x0 Src/screen.o
  .data          0x0000000000000000        0x0 Src/screen.o
  .bss           0x0000000000000000       0x16 Src/screen.o
@@ -9016,7 +8997,7 @@ Discarded input sections
  .debug_aranges
                 0x0000000000000000       0x50 Src/screen.o
  .debug_ranges  0x0000000000000000       0x58 Src/screen.o
- .debug_macro   0x0000000000000000      0x50e Src/screen.o
+ .debug_macro   0x0000000000000000      0x519 Src/screen.o
  .debug_macro   0x0000000000000000      0xaa2 Src/screen.o
  .debug_macro   0x0000000000000000       0x18 Src/screen.o
  .debug_macro   0x0000000000000000       0x22 Src/screen.o
@@ -9111,7 +9092,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x71 Src/screen.o
  .debug_macro   0x0000000000000000      0x1c3 Src/screen.o
  .debug_macro   0x0000000000000000       0xca Src/screen.o
- .debug_macro   0x0000000000000000       0x10 Src/screen.o
  .debug_line    0x0000000000000000      0xe89 Src/screen.o
  .debug_str     0x0000000000000000    0xe5489 Src/screen.o
  .comment       0x0000000000000000       0x1e Src/screen.o
@@ -9480,25 +9460,29 @@ Discarded input sections
                 0x0000000000000000       0x34 Src/ssd1306.o
  .group         0x0000000000000000        0xc Src/states.o
  .group         0x0000000000000000        0xc Src/states.o
- .group         0x0000000000000000        0xc Src/states.o
  .text          0x0000000000000000        0x0 Src/states.o
  .data          0x0000000000000000        0x0 Src/states.o
  .bss           0x0000000000000000        0x0 Src/states.o
- .text.runFSM   0x0000000000000000       0x2e Src/states.o
- .debug_info    0x0000000000000000      0x1b1 Src/states.o
- .debug_abbrev  0x0000000000000000      0x104 Src/states.o
- .debug_loc     0x0000000000000000       0x22 Src/states.o
+ .text.run_FSM  0x0000000000000000       0x2e Src/states.o
+ .text.get_state_data
+                0x0000000000000000        0x4 Src/states.o
+ .text.set_state_data
+                0x0000000000000000        0x4 Src/states.o
+ .text.init_FSM
+                0x0000000000000000       0x28 Src/states.o
+ .debug_info    0x0000000000000000      0x26f Src/states.o
+ .debug_abbrev  0x0000000000000000      0x19a Src/states.o
+ .debug_loc     0x0000000000000000       0x8c Src/states.o
  .debug_aranges
-                0x0000000000000000       0x20 Src/states.o
- .debug_ranges  0x0000000000000000       0x10 Src/states.o
- .debug_macro   0x0000000000000000       0x23 Src/states.o
+                0x0000000000000000       0x38 Src/states.o
+ .debug_ranges  0x0000000000000000       0x40 Src/states.o
+ .debug_macro   0x0000000000000000       0x30 Src/states.o
  .debug_macro   0x0000000000000000      0xaa2 Src/states.o
- .debug_macro   0x0000000000000000       0x10 Src/states.o
  .debug_macro   0x0000000000000000      0x174 Src/states.o
- .debug_line    0x0000000000000000      0x121 Src/states.o
- .debug_str     0x0000000000000000     0x31b3 Src/states.o
+ .debug_line    0x0000000000000000      0x1ac Src/states.o
+ .debug_str     0x0000000000000000     0x325c Src/states.o
  .comment       0x0000000000000000       0x1e Src/states.o
- .debug_frame   0x0000000000000000       0x28 Src/states.o
+ .debug_frame   0x0000000000000000       0x64 Src/states.o
  .ARM.attributes
                 0x0000000000000000       0x34 Src/states.o
  .group         0x0000000000000000        0xc Src/stm32f4xx_hal_msp.o
@@ -12270,7 +12254,7 @@ OUTPUT(V2.0.elf elf32-littlearm)
  .debug_ranges  0x0000000000001900       0xa8 Src/ws2812b.o
  .debug_ranges  0x00000000000019a8       0x20 startup/startup_stm32f429xx.o
 
-.debug_macro    0x0000000000000000    0x29ee1
+.debug_macro    0x0000000000000000    0x29eec
  .debug_macro   0x0000000000000000      0x3e5 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
  .debug_macro   0x00000000000003e5      0xaa2 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
  .debug_macro   0x0000000000000e87      0x17f Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
@@ -12380,17 +12364,17 @@ OUTPUT(V2.0.elf elf32-littlearm)
  .debug_macro   0x0000000000027b4a      0x273 Middlewares/Third_Party/FreeRTOS/Source/tasks.o
  .debug_macro   0x0000000000027dbd       0x11 Middlewares/Third_Party/FreeRTOS/Source/tasks.o
  .debug_macro   0x0000000000027dce      0x1ad Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.o
- .debug_macro   0x0000000000027f7b      0x588 Src/main.o
- .debug_macro   0x0000000000028503       0x10 Src/main.o
- .debug_macro   0x0000000000028513       0x76 Src/main.o
- .debug_macro   0x0000000000028589      0x385 Src/stm32f4xx_hal_msp.o
- .debug_macro   0x000000000002890e      0x443 Src/stm32f4xx_it.o
- .debug_macro   0x0000000000028d51      0x38b Src/system_stm32f4xx.o
- .debug_macro   0x00000000000290dc      0x42e Src/usbd_conf.o
- .debug_macro   0x000000000002950a      0x4dd Src/visEffect.o
- .debug_macro   0x00000000000299e7       0x64 Src/visEffect.o
- .debug_macro   0x0000000000029a4b       0x16 Src/visEffect.o
- .debug_macro   0x0000000000029a61      0x480 Src/ws2812b.o
+ .debug_macro   0x0000000000027f7b      0x593 Src/main.o
+ .debug_macro   0x000000000002850e       0x10 Src/main.o
+ .debug_macro   0x000000000002851e       0x76 Src/main.o
+ .debug_macro   0x0000000000028594      0x385 Src/stm32f4xx_hal_msp.o
+ .debug_macro   0x0000000000028919      0x443 Src/stm32f4xx_it.o
+ .debug_macro   0x0000000000028d5c      0x38b Src/system_stm32f4xx.o
+ .debug_macro   0x00000000000290e7      0x42e Src/usbd_conf.o
+ .debug_macro   0x0000000000029515      0x4dd Src/visEffect.o
+ .debug_macro   0x00000000000299f2       0x64 Src/visEffect.o
+ .debug_macro   0x0000000000029a56       0x16 Src/visEffect.o
+ .debug_macro   0x0000000000029a6c      0x480 Src/ws2812b.o
 
 .debug_line     0x0000000000000000    0x230d2
  .debug_line    0x0000000000000000      0xa5c Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o

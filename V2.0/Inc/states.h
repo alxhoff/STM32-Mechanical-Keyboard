@@ -9,6 +9,7 @@
 #define STATES_H_
 
 //KEYBOARD STATES
+#include <stddef.h>
 
 #define ADD_STATE( STATE_STRUCT )
 
@@ -39,7 +40,8 @@ typedef struct state_machine{
 	state_t			*current_state;
 	state_t			*next_state;
 
-	state_t			*state_head;
+	state_t			*states;
+	size_t			count;
 } state_machine_t;
 
 typedef enum{
