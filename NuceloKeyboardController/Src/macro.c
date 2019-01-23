@@ -34,7 +34,7 @@ int8_t state_macro_set( keymap_list_t* layer_list )
 	//TODO LIGHTS
 	macro_entry_t* new_macro = macro_allocate_new_macro( keyboard_devs->macro_table );
 	new_macro->key_code = macro_key; //GOOD
-	new_macro->keypress_string =
+	new_macro->string =
 			scan_get_input_seq( keyboard_devs->keyboard,
 					keyboard_devs->layer_list, KEY(MACRO_S) );
 
@@ -89,9 +89,9 @@ int8_t macro_table_add_entry( macro_table_t* table, macro_entry_t* entry )
 	if(new_entry == NULL) return -ENOMEM;
 
 	new_entry->key_code = entry->key_code;
-	new_entry->keypress_string = (char*)malloc(sizeof(char) *
-			(strlen(entry->keypress_string) +1 ));
-	strcpy(new_entry->keypress_string, entry->keypress_string);
+	new_entry->string = (char*)malloc(sizeof(char) *
+			(strlen(entry->string) +1 ));
+	strcpy(new_entry->string, entry->string);
 
 	if(table->count == 0){
 		table->head = new_entry;
@@ -145,15 +145,15 @@ int8_t macro_execute_macro( macro_table_t* table, macro_entry_t* macro )
 	};
 
 	uint16_t i = 0;
-	while(macro->keypress_string[i] != '\0'){
-		if(i >=1 && macro->keypress_string[i] == macro->keypress_string[i-1]){
+	while(macro->string[i] != '\0'){
+		if(i >=1 && macro->string[i] == macro->string[i-1]){
 //			macro_report.key1 = 0;
 			macro_send_blank( &macro_report );
 			USBD_HID_SendReport(&hUsbDeviceFS, &macro_report, sizeof(keyboardHID_t));
 			vTaskDelay(16);
 		}
-		macro_report.key1 =	lookup_sc[(uint8_t)macro->keypress_string[i]].scanCode;
-		macro_report.modifiers = lookup_sc[(uint8_t)macro->keypress_string[i]].modifier;
+		macro_report.key1 =	lookup_sc[(uint8_t)macro->string[i]].code;
+		macro_report.modifiers = lookup_sc[(uint8_t)macro->string[i]].mod;
 		USBD_HID_SendReport(&hUsbDeviceFS, &macro_report, sizeof(keyboardHID_t));
 
 		vTaskDelay(16);
@@ -183,7 +183,7 @@ macro_entry_t* macro_allocate_new_macro( macro_table_t* table )
 	if(new == NULL)
 		return NULL;
 
-	new->keypress_string = NULL;
+	new->string = NULL;
 	new->next = NULL;
 	new->key_code = NULL;
 

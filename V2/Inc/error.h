@@ -47,7 +47,8 @@ typedef enum {
 	EUSB			= 2,
 	EBUFF			= 3,
 	EADC			= 4,
-	ENOINIT			= 5
+	ENOINIT			= 5,
+	ESEND			= 6,
 } err_codes_t;
 
 #endif /* ERROR_H_ */

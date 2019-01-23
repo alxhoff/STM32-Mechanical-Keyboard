@@ -60,7 +60,6 @@ Src/AT24Cxx_stm32_hal.o: ../Src/AT24Cxx_stm32_hal.c \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/usbd_conf.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keyboard.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/datatypes.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/error.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/states.h
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/AT24Cxx_stm32_hal.h:
@@ -184,7 +183,5 @@ Src/AT24Cxx_stm32_hal.o: ../Src/AT24Cxx_stm32_hal.c \
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keyboard.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/datatypes.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/error.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/states.h:

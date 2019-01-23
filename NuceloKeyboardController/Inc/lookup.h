@@ -15,8 +15,8 @@
 
 struct scan_code
 {
-	uint8_t scanCode;
-	uint8_t modifier;
+	uint8_t code;
+	uint8_t mod;
 };
 
 struct scan_code_char

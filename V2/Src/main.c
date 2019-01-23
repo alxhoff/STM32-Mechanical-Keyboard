@@ -159,10 +159,7 @@ int main(void)
 //  		  }
 //  	  }
 
-	GPIO_TypeDef* row_ports[] =
-	{ ROW_PORT_0, ROW_PORT_1, ROW_PORT_2, ROW_PORT_3, ROW_PORT_4 };
-	uint16_t row_pins[] =
-	{ ROW_PIN_0, ROW_PIN_1, ROW_PIN_2, ROW_PIN_3, ROW_PIN_4 };
+
 
 	keyboard_init(keyboard_devs, row_ports, row_pins);
 
@@ -175,14 +172,12 @@ int main(void)
 
 	SN54HC595_init_obj(&shift_array);
 
+	//Keymap init
 	keymap_list_init(&keymap_init0);
+	keymap_list_append_layer(&keymap_init1);
+	keymap_list_append_layer(&keymap_init2);
 
-	layer_list_append_layer(keyboard_devs->layer_list, &keymap_init1);
-
-	layer_list_append_layer(keyboard_devs->layer_list, &keymap_init2);
-
-	layer_table_init(keyboard_devs->layer_list);
-
+	//TODO
 	macro_init(keyboard_devs);
 
 	macro_entry_t test_macro =

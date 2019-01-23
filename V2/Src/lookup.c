@@ -421,3 +421,13 @@ struct scan_code lookup_sc[127] = {
 	[126]={SC(NON_US_HASHMARK_AND_TILDE),MOD(RIGHTSHIFT)}
 };
 
+unsigned char lookup_get_key(unsigned char character)
+{
+	return lookup_sc[character].code;
+}
+
+unsigned char lookup_get_mod(unsigned char character)
+{
+	return lookup_sc[character].mod;
+}
+

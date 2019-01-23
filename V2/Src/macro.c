@@ -7,26 +7,34 @@
 
 #include <stdio.h>
 
-#include "scan.h"
 #include "macro.h"
 #include "lookup.h"
-#include "extern.h"
+#include "keyboard.h"
 
-int8_t state_enter_macro_set()
+typedef struct macro_table{
+	macro_entry_t 	*head;
+	macro_entry_t 	*tail;
+
+	int 			count;
+} macro_table_t;
+
+macro_table_t macro_dev = {0};
+
+unsigned char state_enter_macro_set()
 {
 	current_keyboard_state = macro_set;
 	vTaskDelay(200);
 	return 0;
 }
 
-int8_t state_exit_macro_set()
+unsigned char state_exit_macro_set()
 {
 	current_keyboard_state = typing;
 	vTaskDelay(200);
 	return 0;
 }
 
-int8_t state_macro_set( keymap_list_t* layer_list )
+unsigned char state_macro_set( keymap_list_t* layer_list )
 {
 	HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
 
@@ -34,7 +42,7 @@ int8_t state_macro_set( keymap_list_t* layer_list )
 	//TODO LIGHTS
 	macro_entry_t* new_macro = macro_allocate_new_macro( keyboard_devs->macro_table );
 	new_macro->key_code = macro_key; //GOOD
-	new_macro->keypress_string =
+	new_macro->string =
 			scan_get_input_seq( keyboard_devs->keyboard,
 					keyboard_devs->layer_list, KEY(MACRO_S) );
 
@@ -45,7 +53,7 @@ int8_t state_macro_set( keymap_list_t* layer_list )
 	return 0;
 }
 
-int8_t state_enter_macro_run()
+unsigned char state_enter_macro_run()
 {
 	current_keyboard_state = macro_run;
 	vTaskDelay(200);
@@ -53,13 +61,13 @@ int8_t state_enter_macro_run()
 	return 0;
 }
 
-int8_t state_exit_macro_run()
+unsigned char state_exit_macro_run()
 {
 	current_keyboard_state = typing;
 	return 0;
 }
 
-int8_t state_macro_run( keymap_list_t* layer_list )
+unsigned char state_macro_run( keymap_list_t* layer_list )
 {
 	HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
 
@@ -74,86 +82,67 @@ int8_t state_macro_run( keymap_list_t* layer_list )
 	return 0;
 }
 
-int8_t macro_init( key_devices_t* key_devs )
+unsigned char macro_table_add_entry( char *string, scan_code_t *sc )
 {
-	key_devs->macro_table = (macro_table_t*) calloc(1, sizeof(macro_table_t));
-	if(key_devs->macro_table == NULL)
+	char *string_cpy = malloc(sizeof(char) * (strlen(string) + 1));
+	if(!string_cpy)
 		return -ENOMEM;
 
-	return 0;
-}
+	macro_entry_t *macro = calloc(1, sizeof(macro_entry_t));
+	if(!macro)
+		goto macro_error;
 
-int8_t macro_table_add_entry( macro_table_t* table, macro_entry_t* entry )
-{
-	macro_entry_t* new_entry = (macro_entry_t*)calloc(1, sizeof(macro_entry_t));
-	if(new_entry == NULL) return -ENOMEM;
+	strcpy(string_cpy, string);
+	memcpy(&macro->key_code, sc, sizeof(scan_code_t));
 
-	new_entry->key_code = entry->key_code;
-	new_entry->keypress_string = (char*)malloc(sizeof(char) *
-			(strlen(entry->keypress_string) +1 ));
-	strcpy(new_entry->keypress_string, entry->keypress_string);
-
-	if(table->count == 0){
-		table->head = new_entry;
-	}else{
-		macro_entry_t* last = macro_table_get_last(table);
-		last->next = new_entry;
+	if(!macro_dev.head){
+		macro_dev.head = macro;
+		macro_dev.tail = macro;
 	}
 
-	table->count++;
-
 	return 0;
+
+macro_error:
+	free(string_cpy);
+	return -ENOMEM;
 }
 
-macro_entry_t* macro_table_get_last( macro_table_t* table )
+macro_entry_t* macro_get_last(void)
 {
-	if(table->count == 0)
-		return NULL;
-
-	macro_entry_t* head = table->head;
-
-	while(head->next != NULL)
-		head = head->next;
-
-	return head;
+	return macro_dev.tail;
 }
 
-macro_entry_t* macro_table_get_w_key_code( macro_table_t* table, key_code key )
+macro_entry_t* macro_get_sc(scan_code_t *sc)
 {
-	macro_entry_t* head = table->head;
+	macro_entry_t *head = macro_dev->head;
 
-	while(head->key_code != key){
+test:
+	if(memcmp(&head->key_code, sc, sizeof(scan_code_t)))
+		return head;
+
+	while(head->next){
 		head = head->next;
-		if(head == NULL)
-			return NULL;
+		goto test;
 	}
 
-	return head;
+	return NULL;
 }
 
-int8_t macro_execute_macro( macro_table_t* table, macro_entry_t* macro )
+unsigned char macro_execute_macro( macro_entry_t* macro )
 {
 	static keyboardHID_t macro_report = {
-			.id = 1,
-			.key1 = 0,
-			.key2 = 0,
-			.key3 = 0,
-			.key4 = 0,
-			.key5 = 0,
-			.key6 = 0,
-			.modifiers = 0
+			.id = 1
 	};
 
-	uint16_t i = 0;
-	while(macro->keypress_string[i] != '\0'){
-		if(i >=1 && macro->keypress_string[i] == macro->keypress_string[i-1]){
-//			macro_report.key1 = 0;
-			macro_send_blank( &macro_report );
-			USBD_HID_SendReport(&hUsbDeviceFS, &macro_report, sizeof(keyboardHID_t));
+	unsigned int i = 0;
+
+	while(macro->string[i] != '\0'){
+		if(i && macro->string[i] == macro->string[i-1]){
+			keyboard_send_blank( &macro_report );
 			vTaskDelay(16);
 		}
-		macro_report.key1 =	lookup_sc[(uint8_t)macro->keypress_string[i]].scanCode;
-		macro_report.modifiers = lookup_sc[(uint8_t)macro->keypress_string[i]].modifier;
+		macro_report.key1 =	lookup_get_key((unsigned char)macro->string[i]);
+		macro_report.modifiers = lookup_get_mod((unsigned char)macro->string[i]);
 		USBD_HID_SendReport(&hUsbDeviceFS, &macro_report, sizeof(keyboardHID_t));
 
 		vTaskDelay(16);
@@ -162,34 +151,4 @@ int8_t macro_execute_macro( macro_table_t* table, macro_entry_t* macro )
 	macro_send_blank( &macro_report );
 
 	return 0;
-}
-
-int8_t macro_send_blank( keyboardHID_t* macro_report )
-{
-	uint8_t* reset = &macro_report->key1;
-	for(uint8_t i =0; i< 6; i++){
-		*reset = 0;
-		reset += sizeof(macro_report->key1);
-	}
-	macro_report->modifiers = 0;
-	USBD_HID_SendReport(&hUsbDeviceFS, macro_report, sizeof(keyboardHID_t));
-
-	return 0;
-}
-
-macro_entry_t* macro_allocate_new_macro( macro_table_t* table )
-{
-	macro_entry_t* new = (macro_entry_t*) malloc(sizeof(macro_entry_t));
-	if(new == NULL)
-		return NULL;
-
-	new->keypress_string = NULL;
-	new->next = NULL;
-	new->key_code = NULL;
-
-	//TODO empty table check
-	macro_entry_t* last = macro_table_get_last( table );
-
-	last->next = new;
-	return new;
 }

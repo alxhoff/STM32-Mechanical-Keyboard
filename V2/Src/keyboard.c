@@ -12,8 +12,18 @@
 #include "types.h"
 #include "ssd1306.h"
 
-void keyboard_init_status_LEDs(void){
+#include "config.h"
+#include "keyboard_private.h"
 
+keyboard_device_t keyboard_dev = {
+		.row_ports = { ROW_PORT_0, ROW_PORT_1, ROW_PORT_2, ROW_PORT_3, ROW_PORT_4 },
+		.row_pins = { ROW_PIN_0, ROW_PIN_1, ROW_PIN_2, ROW_PIN_3, ROW_PIN_4 },
+		.keyboard_report_ID = 1,
+		.media_report_ID = 2,
+};
+
+void keyboard_init_status_LEDS(void)
+{
 	  GPIO_InitTypeDef GPIO_InitStruct;
 
 	  /*Configure GPIO pin : PA15 */
@@ -38,58 +48,53 @@ void keyboard_init_status_LEDs(void){
 	  HAL_GPIO_Init(FUNC_STATUS_PORT, &GPIO_InitStruct);
 }
 
-int8_t keyboard_init(key_devices_t* keyboard_devices,
-		GPIO_TypeDef* row_ports[KEYBOARD_ROWS], uint16_t row_pins[KEYBOARD_ROWS])
+void keyboard_init_row_inputs(void)
 {
-
-	keyboard_devices->keyboard =
-			(keyboard_device_t*)calloc(1, sizeof(keyboard_device_t));
-	if(keyboard_devices->keyboard == NULL)
-		return key_init_err;
-
-	memcpy(keyboard_devices->keyboard->col_ports, row_ports,
-				sizeof(GPIO_TypeDef*) * KEYBOARD_ROWS);
-
-	memcpy(keyboard_devices->keyboard->col_pins, row_pins,
-				sizeof(uint16_t) * KEYBOARD_ROWS);
-
 	GPIO_InitTypeDef GPIO_InitStruct;
 
 	//INIT ROWS - input
-	for(uint8_t i=0; i<KEYBOARD_ROWS; i++){
+	for(unsigned char i=0; i<KEYBOARD_ROWS; i++){
 		GPIO_InitStruct.Pin = row_pins[i];
 		GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
 		GPIO_InitStruct.Pull = GPIO_PULLDOWN;
 		HAL_GPIO_Init(row_ports[i], &GPIO_InitStruct);
 	}
+}
 
-	//HID DATA
-	keyboard_devices->keyboard_HID =
-			(keyboard_HID_data_t*)calloc(1, sizeof(keyboard_HID_data_t));
-	if(keyboard_devices->keyboard_HID == NULL)
-		return key_init_err;
+int8_t keyboard_init(GPIO_TypeDef* row_ports[KEYBOARD_ROWS],
+		uint16_t row_pins[KEYBOARD_ROWS])
 
-	keyboard_devices->keyboard_HID->keyboard_report.id = 1;
-	keyboard_devices->keyboard_HID->keyboard_state = inactive;
-	keyboard_devices->keyboard_HID->media_report.id = 2;
-	keyboard_devices->keyboard_HID->media_state = inactive;
+{
+	keyboard_init_status_LEDs();
+	keyboard_init_row_inputs();
 
-	keyboard_devices->keyboard_HID->out_buf.key_buf.count = 0;
-	keyboard_devices->keyboard_HID->out_buf.med_buf.count = 0;
-	keyboard_devices->keyboard_HID->out_buf.mod_buf = 0;
 
-	for(int i=0; i<6; i++)
-		keyboard_devices->keyboard_HID->prev_keys[i] = 0;
-
-	keyboard_devices->keyboard_HID->prev_report_len = 0;
-	keyboard_devices->keyboard_HID->key_buf.index=0;
-	keyboard_devices->keyboard_HID->out_buf.key_buf.count = 0;
-	keyboard_devices->keyboard_HID->out_buf.med_buf.count = 0;
-
-	current_keyboard_state = typing;
+//	//HID DATA
+//	keyboard_devices->keyboard_HID =
+//			(keyboard_HID_data_t*)calloc(1, sizeof(keyboard_HID_data_t));
+//	if(keyboard_devices->keyboard_HID == NULL)
+//		return key_init_err;
+//
+//	keyboard_devices->keyboard_HID->keyboard_report.id = 1;
+//	keyboard_devices->keyboard_HID->keyboard_state = inactive;
+//	keyboard_devices->keyboard_HID->media_report.id = 2;
+//	keyboard_devices->keyboard_HID->media_state = inactive;
+//
+//	keyboard_devices->keyboard_HID->out_buf.key_buf.count = 0;
+//	keyboard_devices->keyboard_HID->out_buf.med_buf.count = 0;
+//	keyboard_devices->keyboard_HID->out_buf.mod_buf = 0;
+//
+//	for(int i=0; i<6; i++)
+//		keyboard_devices->keyboard_HID->prev_keys[i] = 0;
+//
+//	keyboard_devices->keyboard_HID->prev_report_len = 0;
+//	keyboard_devices->keyboard_HID->key_buf.index=0;
+//	keyboard_devices->keyboard_HID->out_buf.key_buf.count = 0;
+//	keyboard_devices->keyboard_HID->out_buf.med_buf.count = 0;
+//
+//	current_keyboard_state = typing;
 
 	//status LEDs
-	keyboard_init_status_LEDs();
 
 	return 0;
 }
@@ -122,7 +127,7 @@ int8_t process_key_buf(keyboard_HID_data_t* data, keymap_list_t* layer_list)
 
 	//TODO PUT INTO STATE FUNCTIONS
 	//iterate through buffer and translate
-	for(uint8_t i=0;i<data->key_buf.index;i++){
+	for(unsigned char i=0;i<data->key_buf.index;i++){
 		//TODO capslock
 		//get character
 		data->key_buf.buffer[i].key_code =
@@ -216,21 +221,21 @@ int8_t process_key_buf(keyboard_HID_data_t* data, keymap_list_t* layer_list)
 signed int reset_buffer(six_key_buffer_t* buffer_to_reset)
 {
 	buffer_to_reset->count=0;
-	for(uint8_t i=0;i<6;i++){
+	for(unsigned char i=0;i<6;i++){
 		buffer_to_reset->keys[i].key_code = 0;
 	}
 	return 0;
 }
 
-int8_t keyboard_prepare_report( keyboard_HID_data_t* data )
+unsigned char keyboard_prepare_report( keyboard_HID_data_t* data )
 {
-	for(uint8_t i = 0; i < data->out_buf.key_buf.count; i++){
-		*(&data->keyboard_report.key1 + i * sizeof(uint8_t)) = data->out_buf.key_buf.keys[i].key_code;
-		data->prev_keys[i] = *(&data->keyboard_report.key1 + i * sizeof(uint8_t));
+	for(unsigned char i = 0; i < data->out_buf.key_buf.count; i++){
+		*(&data->keyboard_report.key1 + i * sizeof(unsigned char)) = data->out_buf.key_buf.keys[i].key_code;
+		data->prev_keys[i] = *(&data->keyboard_report.key1 + i * sizeof(unsigned char));
 	}
-	for(uint8_t i = data->out_buf.key_buf.count; i<6 ; i++){
-		*(&data->keyboard_report.key1 + i * sizeof(uint8_t)) = 0x00;
-		data->prev_keys[i] = *(&data->keyboard_report.key1 + i * sizeof(uint8_t));
+	for(unsigned char i = data->out_buf.key_buf.count; i<6 ; i++){
+		*(&data->keyboard_report.key1 + i * sizeof(unsigned char)) = 0x00;
+		data->prev_keys[i] = *(&data->keyboard_report.key1 + i * sizeof(unsigned char));
 	}
 
 	data->keyboard_report.modifiers = data->out_buf.mod_buf;
@@ -238,15 +243,24 @@ int8_t keyboard_prepare_report( keyboard_HID_data_t* data )
 	return 0;
 }
 
-int8_t media_prepare_report( keyboard_HID_data_t* data )
+unsigned char media_prepare_report( keyboard_HID_data_t* data )
 {
-	for(uint8_t i = 0; i < data->out_buf.med_buf.count; i++)
+	for(unsigned char i = 0; i < data->out_buf.med_buf.count; i++)
 		data->media_report.keys = data->out_buf.med_buf.key.key_code;
 
 	return 0;
 }
 
-int8_t send_keyboard_report( keyboard_HID_data_t* data, report_type type )
+unsigned char keyboard_send_blank(void)
+{
+	static const keyboardHID_t blank = {0};
+	if(USBD_HID_SendReport(&hUsbDeviceFS, &blank, sizeof(keyboardHID_t)))
+		return -ESEND;
+
+	return 0;
+}
+
+unsigned char send_keyboard_report( keyboard_HID_data_t* data, report_type type )
 {
 	switch(type){
 	case keyboard:
@@ -272,7 +286,7 @@ int8_t send_keyboard_report( keyboard_HID_data_t* data, report_type type )
 	return 0;
 }
 
-int8_t process_keyboard_flags ( keyboard_HID_data_t* data )
+unsigned char process_keyboard_flags ( keyboard_HID_data_t* data )
 {
 	if(data->keyboard_state == active){
 		keyboard_prepare_report(data);
@@ -293,9 +307,9 @@ int8_t process_keyboard_flags ( keyboard_HID_data_t* data )
 	return 0;
 }
 
-uint8_t process_single_key( keymap_list_t* layer_list, uint8_t col, uint8_t row )
+unsigned char process_single_key( keymap_list_t* layer_list, unsigned char col, unsigned char row )
 {
-	uint8_t ret = 0;
+	unsigned char ret = 0;
 	ret = layer_list->layer_head->grid[row][col];
 	if(ret)
 		return ret;
@@ -318,7 +332,7 @@ void clear_keyboard_report(  keyboard_HID_data_t* data )
 		data->media_report.keys = 0;
 }
 
-void display_int_on_screen(uint8_t col, uint8_t row)
+void display_int_on_screen(unsigned char col, unsigned char row)
 {
 	static char col_str[10];
 	static char row_str[10];

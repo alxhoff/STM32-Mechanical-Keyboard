@@ -13,11 +13,11 @@
 #define SC(key) HID_KEYBOARD_SC_##key
 #define MOD(key) HID_KEYBOARD_MODIFIER_##key
 
-struct scan_code
+typedef struct scan_code
 {
-	uint8_t scanCode;
-	uint8_t modifier;
-};
+	unsigned char code;
+	unsigned char mod;
+} scan_code_t;
 
 struct scan_code_char
 {
@@ -25,7 +25,5 @@ struct scan_code_char
 	char* modified;
 };
 
-extern struct scan_code_char lookup_char[207];
-extern struct scan_code lookup_sc[127];
 
 #endif /* LOOKUP_H_ */
