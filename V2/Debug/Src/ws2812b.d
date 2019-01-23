@@ -36,6 +36,7 @@ Src/ws2812b.o: ../Src/ws2812b.c \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/ws2812b.h \
+ /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/config.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/ws2812b.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h \
@@ -53,8 +54,7 @@ Src/ws2812b.o: ../Src/ws2812b.c \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keyboard_config.h
+ /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 
@@ -130,6 +130,8 @@ Src/ws2812b.o: ../Src/ws2812b.c \
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/ws2812b.h:
 
+/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/config.h:
+
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/ws2812b.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h:
@@ -165,5 +167,3 @@ Src/ws2812b.o: ../Src/ws2812b.c \
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keyboard_config.h:

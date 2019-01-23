@@ -140,8 +140,7 @@ int keymap_list_prepend_layer(keymap_layer_t *layer)
 	return 0;
 }
 
-int keymap_list_add_pos(keymap_list_t *list,
-		keymap_layer_t *layer, unsigned char pos)
+int keymap_list_add_pos(keymap_layer_t *layer, unsigned char pos)
 {
 	//TODO
 }

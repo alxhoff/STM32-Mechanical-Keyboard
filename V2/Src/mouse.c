@@ -9,8 +9,7 @@
 #include "error.h"
 #include "stm32f4xx_hal.h"
 #include "cmsis_os.h"
-
-mouse_device_t *mouse_dev;
+#include "usb_device.h"
 
 typedef struct buf{
 	signed long x;
@@ -26,42 +25,30 @@ typedef struct mouse_device{
 
 	buf_t buf;
 
-	report_states state;
 } mouse_device_t;
 
-unsigned char mouse_init(void)
+mouse_device_t mouse_dev = {0};
+
+unsigned char mouse_get_coord(mouse_coord_t *coord)
 {
-	mouse_dev = calloc(1, sizeof(mouse_device_t));
-	if(mouse_dev) return -ENOMEM;
 
-	mouse_dev->buf.x=0;
-	mouse_dev->buf.y=0;
-	mouse_dev->state=inactive;
+	if(HAL_ADC_Start(mouse_dev.adc_x) != HAL_OK)
+		return -EADC;
 
-	return 0;
-}
+	if(HAL_ADC_Start(mouse_dev.adc_y) != HAL_OK)
+		return -EADC;
 
-mouse_coord_t mouse_get_coord(void)
-{
-	mouse_coord_t ret = {0};
+	if(HAL_ADC_PollForConversion(mouse_dev.adc_x, 50) != HAL_OK)
+		return -EADC;
 
-	if(HAL_ADC_Start(mouse_dev->adc_x) != HAL_OK)
-		return NULL;
+	if(HAL_ADC_PollForConversion(mouse_dev.adc_y, 50) != HAL_OK)
+		return -EADC;
 
-	if(HAL_ADC_Start(mouse_dev->adc_y) != HAL_OK)
-		return NULL;
-
-	if(HAL_ADC_PollForConversion(mouse_dev->adc_x, 50) != HAL_OK)
-		return NULL;
-
-	if(HAL_ADC_PollForConversion(mouse_dev->adc_y, 50) != HAL_OK)
-		return NULL;
-
-	ret.x = ((signed long)HAL_ADC_GetValue(mouse_dev->adc_x) >> 4);
-	ret.y = ((signed long)HAL_ADC_GetValue(mouse_dev->adc_y) >> 4);
+	coord->x = ((signed long)HAL_ADC_GetValue(mouse_dev.adc_x) >> 4);
+	coord->y = ((signed long)HAL_ADC_GetValue(mouse_dev.adc_y) >> 4);
 
 	//TODO what is this?
-	mouse_dev->state = active;
+//	mouse_dev.state = active;
 
 	return 0;
 }
@@ -86,28 +73,28 @@ unsigned char calibrate_mouse(void)
 
 
 
-void process_buf ( mouse_HID_data_t* data )
+void process_buf(void)
 {
 	//TODO MOUSE DYNAMICS - exponential
 
 	//scale left and downwards ranges
-	if(mouse_dev->buf.x <= 155)
-		mouse_dev->buf.x *= 1.37;
+	if(mouse_dev.buf.x <= 155)
+		mouse_dev.buf.x *= 1.37;
 
-	if(mouse_dev->buf.y <= 155)
-		mouse_dev->buf.y *= 1.26;
+	if(mouse_dev.buf.y <= 155)
+		mouse_dev.buf.y *= 1.26;
 
 	//shift
-	mouse_dev->buf.x -= 167;
-	mouse_dev->buf.y -= 167;
+	mouse_dev.buf.x -= 167;
+	mouse_dev.buf.y -= 167;
 
 	//clear movements under 20 from center
 
-	if(mouse_dev->buf.x < 20 && mouse_dev->buf.x > -20)
-		mouse_dev->buf.x = 0;
+	if(mouse_dev.buf.x < 20 && mouse_dev.buf.x > -20)
+		mouse_dev.buf.x = 0;
 
-	if(mouse_dev->buf.y < 20 && mouse_dev->buf.y > -20)
-		mouse_dev->buf.y = 0;
+	if(mouse_dev.buf.y < 20 && mouse_dev.buf.y > -20)
+		mouse_dev.buf.y = 0;
 }
 
 mouse_HID_t mouse_prepare_report (void)
@@ -115,38 +102,39 @@ mouse_HID_t mouse_prepare_report (void)
 	mouse_HID_t ret = {0};
 
 	ret.buttons = mouse_get_buttons();
-	ret.coord = mouse_get_coord();
+	//TODO check sucess
+	mouse_get_coord(&ret.coord);
 	ret.wheel = mouse_get_buttons();
 
-	return 0;
+	return ret;
 }
 
 unsigned char mouse_send_report ( mouse_HID_t* data )
 {
 	USBD_HID_SendReport(&hUsbDeviceFS, &data, sizeof(mouse_HID_t));
-	mouse_dev->state = clearing;
+//	mouse_dev.state = clearing;
 	return 0;
 }
 
 unsigned char mouse_run (void)
 {
-	static mouse_HID_t data = NULL;
-	if(mouse_dev->state == active){
-		if(xSemaphoreTake( USB_send_lock, (TickType_t) portMAX_DELAY) == pdTRUE){
-			data = mouse_prepare_report();
-			mouse_send_report(&data);
-			mouse_dev->state = clearing;
-
-			xSemaphoreGive(USB_send_lock);
-		}
-
-	}else if( mouse_dev->state == clearing){
-		if(xSemaphoreTake( USB_send_lock, (TickType_t) portMAX_DELAY) == pdTRUE){
-			mouse_send_report(data);
-			mouse_dev->state = inactive;
-
-			xSemaphoreGive(USB_send_lock);
-		}
-	}
+//	static mouse_HID_t data = NULL;
+//	if(mouse_dev.state == active){
+//		if(xSemaphoreTake( USB_send_lock, (TickType_t) portMAX_DELAY) == pdTRUE){
+//			data = mouse_prepare_report();
+//			mouse_send_report(&data);
+////			mouse_dev.state = clearing;
+//
+//			xSemaphoreGive(USB_send_lock);
+//		}
+//
+//	}else if( mouse_dev.state == clearing){
+//		if(xSemaphoreTake( USB_send_lock, (TickType_t) portMAX_DELAY) == pdTRUE){
+//			mouse_send_report(data);
+////			mouse_dev.state = inactive;
+//
+//			xSemaphoreGive(USB_send_lock);
+//		}
+//	}
 	return 0;
 }

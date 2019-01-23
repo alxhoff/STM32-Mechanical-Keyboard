@@ -36,7 +36,8 @@ Src/SN54HC595.o: ../Src/SN54HC595.c \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/SN54HC595.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/config.h
+ /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/config.h \
+ /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/error.h
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 
@@ -113,3 +114,5 @@ Src/SN54HC595.o: ../Src/SN54HC595.c \
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/SN54HC595.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/config.h:
+
+/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/error.h:

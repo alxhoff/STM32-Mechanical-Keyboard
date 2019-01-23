@@ -1,6 +1,5 @@
 Src/mouse.o: ../Src/mouse.c \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/mouse.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/states.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/error.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/stm32f4xx_hal_conf.h \
@@ -38,8 +37,6 @@ Src/mouse.o: ../Src/mouse.c \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/error.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/extern.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/FreeRTOSConfig.h \
@@ -59,14 +56,9 @@ Src/mouse.o: ../Src/mouse.c \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/usb_device.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/usbd_conf.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keyboard_config.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keyboard.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/datatypes.h
+ /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/usbd_conf.h
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/mouse.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/states.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/error.h:
 
@@ -142,10 +134,6 @@ Src/mouse.o: ../Src/mouse.c \
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h:
 
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/error.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/extern.h:
-
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h:
@@ -185,9 +173,3 @@ Src/mouse.o: ../Src/mouse.c \
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/usbd_conf.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keyboard_config.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keyboard.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/datatypes.h:

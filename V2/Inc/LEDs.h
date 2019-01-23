@@ -52,7 +52,7 @@ typedef struct LED_array{
 	uint8_t count_row_direction;
 	uint8_t count_col_direction;
 
-	void (*update)(key_devices_t*);
+	void (*update)(void);
 } LED_array_t;
 
 #endif /* LEDS_H_ */

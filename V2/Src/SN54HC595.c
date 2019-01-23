@@ -9,139 +9,130 @@
 
 #include "stm32f4xx_hal.h"
 #include "SN54HC595.h"
+#include "error.h"
 
-void SN54HC595_init()
+#define CLOCK_SWITCH(PORT)		{if(PORT == GPIOA)\
+							__HAL_RCC_GPIOA_CLK_ENABLE();\
+						else if(PORT == GPIOB) \
+							__HAL_RCC_GPIOB_CLK_ENABLE();\
+						else if(PORT == GPIOC) \
+							__HAL_RCC_GPIOC_CLK_ENABLE();\
+						else if(PORT == GPIOD) \
+							__HAL_RCC_GPIOD_CLK_ENABLE();\
+						else if(PORT == GPIOE) \
+							__HAL_RCC_GPIOE_CLK_ENABLE();\
+						else if(PORT == GPIOF) \
+							__HAL_RCC_GPIOF_CLK_ENABLE();\
+						else if(PORT == GPIOG) \
+							__HAL_RCC_GPIOG_CLK_ENABLE();\
+						else if(PORT == GPIOH) \
+							__HAL_RCC_GPIOH_CLK_ENABLE();\
+						else if(PORT == GPIOI) \
+							__HAL_RCC_GPIOI_CLK_ENABLE();\
+						else if(PORT == GPIOJ) \
+							__HAL_RCC_GPIOJ_CLK_ENABLE();\
+						else if(PORT == GPIOK) \
+							__HAL_RCC_GPIOK_CLK_ENABLE();\
+						}
+
+#define CLOCK_ENABLE(PORT)		__HAL_RCC_##PORT##_CLK_ENABLE();
+
+typedef struct shift_array shift_array_t;
+
+struct shift_array{
+	unsigned char* out_buf;
+
+	unsigned char dev_count;
+
+	uint16_t ser_in_pin;
+	GPIO_TypeDef* ser_in_port;
+	unsigned char ser_in_clock_init;
+	uint16_t ser_clk_pin;
+	GPIO_TypeDef* ser_clk_port;
+	unsigned char ser_clk_clock_init;
+
+	uint16_t latch_pin;
+	GPIO_TypeDef* latch_port;
+	unsigned char latch_clock_init;
+
+	uint16_t out_ena_pin;
+	GPIO_TypeDef* out_ena_port;
+	unsigned char out_ena_clock_init;
+	unsigned char out_ena_connected;
+
+	uint16_t sr_clr_pin;
+	GPIO_TypeDef* sr_clr_port;
+	unsigned char sr_clr_clock_init;
+	unsigned char sr_clr_connected;
+
+	void (* output)(shift_array_t*, unsigned char);
+
+	void (* output_delay)(shift_array_t*, unsigned char, uint32_t);
+
+	void (* disbale)(shift_array_t*);
+
+	void (* enable)(shift_array_t*);
+
+	void (* reset_latch)(shift_array_t*);
+
+	void (* set_byte)(shift_array_t*, unsigned char, unsigned char);
+
+	void (* set_data)(shift_array_t*, unsigned char*);
+
+	void (* clock_data)(shift_array_t*);
+
+	void (* latch)(shift_array_t*);
+};
+
+shift_array_t shift_dev = {
+				.dev_count = 2,
+				.ser_in_pin = SHIFT_SER_IN_PIN,	//GPIO PINS FOR SHIFT ARRAY
+				.ser_in_port = SHIFT_SER_IN_PORT,
+				.ser_in_clock_init = 1,
+				.ser_clk_pin = SHIFT_SER_CLK_PIN,
+				.ser_clk_port = SHIFT_SER_CLK_PORT,
+				.ser_clk_clock_init = 1,
+				.latch_pin = SHIFT_LATCH_PIN,
+				.latch_port = SHIFT_LATCH_PORT,
+				.latch_clock_init = 1,
+				.out_ena_pin = SHIFT_OUT_ENA_PIN,
+				.out_ena_port = SHIFT_OUT_ENA_PORT,
+				.out_ena_clock_init = 1,
+				.sr_clr_pin = SHIFT_SER_CLR_PIN,
+				.sr_clr_port = SHIFT_SER_CLR_PORT,
+				.sr_clr_clock_init = 1,
+		};
+
+unsigned char SN54HC595_get_dev_count(void)
 {
-	GPIO_InitTypeDef GPIO_InitStruct;
-
-	SER_IN_CLOCK;
-	SER_CLK_CLOCK;
-	LATCH_CLOCK;
-	OUT_ENA_CLOCK;
-	SR_CLR_CLOCK;
-
-	/*Configure serial in */
-	GPIO_InitStruct.Pin = SER_IN_PIN;
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_PULLUP;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(SER_IN_PORT, &GPIO_InitStruct);
-
-	/*Configure serial clock */
-	GPIO_InitStruct.Pin = SER_CLK_PIN;
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_PULLUP;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(SER_CLK_PORT, &GPIO_InitStruct);
-
-	/*Configure latch pin */
-	GPIO_InitStruct.Pin = LATCH_PIN;
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_PULLUP;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(LATCH_PORT, &GPIO_InitStruct);
-
-	/*Configure output enable */
-	GPIO_InitStruct.Pin = OUT_ENA_PIN;
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_PULLUP;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(OUT_ENA_PORT, &GPIO_InitStruct);
-
-	/*Configure serial clear */
-	GPIO_InitStruct.Pin = SR_CLR_PIN;
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_PULLUP;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(SR_CLR_PORT, &GPIO_InitStruct);
-
-	//Clear status register and enable output
-	SN54HC595_clear_register();
-
-	SN54HC595_enable();
-
-	SN54HC595_reset_latch();
+	return shift_dev.dev_count;
 }
 
-void SN54HC595_latch_register()
+unsigned char SN54HC595_out_bytes(unsigned char* data, unsigned char byte_count)
 {
-	HAL_GPIO_WritePin(LATCH_PORT, LATCH_PIN, GPIO_PIN_SET);
-	HAL_GPIO_WritePin(LATCH_PORT, LATCH_PIN, GPIO_PIN_RESET);
+	if(byte_count != shift_dev.dev_count)
+			return -EINVAL;
+	shift_dev.set_data(&shift_dev, data);
+	shift_dev.output(&shift_dev, byte_count);
 }
 
-void SN54HC595_clock_register()
+//TODO is byte count necessary?
+unsigned char SN54HC595_out_bytes_delay(unsigned char* data,
+		unsigned char byte_count, unsigned long delay)
 {
-	HAL_GPIO_WritePin(SER_CLK_PORT, SER_CLK_PIN, GPIO_PIN_SET);
-	HAL_GPIO_WritePin(SER_CLK_PORT, SER_CLK_PIN, GPIO_PIN_RESET);
+	if(byte_count != shift_dev.dev_count)
+		return -EINVAL;
+	shift_dev.set_data(&shift_dev, data);
+	shift_dev.output_delay(&shift_dev, byte_count, delay);
 }
 
-void SN54HC595_clear_register()
-{
-	HAL_GPIO_WritePin(SR_CLR_PORT, SR_CLR_PIN, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(SR_CLR_PORT, SR_CLR_PIN, GPIO_PIN_SET);
-}
-
-void SN54HC595_disable()
-{
-	HAL_GPIO_WritePin(OUT_ENA_PORT, OUT_ENA_PIN, GPIO_PIN_SET);
-}
-
-void SN54HC595_enable()
-{
-	HAL_GPIO_WritePin(OUT_ENA_PORT, OUT_ENA_PIN, GPIO_PIN_RESET);
-}
-
-void SN54HC595_reset_latch()
-{
-	HAL_GPIO_WritePin(LATCH_PORT, LATCH_PIN, GPIO_PIN_RESET);
-}
-
-void SN54HC595_out_bytes(uint8_t* data, uint8_t byte_count)
-{
-	//Set serial clock and latch pin low
-	HAL_GPIO_WritePin(SER_CLK_PORT, SER_CLK_PIN, GPIO_PIN_RESET);
-	for(uint8_t i = 0; i < byte_count; i++){
-		for(uint8_t j = 0; j < 8; j++){
-			if(*(data + (i * sizeof(uint8_t))) & (1 << j))
-				HAL_GPIO_WritePin(SER_IN_PORT, SER_IN_PIN, GPIO_PIN_SET);
-			else
-				HAL_GPIO_WritePin(SER_IN_PORT, SER_IN_PIN, GPIO_PIN_RESET);
-			//clock bit
-			SN54HC595_clock_register();
-		}
-		//latch data
-		SN54HC595_latch_register();
-	}
-}
-
-void SN54HC595_out_bytes_w_delay(uint8_t* data, uint8_t byte_count, uint32_t delay)
-{
-	//Set serial clock and latch pin low
-	HAL_GPIO_WritePin(SER_CLK_PORT, SER_CLK_PIN, GPIO_PIN_RESET);
-	for(uint8_t i = 0; i < byte_count; i++){
-		for(uint8_t j = 0; j < 8; j++){
-			if(*(data + (i * sizeof(uint8_t))) & (1 << j))
-				HAL_GPIO_WritePin(SER_IN_PORT, SER_IN_PIN, GPIO_PIN_SET);
-			else
-				HAL_GPIO_WritePin(SER_IN_PORT, SER_IN_PIN, GPIO_PIN_RESET);
-			//clock bit
-			SN54HC595_clock_register();
-		}
-		//latch data
-		SN54HC595_latch_register();
-		HAL_Delay(delay);
-	}
-}
-
-#ifdef USE_SN54HC595_STRUCTS
-
-void output_self(shift_array_t* self, uint8_t byte_count)
+void output_self(shift_array_t* self, unsigned char byte_count)
 {
 	//Set serial clock and latch pin low
 	HAL_GPIO_WritePin(self->ser_clk_port, self->ser_clk_pin, GPIO_PIN_RESET);
-	for(uint8_t i = byte_count; i > 0; i--){
-		for(uint8_t j = 8; j > 0; j--){
-			if(*(self->out_buf + ((i-1) * sizeof(uint8_t))) & (1 << (j-1)))
+	for(unsigned char i = byte_count; i > 0; i--){
+		for(unsigned char j = 8; j > 0; j--){
+			if(*(self->out_buf + ((i-1) * sizeof(unsigned char))) & (1 << (j-1)))
 				HAL_GPIO_WritePin(self->ser_in_port, self->ser_in_pin, GPIO_PIN_SET);
 			else
 				HAL_GPIO_WritePin(self->ser_in_port, self->ser_in_pin, GPIO_PIN_RESET);
@@ -153,13 +144,13 @@ void output_self(shift_array_t* self, uint8_t byte_count)
 	self->latch(self);
 }
 
-void output_self_delay(shift_array_t* self, uint8_t byte_count, uint32_t delay)
+void output_self_delay(shift_array_t* self, unsigned char byte_count, uint32_t delay)
 {
 	//Set serial clock and latch pin low
 	HAL_GPIO_WritePin(self->ser_clk_port, self->ser_clk_pin, GPIO_PIN_RESET);
-	for(uint8_t i = 0; i < byte_count; i++){
-		for(uint8_t j = 0; j < 8; j++){
-			if(*(self->out_buf + (i * sizeof(uint8_t))) & (1 << j))
+	for(unsigned char i = 0; i < byte_count; i++){
+		for(unsigned char j = 0; j < 8; j++){
+			if(*(self->out_buf + (i * sizeof(unsigned char))) & (1 << j))
 				HAL_GPIO_WritePin(self->ser_in_port, self->ser_in_pin, GPIO_PIN_SET);
 			else
 				HAL_GPIO_WritePin(self->ser_in_port, self->ser_in_pin, GPIO_PIN_RESET);
@@ -187,15 +178,15 @@ void reset_latch_self(shift_array_t* self)
 	HAL_GPIO_WritePin(self->latch_port, self->latch_pin, GPIO_PIN_RESET);
 }
 
-void set_byte_self(shift_array_t* self, uint8_t byte_index, uint8_t byte)
+void set_byte_self(shift_array_t* self, unsigned char byte_index, unsigned char byte)
 {
 	if(byte_index < self->dev_count)
 		self->out_buf[byte_index] = byte;
 }
 
-void set_data_self(shift_array_t* self, uint8_t* data)
+void set_data_self(shift_array_t* self, unsigned char* data)
 {
-	memcpy(self->out_buf, data, self->dev_count);
+	memcpy(self->out_buf, data, self->dev_count * sizeof(unsigned char));
 }
 
 void clock_data_self(shift_array_t* self)
@@ -266,7 +257,7 @@ void SN54HC595_init_obj(shift_array_t* shift)
 
 	reset_latch_self(shift);
 
-	shift->out_buf = (uint8_t*)calloc(1, sizeof(uint8_t)* shift->dev_count);
+	shift->out_buf = (unsigned char*)calloc(1, sizeof(unsigned char)* shift->dev_count);
 
 	for(int i = 0; i < shift->dev_count; i++)
 		shift->out_buf[i] = 0xFF;
@@ -284,4 +275,7 @@ void SN54HC595_init_obj(shift_array_t* shift)
 	shift->latch = &latch_self;
 }
 
-#endif
+void SN54HC595_init()
+{
+	SN54HC595_init_obj(&shift_dev);
+}

@@ -9,7 +9,6 @@
 #include <string.h>
 
 #include "screen.h"
-#include "extern.h"
 
 void screen_draw_cursor(screen_t* screen)
 {
@@ -104,7 +103,7 @@ HAL_StatusTypeDef ssd1306_draw_cursor(screen_t* self)
 	return HAL_OK;
 }
 
-screen_err_t screen_update(screen_t* screen)
+unsigned char screen_update(screen_t* screen)
 {
 	screen->LCD_dev->fill(screen->LCD_dev, screen->LCD_dev->background);
 
@@ -132,14 +131,14 @@ screen_err_t screen_update(screen_t* screen)
 
 	screen->LCD_dev->update(screen->LCD_dev);
 
-	return screen_ok;
+	return 0;
 }
 
 //TODO can this be done without global?
 void screen_cursor_callback(TimerHandle_t xTimer)
 {
-	keyboard_devs->screen->cursor_on = !keyboard_devs->screen->cursor_on;
-	HAL_GPIO_TogglePin(LD3_GPIO_Port, LD3_Pin);
+//	keyboard_devs->screen->cursor_on = !keyboard_devs->screen->cursor_on;
+//	HAL_GPIO_TogglePin(LD3_GPIO_Port, LD3_Pin);
 }
 
 screen_t* screen_init(screen_init_t* init_values)

@@ -15,9 +15,6 @@
 #include "fonts.h"
 #include "ssd1306.h"
 
-#define GET_SCREEN	keyboard_devs->screen
-#define GET_LCD		keyboard_devs->screen->LCD_dev
-
 typedef struct screen_init
 {
 	uint8_t rows;
@@ -71,7 +68,7 @@ struct screen
 
 	SSD1306_device_t* LCD_dev;
 
-	screen_err_t (*update)(screen_t*);
+	unsigned char (*update)(screen_t*);
 	HAL_StatusTypeDef (*draw_cursor)(screen_t*);
 };
 

@@ -9,7 +9,6 @@ C_SRCS += \
 ../Src/DS3231_stm32_hal.c \
 ../Src/SN54HC595.c \
 ../Src/datatypes.c \
-../Src/devices.c \
 ../Src/fonts.c \
 ../Src/freertos.c \
 ../Src/keyboard.c \
@@ -39,7 +38,6 @@ OBJS += \
 ./Src/DS3231_stm32_hal.o \
 ./Src/SN54HC595.o \
 ./Src/datatypes.o \
-./Src/devices.o \
 ./Src/fonts.o \
 ./Src/freertos.o \
 ./Src/keyboard.o \
@@ -69,7 +67,6 @@ C_DEPS += \
 ./Src/DS3231_stm32_hal.d \
 ./Src/SN54HC595.d \
 ./Src/datatypes.d \
-./Src/devices.d \
 ./Src/fonts.d \
 ./Src/freertos.d \
 ./Src/keyboard.d \

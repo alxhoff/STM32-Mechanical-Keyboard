@@ -8,13 +8,10 @@
 #ifndef CLI_H_
 #define CLI_H_
 
-#include <stdio.h>
+#include "lookup.h"
 
-#include "states.h"
-#include "types.h"
-
-int8_t state_enter_CLI();
-int8_t state_CLI();
-int8_t CLI_process_key(key_code_w_mod_t input);
+unsigned char state_enter_CLI();
+unsigned char state_CLI();
+unsigned char CLI_process_key(scan_code_t input);
 
 #endif /* CLI_H_ */

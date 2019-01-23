@@ -1,18 +1,15 @@
 /*
+
  * AT24Cxx_stm32_hal.c
  *
  *  Created on: Sep 1, 2017
  *      Author: alxhoff
- */
+
 
 #include "AT24Cxx_stm32_hal.h"
 #include <stddef.h>
 #include <stdio.h>
 
-//include for extern i2c handle
-//**************************
-#include "extern.h"
-//**************************
 
 uint16_t AT24Cxx_get_max_addr ( AT24Cxx_device* dev )
 {
@@ -171,3 +168,4 @@ AT24Cxx_ERR_TypeDef AT24Cxx_read_byte_buffer( AT24Cxx_device* dev, uint16_t mem_
 
 
 
+*/

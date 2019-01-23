@@ -48,8 +48,8 @@
  * @param HID_reports HID data structure where the key buffer is to be stored
  * @return 0 on success
  * */
-int8_t scan_key_matrix(keyboard_device_t* keyboard_dev,
-		keyboard_HID_data_t* HID_reports);
+//unsigned char scan_key_matrix(keyboard_device_t* keyboard_dev,
+//		keyboard_HID_data_t* HID_reports);
 
 /**
  * @brief Gets a single not debounced key input from the keyboad
@@ -67,8 +67,8 @@ int8_t scan_key_matrix(keyboard_device_t* keyboard_dev,
  * the keyboard
  * layer
  * */
-key_code scan_get_single_key( keyboard_device_t* keyboard_dev,
-		keymap_list_t* layer_list );
+//key_code scan_get_single_key( keyboard_device_t* keyboard_dev,
+//		keymap_list_t* layer_list );
 
 /**
  * @brief Gets a single not debounced key input from the keyboad with
@@ -86,8 +86,8 @@ key_code scan_get_single_key( keyboard_device_t* keyboard_dev,
  * @return The key code/key modifier pair of a single key press from the
  * bottom most layer of the keyboard
  * */
-key_code_w_mod_t scan_get_single_key_w_mod( keyboard_device_t* keyboard_dev,
-		keymap_list_t* layer_list );
+//key_code_w_mod_t scan_get_single_key_w_mod( keyboard_device_t* keyboard_dev,
+//		keymap_list_t* layer_list );
 
 /**
  * @brief Gets single character input from the keyboard
@@ -98,8 +98,8 @@ key_code_w_mod_t scan_get_single_key_w_mod( keyboard_device_t* keyboard_dev,
  * @param layer_list Layer list to be used to find the key's key code
  * @return Single char from keyboard input
  * */
-char* scan_get_single_key_char( keyboard_device_t* keyboard_dev,
-		keymap_list_t* layer_list );
+//char* scan_get_single_key_char( keyboard_device_t* keyboard_dev,
+//		keymap_list_t* layer_list );
 
 /**
  * @brief Gets input sequence from keyboard
@@ -111,7 +111,7 @@ char* scan_get_single_key_char( keyboard_device_t* keyboard_dev,
  * @param exit_char Character to be presed to exit the function
  * @return Char pointer to a string representation of the input
  * */
-char* scan_get_input_seq( keyboard_device_t* keyboard_dev,
-		keymap_list_t* layer_list, char exit_char );
+//char* scan_get_input_seq( keyboard_device_t* keyboard_dev,
+//		keymap_list_t* layer_list, char exit_char );
 
 #endif /* SCAN_H_ */

@@ -206,7 +206,7 @@ int main(void)
 	macro_init(keyboard_devs);
 
 	macro_entry_t test_macro =
-	{ .key_code = 0x24, .keypress_string = "pew pew this is a macro and it "
+	{ .sc = 0x24, .string = "pew pew this is a macro and it "
 			"can use all DA SYMBOLZZZ !@#$%^*()_+", };
 
 	macro_table_add_entry(keyboard_devs->macro_table, &test_macro);

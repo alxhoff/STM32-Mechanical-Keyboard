@@ -1,7 +1,6 @@
 Src/CLI.o: ../Src/CLI.c \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/CLI.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/states.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/types.h \
+ /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/lookup.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/screen.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/FreeRTOSConfig.h \
@@ -56,27 +55,16 @@ Src/CLI.o: ../Src/CLI.c \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keyboard.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/config.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/datatypes.h \
+ /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/states.h \
+ /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/types.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keymap.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/HIDClassCommon.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/config.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/extern.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/usb_device.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/usbd_conf.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/lookup.h
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/CLI.h:
 
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/states.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/types.h:
+/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/lookup.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/screen.h:
 
@@ -186,32 +174,14 @@ Src/CLI.o: ../Src/CLI.c \
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/datatypes.h:
 
+/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/states.h:
+
+/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/types.h:
+
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keymap.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/HIDClassCommon.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/config.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/extern.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/task.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/usb_device.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/usbd_conf.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/lookup.h:

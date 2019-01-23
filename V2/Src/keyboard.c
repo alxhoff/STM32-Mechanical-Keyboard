@@ -5,15 +5,11 @@
  * @brief Data types and functions for performing classical keyboard functions
  */
 
-#include "extern.h"
-#include "macro.h"
-#include "CLI.h"
-#include "layers.h"
-#include "types.h"
-#include "ssd1306.h"
 
 #include "config.h"
+#include "keyboard.h"
 #include "keyboard_private.h"
+#include "keymap.h"
 
 keyboard_device_t keyboard_dev = {
 		.row_ports = { ROW_PORT_0, ROW_PORT_1, ROW_PORT_2, ROW_PORT_3, ROW_PORT_4 },
@@ -53,19 +49,17 @@ void keyboard_init_row_inputs(void)
 	GPIO_InitTypeDef GPIO_InitStruct;
 
 	//INIT ROWS - input
-	for(unsigned char i=0; i<KEYBOARD_ROWS; i++){
-		GPIO_InitStruct.Pin = row_pins[i];
+	for(unsigned char i = 0; i < KEYBOARD_ROWS; i++){
+		GPIO_InitStruct.Pin = keyboard_dev.row_pins[i];
 		GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
 		GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-		HAL_GPIO_Init(row_ports[i], &GPIO_InitStruct);
+		HAL_GPIO_Init(keyboard_dev.row_ports[i], &GPIO_InitStruct);
 	}
 }
 
-int8_t keyboard_init(GPIO_TypeDef* row_ports[KEYBOARD_ROWS],
-		uint16_t row_pins[KEYBOARD_ROWS])
-
+void keyboard_init(void)
 {
-	keyboard_init_status_LEDs();
+	keyboard_init_status_LEDS();
 	keyboard_init_row_inputs();
 
 
@@ -96,10 +90,9 @@ int8_t keyboard_init(GPIO_TypeDef* row_ports[KEYBOARD_ROWS],
 
 	//status LEDs
 
-	return 0;
 }
 
-int8_t process_key_buf(keyboard_HID_data_t* data, keymap_list_t* layer_list)
+/*int8_t process_key_buf(keyboard_HID_data_t* data, keymap_list_t* layer_list)
 {
 	if(data->key_buf.index == 0){
 		return -EBUFF;
@@ -216,7 +209,7 @@ int8_t process_key_buf(keyboard_HID_data_t* data, keymap_list_t* layer_list)
 	state_change_CLI: state_enter_CLI();
 	CLI: state_CLI();
 	return 0;
-}
+}*/
 
 signed int reset_buffer(six_key_buffer_t* buffer_to_reset)
 {
@@ -229,40 +222,41 @@ signed int reset_buffer(six_key_buffer_t* buffer_to_reset)
 
 unsigned char keyboard_prepare_report( keyboard_HID_data_t* data )
 {
-	for(unsigned char i = 0; i < data->out_buf.key_buf.count; i++){
-		*(&data->keyboard_report.key1 + i * sizeof(unsigned char)) = data->out_buf.key_buf.keys[i].key_code;
-		data->prev_keys[i] = *(&data->keyboard_report.key1 + i * sizeof(unsigned char));
-	}
-	for(unsigned char i = data->out_buf.key_buf.count; i<6 ; i++){
-		*(&data->keyboard_report.key1 + i * sizeof(unsigned char)) = 0x00;
-		data->prev_keys[i] = *(&data->keyboard_report.key1 + i * sizeof(unsigned char));
-	}
-
-	data->keyboard_report.modifiers = data->out_buf.mod_buf;
-
-	return 0;
+//	for(unsigned char i = 0; i < data->out_buf.key_buf.count; i++){
+//		*(&data->keyboard_report.key1 + i * sizeof(unsigned char)) = data->out_buf.key_buf.keys[i].key_code;
+//		data->prev_keys[i] = *(&data->keyboard_report.key1 + i * sizeof(unsigned char));
+//	}
+//	for(unsigned char i = data->out_buf.key_buf.count; i<6 ; i++){
+//		*(&data->keyboard_report.key1 + i * sizeof(unsigned char)) = 0x00;
+//		data->prev_keys[i] = *(&data->keyboard_report.key1 + i * sizeof(unsigned char));
+//	}
+//
+//	data->keyboard_report.modifiers = data->out_buf.mod_buf;
+//
+//	return 0;
 }
 
 unsigned char media_prepare_report( keyboard_HID_data_t* data )
 {
-	for(unsigned char i = 0; i < data->out_buf.med_buf.count; i++)
-		data->media_report.keys = data->out_buf.med_buf.key.key_code;
-
-	return 0;
+//	for(unsigned char i = 0; i < data->out_buf.med_buf.count; i++)
+//		data->media_report.keys = data->out_buf.med_buf.key.key_code;
+//
+//	return 0;
 }
 
 unsigned char keyboard_send_blank(void)
 {
-	static const keyboardHID_t blank = {0};
-	if(USBD_HID_SendReport(&hUsbDeviceFS, &blank, sizeof(keyboardHID_t)))
-		return -ESEND;
-
-	return 0;
+//	static const keyboardHID_t blank = {0};
+//	if(USBD_HID_SendReport(&hUsbDeviceFS, &blank, sizeof(keyboardHID_t)))
+//		return -ESEND;
+//
+//	return 0;
 }
 
-unsigned char send_keyboard_report( keyboard_HID_data_t* data, report_type type )
+unsigned char send_keyboard_report( keyboardHID_t *data, report_type type)
+//unsigned char send_keyboard_report( keyboard_HID_data_t* data, report_type type )
 {
-	switch(type){
+	/*switch(type){
 	case keyboard:
 		if(xSemaphoreTake( USB_send_lock, (TickType_t) portMAX_DELAY) == pdTRUE){
 			USBD_HID_SendReport(&hUsbDeviceFS, &data->keyboard_report, sizeof(keyboardHID_t));
@@ -283,34 +277,34 @@ unsigned char send_keyboard_report( keyboard_HID_data_t* data, report_type type 
 	default:
 		return -EUSB;
 	}
-	return 0;
+	return 0;*/
 }
 
 unsigned char process_keyboard_flags ( keyboard_HID_data_t* data )
 {
-	if(data->keyboard_state == active){
-		keyboard_prepare_report(data);
-		send_keyboard_report(data, keyboard);
-		data->keyboard_state = clearing;
-	}else if( data->keyboard_state == clearing){
-		send_keyboard_report(data, keyboard);
-		data->keyboard_state = inactive;
-	}
-	if(data->media_state == active){
-		media_prepare_report(data);
-		send_keyboard_report(data, media);
-		data->media_state = clearing;
-	}else if( data->media_state == clearing){
-		send_keyboard_report(data, media);
-		data->media_state = inactive;
-	}
-	return 0;
+//	if(data->keyboard_state == active){
+//		keyboard_prepare_report(data);
+//		send_keyboard_report(data, keyboard);
+//		data->keyboard_state = clearing;
+//	}else if( data->keyboard_state == clearing){
+//		send_keyboard_report(data, keyboard);
+//		data->keyboard_state = inactive;
+//	}
+//	if(data->media_state == active){
+//		media_prepare_report(data);
+//		send_keyboard_report(data, media);
+//		data->media_state = clearing;
+//	}else if( data->media_state == clearing){
+//		send_keyboard_report(data, media);
+//		data->media_state = inactive;
+//	}
+//	return 0;
 }
 
-unsigned char process_single_key( keymap_list_t* layer_list, unsigned char col, unsigned char row )
+unsigned char process_single_key(unsigned char col, unsigned char row )
 {
 	unsigned char ret = 0;
-	ret = layer_list->layer_head->grid[row][col];
+//	ret = layer_list->layer_head->grid[row][col];
 	if(ret)
 		return ret;
 	else
@@ -319,34 +313,34 @@ unsigned char process_single_key( keymap_list_t* layer_list, unsigned char col, 
 
 void clear_keyboard_report(  keyboard_HID_data_t* data )
 {
-	if(data->keyboard_state == clearing || data->keyboard_state == active){
-		data->keyboard_report.key1 = 0;
-		data->keyboard_report.key2 = 0;
-		data->keyboard_report.key3 = 0;
-		data->keyboard_report.key4 = 0;
-		data->keyboard_report.key5 = 0;
-		data->keyboard_report.key6 = 0;
-		data->keyboard_report.modifiers = 0;
-	}
-	if(data->keyboard_state == clearing || data->keyboard_state == active)
-		data->media_report.keys = 0;
+//	if(data->keyboard_state == clearing || data->keyboard_state == active){
+//		data->keyboard_report.key1 = 0;
+//		data->keyboard_report.key2 = 0;
+//		data->keyboard_report.key3 = 0;
+//		data->keyboard_report.key4 = 0;
+//		data->keyboard_report.key5 = 0;
+//		data->keyboard_report.key6 = 0;
+//		data->keyboard_report.modifiers = 0;
+//	}
+//	if(data->keyboard_state == clearing || data->keyboard_state == active)
+//		data->media_report.keys = 0;
 }
 
 void display_int_on_screen(unsigned char col, unsigned char row)
 {
-	static char col_str[10];
-	static char row_str[10];
-	HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_SET);
-
-	sprintf(col_str, "Col: %d", col);
-	sprintf(row_str, "Row: %d", row);
-
-	ssd1306_Fill(White);
-	ssd1306_SetCursor(23,10);
-//	ssd1306_WriteString("here",Font_11x18,Black);
-
-	ssd1306_WriteString(&col_str,Font_11x18,Black);
-	ssd1306_SetCursor(23,30);
-	ssd1306_WriteString(&row_str,Font_11x18,Black);
-	ssd1306_UpdateScreen();
+//	static char col_str[10];
+//	static char row_str[10];
+//	HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_SET);
+//
+//	sprintf(col_str, "Col: %d", col);
+//	sprintf(row_str, "Row: %d", row);
+//
+//	ssd1306_Fill(White);
+//	ssd1306_SetCursor(23,10);
+////	ssd1306_WriteString("here",Font_11x18,Black);
+//
+//	ssd1306_WriteString(&col_str,Font_11x18,Black);
+//	ssd1306_SetCursor(23,30);
+//	ssd1306_WriteString(&row_str,Font_11x18,Black);
+//	ssd1306_UpdateScreen();
 }

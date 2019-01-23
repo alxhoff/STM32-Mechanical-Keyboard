@@ -60,7 +60,6 @@
 #include "scan.h"
 
 //hardware devices
-#include "devices.h"
 #include "keyboard.h"
 
 //LCD
@@ -92,8 +91,6 @@ osThreadId CLIListenHandle;
 SemaphoreHandle_t USB_send_lock = NULL;
 
 //AT24Cxx_devices eeprom_devs;
-
-key_devices_t* keyboard_devs;
 
 keyboard_states_t current_keyboard_state;
 /* USER CODE END PV */
@@ -161,7 +158,7 @@ int main(void)
 
 
 
-	keyboard_init(keyboard_devs, row_ports, row_pins);
+	keyboard_init();
 
 	HAL_GPIO_WritePin(CAPS_STATUS_PORT, CAPS_STATUS_PIN, GPIO_PIN_SET);
 	HAL_GPIO_WritePin(CLI_STATUS_PORT, CLI_STATUS_PIN, GPIO_PIN_RESET);
@@ -170,23 +167,25 @@ int main(void)
 
 	//TODO STANDARDIZE DEVICE INIT
 
-	SN54HC595_init_obj(&shift_array);
+	SN54HC595_init();
 
 	//Keymap init
 	keymap_list_init(&keymap_init0);
 	keymap_list_append_layer(&keymap_init1);
 	keymap_list_append_layer(&keymap_init2);
 
+	macro_entry_t test_macro = {
+			.sc = {
+					.code = 0x24
+			},
+			.string = "pew pew this is a macro and it "
+					"can use all DA SYMBOLZZZ !@#$%^*()_+",
+	};
+
+	macro_add_entry(&test_macro);
+
 	//TODO
-	macro_init(keyboard_devs);
-
-	macro_entry_t test_macro =
-	{ .key_code = 0x24, .keypress_string = "pew pew this is a macro and it "
-			"can use all DA SYMBOLZZZ !@#$%^*()_+", };
-
-	macro_table_add_entry(keyboard_devs->macro_table, &test_macro);
-
-	SSD1306_device_init_t LCD_init_dev =
+	/*SSD1306_device_init_t LCD_init_dev =
 	{ .background = White, .width = 128, .height = 64, .port = &hi2c1, .font =
 			&Font_11x18, };
 
@@ -205,23 +204,26 @@ int main(void)
 			.LCD_dev = keyboard_devs->LCD, .font = keyboard_devs->LCD->font,
 			.message = "123456789123456789123456789", .cursor_period = 750, };
 
-	keyboard_devs->screen = screen_init(&CLI_test_init);
+	keyboard_devs->screen = screen_init(&CLI_test_init);*/
 
-	visInit(keyboard_devs);
-	//AT24Cxx_init(&eeprom_devs, 7);
+	//TODO
+/*	visInit(keyboard_devs);*/
 
-//	volatile uint8_t data = 20;
-//	volatile AT24Cxx_ERR_TypeDef ret;
-//	ret = AT24Cxx_write_byte( AT24Cxx_get_dev(&eeprom_devs, 0) , &data, 0x11 );
-//
-//	volatile uint8_t read_data = 0;
-//	ret = AT24Cxx_read_byte( AT24Cxx_get_dev(&eeprom_devs, 0), &read_data, 0x11 );
-//
-//	while(HAL_I2C_Mem_Write(&hi2c2, 0b10101110, 0xB1 ,I2C_MEMADD_SIZE_8BIT
-//			, 0x11, 1,1000)!= HAL_OK);
-//
-//	while(HAL_I2C_Mem_Read(&hi2c2, 0b10101111, 0xB1 ,I2C_MEMADD_SIZE_8BIT
-//				, &read_data, 1,1000)!= HAL_OK);
+	//TODO
+	/*AT24Cxx_init(&eeprom_devs, 7);
+
+	volatile uint8_t data = 20;
+	volatile AT24Cxx_ERR_TypeDef ret;
+	ret = AT24Cxx_write_byte( AT24Cxx_get_dev(&eeprom_devs, 0) , &data, 0x11 );
+
+	volatile uint8_t read_data = 0;
+	ret = AT24Cxx_read_byte( AT24Cxx_get_dev(&eeprom_devs, 0), &read_data, 0x11 );
+
+	while(HAL_I2C_Mem_Write(&hi2c2, 0b10101110, 0xB1 ,I2C_MEMADD_SIZE_8BIT
+			, 0x11, 1,1000)!= HAL_OK);
+
+	while(HAL_I2C_Mem_Read(&hi2c2, 0b10101111, 0xB1 ,I2C_MEMADD_SIZE_8BIT
+				, &read_data, 1,1000)!= HAL_OK);*/
 
   /* USER CODE END 2 */
 
@@ -249,8 +251,8 @@ int main(void)
   /* USER CODE BEGIN RTOS_THREADS */
 //  osThreadDef(ADCListen, MouseListenCallback, osPriorityIdle, 0, 128);
 //  ADCListenHandle = osThreadCreate(osThread(ADCListen), NULL);
-	osThreadDef(CLIListen, CLIListenCallback, osPriorityIdle, 0, 128);
-	CLIListenHandle = osThreadCreate(osThread(CLIListen), NULL);
+//	osThreadDef(CLIListen, CLIListenCallback, osPriorityIdle, 0, 128);
+//	CLIListenHandle = osThreadCreate(osThread(CLIListen), NULL);
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_QUEUES */
@@ -583,23 +585,22 @@ void MouseListenCallback(void const * argument)
 {
 	TickType_t xLastWakeTime = xTaskGetTickCount();
 	const TickType_t xPeriod = 5;
-//
-	mouse_init();
-//  /* Infinite loop */
+
+	/* Infinite loop */
 	for (;;)
 	{
-//#ifdef ENABLE_MOUSE
-//	vTaskDelayUntil(&xLastWakeTime, xPeriod);
-//
-//	if(ADC_retrieve_values(&mouse_data) == mouse_ok)
-//		process_mouse_buf(&mouse_data);
-//
-//	clear_mouse_report(&mouse_data);
-//	process_mouse_flags(&mouse_data);
+#ifdef ENABLE_MOUSE
+	//TODO
+	/*vTaskDelayUntil(&xLastWakeTime, xPeriod);
 
-		//ADC_display_values(&mouse_data.mouse_buf.x, &mouse_data.mouse_buf.y);
-//#endif
-//	vTaskDelay(xDelay);
+	if(ADC_retrieve_values(&mouse_data) == mouse_ok)
+		process_mouse_buf(&mouse_data);
+
+	clear_mouse_report(&mouse_data);
+	process_mouse_flags(&mouse_data);
+
+		//ADC_display_values(&mouse_data.mouse_buf.x, &mouse_data.mouse_buf.y);*/
+#endif
 	}
 }
 
@@ -611,7 +612,8 @@ void CLIListenCallback(void const * argument)
 	for (;;)
 	{
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);
-		keyboard_devs->screen->update(keyboard_devs->screen);
+		//TODO
+//		keyboard_devs->screen->update(keyboard_devs->screen);
 //		keyboard_devs->screen->draw_cursor(keyboard_devs->screen);
 	}
 }
@@ -630,7 +632,8 @@ void StartDefaultTask(void const * argument)
 	for (;;)
 	{
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);
-		visHandle(keyboard_devs);
+		//TODO LEDS
+//		visHandle(keyboard_devs);
 	}
   /* USER CODE END 5 */ 
 }
@@ -642,6 +645,7 @@ void KeyboardListenCallback(void const * argument)
 	TickType_t xLastWakeTime = xTaskGetTickCount();
 	const TickType_t xPeriod = 20;
 
+	//TODO
 	USB_send_lock = xSemaphoreCreateMutex();
 
 	/* Infinite loop */
@@ -649,13 +653,13 @@ void KeyboardListenCallback(void const * argument)
 	{
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);
 
-		if (scan_key_matrix(keyboard_devs->keyboard,
-				keyboard_devs->keyboard_HID) == 0)
-			process_key_buf(keyboard_devs->keyboard_HID,
-					keyboard_devs->layer_list);
+//		if (scan_key_matrix(keyboard_devs->keyboard,
+//				keyboard_devs->keyboard_HID) == 0)
+//			process_key_buf(keyboard_devs->keyboard_HID,
+//					keyboard_devs->layer_list);
 
-		clear_keyboard_report(keyboard_devs->keyboard_HID);
-		process_keyboard_flags(keyboard_devs->keyboard_HID);
+//		clear_keyboard_report(keyboard_devs->keyboard_HID);
+//		process_keyboard_flags(keyboard_devs->keyboard_HID);
 	}
   /* USER CODE END KeyboardListenCallback */
 }

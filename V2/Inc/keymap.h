@@ -163,8 +163,7 @@ int keymap_list_append_layer(keymap_layer_t *layer);
 
 int keymap_list_prepend_layer(keymap_layer_t *layer);
 
-int keymap_list_add_pos(keymap_list_t *list,
-		keymap_layer_t *layer, unsigned char pos);
+int keymap_list_add_pos(keymap_layer_t *layer, unsigned char pos);
 
 unsigned char keymap_list_get_ID_count(void);
 

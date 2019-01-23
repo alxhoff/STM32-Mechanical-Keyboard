@@ -39,7 +39,6 @@
 "Src/DS3231_stm32_hal.o"
 "Src/SN54HC595.o"
 "Src/datatypes.o"
-"Src/devices.o"
 "Src/fonts.o"
 "Src/freertos.o"
 "Src/keyboard.o"

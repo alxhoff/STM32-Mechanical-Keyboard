@@ -17,7 +17,7 @@
 
 #include <stdint.h>
 
-void visInit(key_devices_t* keyboard_devs);
+void visInit(void);
 void visHandle();
 
 #endif /* VISEFFECT_H_ */

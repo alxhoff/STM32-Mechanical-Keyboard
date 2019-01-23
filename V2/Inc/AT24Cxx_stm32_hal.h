@@ -1,9 +1,10 @@
 /*
+
  * AT24C32_stm32_hal.h
  *
  *  Created on: Sep 1, 2017
  *      Author: alxhoff
- */
+
 
 #ifndef AT24CXX_STM32_HAL_H_
 #define AT24CXX_STM32_HAL_H_
@@ -89,4 +90,5 @@ AT24Cxx_ERR_TypeDef AT24Cxx_write_byte_buffer( AT24Cxx_device* dev, uint16_t mem
 AT24Cxx_ERR_TypeDef AT24Cxx_read_byte( AT24Cxx_device* dev, uint8_t* ret, uint16_t mem_addr);
 AT24Cxx_ERR_TypeDef AT24Cxx_read_byte_buffer( AT24Cxx_device* dev, uint16_t mem_addr, uint8_t* ret_buf, uint16_t buf_len);
 
-#endif /* AT24CXX_STM32_HAL_H_ */
+#endif  AT24CXX_STM32_HAL_H_
+*/

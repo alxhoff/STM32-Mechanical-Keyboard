@@ -65,33 +65,6 @@
  */
 
 //PIN DEFS
-
-#define CLOCK_SWITCH(PORT)		{if(PORT == GPIOA)\
-							__HAL_RCC_GPIOA_CLK_ENABLE();\
-						else if(PORT == GPIOB) \
-							__HAL_RCC_GPIOB_CLK_ENABLE();\
-						else if(PORT == GPIOC) \
-							__HAL_RCC_GPIOC_CLK_ENABLE();\
-						else if(PORT == GPIOD) \
-							__HAL_RCC_GPIOD_CLK_ENABLE();\
-						else if(PORT == GPIOE) \
-							__HAL_RCC_GPIOE_CLK_ENABLE();\
-						else if(PORT == GPIOF) \
-							__HAL_RCC_GPIOF_CLK_ENABLE();\
-						else if(PORT == GPIOG) \
-							__HAL_RCC_GPIOG_CLK_ENABLE();\
-						else if(PORT == GPIOH) \
-							__HAL_RCC_GPIOH_CLK_ENABLE();\
-						else if(PORT == GPIOI) \
-							__HAL_RCC_GPIOI_CLK_ENABLE();\
-						else if(PORT == GPIOJ) \
-							__HAL_RCC_GPIOJ_CLK_ENABLE();\
-						else if(PORT == GPIOK) \
-							__HAL_RCC_GPIOK_CLK_ENABLE();\
-						}
-
-#define CLOCK_ENABLE(PORT)		__HAL_RCC_##PORT##_CLK_ENABLE();
-
 #define SER_IN_PIN			SHIFT_SER_IN_PIN //A8
 #define SER_IN_PORT			SHIFT_SER_IN_PORT
 #define SER_IN_CLOCK		CLOCK_ENABLE(SHIFT_SER_IN_PORT)
@@ -110,80 +83,17 @@
 #define SR_CLR_PORT			SHIFT_SER_CLR_PORT
 #define SR_CLR_CLOCK		CLOCK_ENABLE(SHIFT_SER_CLR_PORT)
 
-#define USE_SN54HC595_STRUCTS		1
-
-#ifdef USE_SN54HC595_STRUCTS
-typedef struct shift_array shift_array_t;
-
-struct shift_array{
-	uint8_t* out_buf;
-
-	uint8_t dev_count;
-
-	uint16_t ser_in_pin;
-	GPIO_TypeDef* ser_in_port;
-	uint8_t ser_in_clock_init;
-	uint16_t ser_clk_pin;
-	GPIO_TypeDef* ser_clk_port;
-	uint8_t ser_clk_clock_init;
-
-	uint16_t latch_pin;
-	GPIO_TypeDef* latch_port;
-	uint8_t latch_clock_init;
-
-	uint16_t out_ena_pin;
-	GPIO_TypeDef* out_ena_port;
-	uint8_t out_ena_clock_init;
-	uint8_t out_ena_connected;
-
-	uint16_t sr_clr_pin;
-	GPIO_TypeDef* sr_clr_port;
-	uint8_t sr_clr_clock_init;
-	uint8_t sr_clr_connected;
-
-	void (* output)(shift_array_t*, uint8_t);
-
-	void (* output_delay)(shift_array_t*, uint8_t, uint32_t);
-
-	void (* disbale)(shift_array_t*);
-
-	void (* enable)(shift_array_t*);
-
-	void (* reset_latch)(shift_array_t*);
-
-	void (* set_byte)(shift_array_t*, uint8_t, uint8_t);
-
-	void (* set_data)(shift_array_t*, uint8_t*);
-
-	void (* clock_data)(shift_array_t*);
-
-	void (* latch)(shift_array_t*);
-};
-
-#endif
-
 void SN54HC595_init();
-void SN54HC595_latch_register();
-void SN54HC595_clock_register();
-void SN54HC595_clear_register();
+
 void SN54HC595_disable();
+
 void SN54HC595_enable();
-void SN54HC595_reset_latch();
-void SN54HC595_out_bytes(uint8_t* data, uint8_t byte_count);
-void SN54HC595_out_bytes_w_delay(uint8_t* data, uint8_t byte_count, uint32_t delay);
 
-#ifdef USE_SN54HC595_STRUCTS
+unsigned char SN54HC595_get_dev_count(void);
 
-void output_self(shift_array_t* self, uint8_t byte_count);
-void output_self_delay(shift_array_t* self, uint8_t byte_count, uint32_t delay);
-void disable_self(shift_array_t* self);
-void enable_self(shift_array_t* self);
-void reset_latch_self(shift_array_t* self);
-void set_byte_self(shift_array_t* self, uint8_t byte_index,uint8_t byte);
-void set_data_self(shift_array_t* self, uint8_t* data);
-void clock_data_self(shift_array_t* self);
-void latch_self(shift_array_t* self);
-void SN54HC595_init_obj(shift_array_t* self);
-#endif
+unsigned char SN54HC595_out_bytes(unsigned char* data, unsigned char byte_count);
+
+unsigned char SN54HC595_out_bytes_delay(unsigned char* data,
+		unsigned char byte_count, uint32_t delay);
 
 #endif /* SN54HC595_H_ */

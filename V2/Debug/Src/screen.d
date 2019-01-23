@@ -48,22 +48,7 @@ Src/screen.o: ../Src/screen.c \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/ssd1306.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/extern.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/usb_device.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/usbd_conf.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keyboard_config.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keyboard.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/datatypes.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/states.h
+ /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/ssd1306.h
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/screen.h:
 
@@ -164,33 +149,3 @@ Src/screen.o: ../Src/screen.c \
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/ssd1306.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/extern.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/task.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/usb_device.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/usbd_conf.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keyboard_config.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keyboard.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/datatypes.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/states.h:
