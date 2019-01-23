@@ -13,7 +13,7 @@
 typedef struct macro_entry macro_entry_t;
 
 struct macro_entry{
-	scan_code_t key_code;
+	scan_code_t sc;
 
 	char* string;
 

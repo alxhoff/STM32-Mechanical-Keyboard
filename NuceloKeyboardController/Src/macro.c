@@ -33,7 +33,7 @@ int8_t state_macro_set( keymap_list_t* layer_list )
 	key_code macro_key = scan_get_single_key( keyboard_devs->keyboard, layer_list );
 	//TODO LIGHTS
 	macro_entry_t* new_macro = macro_allocate_new_macro( keyboard_devs->macro_table );
-	new_macro->key_code = macro_key; //GOOD
+	new_macro->sc = macro_key; //GOOD
 	new_macro->string =
 			scan_get_input_seq( keyboard_devs->keyboard,
 					keyboard_devs->layer_list, KEY(MACRO_S) );
@@ -88,7 +88,7 @@ int8_t macro_table_add_entry( macro_table_t* table, macro_entry_t* entry )
 	macro_entry_t* new_entry = (macro_entry_t*)calloc(1, sizeof(macro_entry_t));
 	if(new_entry == NULL) return -ENOMEM;
 
-	new_entry->key_code = entry->key_code;
+	new_entry->sc = entry->sc;
 	new_entry->string = (char*)malloc(sizeof(char) *
 			(strlen(entry->string) +1 ));
 	strcpy(new_entry->string, entry->string);
@@ -122,7 +122,7 @@ macro_entry_t* macro_table_get_w_key_code( macro_table_t* table, key_code key )
 {
 	macro_entry_t* head = table->head;
 
-	while(head->key_code != key){
+	while(head->sc != key){
 		head = head->next;
 		if(head == NULL)
 			return NULL;
@@ -185,7 +185,7 @@ macro_entry_t* macro_allocate_new_macro( macro_table_t* table )
 
 	new->string = NULL;
 	new->next = NULL;
-	new->key_code = NULL;
+	new->sc = NULL;
 
 	//TODO empty table check
 	macro_entry_t* last = macro_table_get_last( table );

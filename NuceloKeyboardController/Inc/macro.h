@@ -17,7 +17,7 @@ typedef struct macro_entry macro_entry_t;
 typedef struct keymap_list keymap_list_t;
 
 struct macro_entry{
-	uint8_t key_code;
+	uint8_t sc;
 
 	char* string;
 

@@ -41,7 +41,7 @@ unsigned char state_macro_set( keymap_list_t* layer_list )
 	key_code macro_key = scan_get_single_key( keyboard_devs->keyboard, layer_list );
 	//TODO LIGHTS
 	macro_entry_t* new_macro = macro_allocate_new_macro( keyboard_devs->macro_table );
-	new_macro->key_code = macro_key; //GOOD
+	new_macro->sc = macro_key; //GOOD
 	new_macro->string =
 			scan_get_input_seq( keyboard_devs->keyboard,
 					keyboard_devs->layer_list, KEY(MACRO_S) );
@@ -82,7 +82,7 @@ unsigned char state_macro_run( keymap_list_t* layer_list )
 	return 0;
 }
 
-unsigned char macro_table_add_entry( char *string, scan_code_t *sc )
+unsigned char macro_add_entry( char *string, scan_code_t *sc )
 {
 	char *string_cpy = malloc(sizeof(char) * (strlen(string) + 1));
 	if(!string_cpy)
@@ -93,7 +93,7 @@ unsigned char macro_table_add_entry( char *string, scan_code_t *sc )
 		goto macro_error;
 
 	strcpy(string_cpy, string);
-	memcpy(&macro->key_code, sc, sizeof(scan_code_t));
+	memcpy(&macro->sc, sc, sizeof(scan_code_t));
 
 	if(!macro_dev.head){
 		macro_dev.head = macro;
@@ -107,6 +107,36 @@ macro_error:
 	return -ENOMEM;
 }
 
+//TODO check this
+unsigned char macro_rem_entry(scan_code_t *sc)
+{
+	macro_entry_t *head = macro_dev->head;
+	macro_entry_t *prev = NULL;
+	if(memcmp(&head->sc, sc, sizeof(scan_code_t))){
+		//single item list
+		if(!head->next){
+			macro_dev->head = NULL;
+			macro_dev->tail = NULL;
+		}else
+			macro_dev->head = head->next;
+		free(head);
+		return 0;
+	}
+
+test:	//if list has more than one item
+	if(memcmp(&head->next->sc, sc, sizeof(scan_code_t))){
+		if(!head->next->next) 	//is tail
+			macro_dev->tail = head;
+		free(head->next);
+		return 0;
+	}
+
+	while(head->next->next)
+		head = head->next;
+
+	return -ENOENT;
+}
+
 macro_entry_t* macro_get_last(void)
 {
 	return macro_dev.tail;
@@ -117,7 +147,7 @@ macro_entry_t* macro_get_sc(scan_code_t *sc)
 	macro_entry_t *head = macro_dev->head;
 
 test:
-	if(memcmp(&head->key_code, sc, sizeof(scan_code_t)))
+	if(memcmp(&head->sc, sc, sizeof(scan_code_t)))
 		return head;
 
 	while(head->next){
