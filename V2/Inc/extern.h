@@ -8,9 +8,9 @@
 #ifndef EXTERN_H_
 #define EXTERN_H_
 
+#include <config.h>
 #include "cmsis_os.h"
 #include "usb_device.h"
-#include "keyboard_config.h"
 #include "keyboard.h"
 
 extern GPIO_TypeDef* col_ports[KEYBOARD_COLS];

@@ -6,8 +6,8 @@
  */
 
 
-#ifndef KEYBOARD_CONFIG_H_
-#define KEYBOARD_CONFIG_H_
+#ifndef CONFIG_H_
+#define CONFIG_H_
 
 //KEYBOARD SIZE
 #define KEYBOARD_ROWS 5
@@ -51,4 +51,4 @@
 #define SHIFT_SER_CLR_PORT	GPIOE
 #define SHIFT_SER_CLR_PIN	GPIO_PIN_5
 
-#endif /* KEYBOARD_CONFIG_H_ */
+#endif /* CONFIG_H_ */

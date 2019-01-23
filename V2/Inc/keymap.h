@@ -9,6 +9,7 @@
 #define KEYMAP_H_
 
 #include "HIDClassCommon.h"
+#include "config.h"
 
 #define KEYMAP( \
     K00, K01, K02, K03, K04, K05, K06, K07, K08, K09, K10, K11, K12, K13, K14, 	\

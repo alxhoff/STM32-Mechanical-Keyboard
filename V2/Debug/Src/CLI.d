@@ -54,10 +54,11 @@ Src/CLI.o: ../Src/CLI.c \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/ssd1306.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/scan.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keyboard.h \
+ /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/config.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/datatypes.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keyboard_config.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keymap.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/HIDClassCommon.h \
+ /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/config.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/extern.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
@@ -181,13 +182,15 @@ Src/CLI.o: ../Src/CLI.c \
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keyboard.h:
 
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/datatypes.h:
+/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/config.h:
 
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keyboard_config.h:
+/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/datatypes.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keymap.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/HIDClassCommon.h:
+
+/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/config.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/extern.h:
 

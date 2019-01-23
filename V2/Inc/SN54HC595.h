@@ -8,8 +8,8 @@
 #ifndef SN54HC595_H_
 #define SN54HC595_H_
 
+#include <config.h>
 #include "stm32f4xx.h"
-#include "keyboard_config.h"
 
 /*
  *#####PINOUT#####

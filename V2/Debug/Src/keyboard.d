@@ -1,5 +1,6 @@
 Src/keyboard.o: ../Src/keyboard.c \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/extern.h \
+ /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/config.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/FreeRTOSConfig.h \
@@ -56,7 +57,6 @@ Src/keyboard.o: ../Src/keyboard.c \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/usbd_conf.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keyboard_config.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keyboard.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/datatypes.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/error.h \
@@ -64,6 +64,7 @@ Src/keyboard.o: ../Src/keyboard.c \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/macro.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keymap.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/HIDClassCommon.h \
+ /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/config.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/types.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/CLI.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/layers.h \
@@ -72,6 +73,8 @@ Src/keyboard.o: ../Src/keyboard.c \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/fonts.h
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/extern.h:
+
+/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/config.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h:
 
@@ -185,8 +188,6 @@ Src/keyboard.o: ../Src/keyboard.c \
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/usbd_conf.h:
 
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keyboard_config.h:
-
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keyboard.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/datatypes.h:
@@ -200,6 +201,8 @@ Src/keyboard.o: ../Src/keyboard.c \
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keymap.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/HIDClassCommon.h:
+
+/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/config.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/types.h:
 

@@ -19,11 +19,11 @@
 
 /* -- Includes -- */
 /* HAL libraries */
+#include <config.h>
 #include "stm32f4xx_hal.h"
 /* Local includes */
 #include "datatypes.h"
 #include "states.h"
-#include "keyboard_config.h"
 
 /**
  * @brief Length of input buffer used when scanning the keyboard

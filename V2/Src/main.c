@@ -55,6 +55,7 @@
 //#include "AT24Cxx_stm32_hal.h"
 //layers & init
 #include "keymap.h"
+#include "keymap_defaults.h"
 #include "macro.h"
 #include "scan.h"
 
@@ -158,8 +159,6 @@ int main(void)
 //  		  }
 //  	  }
 
-	keyboard_devices_init(&keyboard_devs);
-
 	GPIO_TypeDef* row_ports[] =
 	{ ROW_PORT_0, ROW_PORT_1, ROW_PORT_2, ROW_PORT_3, ROW_PORT_4 };
 	uint16_t row_pins[] =
@@ -176,7 +175,7 @@ int main(void)
 
 	SN54HC595_init_obj(&shift_array);
 
-	layer_list_init(keyboard_devs, &keymap_init0);
+	keymap_list_init(&keymap_init0);
 
 	layer_list_append_layer(keyboard_devs->layer_list, &keymap_init1);
 

@@ -14,9 +14,9 @@
 
 #ifndef WS2812B_H_
 #define WS2812B_H_
+#include <config.h>
 #include "ws2812b.h"
 #include "cmsis_os.h"
-#include "keyboard_config.h"
 
 // GPIO enable command
 #define WS2812B_GPIO_CLK_ENABLE() __HAL_RCC_GPIOF_CLK_ENABLE()

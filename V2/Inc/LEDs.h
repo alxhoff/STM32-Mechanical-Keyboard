@@ -8,7 +8,7 @@
 #ifndef LEDS_H_
 #define LEDS_H_
 
-#include "keyboard_config.h"
+#include <config.h>
 
 #define CHECK_EVENODD(N) ((N%2==0)?1:0)
 
