@@ -46,7 +46,7 @@ struct keymap_layer{
 //	key_grid_TypeDef* grid;
 	uint8_t grid[KEYBOARD_ROWS][KEYBOARD_COLS];
 
-	uint8_t layer_modifier_key_code;
+	uint8_t mod_key_code;
 
 	char* name;
 	uint8_t ID;

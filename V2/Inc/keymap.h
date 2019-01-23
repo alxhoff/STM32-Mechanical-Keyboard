@@ -8,10 +8,7 @@
 #ifndef KEYMAP_H_
 #define KEYMAP_H_
 
-#include "datatypes.h"
 #include "HIDClassCommon.h"
-#include "keyboard_config.h"
-#include "types.h"
 
 #define KEYMAP( \
     K00, K01, K02, K03, K04, K05, K06, K07, K08, K09, K10, K11, K12, K13, K14, 	\
@@ -29,63 +26,21 @@
 
 #define KEY(SC)	K_##SC
 
-typedef struct layer_table_entry layer_table_entry_t;
+typedef unsigned char key_grid_TypeDef[KEYBOARD_ROWS][KEYBOARD_COLS];
+
 typedef struct keymap_layer keymap_layer_t;
-
-typedef uint8_t key_grid_TypeDef[KEYBOARD_ROWS][KEYBOARD_COLS];
-
-typedef struct{
-	const uint8_t grid[KEYBOARD_ROWS][KEYBOARD_COLS];
-
-	uint8_t key;
-
-	char* name;
-} layer_init;
 
 struct keymap_layer{
 //	key_grid_TypeDef* grid;
-	uint8_t grid[KEYBOARD_ROWS][KEYBOARD_COLS];
+	unsigned char 		grid[KEYBOARD_ROWS][KEYBOARD_COLS];
 
-	uint8_t layer_modifier_key_code;
+	unsigned char 		mod_key_code;
 
-	char* name;
-	uint8_t ID;
+	char* 				name;
+	unsigned char 		ID;
 
-	keymap_layer_t* next;
-	keymap_layer_t* prev;
-
+	keymap_layer_t* 	next;
 };
-
-struct layer_table_entry{
-	uint8_t ID;
-
-	uint8_t (*grid)[KEYBOARD_ROWS][KEYBOARD_COLS];
-
-	keymap_layer_t* layer;
-
-	uint8_t key_code;
-
-	layer_table_entry_t* next;
-};
-
-typedef struct{
-	layer_table_entry_t* layer_head;
-
-	uint8_t entry_count;
-} layer_table;
-
-typedef struct keymap_list{
-	//LAYERS
-	keymap_layer_t* layer_head;
-
-	uint8_t ID_count;
-
-	uint8_t layer_count;
-
-	layer_table* table;
-
-	uint8_t current_layer;
-} keymap_list_t;
 
 #define K_ESC			HID_KEYBOARD_SC_ESCAPE
 #define K_1				HID_KEYBOARD_SC_1_AND_EXCLAMATION
@@ -183,24 +138,42 @@ typedef struct keymap_list{
 #define K_NUM0			HID_KEYBOARD_SC_KEYPAD_0_AND_INSERT
 
 //prototypes
-keymap_err_t layer_list_init(key_devices_t* keyboard_devices, layer_init* initial_layer_to_add );
-keymap_err_t layer_list_append_layer( keymap_list_t* layer_list, layer_init* layer_to_add );
-uint8_t layer_list_get_ID( keymap_list_t* layer_list );
-keymap_layer_t* layer_list_get_last ( keymap_list_t* layer_list_t );
-keymap_layer_t* layer_table_get_layer_w_ID( keymap_list_t* layer_list_t, uint8_t ID );
-keymap_layer_t* layer_table_get_current_layer ( keymap_list_t* layer_list_t );
-layer_table_entry_t* layer_table_get_last ( keymap_list_t* layer_list_t );
-keymap_err_t layer_list_rem_layer_w_ID ( keymap_list_t* layer_list, uint8_t ID );
-keymap_err_t layer_table_init ( keymap_list_t* layer_list );
-layer_table_entry_t* layer_table_get_second_last (keymap_list_t* layer_list );
-keymap_err_t layer_table_append ( keymap_list_t* layer_list, layer_table_entry_t* layer );
-keymap_err_t layer_table_rem_last ( keymap_list_t* layer_list );
-keymap_err_t layer_table_rem_layer_w_ID ( keymap_list_t* layer_list, uint8_t ID );
-uint8_t layer_table_get_ID_w_layer ( keymap_list_t* layer_list, keymap_layer_t* layer );
-uint8_t layer_table_get_ID_w_key ( keymap_list_t* layer_list, key_code key );
+unsigned char keymap_list_init(keymap_layer_t *layer);
 
-extern const layer_init keymap_init0;
-extern const layer_init keymap_init1;
-extern const layer_init keymap_init2;
+keymap_layer_t *keymap_layer_init(char* name, unsigned char modifier_key_code);
+
+void keymap_layer_set_key(keymap_layer_t *layer, unsigned char row,
+		unsigned char col, unsigned char val);
+
+unsigned char keymap_layer_get_key(keymap_layer_t *layer, unsigned char row,
+		unsigned char col);
+
+void keymap_layer_set_name(keymap_layer_t *layer, char* name);
+
+void keymap_layer_set_mod_key_code(keymap_layer_t *layer, unsigned char code);
+
+unsigned char keymap_layer_get_mod_key_code(keymap_layer_t *layer);
+
+unsigned char keymap_layer_get_ID(keymap_layer_t *layer);
+
+keymap_layer_t *keymap_layer_get_next(keymap_layer_t *layer);
+
+int keymap_list_append_layer(keymap_layer_t *layer);
+
+int keymap_list_prepend_layer(keymap_layer_t *layer);
+
+int keymap_list_add_pos(keymap_list_t *list,
+		keymap_layer_t *layer, unsigned char pos);
+
+unsigned char keymap_list_get_ID_count(void);
+
+unsigned char keymap_list_get_layer_count(void);
+
+keymap_layer_t *keymap_list_get_current_layer(void);
+
+keymap_layer_t *keymap_list_get_layer_ID(unsigned char ID);
+
+keymap_layer_t *keymap_list_get_layer_mod_key(unsigned char key);
+
 
 #endif /* KEYMAP_H_ */

@@ -8,10 +8,6 @@
 #ifndef MOUSE_H_
 #define MOUSE_H_
 
-#include "states.h"
-#include "error.h"
-#include "stm32f4xx_hal.h"
-
 //CALIBRATION
 #define LARGE_RANGE 	100
 #define SMALL_RANGE 	84
@@ -27,34 +23,20 @@
 #define Y_MID			178
 
 
-typedef struct mouseHID{
-	const uint8_t id;
-	uint8_t buttons;
-	int8_t x;
-	int8_t y;
-	int8_t wheel;
-  } mouseHID_t;
+typedef struct mouse_coord{
+	signed char 		x;
+	signed char 		y;
+} mouse_coord_t;
 
-typedef struct mouse_buf{
-	signed long x;
-	signed long y;
-} mouse_buf_t;
+//mouse HID must always be 3
+typedef struct mouse_HID{
+	unsigned char 		id;
+	unsigned char 		buttons;
+	mouse_coord_t		coord;
+	signed char 		wheel;
+  } mouse_HID_t;
 
-typedef struct mouse_HID_data{
-	mouseHID_t mouse_HID;
-	report_states mouse_state;
-
-	mouse_buf_t mouse_buf;
-} mouse_HID_data_t;
-
-typedef struct mouse_device{
-	const ADC_HandleTypeDef* adc_x;
-	const ADC_HandleTypeDef* adc_y;
-
-	signed long x_cal;
-	signed long y_cal;
-} mouse_device_t;
-
-key_err_t mouse_init( mouse_HID_data_t* data );
+unsigned char mouse_init(void);
+unsigned char mouse_run (void);
 
 #endif /* MOUSE_H_ */

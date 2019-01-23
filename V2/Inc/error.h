@@ -20,13 +20,6 @@ typedef enum{
 	shift_init_err	= 1
 } shift_err_t;
 
-typedef enum{
-	km_ok				= 0,
-	km_init_err			= -1,
-	km_ID_err			= -2,
-	km_table_init_err	= -3
-} keymap_err_t;
-
 typedef enum {
 	key_ok = 0,
 	adc_err = -1,
@@ -54,6 +47,7 @@ typedef enum {
 	EUSB			= 2,
 	EBUFF			= 3,
 	EADC			= 4,
+	ENOINIT			= 5
 } err_codes_t;
 
 #endif /* ERROR_H_ */

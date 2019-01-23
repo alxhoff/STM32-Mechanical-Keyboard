@@ -174,8 +174,6 @@ int main(void)
 
 	//TODO STANDARDIZE DEVICE INIT
 
-
-
 	SN54HC595_init_obj(&shift_array);
 
 	layer_list_init(keyboard_devs, &keymap_init0);
@@ -589,16 +587,10 @@ static void MX_GPIO_Init(void)
 /* ADCListenCallback function */
 void MouseListenCallback(void const * argument)
 {
-//	TickType_t xLastWakeTime = xTaskGetTickCount();
-//	const TickType_t xPeriod = 5;
+	TickType_t xLastWakeTime = xTaskGetTickCount();
+	const TickType_t xPeriod = 5;
 //
-//	mouse_HID_data_t mouse_data = {
-//
-//			.mouse_HID = {
-//					.id = 3
-//			}
-//	};
-//	mouse_init(&mouse_data);
+	mouse_init();
 //  /* Infinite loop */
 	for (;;)
 	{

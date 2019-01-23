@@ -65,7 +65,7 @@ keymap_err_t layer_list_init(key_devices_t* keyboard_devices,
 		return km_init_err;
 
 	layer->ID =  layer_list_get_ID(keyboard_devices->layer_list);
-	layer->layer_modifier_key_code = initial_layer_to_add->key;
+	layer->mod_key_code = initial_layer_to_add->key;
 
 	layer->name = (char*) malloc
 			((strlen(initial_layer_to_add->name)+1)*sizeof(char));
@@ -94,7 +94,7 @@ keymap_err_t layer_list_append_layer( keymap_list_t* layer_list,
 		return km_init_err;
 
 	//fill layer#######
-	layer->layer_modifier_key_code = layer_to_add->key;
+	layer->mod_key_code = layer_to_add->key;
 	layer->ID = layer_list_get_ID(layer_list);
 	layer_list->layer_count++;
 
@@ -149,7 +149,7 @@ keymap_err_t layer_table_init ( keymap_list_t* layer_list )
 			return km_table_init_err;
 
 		new_entry->ID = layer_list_head->ID;
-		new_entry->key_code = layer_list_head->layer_modifier_key_code;
+		new_entry->key_code = layer_list_head->mod_key_code;
 		new_entry->layer = layer_list_head;
 		new_entry->grid = &layer_list_head->grid;
 		// how to access -> int lol = (*new_entry->grid)[1][1];
@@ -351,7 +351,7 @@ uint8_t layer_table_get_ID_w_key ( keymap_list_t* layer_list, key_code key )
 {
 	keymap_layer_t* head = layer_list->layer_head;
 
-	while(head->layer_modifier_key_code != key)
+	while(head->mod_key_code != key)
 		head = head->next;
 
 	return head->ID;

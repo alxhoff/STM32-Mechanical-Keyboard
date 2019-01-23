@@ -7,117 +7,143 @@
 
 #include "mouse.h"
 #include "error.h"
-#include "extern.h"
+#include "stm32f4xx_hal.h"
+#include "cmsis_os.h"
 
-key_err_t mouse_init( mouse_HID_data_t* data )
+mouse_device_t *mouse_dev;
+
+typedef struct buf{
+	signed long x;
+	signed long y;
+} buf_t;
+
+typedef struct mouse_device{
+	const ADC_HandleTypeDef* adc_x;
+	const ADC_HandleTypeDef* adc_y;
+
+	signed long x_cal;
+	signed long y_cal;
+
+	buf_t buf;
+
+	report_states state;
+} mouse_device_t;
+
+unsigned char mouse_init(void)
 {
-	data->mouse_buf.x=0;
-	data->mouse_buf.y=0;
-	data->mouse_state=inactive;
+	mouse_dev = calloc(1, sizeof(mouse_device_t));
+	if(mouse_dev) return -ENOMEM;
+
+	mouse_dev->buf.x=0;
+	mouse_dev->buf.y=0;
+	mouse_dev->state=inactive;
 
 	return 0;
 }
 
-key_err_t ADC_retrieve_values( mouse_device_t* mouse, mouse_HID_data_t* data )
+mouse_coord_t mouse_get_coord(void)
 {
-	if(HAL_ADC_Start(mouse->adc_x) != HAL_OK)
-		return -EADC;
+	mouse_coord_t ret = {0};
 
-	if(HAL_ADC_Start(mouse->adc_y) != HAL_OK)
-		return -EADC;
+	if(HAL_ADC_Start(mouse_dev->adc_x) != HAL_OK)
+		return NULL;
 
-	if(HAL_ADC_PollForConversion(mouse->adc_x, 50) != HAL_OK)
-		return -EADC;
+	if(HAL_ADC_Start(mouse_dev->adc_y) != HAL_OK)
+		return NULL;
 
-	if(HAL_ADC_PollForConversion(mouse->adc_y, 50) != HAL_OK)
-		return -EADC;
+	if(HAL_ADC_PollForConversion(mouse_dev->adc_x, 50) != HAL_OK)
+		return NULL;
 
-	data->mouse_buf.x = ((signed long)HAL_ADC_GetValue(mouse->adc_x) >> 4);
-	data->mouse_buf.y = ((signed long)HAL_ADC_GetValue(mouse->adc_y) >> 4);
+	if(HAL_ADC_PollForConversion(mouse_dev->adc_y, 50) != HAL_OK)
+		return NULL;
 
-	if((data->mouse_buf.x < 187 && data->mouse_buf.x > 147) && (data->mouse_buf.y < 187 && data->mouse_buf.y > 147))
-			return -EBUFF;
+	ret.x = ((signed long)HAL_ADC_GetValue(mouse_dev->adc_x) >> 4);
+	ret.y = ((signed long)HAL_ADC_GetValue(mouse_dev->adc_y) >> 4);
 
-	data->mouse_state = active;
+	//TODO what is this?
+	mouse_dev->state = active;
 
 	return 0;
 }
 
-key_err_t calibrate_mouse( mouse_HID_data_t* data )
+unsigned char mouse_get_buttons(void)
+{
+	//TODO
+	return 0;
+}
+
+signed char mouse_get_wheel(void)
+{
+	return 0;
+}
+
+unsigned char calibrate_mouse(void)
 {
 	//TODO
 
 	return 0;
 }
 
-key_err_t clear_mouse_report ( mouse_HID_data_t* data )
-{
-	if(data->mouse_state == clearing || data->mouse_state == active){
-		data->mouse_HID.buttons=0;
-		data->mouse_HID.x=0;
-		data->mouse_HID.y=0;
-		data->mouse_HID.wheel=0;
-	}
-	return 0;
-}
 
-key_err_t process_mouse_buf ( mouse_HID_data_t* data )
+
+void process_buf ( mouse_HID_data_t* data )
 {
 	//TODO MOUSE DYNAMICS - exponential
 
 	//scale left and downwards ranges
-	if(data->mouse_buf.x <= 155)
-		data->mouse_buf.x *= 1.37;
+	if(mouse_dev->buf.x <= 155)
+		mouse_dev->buf.x *= 1.37;
 
-	if(data->mouse_buf.y <= 155)
-		data->mouse_buf.y *= 1.26;
+	if(mouse_dev->buf.y <= 155)
+		mouse_dev->buf.y *= 1.26;
 
 	//shift
-	data->mouse_buf.x -= 167;
-	data->mouse_buf.y -= 167;
+	mouse_dev->buf.x -= 167;
+	mouse_dev->buf.y -= 167;
 
 	//clear movements under 20 from center
 
-	if(data->mouse_buf.x < 20 && data->mouse_buf.x > -20)
-		data->mouse_buf.x = 0;
+	if(mouse_dev->buf.x < 20 && mouse_dev->buf.x > -20)
+		mouse_dev->buf.x = 0;
 
-	if(data->mouse_buf.y < 20 && data->mouse_buf.y > -20)
-		data->mouse_buf.y = 0;
+	if(mouse_dev->buf.y < 20 && mouse_dev->buf.y > -20)
+		mouse_dev->buf.y = 0;
+}
+
+mouse_HID_t mouse_prepare_report (void)
+{
+	mouse_HID_t ret = {0};
+
+	ret.buttons = mouse_get_buttons();
+	ret.coord = mouse_get_coord();
+	ret.wheel = mouse_get_buttons();
 
 	return 0;
 }
 
-key_err_t prepare_mouse_report ( mouse_HID_data_t* data )
+unsigned char mouse_send_report ( mouse_HID_t* data )
 {
-	//basic mouse control
-	data->mouse_HID.x = (uint8_t) data->mouse_buf.x;
-	data->mouse_HID.y = -1 * (uint8_t) data->mouse_buf.y;
-
+	USBD_HID_SendReport(&hUsbDeviceFS, &data, sizeof(mouse_HID_t));
+	mouse_dev->state = clearing;
 	return 0;
 }
 
-key_err_t send_mouse_report ( mouse_HID_data_t* data )
+unsigned char mouse_run (void)
 {
-	USBD_HID_SendReport(&hUsbDeviceFS, &data->mouse_HID, sizeof(mouseHID_t));
-	data->mouse_state = clearing;
-	return 0;
-}
-
-key_err_t process_mouse_flags ( mouse_HID_data_t* data )
-{
-	if(data->mouse_state == active){
+	static mouse_HID_t data = NULL;
+	if(mouse_dev->state == active){
 		if(xSemaphoreTake( USB_send_lock, (TickType_t) portMAX_DELAY) == pdTRUE){
-			prepare_mouse_report(data);
-			send_mouse_report(data);
-			data->mouse_state = clearing;
+			data = mouse_prepare_report();
+			mouse_send_report(&data);
+			mouse_dev->state = clearing;
 
 			xSemaphoreGive(USB_send_lock);
 		}
 
-	}else if( data->mouse_state == clearing){
+	}else if( mouse_dev->state == clearing){
 		if(xSemaphoreTake( USB_send_lock, (TickType_t) portMAX_DELAY) == pdTRUE){
-			send_mouse_report(data);
-			data->mouse_state = inactive;
+			mouse_send_report(data);
+			mouse_dev->state = inactive;
 
 			xSemaphoreGive(USB_send_lock);
 		}
