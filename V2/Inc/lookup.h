@@ -8,22 +8,9 @@
 #ifndef LOOKUP_H_
 #define LOOKUP_H_
 
-#include <stdio.h>
+unsigned char lookup_get_key(unsigned char character);
+unsigned char lookup_get_mod(unsigned char character);
 
-#define SC(key) HID_KEYBOARD_SC_##key
-#define MOD(key) HID_KEYBOARD_MODIFIER_##key
-
-typedef struct scan_code
-{
-	unsigned char code;
-	unsigned char mod;
-} scan_code_t;
-
-struct scan_code_char
-{
-	char* unmodified;
-	char* modified;
-};
 
 
 #endif /* LOOKUP_H_ */

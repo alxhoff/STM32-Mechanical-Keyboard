@@ -653,11 +653,10 @@ void KeyboardListenCallback(void const * argument)
 	{
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);
 
-//		if (scan_key_matrix(keyboard_devs->keyboard,
-//				keyboard_devs->keyboard_HID) == 0)
-//			process_key_buf(keyboard_devs->keyboard_HID,
-//					keyboard_devs->layer_list);
+		if (scan_key_matrix() == 0) /* if keys were pressed */
+			process_key_buf();		/* convert row-col to actual keys */
 
+		//STATE MACHINE HERE
 //		clear_keyboard_report(keyboard_devs->keyboard_HID);
 //		process_keyboard_flags(keyboard_devs->keyboard_HID);
 	}

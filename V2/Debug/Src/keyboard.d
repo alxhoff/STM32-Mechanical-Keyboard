@@ -37,12 +37,13 @@ Src/keyboard.o: ../Src/keyboard.c \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keyboard.h \
+ /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/config.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/datatypes.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/states.h \
+ /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/buffers.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keyboard_private.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keymap.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/HIDClassCommon.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/config.h
+ /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/HIDClassCommon.h
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/config.h:
 
@@ -120,14 +121,16 @@ Src/keyboard.o: ../Src/keyboard.c \
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keyboard.h:
 
+/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/config.h:
+
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/datatypes.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/states.h:
+
+/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/buffers.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keyboard_private.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keymap.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/HIDClassCommon.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/config.h:

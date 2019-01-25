@@ -85,7 +85,7 @@ struct shift_array{
 };
 
 shift_array_t shift_dev = {
-				.dev_count = 2,
+				.dev_count = SHIFT_DEVICES,
 				.ser_in_pin = SHIFT_SER_IN_PIN,	//GPIO PINS FOR SHIFT ARRAY
 				.ser_in_port = SHIFT_SER_IN_PORT,
 				.ser_in_clock_init = 1,
@@ -114,6 +114,8 @@ unsigned char SN54HC595_out_bytes(unsigned char* data, unsigned char byte_count)
 			return -EINVAL;
 	shift_dev.set_data(&shift_dev, data);
 	shift_dev.output(&shift_dev, byte_count);
+
+	return 0;
 }
 
 //TODO is byte count necessary?
@@ -124,6 +126,24 @@ unsigned char SN54HC595_out_bytes_delay(unsigned char* data,
 		return -EINVAL;
 	shift_dev.set_data(&shift_dev, data);
 	shift_dev.output_delay(&shift_dev, byte_count, delay);
+
+	return 0;
+}
+
+void SN54HC595_out(void)
+{
+	shift_dev.output(&shift_dev, shift_dev.dev_count);
+}
+
+void SN54HC595_clear(void)
+{
+	HAL_GPIO_WritePin(shift_dev.ser_clk_port, shift_dev.ser_clk_pin, GPIO_PIN_RESET);
+	for(unsigned char i = 0; i < shift_dev.dev_count * 8; i++){
+		HAL_GPIO_WritePin(shift_dev.ser_in_port, shift_dev.ser_in_pin, GPIO_PIN_RESET);
+		shift_dev.clock_data(&shift_dev);
+	}
+	//latch data
+	shift_dev.latch(&shift_dev);
 }
 
 void output_self(shift_array_t* self, unsigned char byte_count)

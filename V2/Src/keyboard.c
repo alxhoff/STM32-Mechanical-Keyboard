@@ -10,6 +10,9 @@
 #include "keyboard.h"
 #include "keyboard_private.h"
 #include "keymap.h"
+#include "cmsis_os.h"
+
+QueueHandle_t queue_packet_to_send;
 
 keyboard_device_t keyboard_dev = {
 		.row_ports = { ROW_PORT_0, ROW_PORT_1, ROW_PORT_2, ROW_PORT_3, ROW_PORT_4 },
@@ -62,7 +65,7 @@ void keyboard_init(void)
 	keyboard_init_status_LEDS();
 	keyboard_init_row_inputs();
 
-
+	queue_packet_to_send = xQueueCreate(20, sizeof(send_buffer_t));
 //	//HID DATA
 //	keyboard_devices->keyboard_HID =
 //			(keyboard_HID_data_t*)calloc(1, sizeof(keyboard_HID_data_t));
@@ -92,130 +95,87 @@ void keyboard_init(void)
 
 }
 
-/*int8_t process_key_buf(keyboard_HID_data_t* data, keymap_list_t* layer_list)
+unsigned char keyboard_read_row(unsigned char row)
 {
-	if(data->key_buf.index == 0){
-		return -EBUFF;
+	return HAL_GPIO_ReadPin(keyboard_dev.row_ports[row], keyboard_dev.row_pins[row]);
+}
+
+void keyboard_scan_buff_reset(void)
+{
+	keyboard_dev.scan_buf.index = 0;
+}
+
+void keyboard_scan_buff_add(unsigned char col, unsigned char row)
+{
+	keyboard_dev.scan_buf.buffer[keyboard_dev.scan_buf.index].col = col;
+	keyboard_dev.scan_buf.buffer[keyboard_dev.scan_buf.index].row = row;
+	keyboard_dev.scan_buf.index++;
+}
+
+unsigned char keyboard_scan_buf_length(void)
+{
+	return keyboard_dev.scan_buf.index;
+}
+
+// sort all standard keys: normal, mod and media into buffer
+void keyboard_sort_scaned_key(send_buffer_t *buf,  unsigned char key)
+{
+	if(key >= 0xE0 && key <= 0xE7) /* media */
+	{
+		buf->med_buf = key;
+		return;
 	}
 
-	//reset buffers
-	data->out_buf.key_buf.count = 0;
-	data->out_buf.med_buf.count = 0;
-	data->shortlist_keys.count = 0;
-
-	//clear modifiers
-
-	data->out_buf.mod_buf = 0x00;
-
-	if(current_keyboard_state == layer_set) goto set_layer;
-
-	if(current_keyboard_state == macro_run) goto macro_run;
-
-	if(current_keyboard_state == macro_set)	goto macro_set;
-
-	if(current_keyboard_state == CLI) goto CLI;
-
-	//get current layer
-	keymap_layer_t* current_layer = layer_table_get_current_layer(layer_list);
-
-	//TODO PUT INTO STATE FUNCTIONS
-	//iterate through buffer and translate
-	for(unsigned char i=0;i<data->key_buf.index;i++){
-		//TODO capslock
-		//get character
-		data->key_buf.buffer[i].key_code =
-				current_layer->grid[data->key_buf.buffer[i].col][data->key_buf.buffer[i].row];
-
-		//LAYER MODIFIER
-		if(data->key_buf.buffer[i].key_code == HID_KEYBOARD_SC_LAYER_FUNCTION)
-			goto state_change_layer;
-
-		//MACRO_RUN
-		if(data->key_buf.buffer[i].key_code == HID_KEYBOARD_SC_MACRO_RUN_FUNCTION)
-			goto state_change_macro_run;
-
-		//MACRO_SET
-		if(data->key_buf.buffer[i].key_code == HID_KEYBOARD_SC_MACRO_SET_FUNCTION)
-			goto state_change_macro_set;
-
-		//CLI
-		if(data->key_buf.buffer[i].key_code == HID_KEYBOARD_SC_CLI_FUNCTION)
-			goto state_change_CLI;
-
-		//MODIFIER
-		if(data->key_buf.buffer[i].key_code >= 0xE0 && data->key_buf.buffer[i].key_code <= 0xE7){
-			data->keyboard_state = active;
-			data->out_buf.mod_buf |= (1 << (data->key_buf.buffer[i].key_code - 0xE0));
-		}
-		//MEIDA
-		else if(data->key_buf.buffer[i].key_code >= 0xE8 && data->key_buf.buffer[i].key_code <= 0xEF){
-			//media
-			data->media_state = active;
-			//TODO intelligent media
-			if(data->out_buf.med_buf.count <= 1){
-				data->out_buf.med_buf.key.key_code =
-						data->key_buf.buffer[i].key_code;
-				data->out_buf.med_buf.count++;
-			}
-		//OTHER KEY PRESSES
-		}else{
-			data->keyboard_state = active;
-			//check if key_code is in last HID report
-			for(int j=0;j<data->prev_report_len;j++){
-				//if yes put into data->out_buf
-				if(data->key_buf.buffer[i].key_code == data->prev_keys[j]){
-
-					data->out_buf.key_buf.keys[data->out_buf.key_buf.count].key_code =
-							data->key_buf.buffer[i].key_code;
-					data->out_buf.key_buf.count++;
-
-					break;
-				}
-			}
-				//else put into data->shortlist_keys
-			data->shortlist_keys.keys[data->shortlist_keys.count].key_code =
-							data->key_buf.buffer[i].key_code;
-			data->shortlist_keys.count++;
-		}
+	if(key >= 0xE0 && key <= 0xE7) /* modifier */
+	{
+		buf->mod_buf |= (1 << (key - 0xE0));
+		return;
 	}
 
-	//fill data->out_buf with keys from data->shortlist_keys
-	if(data->keyboard_state == active){
-		int out_buf_count = data->out_buf.key_buf.count;
 
-		for(int i=data->out_buf.key_buf.count;
-				i<out_buf_count + data->shortlist_keys.count;i++){
-			data->out_buf.key_buf.keys[i].key_code =
-					data->shortlist_keys.keys[i - out_buf_count].key_code;
-			data->out_buf.key_buf.count++;
-			if(i==5)
+}
+
+unsigned char process_key_buf(void)
+{
+	static unsigned char ret = 0;
+	static unsigned char tmp_sc;
+	send_buffer_t *buf = calloc(1, sizeof(send_buffer_t));
+	if(!buf)
+		return -ENOMEM;
+
+	//process buffer into key codes
+	//TODO make this process 6 normal keys and X others in each call
+	while(keyboard_dev.scan_buf.index)
+	{
+		static unsigned char i = 0;
+		for(;i < (keyboard_dev.scan_buf.index > 5) ?
+					5 : keyboard_dev.scan_buf.index; i++)
+		{
+			tmp_sc = keymap_get_key_sk(keyboard_dev.scan_buf.buffer[i]);
+
+			/* State change */
+			ret = lookup_state_change_key(tmp_sc);
+			if(ret){ /* if state change key */
+				//HANDLE STATE CHANGE
+				keyboard_dev.scan_buf.index = 0; /* clear buffer */
+				return 0;
+			}
+
+			/* Toggle key */
+			ret = lookup_toggle_key(tmp_sc);
+			if(ret){
+				//TODO handle press
 				break;
+			}
+
+			/* The rest */
+			keyboard_sort_scaned_key(buf, tmp_sc);
 		}
-	}
+			if(!queue_packet_to_send)
+				return -ENOINIT;
 
-	//prepare for sending
-	data->prev_report_len = data->out_buf.key_buf.count;
-
-	return 0;
-	state_change_layer: state_enter_layer_set();
-	set_layer: state_layer_set( layer_list );
-	return 0;
-	state_change_macro_run: state_enter_macro_run();
-	macro_run: state_macro_run( layer_list );
-	return 0;
-	state_change_macro_set: state_enter_macro_set();
-	macro_set: state_macro_set( layer_list );
-	return 0;
-	state_change_CLI: state_enter_CLI();
-	CLI: state_CLI();
-	return 0;
-}*/
-
-signed int reset_buffer(six_key_buffer_t* buffer_to_reset)
-{
-	buffer_to_reset->count=0;
-	for(unsigned char i=0;i<6;i++){
-		buffer_to_reset->keys[i].key_code = 0;
+			xQueueSend(queue_packet_to_send, buf, portMAX_DELAY);
+			keyboard_dev.scan_buf.index -= i;
 	}
 	return 0;
 }

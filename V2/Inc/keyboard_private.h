@@ -8,12 +8,14 @@
 #ifndef KEYBOARD_PRIVATE_H_
 #define KEYBOARD_PRIVATE_H_
 
+#include "buffers.h"
+
   /**
-   * @typedef single_key_t
-   * @brief Typedef of single_key
+   * @typedef scaned_key_t
+   * @brief Typedef of scaned_key
    * */
   /**
-   * @struct single_key
+   * @struct scaned_key
    * @brief Represents a single keyboard key
    *
    * The key structure represents a key at a given moment in time by representing
@@ -21,18 +23,17 @@
    * as it stores one static key_code which can be dynamically changed.
    *
    * */
-typedef struct single_key{
+typedef struct scaned_key{
 	unsigned char row;			/**< Key's row */
 	unsigned char col;			/**< Key's col */
-	unsigned char key_code;		/**< Ket's key code */
-} single_key_t;
+} scaned_key_t;
 
 /**
- * @typedef keypress_buffer_t
- * @brief Typedef of keypress_buffer
+ * @typedef scan_buffer_t
+ * @brief Typedef of scan_buffer
  * */
 /**
- * @struct keypress_buffer
+ * @struct scan_buffer
  * @brief Keypress input buffer used to store keystroke input from keyboard.
  *
  * When the keyboard is initially scanned, all keys that were found to be pressed are
@@ -40,11 +41,10 @@ typedef struct single_key{
  * row and col values, not key_codes.
  *
  * */
-typedef struct keypress_buffer{
-	single_key_t buffer[SCAN_KEY_BUFFER_LENGTH];	/**< Key buffer */
-	unsigned char index;									/**< Stores the amount of keys currently within
-	 	 	 	 	 	 	 	 	 	 	 	 	 	 the buffer*/
-} keypress_buffer_t;
+typedef struct scan_buffer{
+	scaned_key_t buffer[SCAN_KEY_BUFFER_LENGTH];	/**< Key buffer */
+	unsigned char index;		/**< Stores the amount of keys currently within the buffer*/
+} scan_buffer_t;
 
 /**
  * @typedef six_key_buffer_t
@@ -59,7 +59,7 @@ typedef struct keypress_buffer{
  *
  * */
 typedef struct six_key_buffer{
-	single_key_t keys[6];
+	scaned_key_t keys[6];
 	unsigned char count;					/**< Stores the number of keys currently within the buffer */
 } six_key_buffer_t;
 
@@ -77,7 +77,7 @@ typedef struct six_key_buffer{
  *
  * */
 typedef struct one_key_buffer{
-	single_key_t key;
+	scaned_key_t key;
 	unsigned char count;					/**< Indicates if the single key is currently loaded or not.
 	 	 	 	 	 	 	 	 	 	 Using a one key buffer without a count can lead to
 	 	 	 	 	 	 	 	 	 	 undefined behaviour*/
@@ -99,8 +99,8 @@ typedef struct one_key_buffer{
 typedef struct send_buffer{
 	six_key_buffer_t key_buf;		/**< Stores the keyboard HID report buffer */
 	unsigned char mod_buf;				/**< Stores the keyboard HID report modifier keys buffer */
-	one_key_buffer_t med_buf;		/**< Stores the media HID report buffer */
-	unsigned char send_flag;				/**< Flag to indicate if the buffers need to be processed */
+	unsigned char med_buf;		/**< Stores the media HID report buffer */
+//	unsigned char send_flag;				/**< Flag to indicate if the buffers need to be processed */
 } send_buffer_t;
 
 /**
@@ -150,13 +150,12 @@ typedef struct keyboard_device{
 	uint16_t row_pins[KEYBOARD_ROWS];			/**< GPIO pins used by the keyboard rows */
 	GPIO_TypeDef* row_ports[KEYBOARD_ROWS];		/**< GPIO ports used by the keyboard rows */
 
-	const keyboard_report_ID;
-	const media_report_ID;
+	const unsigned char keyboard_report_ID;
+	const unsigned char media_report_ID;
 
-	keypress_buffer_t key_buf;			/**< Buffer where scanned keys are stored before processing */
+	//TODO lock this to prepare for multicore
+	scan_buffer_t scan_buf;			/**< Buffer where scanned keys are stored before processing */
 	six_key_buffer_t prev_buf;
-//	uint16_t col_pins[KEYBOARD_COLS];			/**< GPIO pins used by the keyboard cols */
-//	GPIO_TypeDef* col_ports[KEYBOARD_COLS];		/**< GPIO ports used by the keyboard cols */
 } keyboard_device_t;
 
 #endif /* KEYBOARD_PRIVATE_H_ */

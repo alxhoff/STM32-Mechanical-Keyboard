@@ -6,7 +6,23 @@
  */
 
 #include "HIDClassCommon.h"
-#include "lookup.h"
+#include "buffers.h"
+#include "config.h"
+
+#define SC(key) HID_KEYBOARD_SC_##key
+#define MOD(key) HID_KEYBOARD_MODIFIER_##key
+
+typedef struct scan_code
+{
+	unsigned char code;
+	unsigned char mod;
+} scan_code_t;
+
+struct scan_code_char
+{
+	char* unmodified;
+	char* modified;
+};
 
 struct scan_code_char lookup_char[207] = {
 		[1] = {0},
@@ -324,7 +340,7 @@ struct scan_code_char lookup_char[207] = {
 		[206] = {"b"}
 };
 
-struct scan_code lookup_sc[127] = {
+struct scan_code lookup_sc[256] = {
 	[32]={SC(SPACE),0},
 	[33]={SC(1_AND_EXCLAMATION),MOD(RIGHTSHIFT)},
 	[34]={SC(APOSTROPHE_AND_QUOTE),MOD(RIGHTSHIFT)},
@@ -418,7 +434,8 @@ struct scan_code lookup_sc[127] = {
 	[123]={SC(OPENING_BRACKET_AND_OPENING_BRACE),MOD(RIGHTSHIFT)},
 	[124]={SC(BACKSLASH_AND_PIPE),MOD(RIGHTSHIFT)},
 	[125]={SC(CLOSING_BRACKET_AND_CLOSING_BRACE),MOD(RIGHTSHIFT)},
-	[126]={SC(NON_US_HASHMARK_AND_TILDE),MOD(RIGHTSHIFT)}
+	[126]={SC(NON_US_HASHMARK_AND_TILDE),MOD(RIGHTSHIFT)},
+	[232]={SC(MEDIA_PLAY),0},
 };
 
 unsigned char lookup_get_key(unsigned char character)
@@ -429,5 +446,30 @@ unsigned char lookup_get_key(unsigned char character)
 unsigned char lookup_get_mod(unsigned char character)
 {
 	return lookup_sc[character].mod;
+}
+
+unsigned char lookup_state_change_key(unsigned char sc)
+{
+	if(sc == SC(LAYER_FUNCTION))
+	{
+		//TODO STATE CHANGE ENUM ETC
+	}else if(sc == SC(MACRO_RUN_FUNCTION))
+	{
+
+	}else if(sc == SC(MACRO_SET_FUNCTION))
+	{
+
+	}else if(sc == SC(CLI_FUNCTION))
+	{
+
+	}
+	return 0;
+}
+
+//look if the key is a key like caps lock
+unsigned char lookup_toggle_key(unsigned char sc)
+{
+
+	return 0;
 }
 

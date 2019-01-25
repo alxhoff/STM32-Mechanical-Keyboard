@@ -8,8 +8,7 @@
 #ifndef SN54HC595_H_
 #define SN54HC595_H_
 
-#include <config.h>
-#include "stm32f4xx.h"
+#include "config.h""
 
 /*
  *#####PINOUT#####
@@ -95,5 +94,10 @@ unsigned char SN54HC595_out_bytes(unsigned char* data, unsigned char byte_count)
 
 unsigned char SN54HC595_out_bytes_delay(unsigned char* data,
 		unsigned char byte_count, uint32_t delay);
+
+void SN54HC595_out(void);
+
+void SN54HC595_clear(void);
+
 
 #endif /* SN54HC595_H_ */

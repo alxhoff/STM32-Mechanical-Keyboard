@@ -66,7 +66,6 @@ Src/main.o: ../Src/main.c \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/scan.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/error.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keyboard.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/config.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/datatypes.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/states.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/types.h \
@@ -210,8 +209,6 @@ Src/main.o: ../Src/main.c \
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/error.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keyboard.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/config.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/datatypes.h:
 

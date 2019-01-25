@@ -6135,11 +6135,11 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x115 Src/CLI.o
  .debug_macro   0x0000000000000000      0x12c Src/CLI.o
  .debug_macro   0x0000000000000000       0x46 Src/CLI.o
- .debug_macro   0x0000000000000000       0xca Src/CLI.o
+ .debug_macro   0x0000000000000000       0xd0 Src/CLI.o
  .debug_macro   0x0000000000000000      0x6db Src/CLI.o
  .debug_macro   0x0000000000000000      0x224 Src/CLI.o
  .debug_line    0x0000000000000000      0x9b3 Src/CLI.o
- .debug_str     0x0000000000000000    0xe65fe Src/CLI.o
+ .debug_str     0x0000000000000000    0xe660e Src/CLI.o
  .comment       0x0000000000000000       0x1e Src/CLI.o
  .debug_frame   0x0000000000000000       0x98 Src/CLI.o
  .ARM.attributes
@@ -6422,9 +6422,11 @@ Discarded input sections
  .text.SN54HC595_get_dev_count
                 0x0000000000000000        0xc Src/SN54HC595.o
  .text.SN54HC595_out_bytes
-                0x0000000000000000       0x28 Src/SN54HC595.o
- .text.SN54HC595_out_bytes_delay
                 0x0000000000000000       0x2c Src/SN54HC595.o
+ .text.SN54HC595_out_bytes_delay
+                0x0000000000000000       0x30 Src/SN54HC595.o
+ .text.SN54HC595_out
+                0x0000000000000000       0x10 Src/SN54HC595.o
  .debug_macro   0x0000000000000000      0xaa2 Src/SN54HC595.o
  .debug_macro   0x0000000000000000       0x18 Src/SN54HC595.o
  .debug_macro   0x0000000000000000       0x22 Src/SN54HC595.o
@@ -6499,7 +6501,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x1df Src/SN54HC595.o
  .debug_macro   0x0000000000000000      0x115 Src/SN54HC595.o
  .debug_macro   0x0000000000000000      0x12c Src/SN54HC595.o
- .debug_macro   0x0000000000000000       0xca Src/SN54HC595.o
+ .debug_macro   0x0000000000000000       0xd0 Src/SN54HC595.o
  .group         0x0000000000000000        0xc Src/datatypes.o
  .text          0x0000000000000000        0x0 Src/datatypes.o
  .data          0x0000000000000000        0x0 Src/datatypes.o
@@ -6794,6 +6796,8 @@ Discarded input sections
  .group         0x0000000000000000        0xc Src/keyboard.o
  .text          0x0000000000000000        0x0 Src/keyboard.o
  .bss           0x0000000000000000        0x0 Src/keyboard.o
+ .text.keyboard_read_row
+                0x0000000000000000       0x1c Src/keyboard.o
  .text.reset_buffer
                 0x0000000000000000       0x1c Src/keyboard.o
  .text.keyboard_prepare_report
@@ -7077,7 +7081,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x1df Src/keymap.o
  .debug_macro   0x0000000000000000      0x115 Src/keymap.o
  .debug_macro   0x0000000000000000      0x12c Src/keymap.o
- .debug_macro   0x0000000000000000       0xc4 Src/keymap.o
+ .debug_macro   0x0000000000000000       0xca Src/keymap.o
  .debug_macro   0x0000000000000000      0x224 Src/keymap.o
  .group         0x0000000000000000        0xc Src/layers.o
  .group         0x0000000000000000        0xc Src/layers.o
@@ -7456,7 +7460,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x1df Src/macro.o
  .debug_macro   0x0000000000000000      0x115 Src/macro.o
  .debug_macro   0x0000000000000000      0x12c Src/macro.o
- .debug_macro   0x0000000000000000       0xc4 Src/macro.o
+ .debug_macro   0x0000000000000000       0xca Src/macro.o
  .debug_macro   0x0000000000000000       0x16 Src/macro.o
  .debug_macro   0x0000000000000000       0x35 Src/macro.o
  .debug_macro   0x0000000000000000       0x16 Src/macro.o
@@ -7656,7 +7660,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x6b Src/main.o
  .debug_macro   0x0000000000000000      0x1c3 Src/main.o
  .debug_macro   0x0000000000000000      0x6db Src/main.o
- .debug_macro   0x0000000000000000       0xca Src/main.o
+ .debug_macro   0x0000000000000000       0xd0 Src/main.o
  .debug_macro   0x0000000000000000      0x224 Src/main.o
  .debug_macro   0x0000000000000000       0x46 Src/main.o
  .group         0x0000000000000000        0xc Src/mouse.o
@@ -7770,7 +7774,7 @@ Discarded input sections
                 0x0000000000000000       0x1c Src/mouse.o
  .text.mouse_run
                 0x0000000000000000        0x4 Src/mouse.o
- .debug_info    0x0000000000000000     0x15ed Src/mouse.o
+ .debug_info    0x0000000000000000     0x15f3 Src/mouse.o
  .debug_abbrev  0x0000000000000000      0x2f8 Src/mouse.o
  .debug_loc     0x0000000000000000       0x45 Src/mouse.o
  .debug_aranges
@@ -7870,7 +7874,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x6b Src/mouse.o
  .debug_macro   0x0000000000000000      0x1c3 Src/mouse.o
  .debug_line    0x0000000000000000      0xb88 Src/mouse.o
- .debug_str     0x0000000000000000    0xe484d Src/mouse.o
+ .debug_str     0x0000000000000000    0xe4854 Src/mouse.o
  .comment       0x0000000000000000       0x1e Src/mouse.o
  .debug_frame   0x0000000000000000       0xc0 Src/mouse.o
  .ARM.attributes
@@ -7947,23 +7951,19 @@ Discarded input sections
  .group         0x0000000000000000        0xc Src/scan.o
  .group         0x0000000000000000        0xc Src/scan.o
  .group         0x0000000000000000        0xc Src/scan.o
- .group         0x0000000000000000        0xc Src/scan.o
- .group         0x0000000000000000        0xc Src/scan.o
- .group         0x0000000000000000        0xc Src/scan.o
- .group         0x0000000000000000        0xc Src/scan.o
  .text          0x0000000000000000        0x0 Src/scan.o
  .data          0x0000000000000000        0x0 Src/scan.o
- .bss           0x0000000000000000        0x0 Src/scan.o
+ .bss           0x0000000000000000        0x2 Src/scan.o
  .text.scan_key_matrix
-                0x0000000000000000        0x4 Src/scan.o
- .debug_info    0x0000000000000000      0xa16 Src/scan.o
- .debug_abbrev  0x0000000000000000      0x200 Src/scan.o
+                0x0000000000000000       0x44 Src/scan.o
+ .debug_info    0x0000000000000000      0xb4f Src/scan.o
+ .debug_abbrev  0x0000000000000000      0x299 Src/scan.o
+ .debug_loc     0x0000000000000000       0x8f Src/scan.o
  .debug_aranges
                 0x0000000000000000       0x20 Src/scan.o
  .debug_ranges  0x0000000000000000       0x10 Src/scan.o
- .debug_macro   0x0000000000000000      0x416 Src/scan.o
+ .debug_macro   0x0000000000000000      0x3e0 Src/scan.o
  .debug_macro   0x0000000000000000      0xaa2 Src/scan.o
- .debug_macro   0x0000000000000000      0x6db Src/scan.o
  .debug_macro   0x0000000000000000      0x17f Src/scan.o
  .debug_macro   0x0000000000000000      0x1a6 Src/scan.o
  .debug_macro   0x0000000000000000       0x33 Src/scan.o
@@ -8034,14 +8034,11 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x1df Src/scan.o
  .debug_macro   0x0000000000000000      0x115 Src/scan.o
  .debug_macro   0x0000000000000000      0x12c Src/scan.o
- .debug_macro   0x0000000000000000       0xc4 Src/scan.o
- .debug_macro   0x0000000000000000      0x224 Src/scan.o
- .debug_macro   0x0000000000000000       0x16 Src/scan.o
- .debug_macro   0x0000000000000000       0x64 Src/scan.o
- .debug_line    0x0000000000000000      0x792 Src/scan.o
- .debug_str     0x0000000000000000    0xe2875 Src/scan.o
+ .debug_macro   0x0000000000000000       0xca Src/scan.o
+ .debug_line    0x0000000000000000      0x7ce Src/scan.o
+ .debug_str     0x0000000000000000    0xde6cf Src/scan.o
  .comment       0x0000000000000000       0x1e Src/scan.o
- .debug_frame   0x0000000000000000       0x20 Src/scan.o
+ .debug_frame   0x0000000000000000       0x2c Src/scan.o
  .ARM.attributes
                 0x0000000000000000       0x34 Src/scan.o
  .group         0x0000000000000000        0xc Src/screen.o
@@ -9600,7 +9597,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x1df Src/visEffect.o
  .debug_macro   0x0000000000000000      0x115 Src/visEffect.o
  .debug_macro   0x0000000000000000      0x12c Src/visEffect.o
- .debug_macro   0x0000000000000000       0xca Src/visEffect.o
+ .debug_macro   0x0000000000000000       0xd0 Src/visEffect.o
  .debug_macro   0x0000000000000000       0xf4 Src/visEffect.o
  .debug_macro   0x0000000000000000      0x168 Src/visEffect.o
  .debug_macro   0x0000000000000000       0xe4 Src/visEffect.o
@@ -9799,7 +9796,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x1df Src/ws2812b.o
  .debug_macro   0x0000000000000000      0x115 Src/ws2812b.o
  .debug_macro   0x0000000000000000      0x12c Src/ws2812b.o
- .debug_macro   0x0000000000000000       0xca Src/ws2812b.o
+ .debug_macro   0x0000000000000000       0xd0 Src/ws2812b.o
  .debug_macro   0x0000000000000000       0xf4 Src/ws2812b.o
  .debug_macro   0x0000000000000000      0x168 Src/ws2812b.o
  .debug_macro   0x0000000000000000       0xe4 Src/ws2812b.o
@@ -11374,7 +11371,7 @@ LOAD /usr/lib/gcc/arm-none-eabi/8.2.0/thumb/v7e-m+fp/hard/crtn.o
                 0x0000000000000acd       0x1e /usr/lib/gcc/arm-none-eabi/8.2.0/thumb/v7e-m+fp/hard/crtn.o
 OUTPUT(V2.elf elf32-littlearm)
 
-.debug_info     0x0000000000000000    0x3e22d
+.debug_info     0x0000000000000000    0x3e2a9
  .debug_info    0x0000000000000000     0x13a2 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
  .debug_info    0x00000000000013a2     0x1815 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.o
  .debug_info    0x0000000000002bb7     0x19d4 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
@@ -11400,22 +11397,22 @@ OUTPUT(V2.elf elf32-littlearm)
  .debug_info    0x00000000000287af     0x1ace Middlewares/Third_Party/FreeRTOS/Source/timers.o
  .debug_info    0x000000000002a27d      0x5be Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.o
  .debug_info    0x000000000002a83b      0xd6c Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
- .debug_info    0x000000000002b5a7     0x1387 Src/SN54HC595.o
- .debug_info    0x000000000002c92e     0x11a0 Src/keyboard.o
- .debug_info    0x000000000002dace      0xfd4 Src/keymap.o
- .debug_info    0x000000000002eaa2     0x1408 Src/macro.o
- .debug_info    0x000000000002feaa     0x33ea Src/main.o
- .debug_info    0x0000000000033294     0x2518 Src/stm32f4xx_hal_msp.o
- .debug_info    0x00000000000357ac      0xe8a Src/stm32f4xx_it.o
- .debug_info    0x0000000000036636      0xe19 Src/system_stm32f4xx.o
- .debug_info    0x000000000003744f      0xe82 Src/usb_device.o
- .debug_info    0x00000000000382d1     0x25f4 Src/usbd_conf.o
- .debug_info    0x000000000003a8c5      0xe34 Src/usbd_desc.o
- .debug_info    0x000000000003b6f9      0xbef Src/visEffect.o
- .debug_info    0x000000000003c2e8     0x1f23 Src/ws2812b.o
- .debug_info    0x000000000003e20b       0x22 startup/startup_stm32f429xx.o
+ .debug_info    0x000000000002b5a7     0x13b3 Src/SN54HC595.o
+ .debug_info    0x000000000002c95a     0x11e4 Src/keyboard.o
+ .debug_info    0x000000000002db3e      0xfda Src/keymap.o
+ .debug_info    0x000000000002eb18     0x140e Src/macro.o
+ .debug_info    0x000000000002ff26     0x33ea Src/main.o
+ .debug_info    0x0000000000033310     0x2518 Src/stm32f4xx_hal_msp.o
+ .debug_info    0x0000000000035828      0xe8a Src/stm32f4xx_it.o
+ .debug_info    0x00000000000366b2      0xe19 Src/system_stm32f4xx.o
+ .debug_info    0x00000000000374cb      0xe82 Src/usb_device.o
+ .debug_info    0x000000000003834d     0x25f4 Src/usbd_conf.o
+ .debug_info    0x000000000003a941      0xe34 Src/usbd_desc.o
+ .debug_info    0x000000000003b775      0xbef Src/visEffect.o
+ .debug_info    0x000000000003c364     0x1f23 Src/ws2812b.o
+ .debug_info    0x000000000003e287       0x22 startup/startup_stm32f429xx.o
 
-.debug_abbrev   0x0000000000000000     0x7a9e
+.debug_abbrev   0x0000000000000000     0x7ab2
  .debug_abbrev  0x0000000000000000      0x395 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
  .debug_abbrev  0x0000000000000395      0x38e Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.o
  .debug_abbrev  0x0000000000000723      0x45e Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
@@ -11442,21 +11439,21 @@ OUTPUT(V2.elf elf32-littlearm)
  .debug_abbrev  0x0000000000004e35      0x242 Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.o
  .debug_abbrev  0x0000000000005077      0x37e Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
  .debug_abbrev  0x00000000000053f5      0x35e Src/SN54HC595.o
- .debug_abbrev  0x0000000000005753      0x377 Src/keyboard.o
- .debug_abbrev  0x0000000000005aca      0x314 Src/keymap.o
- .debug_abbrev  0x0000000000005dde      0x333 Src/macro.o
- .debug_abbrev  0x0000000000006111      0x374 Src/main.o
- .debug_abbrev  0x0000000000006485      0x2f7 Src/stm32f4xx_hal_msp.o
- .debug_abbrev  0x000000000000677c      0x27c Src/stm32f4xx_it.o
- .debug_abbrev  0x00000000000069f8      0x23d Src/system_stm32f4xx.o
- .debug_abbrev  0x0000000000006c35      0x23d Src/usb_device.o
- .debug_abbrev  0x0000000000006e72      0x33d Src/usbd_conf.o
- .debug_abbrev  0x00000000000071af      0x2b5 Src/usbd_desc.o
- .debug_abbrev  0x0000000000007464      0x24d Src/visEffect.o
- .debug_abbrev  0x00000000000076b1      0x3db Src/ws2812b.o
- .debug_abbrev  0x0000000000007a8c       0x12 startup/startup_stm32f429xx.o
+ .debug_abbrev  0x0000000000005753      0x38b Src/keyboard.o
+ .debug_abbrev  0x0000000000005ade      0x314 Src/keymap.o
+ .debug_abbrev  0x0000000000005df2      0x333 Src/macro.o
+ .debug_abbrev  0x0000000000006125      0x374 Src/main.o
+ .debug_abbrev  0x0000000000006499      0x2f7 Src/stm32f4xx_hal_msp.o
+ .debug_abbrev  0x0000000000006790      0x27c Src/stm32f4xx_it.o
+ .debug_abbrev  0x0000000000006a0c      0x23d Src/system_stm32f4xx.o
+ .debug_abbrev  0x0000000000006c49      0x23d Src/usb_device.o
+ .debug_abbrev  0x0000000000006e86      0x33d Src/usbd_conf.o
+ .debug_abbrev  0x00000000000071c3      0x2b5 Src/usbd_desc.o
+ .debug_abbrev  0x0000000000007478      0x24d Src/visEffect.o
+ .debug_abbrev  0x00000000000076c5      0x3db Src/ws2812b.o
+ .debug_abbrev  0x0000000000007aa0       0x12 startup/startup_stm32f429xx.o
 
-.debug_loc      0x0000000000000000    0x19b3a
+.debug_loc      0x0000000000000000    0x19b59
  .debug_loc     0x0000000000000000      0x13c Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
  .debug_loc     0x000000000000013c      0xab5 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.o
  .debug_loc     0x0000000000000bf1      0x700 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
@@ -11482,19 +11479,19 @@ OUTPUT(V2.elf elf32-littlearm)
  .debug_loc     0x0000000000016585      0xbc4 Middlewares/Third_Party/FreeRTOS/Source/timers.o
  .debug_loc     0x0000000000017149      0x124 Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.o
  .debug_loc     0x000000000001726d      0x313 Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
- .debug_loc     0x0000000000017580      0x3cf Src/SN54HC595.o
- .debug_loc     0x000000000001794f      0x130 Src/keyboard.o
- .debug_loc     0x0000000000017a7f      0x302 Src/keymap.o
- .debug_loc     0x0000000000017d81      0x1fd Src/macro.o
- .debug_loc     0x0000000000017f7e       0xbe Src/main.o
- .debug_loc     0x000000000001803c      0x24a Src/stm32f4xx_hal_msp.o
- .debug_loc     0x0000000000018286      0x16c Src/system_stm32f4xx.o
- .debug_loc     0x00000000000183f2      0xd81 Src/usbd_conf.o
- .debug_loc     0x0000000000019173      0x319 Src/usbd_desc.o
- .debug_loc     0x000000000001948c      0x185 Src/visEffect.o
- .debug_loc     0x0000000000019611      0x529 Src/ws2812b.o
+ .debug_loc     0x0000000000017580      0x3c9 Src/SN54HC595.o
+ .debug_loc     0x0000000000017949      0x155 Src/keyboard.o
+ .debug_loc     0x0000000000017a9e      0x302 Src/keymap.o
+ .debug_loc     0x0000000000017da0      0x1fd Src/macro.o
+ .debug_loc     0x0000000000017f9d       0xbe Src/main.o
+ .debug_loc     0x000000000001805b      0x24a Src/stm32f4xx_hal_msp.o
+ .debug_loc     0x00000000000182a5      0x16c Src/system_stm32f4xx.o
+ .debug_loc     0x0000000000018411      0xd81 Src/usbd_conf.o
+ .debug_loc     0x0000000000019192      0x319 Src/usbd_desc.o
+ .debug_loc     0x00000000000194ab      0x185 Src/visEffect.o
+ .debug_loc     0x0000000000019630      0x529 Src/ws2812b.o
 
-.debug_aranges  0x0000000000000000     0x1e38
+.debug_aranges  0x0000000000000000     0x1e48
  .debug_aranges
                 0x0000000000000000       0xd8 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
  .debug_aranges
@@ -11546,35 +11543,35 @@ OUTPUT(V2.elf elf32-littlearm)
  .debug_aranges
                 0x0000000000001858       0x50 Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
  .debug_aranges
-                0x00000000000018a8       0x88 Src/SN54HC595.o
+                0x00000000000018a8       0x90 Src/SN54HC595.o
  .debug_aranges
-                0x0000000000001930       0x78 Src/keyboard.o
+                0x0000000000001938       0x80 Src/keyboard.o
  .debug_aranges
-                0x00000000000019a8       0xb8 Src/keymap.o
+                0x00000000000019b8       0xb8 Src/keymap.o
  .debug_aranges
-                0x0000000000001a60       0x48 Src/macro.o
+                0x0000000000001a70       0x48 Src/macro.o
  .debug_aranges
-                0x0000000000001aa8       0x88 Src/main.o
+                0x0000000000001ab8       0x88 Src/main.o
  .debug_aranges
-                0x0000000000001b30       0x60 Src/stm32f4xx_hal_msp.o
+                0x0000000000001b40       0x60 Src/stm32f4xx_hal_msp.o
  .debug_aranges
-                0x0000000000001b90       0x28 Src/stm32f4xx_it.o
+                0x0000000000001ba0       0x28 Src/stm32f4xx_it.o
  .debug_aranges
-                0x0000000000001bb8       0x28 Src/system_stm32f4xx.o
+                0x0000000000001bc8       0x28 Src/system_stm32f4xx.o
  .debug_aranges
-                0x0000000000001be0       0x20 Src/usb_device.o
+                0x0000000000001bf0       0x20 Src/usb_device.o
  .debug_aranges
-                0x0000000000001c00       0xf8 Src/usbd_conf.o
+                0x0000000000001c10       0xf8 Src/usbd_conf.o
  .debug_aranges
-                0x0000000000001cf8       0x50 Src/usbd_desc.o
+                0x0000000000001d08       0x50 Src/usbd_desc.o
  .debug_aranges
-                0x0000000000001d48       0x40 Src/visEffect.o
+                0x0000000000001d58       0x40 Src/visEffect.o
  .debug_aranges
-                0x0000000000001d88       0x88 Src/ws2812b.o
+                0x0000000000001d98       0x88 Src/ws2812b.o
  .debug_aranges
-                0x0000000000001e10       0x28 startup/startup_stm32f429xx.o
+                0x0000000000001e20       0x28 startup/startup_stm32f429xx.o
 
-.debug_ranges   0x0000000000000000     0x1dc8
+.debug_ranges   0x0000000000000000     0x1dd8
  .debug_ranges  0x0000000000000000       0xc8 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
  .debug_ranges  0x00000000000000c8       0xd8 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.o
  .debug_ranges  0x00000000000001a0       0xe0 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
@@ -11600,22 +11597,22 @@ OUTPUT(V2.elf elf32-littlearm)
  .debug_ranges  0x0000000000001728       0xa8 Middlewares/Third_Party/FreeRTOS/Source/timers.o
  .debug_ranges  0x00000000000017d0       0x88 Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.o
  .debug_ranges  0x0000000000001858       0x40 Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
- .debug_ranges  0x0000000000001898       0xa8 Src/SN54HC595.o
- .debug_ranges  0x0000000000001940       0x68 Src/keyboard.o
- .debug_ranges  0x00000000000019a8       0xa8 Src/keymap.o
- .debug_ranges  0x0000000000001a50       0x50 Src/macro.o
- .debug_ranges  0x0000000000001aa0       0x78 Src/main.o
- .debug_ranges  0x0000000000001b18       0x50 Src/stm32f4xx_hal_msp.o
- .debug_ranges  0x0000000000001b68       0x18 Src/stm32f4xx_it.o
- .debug_ranges  0x0000000000001b80       0x18 Src/system_stm32f4xx.o
- .debug_ranges  0x0000000000001b98       0x10 Src/usb_device.o
- .debug_ranges  0x0000000000001ba8       0xe8 Src/usbd_conf.o
- .debug_ranges  0x0000000000001c90       0x40 Src/usbd_desc.o
- .debug_ranges  0x0000000000001cd0       0x30 Src/visEffect.o
- .debug_ranges  0x0000000000001d00       0xa8 Src/ws2812b.o
- .debug_ranges  0x0000000000001da8       0x20 startup/startup_stm32f429xx.o
+ .debug_ranges  0x0000000000001898       0xb0 Src/SN54HC595.o
+ .debug_ranges  0x0000000000001948       0x70 Src/keyboard.o
+ .debug_ranges  0x00000000000019b8       0xa8 Src/keymap.o
+ .debug_ranges  0x0000000000001a60       0x50 Src/macro.o
+ .debug_ranges  0x0000000000001ab0       0x78 Src/main.o
+ .debug_ranges  0x0000000000001b28       0x50 Src/stm32f4xx_hal_msp.o
+ .debug_ranges  0x0000000000001b78       0x18 Src/stm32f4xx_it.o
+ .debug_ranges  0x0000000000001b90       0x18 Src/system_stm32f4xx.o
+ .debug_ranges  0x0000000000001ba8       0x10 Src/usb_device.o
+ .debug_ranges  0x0000000000001bb8       0xe8 Src/usbd_conf.o
+ .debug_ranges  0x0000000000001ca0       0x40 Src/usbd_desc.o
+ .debug_ranges  0x0000000000001ce0       0x30 Src/visEffect.o
+ .debug_ranges  0x0000000000001d10       0xa8 Src/ws2812b.o
+ .debug_ranges  0x0000000000001db8       0x20 startup/startup_stm32f429xx.o
 
-.debug_macro    0x0000000000000000    0x2cb40
+.debug_macro    0x0000000000000000    0x2cb46
  .debug_macro   0x0000000000000000      0x3e5 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
  .debug_macro   0x00000000000003e5      0xaa2 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
  .debug_macro   0x0000000000000e87      0x17f Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
@@ -11745,24 +11742,24 @@ OUTPUT(V2.elf elf32-littlearm)
  .debug_macro   0x0000000000029517       0x1c Src/SN54HC595.o
  .debug_macro   0x0000000000029533       0x5e Src/SN54HC595.o
  .debug_macro   0x0000000000029591      0x3e2 Src/keyboard.o
- .debug_macro   0x0000000000029973       0xc4 Src/keyboard.o
- .debug_macro   0x0000000000029a37      0x40f Src/keymap.o
- .debug_macro   0x0000000000029e46      0x464 Src/macro.o
- .debug_macro   0x000000000002a2aa      0x58d Src/main.o
- .debug_macro   0x000000000002a837       0xf4 Src/main.o
- .debug_macro   0x000000000002a92b       0x16 Src/main.o
- .debug_macro   0x000000000002a941      0x385 Src/stm32f4xx_hal_msp.o
- .debug_macro   0x000000000002acc6      0x443 Src/stm32f4xx_it.o
- .debug_macro   0x000000000002b109      0x38b Src/system_stm32f4xx.o
- .debug_macro   0x000000000002b494      0x455 Src/usb_device.o
- .debug_macro   0x000000000002b8e9      0x42e Src/usbd_conf.o
- .debug_macro   0x000000000002bd17      0x462 Src/usbd_desc.o
- .debug_macro   0x000000000002c179      0x4cd Src/visEffect.o
- .debug_macro   0x000000000002c646       0x64 Src/visEffect.o
- .debug_macro   0x000000000002c6aa       0x16 Src/visEffect.o
- .debug_macro   0x000000000002c6c0      0x480 Src/ws2812b.o
+ .debug_macro   0x0000000000029973       0xca Src/keyboard.o
+ .debug_macro   0x0000000000029a3d      0x40f Src/keymap.o
+ .debug_macro   0x0000000000029e4c      0x464 Src/macro.o
+ .debug_macro   0x000000000002a2b0      0x58d Src/main.o
+ .debug_macro   0x000000000002a83d       0xf4 Src/main.o
+ .debug_macro   0x000000000002a931       0x16 Src/main.o
+ .debug_macro   0x000000000002a947      0x385 Src/stm32f4xx_hal_msp.o
+ .debug_macro   0x000000000002accc      0x443 Src/stm32f4xx_it.o
+ .debug_macro   0x000000000002b10f      0x38b Src/system_stm32f4xx.o
+ .debug_macro   0x000000000002b49a      0x455 Src/usb_device.o
+ .debug_macro   0x000000000002b8ef      0x42e Src/usbd_conf.o
+ .debug_macro   0x000000000002bd1d      0x462 Src/usbd_desc.o
+ .debug_macro   0x000000000002c17f      0x4cd Src/visEffect.o
+ .debug_macro   0x000000000002c64c       0x64 Src/visEffect.o
+ .debug_macro   0x000000000002c6b0       0x16 Src/visEffect.o
+ .debug_macro   0x000000000002c6c6      0x480 Src/ws2812b.o
 
-.debug_line     0x0000000000000000    0x296e8
+.debug_line     0x0000000000000000    0x29729
  .debug_line    0x0000000000000000      0xa52 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
  .debug_line    0x0000000000000a52     0x144f Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.o
  .debug_line    0x0000000000001ea1      0xc51 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
@@ -11788,22 +11785,22 @@ OUTPUT(V2.elf elf32-littlearm)
  .debug_line    0x000000000001e87f      0xcc4 Middlewares/Third_Party/FreeRTOS/Source/timers.o
  .debug_line    0x000000000001f543      0x78c Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.o
  .debug_line    0x000000000001fccf      0x7be Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
- .debug_line    0x000000000002048d      0xb7d Src/SN54HC595.o
- .debug_line    0x000000000002100a      0x976 Src/keyboard.o
- .debug_line    0x0000000000021980      0xae1 Src/keymap.o
- .debug_line    0x0000000000022461      0xa76 Src/macro.o
- .debug_line    0x0000000000022ed7     0x10cf Src/main.o
- .debug_line    0x0000000000023fa6      0xa50 Src/stm32f4xx_hal_msp.o
- .debug_line    0x00000000000249f6      0x945 Src/stm32f4xx_it.o
- .debug_line    0x000000000002533b      0x80e Src/system_stm32f4xx.o
- .debug_line    0x0000000000025b49      0x89f Src/usb_device.o
- .debug_line    0x00000000000263e8      0xe0f Src/usbd_conf.o
- .debug_line    0x00000000000271f7      0x929 Src/usbd_desc.o
- .debug_line    0x0000000000027b20      0xabe Src/visEffect.o
- .debug_line    0x00000000000285de     0x108b Src/ws2812b.o
- .debug_line    0x0000000000029669       0x7f startup/startup_stm32f429xx.o
+ .debug_line    0x000000000002048d      0xb9e Src/SN54HC595.o
+ .debug_line    0x000000000002102b      0x996 Src/keyboard.o
+ .debug_line    0x00000000000219c1      0xae1 Src/keymap.o
+ .debug_line    0x00000000000224a2      0xa76 Src/macro.o
+ .debug_line    0x0000000000022f18     0x10cf Src/main.o
+ .debug_line    0x0000000000023fe7      0xa50 Src/stm32f4xx_hal_msp.o
+ .debug_line    0x0000000000024a37      0x945 Src/stm32f4xx_it.o
+ .debug_line    0x000000000002537c      0x80e Src/system_stm32f4xx.o
+ .debug_line    0x0000000000025b8a      0x89f Src/usb_device.o
+ .debug_line    0x0000000000026429      0xe0f Src/usbd_conf.o
+ .debug_line    0x0000000000027238      0x929 Src/usbd_desc.o
+ .debug_line    0x0000000000027b61      0xabe Src/visEffect.o
+ .debug_line    0x000000000002861f     0x108b Src/ws2812b.o
+ .debug_line    0x00000000000296aa       0x7f startup/startup_stm32f429xx.o
 
-.debug_str      0x0000000000000000    0xf3876
+.debug_str      0x0000000000000000    0xf38ad
  .debug_str     0x0000000000000000    0xdebf0 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
                                       0xdefcf (size before relaxing)
  .debug_str     0x00000000000debf0      0x673 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.o
@@ -11854,33 +11851,33 @@ OUTPUT(V2.elf elf32-littlearm)
                                        0x83bc (size before relaxing)
  .debug_str     0x00000000000ed442      0x23a Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
                                        0xa8ed (size before relaxing)
- .debug_str     0x00000000000ed67c      0xa4e Src/SN54HC595.o
-                                      0xdeecd (size before relaxing)
- .debug_str     0x00000000000ee0ca     0x439f Src/keyboard.o
-                                      0xe2a0b (size before relaxing)
- .debug_str     0x00000000000f2469      0x268 Src/keymap.o
-                                      0xe2945 (size before relaxing)
- .debug_str     0x00000000000f26d1      0x1a9 Src/macro.o
-                                      0xdf614 (size before relaxing)
- .debug_str     0x00000000000f287a      0x424 Src/main.o
-                                      0xea1fd (size before relaxing)
- .debug_str     0x00000000000f2c9e       0x1b Src/stm32f4xx_hal_msp.o
+ .debug_str     0x00000000000ed67c      0xa73 Src/SN54HC595.o
+                                      0xdeef2 (size before relaxing)
+ .debug_str     0x00000000000ee0ef     0x43b1 Src/keyboard.o
+                                      0xe2a3e (size before relaxing)
+ .debug_str     0x00000000000f24a0      0x268 Src/keymap.o
+                                      0xe295c (size before relaxing)
+ .debug_str     0x00000000000f2708      0x1a9 Src/macro.o
+                                      0xdf62b (size before relaxing)
+ .debug_str     0x00000000000f28b1      0x424 Src/main.o
+                                      0xea20d (size before relaxing)
+ .debug_str     0x00000000000f2cd5       0x1b Src/stm32f4xx_hal_msp.o
                                       0xdf67e (size before relaxing)
- .debug_str     0x00000000000f2cb9       0x5a Src/stm32f4xx_it.o
+ .debug_str     0x00000000000f2cf0       0x5a Src/stm32f4xx_it.o
                                       0xe38b3 (size before relaxing)
- .debug_str     0x00000000000f2d13       0x5a Src/system_stm32f4xx.o
+ .debug_str     0x00000000000f2d4a       0x5a Src/system_stm32f4xx.o
                                       0xde445 (size before relaxing)
- .debug_str     0x00000000000f2d6d       0x14 Src/usb_device.o
+ .debug_str     0x00000000000f2da4       0x14 Src/usb_device.o
                                       0xdf251 (size before relaxing)
- .debug_str     0x00000000000f2d81       0x46 Src/usbd_conf.o
+ .debug_str     0x00000000000f2db8       0x46 Src/usbd_conf.o
                                       0xdffd5 (size before relaxing)
- .debug_str     0x00000000000f2dc7      0x237 Src/usbd_desc.o
+ .debug_str     0x00000000000f2dfe      0x237 Src/usbd_desc.o
                                       0xdf01d (size before relaxing)
- .debug_str     0x00000000000f2ffe      0x629 Src/visEffect.o
-                                      0xe3f3e (size before relaxing)
- .debug_str     0x00000000000f3627      0x220 Src/ws2812b.o
-                                      0xe4bb2 (size before relaxing)
- .debug_str     0x00000000000f3847       0x2f startup/startup_stm32f429xx.o
+ .debug_str     0x00000000000f3035      0x629 Src/visEffect.o
+                                      0xe3f4e (size before relaxing)
+ .debug_str     0x00000000000f365e      0x220 Src/ws2812b.o
+                                      0xe4bc2 (size before relaxing)
+ .debug_str     0x00000000000f387e       0x2f startup/startup_stm32f429xx.o
                                          0x65 (size before relaxing)
 
 .comment        0x0000000000000000       0x1d
@@ -11924,7 +11921,7 @@ OUTPUT(V2.elf elf32-littlearm)
  .comment       0x000000000000001d       0x1e Src/visEffect.o
  .comment       0x000000000000001d       0x1e Src/ws2812b.o
 
-.debug_frame    0x0000000000000000     0x5544
+.debug_frame    0x0000000000000000     0x557c
  .debug_frame   0x0000000000000000      0x1b8 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
  .debug_frame   0x00000000000001b8      0x27c Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.o
  .debug_frame   0x0000000000000434      0x15c Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
@@ -11950,28 +11947,28 @@ OUTPUT(V2.elf elf32-littlearm)
  .debug_frame   0x0000000000004204      0x248 Middlewares/Third_Party/FreeRTOS/Source/timers.o
  .debug_frame   0x000000000000444c       0xfc Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.o
  .debug_frame   0x0000000000004548       0xac Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
- .debug_frame   0x00000000000045f4      0x170 Src/SN54HC595.o
- .debug_frame   0x0000000000004764       0xfc Src/keyboard.o
- .debug_frame   0x0000000000004860      0x164 Src/keymap.o
- .debug_frame   0x00000000000049c4       0xac Src/macro.o
- .debug_frame   0x0000000000004a70      0x18c Src/main.o
- .debug_frame   0x0000000000004bfc      0x108 Src/stm32f4xx_hal_msp.o
- .debug_frame   0x0000000000004d04       0x40 Src/stm32f4xx_it.o
- .debug_frame   0x0000000000004d44       0x30 Src/system_stm32f4xx.o
- .debug_frame   0x0000000000004d74       0x28 Src/usb_device.o
- .debug_frame   0x0000000000004d9c      0x2b0 Src/usbd_conf.o
- .debug_frame   0x000000000000504c       0xa8 Src/usbd_desc.o
- .debug_frame   0x00000000000050f4       0x70 Src/visEffect.o
- .debug_frame   0x0000000000005164      0x1b0 Src/ws2812b.o
- .debug_frame   0x0000000000005314       0x20 /usr/lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-calloc.o)
- .debug_frame   0x0000000000005334       0x2c /usr/lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-init.o)
- .debug_frame   0x0000000000005360       0x30 /usr/lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-malloc.o)
- .debug_frame   0x0000000000005390       0x28 /usr/lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-memcpy-stub.o)
- .debug_frame   0x00000000000053b8       0x20 /usr/lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-memset.o)
- .debug_frame   0x00000000000053d8       0x2c /usr/lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-nano-callocr.o)
- .debug_frame   0x0000000000005404       0x38 /usr/lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-nano-freer.o)
- .debug_frame   0x000000000000543c       0x30 /usr/lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-nano-mallocr.o)
- .debug_frame   0x000000000000546c       0x2c /usr/lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-sbrkr.o)
- .debug_frame   0x0000000000005498       0x30 /usr/lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-mlock.o)
- .debug_frame   0x00000000000054c8       0x5c /usr/lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-reent.o)
- .debug_frame   0x0000000000005524       0x20 /usr/lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libnosys.a(sbrk.o)
+ .debug_frame   0x00000000000045f4      0x190 Src/SN54HC595.o
+ .debug_frame   0x0000000000004784      0x114 Src/keyboard.o
+ .debug_frame   0x0000000000004898      0x164 Src/keymap.o
+ .debug_frame   0x00000000000049fc       0xac Src/macro.o
+ .debug_frame   0x0000000000004aa8      0x18c Src/main.o
+ .debug_frame   0x0000000000004c34      0x108 Src/stm32f4xx_hal_msp.o
+ .debug_frame   0x0000000000004d3c       0x40 Src/stm32f4xx_it.o
+ .debug_frame   0x0000000000004d7c       0x30 Src/system_stm32f4xx.o
+ .debug_frame   0x0000000000004dac       0x28 Src/usb_device.o
+ .debug_frame   0x0000000000004dd4      0x2b0 Src/usbd_conf.o
+ .debug_frame   0x0000000000005084       0xa8 Src/usbd_desc.o
+ .debug_frame   0x000000000000512c       0x70 Src/visEffect.o
+ .debug_frame   0x000000000000519c      0x1b0 Src/ws2812b.o
+ .debug_frame   0x000000000000534c       0x20 /usr/lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-calloc.o)
+ .debug_frame   0x000000000000536c       0x2c /usr/lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-init.o)
+ .debug_frame   0x0000000000005398       0x30 /usr/lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-malloc.o)
+ .debug_frame   0x00000000000053c8       0x28 /usr/lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-memcpy-stub.o)
+ .debug_frame   0x00000000000053f0       0x20 /usr/lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-memset.o)
+ .debug_frame   0x0000000000005410       0x2c /usr/lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-nano-callocr.o)
+ .debug_frame   0x000000000000543c       0x38 /usr/lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-nano-freer.o)
+ .debug_frame   0x0000000000005474       0x30 /usr/lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-nano-mallocr.o)
+ .debug_frame   0x00000000000054a4       0x2c /usr/lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-sbrkr.o)
+ .debug_frame   0x00000000000054d0       0x30 /usr/lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-mlock.o)
+ .debug_frame   0x0000000000005500       0x5c /usr/lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-reent.o)
+ .debug_frame   0x000000000000555c       0x20 /usr/lib/gcc/arm-none-eabi/8.2.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libnosys.a(sbrk.o)

@@ -19,16 +19,13 @@
 
 /* -- Includes -- */
 /* HAL libraries */
-#include <config.h>
+#include "config.h"
 #include "stm32f4xx_hal.h"
 /* Local includes */
 #include "datatypes.h"
 #include "states.h"
+#include "buffers.h"
 
-/**
- * @brief Length of input buffer used when scanning the keyboard
- * */
-#define SCAN_KEY_BUFFER_LENGTH		20
 
 typedef enum{
 	keyboard,
@@ -117,7 +114,7 @@ void keyboard_init_status_LEDS(void);
 * @param layer_list layer list used to convert key_codes
 * @return 0 on success
 */
-//unsigned char process_key_buf(keyboard_HID_data_t* data, keymap_list_t* layer_list);
+unsigned char process_key_buf(void);
 
 /**
 * @brief Processes any pending HID reports
@@ -148,7 +145,9 @@ void keyboard_init_status_LEDS(void);
 * @brief Clears the keyboard HID report
 */
 //void clear_keyboard_report(  keyboard_HID_data_t* data );
-
+unsigned char keyboard_read_row(unsigned char row);
+void keyboard_reset_scan_buff(void);
+void keyboard_scan_buff_add(unsigned char col, unsigned char row);
 unsigned char keyboard_send_blank(void);
 
 #endif /* KEYBOARD_H_ */

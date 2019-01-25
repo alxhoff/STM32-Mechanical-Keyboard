@@ -5,46 +5,36 @@
  * @brief Functions used to scan the keyboard for input
  */
 
-#include "keymap.h"
-#include "keyboard.h"
 #include "scan.h"
-#include "lookup.h"
-#include "types.h"
-#include "SN54HC595.h"
+#include "config.h"
 
 unsigned char scan_key_matrix(void)
 {
-	//reset keypress buffer
-//	HID_reports->key_buf.index = 0;
+	keyboard_scan_buff_reset();
 
-//	unsigned char row_mask[SN54HC595_get_dev_count()] = {0};
+	static unsigned char row_mask[SHIFT_DEVICES] = {0};
+	unsigned char ret = 0;
 
-//	shift_array.set_data(&shift_array, row_mask);
-//	shift_array.output(&shift_array, shift_array.dev_count);
-//
-//	for(unsigned char row=0;row<KEYBOARD_COLS;row++){
-//		//Set current column high so that rows can be read
-//		row_mask[row/8] = (1<<(row-((row/8)*8)));
-//		shift_array.set_byte(&shift_array, row/8, row_mask[row/8]);
-//		shift_array.output(&shift_array, shift_array.dev_count);
-//		vTaskDelay(1);
-//
-//		for(unsigned char col=0;col<KEYBOARD_ROWS;col++){
-// 			if(HAL_GPIO_ReadPin(keyboard_dev->col_ports[col], keyboard_dev->col_pins[col])){
-//				//key is pressed
-//				HID_reports->key_buf.buffer[HID_reports->key_buf.index].col=col;
-//				HID_reports->key_buf.buffer[HID_reports->key_buf.index].row=14 - row;
-//				HID_reports->key_buf.index++;
-//			}
-//		}
-//		row_mask[row/8] = 0;
-//		shift_array.set_byte(&shift_array, 0, 0x00);
-//		shift_array.output(&shift_array, shift_array.dev_count);
-//	}
-//
-//	if(HID_reports->key_buf.index == 0)
-//		return -EBUFF;
-//
+	for(unsigned char row=0;row<KEYBOARD_COLS;row++){
+		//Set current column high so that rows can be read
+		row_mask[row/8] = (1<<(row-((row/8)*8)));
+		ret = SN54HC595_out_bytes(row_mask, SHIFT_DEVICES);
+		if(ret)
+			return -EAGAIN;
+		vTaskDelay(1);	//wait for shift register
+
+		for(unsigned char col = 0; col < KEYBOARD_ROWS; col++)	/* test each row */
+			if(keyboard_read_row(col))							/*key is pressed */
+				keyboard_scan_buff_add(col, row);
+
+		//TODO is this necessary?
+		row_mask[row/8] = 0;
+		SN54HC595_clear();
+	}
+
+	if(!keyboard_scan_buf_length())
+		return -ENOENT;
+
 	return 0;
 }
 //
