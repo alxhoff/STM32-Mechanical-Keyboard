@@ -175,9 +175,7 @@ int main(void)
 	keymap_list_append_layer(&keymap_init2);
 
 	macro_entry_t test_macro = {
-			.sc = {
-					.code = 0x24
-			},
+			.sc =  HID_KEYBOARD_SC_7_AND_AMPERSAND,
 			.string = "pew pew this is a macro and it "
 					"can use all DA SYMBOLZZZ !@#$%^*()_+",
 	};

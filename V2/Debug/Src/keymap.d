@@ -1,6 +1,6 @@
 Src/keymap.o: ../Src/keymap.c \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keymap.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/HIDClassCommon.h \
+ /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/error.h \
+ /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keymap_private.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/config.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/stm32f4xx_hal_conf.h \
@@ -37,12 +37,11 @@ Src/keymap.o: ../Src/keymap.c \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/error.h
+ /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h
 
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keymap.h:
+/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/error.h:
 
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/HIDClassCommon.h:
+/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keymap_private.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/config.h:
 
@@ -117,5 +116,3 @@ Src/keymap.o: ../Src/keymap.c \
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h:
-
-/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/error.h:

@@ -43,6 +43,7 @@ Src/macro.o: ../Src/macro.c \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/datatypes.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/states.h \
+ /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/buffers.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/usb_device.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/usbd_conf.h
@@ -134,6 +135,8 @@ Src/macro.o: ../Src/macro.c \
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/datatypes.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/states.h:
+
+/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/buffers.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/usb_device.h:
 

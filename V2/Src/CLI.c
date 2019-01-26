@@ -84,8 +84,8 @@ unsigned char CLI_process_arrows(unsigned char left)
 	return 0;
 }
 
-unsigned char CLI_process_character(char input)
-{
+//unsigned char CLI_process_character(char input)
+//{
 	//insert character at x buff offset
 	//copy characters after buffer to temp buffer
 	/*uint16_t offset = GET_SCREEN->x_buff_shift + GET_SCREEN->cursor_x;
@@ -106,10 +106,10 @@ unsigned char CLI_process_character(char input)
 	strcpy(GET_SCREEN->buffers[0] + offset + 1, buffer);
 
 	return 0;*/
-}
+//}
 
-unsigned char CLI_process_key(scan_code_t input)
-{
+//unsigned char CLI_process_key(scan_code_t input)
+//{
 	//possible inputs
 	//CLI key -> exit
 //	if(input.key_code == KEY(CLI)){
@@ -154,4 +154,4 @@ unsigned char CLI_process_key(scan_code_t input)
 //	}
 //
 //	return 0;
-}
+//}

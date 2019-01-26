@@ -5,7 +5,7 @@
  * @brief Data types and functions for performing classical keyboard functions
  */
 
-
+#include "error.h"
 #include "config.h"
 #include "keyboard.h"
 #include "keyboard_private.h"
@@ -102,86 +102,110 @@ unsigned char keyboard_read_row(unsigned char row)
 
 void keyboard_scan_buff_reset(void)
 {
-	keyboard_dev.scan_buf.index = 0;
+	keyboard_dev.scan_buf.count = 0;
 }
 
 void keyboard_scan_buff_add(unsigned char col, unsigned char row)
 {
-	keyboard_dev.scan_buf.buffer[keyboard_dev.scan_buf.index].col = col;
-	keyboard_dev.scan_buf.buffer[keyboard_dev.scan_buf.index].row = row;
-	keyboard_dev.scan_buf.index++;
+	keyboard_dev.scan_buf.buf[keyboard_dev.scan_buf.count].col = col;
+	keyboard_dev.scan_buf.buf[keyboard_dev.scan_buf.count].row = row;
+	keyboard_dev.scan_buf.count++;
 }
 
 unsigned char keyboard_scan_buf_length(void)
 {
-	return keyboard_dev.scan_buf.index;
+	return keyboard_dev.scan_buf.count;
+}
+
+
+unsigned char is_in_prev_buf(unsigned char sc)
+{
+	static unsigned char i = 0;
+	for(; i < keyboard_dev.prev_buf.count; i++)
+		if(sc == keyboard_dev.prev_buf.keys[i])
+			return 1;
+	return 0;
 }
 
 // sort all standard keys: normal, mod and media into buffer
-void keyboard_sort_scaned_key(send_buffer_t *buf,  unsigned char key)
+//returns -1 if 6 normals keys have been processed
+void keyboard_sort_scaned_key(send_buffer_t *send_buf,
+		key_buffer_t *buf_new, unsigned char key)
 {
 	if(key >= 0xE0 && key <= 0xE7) /* media */
 	{
-		buf->med_buf = key;
+		send_buf->med_buf = key;
 		return;
 	}
 
 	if(key >= 0xE0 && key <= 0xE7) /* modifier */
 	{
-		buf->mod_buf |= (1 << (key - 0xE0));
+		send_buf->mod_buf |= (1 << (key - 0xE0));
 		return;
 	}
 
-
+	//sort key into send buffer or new keys buf
+	if(is_in_prev_buf(key))
+		send_buf->key_buf.keys[send_buf->key_buf.count++] = key;
+	else
+		buf_new->buf[buf_new->count++] = key;
 }
+
 
 unsigned char process_key_buf(void)
 {
 	static unsigned char ret = 0;
 	static unsigned char tmp_sc;
+	unsigned char i = 0;
+	static key_buffer_t sc_new = {0};
+
 	send_buffer_t *buf = calloc(1, sizeof(send_buffer_t));
 	if(!buf)
 		return -ENOMEM;
 
-	//process buffer into key codes
-	//TODO make this process 6 normal keys and X others in each call
-	while(keyboard_dev.scan_buf.index)
+	while(keyboard_dev.scan_buf.count)
 	{
-		static unsigned char i = 0;
-		for(;i < (keyboard_dev.scan_buf.index > 5) ?
-					5 : keyboard_dev.scan_buf.index; i++)
-		{
-			tmp_sc = keymap_get_key_sk(keyboard_dev.scan_buf.buffer[i]);
-
-			/* State change */
-			ret = lookup_state_change_key(tmp_sc);
-			if(ret){ /* if state change key */
-				//HANDLE STATE CHANGE
-				keyboard_dev.scan_buf.index = 0; /* clear buffer */
-				return 0;
-			}
-
-			/* Toggle key */
-			ret = lookup_toggle_key(tmp_sc);
-			if(ret){
-				//TODO handle press
-				break;
-			}
-
-			/* The rest */
-			keyboard_sort_scaned_key(buf, tmp_sc);
+		tmp_sc = keymap_get_key(keyboard_dev.scan_buf.buf[i].row,
+				keyboard_dev.scan_buf.buf[i].col);
+		/* State change */
+		ret = lookup_state_change_key(tmp_sc);
+		if(ret){ /* if state change key */
+			//TODO HANDLE STATE CHANGE
+			keyboard_dev.scan_buf.count = 0; /* clear buffer */
+			return 0;
 		}
-			if(!queue_packet_to_send)
-				return -ENOINIT;
 
-			xQueueSend(queue_packet_to_send, buf, portMAX_DELAY);
-			keyboard_dev.scan_buf.index -= i;
+		/* Toggle key */
+		ret = lookup_toggle_key(tmp_sc);
+		if(ret){
+			//TODO handle toggle press
+		}
+
+		/* The rest */
+		keyboard_sort_scaned_key(buf, &sc_new, tmp_sc);
+
+		keyboard_dev.scan_buf.count--;
+		i++;
 	}
+	////TODO scan buf count should be zero
+
+	while(buf->key_buf.count < 6 && sc_new.count) /* Fill buf with new keys */
+		buf->key_buf.keys[buf->key_buf.count++] =
+				sc_new.buf[sc_new.count--];
+
+	if(!queue_packet_to_send)
+		return -ENOINIT;
+
+	xQueueSend(queue_packet_to_send, buf, portMAX_DELAY);
+
+	memcpy(&keyboard_dev.prev_buf, &buf->key_buf, /* Save for next frame */
+			sizeof(six_key_buffer_t));
+
 	return 0;
 }
 
-unsigned char keyboard_prepare_report( keyboard_HID_data_t* data )
-{
+//unsigned char keyboard_prepare_report( keyboard_HID_data_t* data )
+//{
 //	for(unsigned char i = 0; i < data->out_buf.key_buf.count; i++){
 //		*(&data->keyboard_report.key1 + i * sizeof(unsigned char)) = data->out_buf.key_buf.keys[i].key_code;
 //		data->prev_keys[i] = *(&data->keyboard_report.key1 + i * sizeof(unsigned char));
@@ -194,54 +218,53 @@ unsigned char keyboard_prepare_report( keyboard_HID_data_t* data )
 //	data->keyboard_report.modifiers = data->out_buf.mod_buf;
 //
 //	return 0;
-}
-
-unsigned char media_prepare_report( keyboard_HID_data_t* data )
-{
+//}
+//
+//unsigned char media_prepare_report( keyboard_HID_data_t* data )
+//{
 //	for(unsigned char i = 0; i < data->out_buf.med_buf.count; i++)
 //		data->media_report.keys = data->out_buf.med_buf.key.key_code;
 //
 //	return 0;
-}
-
-unsigned char keyboard_send_blank(void)
-{
+//}
+//
+//unsigned char keyboard_send_blank(void)
+//{
 //	static const keyboardHID_t blank = {0};
 //	if(USBD_HID_SendReport(&hUsbDeviceFS, &blank, sizeof(keyboardHID_t)))
 //		return -ESEND;
 //
 //	return 0;
-}
-
-unsigned char send_keyboard_report( keyboardHID_t *data, report_type type)
+//}
+//
 //unsigned char send_keyboard_report( keyboard_HID_data_t* data, report_type type )
-{
-	/*switch(type){
-	case keyboard:
-		if(xSemaphoreTake( USB_send_lock, (TickType_t) portMAX_DELAY) == pdTRUE){
-			USBD_HID_SendReport(&hUsbDeviceFS, &data->keyboard_report, sizeof(keyboardHID_t));
-			data->keyboard_state = clearing;
-			xSemaphoreGive(USB_send_lock);
-		}
-		return 0;
-		break;
-	case media:
-		if(xSemaphoreTake( USB_send_lock, (TickType_t) portMAX_DELAY) == pdTRUE){
-			USBD_HID_SendReport(&hUsbDeviceFS, &data->media_report, sizeof(mediaHID_t));
-			data->media_state = clearing;
-			xSemaphoreGive(USB_send_lock);
-		}
-		return 0;
-		break;
-	case mouse:
-	default:
-		return -EUSB;
-	}
-	return 0;*/
-}
-
-unsigned char process_keyboard_flags ( keyboard_HID_data_t* data )
-{
+//{
+//	switch(type){
+//	case keyboard:
+//		if(xSemaphoreTake( USB_send_lock, (TickType_t) portMAX_DELAY) == pdTRUE){
+//			USBD_HID_SendReport(&hUsbDeviceFS, &data->keyboard_report, sizeof(keyboardHID_t));
+//			data->keyboard_state = clearing;
+//			xSemaphoreGive(USB_send_lock);
+//		}
+//		return 0;
+//		break;
+//	case media:
+//		if(xSemaphoreTake( USB_send_lock, (TickType_t) portMAX_DELAY) == pdTRUE){
+//			USBD_HID_SendReport(&hUsbDeviceFS, &data->media_report, sizeof(mediaHID_t));
+//			data->media_state = clearing;
+//			xSemaphoreGive(USB_send_lock);
+//		}
+//		return 0;
+//		break;
+//	case mouse:
+//	default:
+//		return -EUSB;
+//	}
+//	return 0;
+//}
+//
+//unsigned char process_keyboard_flags ( keyboard_HID_data_t* data )
+//{
 //	if(data->keyboard_state == active){
 //		keyboard_prepare_report(data);
 //		send_keyboard_report(data, keyboard);
@@ -259,20 +282,20 @@ unsigned char process_keyboard_flags ( keyboard_HID_data_t* data )
 //		data->media_state = inactive;
 //	}
 //	return 0;
-}
-
-unsigned char process_single_key(unsigned char col, unsigned char row )
-{
-	unsigned char ret = 0;
-//	ret = layer_list->layer_head->grid[row][col];
-	if(ret)
-		return ret;
-	else
-		return 0;
-}
-
-void clear_keyboard_report(  keyboard_HID_data_t* data )
-{
+//}
+//
+//unsigned char process_single_key(unsigned char col, unsigned char row )
+//{
+//	unsigned char ret = 0;
+////	ret = layer_list->layer_head->grid[row][col];
+//	if(ret)
+//		return ret;
+//	else
+//		return 0;
+//}
+//
+//void clear_keyboard_report(  keyboard_HID_data_t* data )
+//{
 //	if(data->keyboard_state == clearing || data->keyboard_state == active){
 //		data->keyboard_report.key1 = 0;
 //		data->keyboard_report.key2 = 0;
@@ -284,10 +307,10 @@ void clear_keyboard_report(  keyboard_HID_data_t* data )
 //	}
 //	if(data->keyboard_state == clearing || data->keyboard_state == active)
 //		data->media_report.keys = 0;
-}
-
-void display_int_on_screen(unsigned char col, unsigned char row)
-{
+//}
+//
+//void display_int_on_screen(unsigned char col, unsigned char row)
+//{
 //	static char col_str[10];
 //	static char row_str[10];
 //	HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_SET);
@@ -303,4 +326,4 @@ void display_int_on_screen(unsigned char col, unsigned char row)
 //	ssd1306_SetCursor(23,30);
 //	ssd1306_WriteString(&row_str,Font_11x18,Black);
 //	ssd1306_UpdateScreen();
-}
+//}

@@ -82,7 +82,7 @@ macro_table_t macro_dev = {0};
 //	return 0;
 //}
 
-unsigned char macro_add_new_entry( char *string, scan_code_t *sc )
+unsigned char macro_add_new_entry( char *string, unsigned char sc )
 {
 	char *string_cpy = malloc(sizeof(char) * (strlen(string) + 1));
 	if(!string_cpy)
@@ -93,9 +93,10 @@ unsigned char macro_add_new_entry( char *string, scan_code_t *sc )
 		goto macro_error;
 
 	strcpy(string_cpy, string);
-	memcpy(&macro->sc, sc, sizeof(scan_code_t));
+	macro->sc = sc;
 
-	if(!macro_dev.head){
+	if(!macro_dev.head)
+	{
 		macro_dev.head = macro;
 		macro_dev.tail = macro;
 	}else{
@@ -112,7 +113,8 @@ macro_error:
 
 void macro_add_entry(macro_entry_t *entry)
 {
-	if(!macro_dev.head){
+	if(!macro_dev.head)
+	{
 		macro_dev.head = entry;
 		macro_dev.tail = entry;
 	}else{
@@ -122,11 +124,12 @@ void macro_add_entry(macro_entry_t *entry)
 }
 
 //TODO check this
-unsigned char macro_rem_entry(scan_code_t *sc)
+unsigned char macro_rem_entry(unsigned char sc)
 {
 	macro_entry_t *head = macro_dev.head;
 	macro_entry_t *prev = NULL;
-	if(memcmp(&head->sc, sc, sizeof(scan_code_t))){
+	if(head->sc == sc)
+	{
 		//single item list
 		if(!head->next){
 			macro_dev.head = NULL;
@@ -138,26 +141,28 @@ unsigned char macro_rem_entry(scan_code_t *sc)
 	}
 
 test:	//if list has more than one item
-	if(memcmp(&head->next->sc, sc, sizeof(scan_code_t))){
+	if(head->next->sc == sc)
+	{
 		if(!head->next->next) 	//is tail
 			macro_dev.tail = head;
 		free(head->next);
 		return 0;
 	}
 
-	while(head->next->next){
+	while(head->next->next)
+	{
 		head = head->next;
 		goto test;
 	}
 	return -ENOENT;
 }
 
-macro_entry_t* macro_get_sc(scan_code_t *sc)
+macro_entry_t* macro_get_sc(unsigned char sc)
 {
 	macro_entry_t *head = macro_dev.head;
 
 test:
-	if(memcmp(&head->sc, sc, sizeof(scan_code_t)))
+	if(head->sc == sc)
 		return head;
 
 	while(head->next){
@@ -193,7 +198,7 @@ unsigned char macro_execute_macro( macro_entry_t* macro )
 	return 0;
 }
 
-unsigned char macro_run_sc(scan_code_t *sc)
+unsigned char macro_run_sc(unsigned char sc)
 {
 	macro_entry_t *macro = macro_get_sc(sc);
 	if(!macro)

@@ -13,21 +13,21 @@
 typedef struct macro_entry macro_entry_t;
 
 struct macro_entry{
-	scan_code_t sc;
+	unsigned char sc;
 
 	char* string;
 
 	macro_entry_t *next;
 };
 
-unsigned char macro_add_new_entry( char *string, scan_code_t *sc );
+unsigned char macro_add_new_entry( char *string, unsigned char sc );
 
 void macro_add_entry(macro_entry_t *entry);
 
-unsigned char macro_rem_entry(scan_code_t *sc);
+unsigned char macro_rem_entry(unsigned char sc);
 
-macro_entry_t* macro_get_sc(scan_code_t *sc);
+macro_entry_t* macro_get_sc(unsigned char sc);
 
-unsigned char macro_run_sc(scan_code_t *sc);
+unsigned char macro_run_sc(unsigned char sc);
 
 #endif /* MACRO_H_ */

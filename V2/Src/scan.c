@@ -10,6 +10,8 @@
 
 unsigned char scan_key_matrix(void)
 {
+	//TODO check if VVV is needed. Maybe already handled
+	// in process_key_buf
 	keyboard_scan_buff_reset();
 
 	static unsigned char row_mask[SHIFT_DEVICES] = {0};

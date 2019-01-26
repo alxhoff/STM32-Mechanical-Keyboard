@@ -60,6 +60,7 @@ Src/CLI.o: ../Src/CLI.c \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/types.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keymap.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/HIDClassCommon.h \
+ /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keymap_private.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/lookup.h
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/CLI.h:
@@ -183,5 +184,7 @@ Src/CLI.o: ../Src/CLI.c \
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keymap.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/HIDClassCommon.h:
+
+/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/keymap_private.h:
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/lookup.h:

@@ -41,7 +41,9 @@ Src/scan.o: ../Src/scan.c \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/datatypes.h \
  /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/states.h \
- /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/types.h
+ /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/buffers.h \
+ /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/types.h \
+ /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/config.h
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/scan.h:
 
@@ -127,4 +129,8 @@ Src/scan.o: ../Src/scan.c \
 
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/states.h:
 
+/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/buffers.h:
+
 /home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/types.h:
+
+/home/alxhoff/git/GitHub/stm32_mech_keyboard/V2/Inc/config.h:
