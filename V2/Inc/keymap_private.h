@@ -19,7 +19,7 @@ struct keymap_layer{
 	unsigned char 		mod_key_code;
 
 	char* 				name;
-	unsigned char 		ID;
+	volatile unsigned char 		ID;
 
 	keymap_layer_t* 	next;
 };

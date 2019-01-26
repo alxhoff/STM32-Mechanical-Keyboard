@@ -8,37 +8,7 @@
 #include "scan.h"
 #include "config.h"
 
-unsigned char scan_key_matrix(void)
-{
-	//TODO check if VVV is needed. Maybe already handled
-	// in process_key_buf
-	keyboard_scan_buff_reset();
 
-	static unsigned char row_mask[SHIFT_DEVICES] = {0};
-	unsigned char ret = 0;
-
-	for(unsigned char row=0;row<KEYBOARD_COLS;row++){
-		//Set current column high so that rows can be read
-		row_mask[row/8] = (1<<(row-((row/8)*8)));
-		ret = SN54HC595_out_bytes(row_mask, SHIFT_DEVICES);
-		if(ret)
-			return -EAGAIN;
-		vTaskDelay(1);	//wait for shift register
-
-		for(unsigned char col = 0; col < KEYBOARD_ROWS; col++)	/* test each row */
-			if(keyboard_read_row(col))							/*key is pressed */
-				keyboard_scan_buff_add(col, row);
-
-		//TODO is this necessary?
-		row_mask[row/8] = 0;
-		SN54HC595_clear();
-	}
-
-	if(!keyboard_scan_buf_length())
-		return -ENOENT;
-
-	return 0;
-}
 //
 //key_code scan_get_single_key( keyboard_device_t* keyboard_dev, keymap_list_t* layer_list )
 //{

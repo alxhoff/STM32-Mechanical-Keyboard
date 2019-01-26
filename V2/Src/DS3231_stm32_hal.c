@@ -18,7 +18,7 @@ uint8_t bcd2dec(uint8_t b)
 }
 
 void DS3231_set_time_short(I2C_HandleTypeDef *hi2c, u08 twelve_hour, u08 hour, u08 min, u08 sec){
-	u08 write_buffer[3];
+	u08 write_buffer[3] = {0};
 	write_buffer[0]= dec2bcd(sec);
 	write_buffer[1] = dec2bcd(min);
 
@@ -36,14 +36,14 @@ void DS3231_set_time_short(I2C_HandleTypeDef *hi2c, u08 twelve_hour, u08 hour, u
 		write_buffer[2] |= dec2bcd(hour & 0x3F);
 	}
 
-	HAL_I2C_Mem_Write(hi2c, DS3231_ADDR8, 0x00, 1, &write_buffer, 3, 10);
+	HAL_I2C_Mem_Write(hi2c, DS3231_ADDR8, 0x00, 1, write_buffer, 3, 10);
 }
 
 void DS3231_get_time_short(I2C_HandleTypeDef *hi2c,  u08* pm, u08* twelve_hour, u08* hour, u08*min, u08* sec){
 	u08 read_buffer[3];
 	u08 return_hour;
 
-	HAL_I2C_Mem_Read(hi2c, DS3231_ADDR8, 0x00, 1, &read_buffer, 3, 10);
+	HAL_I2C_Mem_Read(hi2c, DS3231_ADDR8, 0x00, 1, read_buffer, 3, 10);
 
 	*sec = bcd2dec(read_buffer[0]);
 	*min = bcd2dec(read_buffer[1]);
@@ -85,14 +85,14 @@ void DS3231_set_date_short(I2C_HandleTypeDef *hi2c, u16 year, u08 month, u08 dat
 	write_buffer[2] = dec2bcd(month) | century;
 	write_buffer[3] = dec2bcd(year);
 
-	HAL_I2C_Mem_Write(hi2c, DS3231_ADDR8, 0x03, 1, &write_buffer, 4, 10);
+	HAL_I2C_Mem_Write(hi2c, DS3231_ADDR8, 0x03, 1, write_buffer, 4, 10);
 }
 
 void DS3231_get_date_short(I2C_HandleTypeDef *hi2c, u16* year, u08* month, u08* date, u08* day){
 	u08 read_buffer[4];
 	volatile u08 century = 0;
 
-	HAL_I2C_Mem_Read(hi2c, DS3231_ADDR8, 0x03, 1, &read_buffer, 4, 10);
+	HAL_I2C_Mem_Read(hi2c, DS3231_ADDR8, 0x03, 1, read_buffer, 4, 10);
 
 	century = ((read_buffer[2]&0x80)>>7);
 	*year = (century == 1 ? (2000 + bcd2dec(read_buffer[3])) : (1900 + bcd2dec(read_buffer[3])));
@@ -143,7 +143,7 @@ void DS3231_set_time(I2C_HandleTypeDef *hi2c, ds3231Time* time){
 	write_buffer[5]=(dec2bcd(time->month) | century);
 	write_buffer[6]=dec2bcd(year);
 
-	HAL_I2C_Mem_Write(hi2c, DS3231_ADDR8, 0x00, 1, &write_buffer, 7, 10);
+	HAL_I2C_Mem_Write(hi2c, DS3231_ADDR8, 0x00, 1, write_buffer, 7, 10);
 }
 
 void DS3231_get_time(I2C_HandleTypeDef *hi2c, ds3231Time* return_struct){
@@ -151,7 +151,7 @@ void DS3231_get_time(I2C_HandleTypeDef *hi2c, ds3231Time* return_struct){
 	u08 century = 0;
 	u08 hour_byte;
 
-	HAL_I2C_Mem_Read(hi2c, DS3231_ADDR8, 0x00, 1, &read_buffer, 7, 10);
+	HAL_I2C_Mem_Read(hi2c, DS3231_ADDR8, 0x00, 1, read_buffer, 7, 10);
 
 	hour_byte=read_buffer[2];
 
@@ -188,7 +188,7 @@ float DS3231_get_temp(I2C_HandleTypeDef *hi2c){
 
 	u08 read_buffer[2];
 
-	HAL_I2C_Mem_Read(hi2c, DS3231_ADDR8, 0x11, 1, &read_buffer, 2, 10);
+	HAL_I2C_Mem_Read(hi2c, DS3231_ADDR8, 0x11, 1, read_buffer, 2, 10);
 
 	read_buffer[1] = (read_buffer[1] >> 6) * 25;
 
@@ -199,7 +199,7 @@ float DS3231_get_temp(I2C_HandleTypeDef *hi2c){
 void DS3231_register_dump(I2C_HandleTypeDef *hi2c, ds3231Registers* return_struct){
 		u08 read_buffer[19];
 
-		HAL_I2C_Mem_Read(hi2c, DS3231_ADDR8, 0x00, 1, &read_buffer, 20, 10);
+		HAL_I2C_Mem_Read(hi2c, DS3231_ADDR8, 0x00, 1, read_buffer, 20, 10);
 
 		return_struct->sec = read_buffer[0];
         return_struct->min = read_buffer[1];
@@ -224,7 +224,7 @@ void DS3231_register_dump(I2C_HandleTypeDef *hi2c, ds3231Registers* return_struc
 
 //untested
 void DS3231_set_alarm_short(I2C_HandleTypeDef *hi2c, u08 twelve_hour, u08 hour, u08 min, u08 sec, ALARM_NUMBER alarm_number){
-	u08 write_buffer[3];
+	u08 write_buffer[3] = {0};
 	write_buffer[0]= dec2bcd(sec);
 	write_buffer[1] = dec2bcd(min);
 
@@ -242,7 +242,7 @@ void DS3231_set_alarm_short(I2C_HandleTypeDef *hi2c, u08 twelve_hour, u08 hour, 
 		write_buffer[2] |= dec2bcd(hour & 0x3F);
 	}
 
-	HAL_I2C_Mem_Write(hi2c, DS3231_ADDR8, 0x07, 1, &write_buffer, 3, 10);
+	HAL_I2C_Mem_Write(hi2c, DS3231_ADDR8, 0x07, 1, write_buffer, 3, 10);
 }
 
 //untested
@@ -255,6 +255,9 @@ void DS3231_set_alarm(I2C_HandleTypeDef *hi2c, ds3231Alarm* alarm_time, ALARM_NU
 		break;
 	case ALARM_TWO:
 		alarm_register_addr = 0x0B;
+		break;
+	default:
+		break;
 	}
 
 	u08 write_buffer[4];
@@ -333,7 +336,7 @@ void DS3231_set_alarm(I2C_HandleTypeDef *hi2c, ds3231Alarm* alarm_time, ALARM_NU
 		break;
 	}
 
-	HAL_I2C_Mem_Write(hi2c, DS3231_ADDR8, alarm_register_addr, 1, &write_buffer, 4, 10);
+	HAL_I2C_Mem_Write(hi2c, DS3231_ADDR8, alarm_register_addr, 1, write_buffer, 4, 10);
 }
 
 //untested
@@ -449,9 +452,11 @@ void DS3231_get_alarm(I2C_HandleTypeDef *hi2c, ds3231Alarm* return_struct, ALARM
 	case ALARM_TWO:
 		alarm_register_addr = 0x0B;
 		break;
+	default:
+		break;
 	}
 
-	HAL_I2C_Mem_Read(hi2c, DS3231_ADDR8, alarm_register_addr, 1, &read_buffer, 4, 10);
+	HAL_I2C_Mem_Read(hi2c, DS3231_ADDR8, alarm_register_addr, 1, read_buffer, 4, 10);
 
 	return_struct->sec=bcd2dec(read_buffer[0] & 0x7F);
 	return_struct->min=bcd2dec(read_buffer[1] & 0x7F);

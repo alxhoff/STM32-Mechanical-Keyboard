@@ -94,6 +94,7 @@ typedef struct mediaHID{
 */
 void keyboard_init(void);
 
+unsigned char keyboard_scan_matrix(void);
 
 void keyboard_init_status_LEDS(void);
 
@@ -114,7 +115,7 @@ void keyboard_init_status_LEDS(void);
 * @param layer_list layer list used to convert key_codes
 * @return 0 on success
 */
-unsigned char process_key_buf(void);
+unsigned char keyboard_process_scan_buf(void);
 
 /**
 * @brief Processes any pending HID reports

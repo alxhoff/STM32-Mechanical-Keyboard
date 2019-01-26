@@ -113,7 +113,7 @@ int keymap_list_append_layer(keymap_layer_t *layer)
 	keymap_layer_list.tail->next = layer;
 	keymap_layer_list.tail = layer;
 
-	layer->ID = keymap_layer_list.ID_count++;
+	layer->ID = ++keymap_layer_list.ID_count;
 	keymap_layer_list.layer_count++;
 
 	return 0;

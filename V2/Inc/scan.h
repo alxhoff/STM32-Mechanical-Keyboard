@@ -15,7 +15,6 @@
 
 #include "error.h"
 #include "keyboard.h"
-#include "types.h"
 
 /**
  * @brief Defines how long the microcontroller requires a button to be
