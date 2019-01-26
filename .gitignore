@@ -2,14 +2,14 @@
 .metadata/*
 **/RemoteSystemsTempFiles
 **/startup
-NuceloKeyboardController/.settings
+NuceloKeyboardController/.settings/
 NuceloKeyboardController/Debug
 V2/Debug
-V2/.settings
+V2/.settings/
 
 #documentation
-doc/latex
-doc/html
+**/doc/latex/
+**/doc/html/
 
 #eclipse
 *.cfg
