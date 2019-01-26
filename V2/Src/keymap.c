@@ -30,7 +30,7 @@ keymap_list_t keymap_layer_list = {0};
 
 
 
-//TODO whichspace names\
+//TODO whichspace names
 //init keymap list with initial layer
 unsigned char keymap_list_init(keymap_layer_t *layer)
 {

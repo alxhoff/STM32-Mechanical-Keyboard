@@ -50,8 +50,6 @@
 #include "usbd_hid.h"
 #include "usbd_desc.h"
 #include "usbd_ctlreq.h"
-
-
 /** @addtogroup STM32_USB_DEVICE_LIBRARY
   * @{
   */
@@ -169,7 +167,7 @@ __ALIGN_BEGIN static uint8_t USBD_HID_CfgDesc[USB_HID_CONFIG_DESC_SIZ]  __ALIGN_
   0x00,         /*bCountryCode: Hardware target country*/
   0x01,         /*bNumDescriptors: Number of HID class descriptors to follow*/
   0x22,         /*bDescriptorType*/
-  HID_CUSTOM_REPORT_DESC_SIZE,/*wItemLength: Total length of Report descriptor*/
+  HID_MOUSE_REPORT_DESC_SIZE,/*wItemLength: Total length of Report descriptor*/
   0x00,
   /******************** Descriptor of Mouse endpoint ********************/
   /* 27 */
@@ -195,7 +193,7 @@ __ALIGN_BEGIN static uint8_t USBD_HID_Desc[USB_HID_DESC_SIZ]  __ALIGN_END  =
   0x00,         /*bCountryCode: Hardware target country*/
   0x01,         /*bNumDescriptors: Number of HID class descriptors to follow*/
   0x22,         /*bDescriptorType*/
-  HID_CUSTOM_REPORT_DESC_SIZE,/*wItemLength: Total length of Report descriptor*/
+  HID_MOUSE_REPORT_DESC_SIZE,/*wItemLength: Total length of Report descriptor*/
   0x00,
 };
 
@@ -214,9 +212,9 @@ __ALIGN_BEGIN static uint8_t USBD_HID_DeviceQualifierDesc[USB_LEN_DEV_QUALIFIER_
   0x00,
 };
 
-__ALIGN_BEGIN static uint8_t HID_CUSTOM_ReportDesc[HID_CUSTOM_REPORT_DESC_SIZE]  __ALIGN_END =
+__ALIGN_BEGIN static uint8_t HID_MOUSE_ReportDesc[HID_MOUSE_REPORT_DESC_SIZE]  __ALIGN_END =
 {
-		 // 78 bytes
+		// 78 bytes
 		  0x05, 0x01,        // Usage Page (Generic Desktop Ctrls)
 		  0x09, 0x06,        // Usage (Keyboard)
 		  0xA1, 0x01,        // Collection (Application)
@@ -229,7 +227,7 @@ __ALIGN_BEGIN static uint8_t HID_CUSTOM_ReportDesc[HID_CUSTOM_REPORT_DESC_SIZE] 
 		  0x15, 0x00,        //   Logical Minimum (0)
 		  0x25, 0x01,        //   Logical Maximum (1)
 		  0x81, 0x02,        //   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
-		  0x95, 0x03,        //   Report Count (3)
+		  0x95, 0x06,        //   Report Count (3)
 		  0x75, 0x08,        //   Report Size (8)
 		  0x15, 0x00,        //   Logical Minimum (0)
 		  0x25, 0x64,        //   Logical Maximum (100)
@@ -375,8 +373,8 @@ static uint8_t  USBD_HID_Setup (USBD_HandleTypeDef *pdev,
     case USB_REQ_GET_DESCRIPTOR: 
       if( req->wValue >> 8 == HID_REPORT_DESC)
       {
-        len = MIN(HID_CUSTOM_REPORT_DESC_SIZE , req->wLength);
-        pbuf = HID_CUSTOM_ReportDesc;
+        len = MIN(HID_MOUSE_REPORT_DESC_SIZE , req->wLength);
+        pbuf = HID_MOUSE_ReportDesc;
       }
       else if( req->wValue >> 8 == HID_DESCRIPTOR_TYPE)
       {

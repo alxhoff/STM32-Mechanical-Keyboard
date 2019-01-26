@@ -8,9 +8,9 @@
 #include "states.h"
 
 
-#define ADD_STATE( MACHINE, STATE )	\
-	MACHINE = realloc(MACHINE, sizeof(state_t) * MACHINE->count);	\
-	MACHINE[MACHINE->count] = STATE;
+//#define ADD_STATE( MACHINE, STATE )	\
+//	MACHINE = realloc(MACHINE, sizeof(state_t) * MACHINE->count);	\
+//	MACHINE[MACHINE->count] = STATE;
 
 unsigned char run_FSM(state_machine_t *FSM)
 {

@@ -9,7 +9,6 @@
 #include "pipes.h"
 #include "error.h"
 #include "usb_device.h"
-#include "usbd_hid.h"
 
 /**
  * @typedef keyboardHID_t
