@@ -89,10 +89,9 @@ osThreadId KeyboardListenHandle;
 /* Private variables ---------------------------------------------------------*/
 osThreadId ADCListenHandle;
 osThreadId CLIListenHandle;
-
+osThreadId SendHandle;
 //AT24Cxx_devices eeprom_devs;
 
-keyboard_states_t current_keyboard_state;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -111,6 +110,7 @@ void KeyboardListenCallback(void const * argument);
 /* Private function prototypes -----------------------------------------------*/
 void MouseListenCallback(void const * argument);
 void CLIListenCallback(void const * argument);
+void SendCallback(void const *arguemnt);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
@@ -150,22 +150,12 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
 
-//  	  while(1){
-//  		  if(HAL_GPIO_ReadPin(USER_Btn_GPIO_Port, USER_Btn_Pin)){
-//  			  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
-//  		  }
-//  	  }
-
-
-
 	keyboard_init();
 
+	//TODO what is this? VVV
 	HAL_GPIO_WritePin(CAPS_STATUS_PORT, CAPS_STATUS_PIN, GPIO_PIN_SET);
 	HAL_GPIO_WritePin(CLI_STATUS_PORT, CLI_STATUS_PIN, GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(FUNC_STATUS_PORT, FUNC_STATUS_PIN, GPIO_PIN_SET);
-
-
-	//TODO STANDARDIZE DEVICE INIT
 
 	SN54HC595_init();
 
@@ -247,6 +237,8 @@ int main(void)
   KeyboardListenHandle = osThreadCreate(osThread(KeyboardListen), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
+	osThreadDef(SendHandle, SendCallback, osPriorityNormal, 0, 128);
+	ADCListenHandle = osThreadCreate(osThread(SendHandle), NULL);
 //  osThreadDef(ADCListen, MouseListenCallback, osPriorityIdle, 0, 128);
 //  ADCListenHandle = osThreadCreate(osThread(ADCListen), NULL);
 //	osThreadDef(CLIListen, CLIListenCallback, osPriorityIdle, 0, 128);
@@ -613,6 +605,14 @@ void CLIListenCallback(void const * argument)
 		//TODO
 //		keyboard_devs->screen->update(keyboard_devs->screen);
 //		keyboard_devs->screen->draw_cursor(keyboard_devs->screen);
+	}
+}
+
+void SendCallback(void const *argument)
+{
+	for(;;)
+	{
+
 	}
 }
 /* USER CODE END 4 */
