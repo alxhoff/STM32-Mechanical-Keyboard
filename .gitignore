@@ -8,8 +8,8 @@ V2/Debug
 V2/.settings
 
 #documentation
-**/latex
-**/html
+doc/latex
+doc/html
 
 #eclipse
 *.cfg
