@@ -90,8 +90,6 @@ osThreadId KeyboardListenHandle;
 osThreadId ADCListenHandle;
 osThreadId CLIListenHandle;
 
-SemaphoreHandle_t USB_send_lock = NULL;
-
 //AT24Cxx_devices eeprom_devs;
 
 keyboard_states_t current_keyboard_state;
@@ -645,8 +643,6 @@ void KeyboardListenCallback(void const * argument)
 	TickType_t xLastWakeTime = xTaskGetTickCount();
 	const TickType_t xPeriod = 20;
 
-	//TODO
-	USB_send_lock = xSemaphoreCreateMutex();
 
 	/* Infinite loop */
 	for (;;)

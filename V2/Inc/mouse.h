@@ -22,20 +22,6 @@
 #define Y_MAX			255
 #define Y_MID			178
 
-
-typedef struct mouse_coord{
-	signed char 		x;
-	signed char 		y;
-} mouse_coord_t;
-
-//mouse HID must always be 3
-typedef struct mouse_HID{
-	unsigned char 		id;
-	unsigned char 		buttons;
-	mouse_coord_t		coord;
-	signed char 		wheel;
-  } mouse_HID_t;
-
 unsigned char mouse_init(void);
 unsigned char mouse_run (void);
 

@@ -34,53 +34,6 @@ typedef enum{
 } report_type;
 
 /**
- * @typedef keyboardHID_t
- * @brief Typedef of keyboardHID
- * */
-/**
- * @struct keyboardHID
- * @brief Keyboard HID report
- *
- * The keyboard HID report is the USB HID report sent to handle all keyboard press
- * events, its structure is defined by the HID descriptor.
- *
- * */
-typedef struct keyboardHID{
-      unsigned char id; 			/**< HID report ID for the keyboard report must always be 1, as described
-      	  	  	  	  	  	in the HID descriptor*/
-      unsigned char modifiers; 	/**< Byte that send key modifiers. See HIDClassCommon.h for bit details*/
-      /** @defgroup HID_keys HID keys
-       * @brief Each key byte represents a keypress to be sent via USB
-       *  @{
-       */
-      unsigned char key1;
-      unsigned char key2;
-      unsigned char key3;
-      unsigned char key4;
-      unsigned char key5;
-      unsigned char key6;
-      /** @} */ // end of HID_keys
-  }keyboardHID_t;
-
-  /**
-   * @typedef mediaHID_t
-   * @brief Typedef of mediaHIDg
-   * */
-  /**
-   * @struct mediaHIDg
-   * @brief Media HID report
-   *
-   * The media HID report is the USB HID report sent to handle all media key press
-   * events, its structure is defined by the HID descriptor.
-   *
-   * */
-typedef struct mediaHID{
-    unsigned char id; 			/**< HID report ID for the media report must be 2, as described in
-    						the HID descriptor*/
-    unsigned char keys;			/**< Single media key contained in the media HID report */
-  } mediaHID_t;
-
-/**
 * @brief Inits the keyboard device and GPIO pins
 *
 * To initialise the keyboard device, this function must be called
@@ -149,6 +102,6 @@ unsigned char keyboard_process_scan_buf(void);
 unsigned char keyboard_read_row(unsigned char row);
 void keyboard_reset_scan_buff(void);
 void keyboard_scan_buff_add(unsigned char col, unsigned char row);
-unsigned char keyboard_send_blank(void);
+unsigned char send_blank(void);
 
 #endif /* KEYBOARD_H_ */

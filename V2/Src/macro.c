@@ -11,7 +11,6 @@
 #include "keyboard.h"
 #include "usb_device.h"
 #include "cmsis_os.h"
-#include "usbd_hid.h"
 
 typedef struct macro_table{
 	macro_entry_t 	*head;
@@ -176,27 +175,28 @@ test:
 
 unsigned char macro_execute_macro( macro_entry_t* macro )
 {
-	static keyboardHID_t macro_report = {
-			.id = 1
-	};
-
-	unsigned int i = 0;
-
-	while(macro->string[i] != '\0'){
-		if(i && macro->string[i] == macro->string[i-1]){
-			keyboard_send_blank();
-			vTaskDelay(16);
-		} //TODO move to keyboard function
-		macro_report.key1 =	lookup_get_key((unsigned char)macro->string[i]);
-		macro_report.modifiers = lookup_get_mod((unsigned char)macro->string[i]);
-		USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t *)&macro_report, sizeof(keyboardHID_t));
-
-		vTaskDelay(16);
-		i++;
-	}
-	//TODO is this needed?
-	keyboard_send_blank();
-
+	//TODO
+//	static keyboardHID_t macro_report = {
+//			.id = 1
+//	};
+//
+//	unsigned int i = 0;
+//
+//	while(macro->string[i] != '\0'){
+//		if(i && macro->string[i] == macro->string[i-1]){
+//			send_blank();
+//			vTaskDelay(16);
+//		} //TODO move to keyboard function
+//		macro_report.key1 =	lookup_get_key((unsigned char)macro->string[i]);
+//		macro_report.modifiers = lookup_get_mod((unsigned char)macro->string[i]);
+//		USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t *)&macro_report, sizeof(keyboardHID_t));
+//
+//		vTaskDelay(16);
+//		i++;
+//	}
+//	//TODO is this needed?
+//	send_blank();
+//
 	return 0;
 }
 

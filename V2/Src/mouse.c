@@ -29,23 +29,23 @@ typedef struct mouse_device{
 
 mouse_device_t mouse_dev = {0};
 
-unsigned char mouse_get_coord(mouse_coord_t *coord)
+unsigned char mouse_get_coord(void)
 {
 
-	if(HAL_ADC_Start(mouse_dev.adc_x) != HAL_OK)
-		return -EADC;
-
-	if(HAL_ADC_Start(mouse_dev.adc_y) != HAL_OK)
-		return -EADC;
-
-	if(HAL_ADC_PollForConversion(mouse_dev.adc_x, 50) != HAL_OK)
-		return -EADC;
-
-	if(HAL_ADC_PollForConversion(mouse_dev.adc_y, 50) != HAL_OK)
-		return -EADC;
-
-	coord->x = ((signed long)HAL_ADC_GetValue(mouse_dev.adc_x) >> 4);
-	coord->y = ((signed long)HAL_ADC_GetValue(mouse_dev.adc_y) >> 4);
+//	if(HAL_ADC_Start(mouse_dev.adc_x) != HAL_OK)
+//		return -EADC;
+//
+//	if(HAL_ADC_Start(mouse_dev.adc_y) != HAL_OK)
+//		return -EADC;
+//
+//	if(HAL_ADC_PollForConversion(mouse_dev.adc_x, 50) != HAL_OK)
+//		return -EADC;
+//
+//	if(HAL_ADC_PollForConversion(mouse_dev.adc_y, 50) != HAL_OK)
+//		return -EADC;
+//
+//	coord->x = ((signed long)HAL_ADC_GetValue(mouse_dev.adc_x) >> 4);
+//	coord->y = ((signed long)HAL_ADC_GetValue(mouse_dev.adc_y) >> 4);
 
 	//TODO what is this?
 //	mouse_dev.state = active;
@@ -97,22 +97,16 @@ void process_buf(void)
 		mouse_dev.buf.y = 0;
 }
 
-mouse_HID_t mouse_prepare_report (void)
+unsigned char mouse_prepare_report (void)
 {
-	mouse_HID_t ret = {0};
-
-	ret.buttons = mouse_get_buttons();
-	//TODO check sucess
-	mouse_get_coord(&ret.coord);
-	ret.wheel = mouse_get_buttons();
-
-	return ret;
-}
-
-unsigned char mouse_send_report ( mouse_HID_t* data )
-{
-	USBD_HID_SendReport(&hUsbDeviceFS, &data, sizeof(mouse_HID_t));
-//	mouse_dev.state = clearing;
+	//TODO
+//	mouse_HID_t ret = {0};
+//
+//	ret.buttons = mouse_get_buttons();
+//	//TODO check sucess
+//	mouse_get_coord(&ret.coord);
+//	ret.wheel = mouse_get_buttons();
+//
 	return 0;
 }
 

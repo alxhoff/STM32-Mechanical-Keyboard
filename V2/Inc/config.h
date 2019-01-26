@@ -17,7 +17,7 @@
  * @brief Length of input buffer used when scanning the keyboard
  * */
 #define SCAN_KEY_BUFFER_LENGTH		20
-#define SCAN_KEY_PIPE_LENGTH		20
+#define SCAN_KEY_PIPE_LENGTH		3
 
 #define SHIFT_DEVICES		2
 
