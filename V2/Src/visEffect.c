@@ -601,7 +601,7 @@ uint32_t Wheel_snappy_fade_in(uint8_t WheelPos) {
 
 void visInit(void)
 {
-	uint8_t i;
+//	uint8_t i;
 
 //	keyboard_devs->LEDs = (LED_array_t*) calloc(1, sizeof(LED_array_t));
 //

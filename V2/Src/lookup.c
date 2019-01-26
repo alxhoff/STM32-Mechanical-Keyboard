@@ -105,8 +105,8 @@ struct scan_code_char lookup_char[207] = {
 		[41] = {0},
 		[42] = {0},
 		[43] = {0},
-		[44] = {.unmodified = (char)32,
-				.modified = (char)32},
+		[44] = {.unmodified = "",
+				.modified = ""},
 		[45] = {.unmodified = "-",
 				.modified = "_"},
 		[46] = {.unmodified = "=",
@@ -115,15 +115,15 @@ struct scan_code_char lookup_char[207] = {
 				.modified = "{"},
 		[48] = {.unmodified = "]",
 				.modified = "}"},
-		[49] = {.unmodified = (char)92,
+		[49] = {.unmodified = "",
 				.modified = "|"},
 				//TODO
 		[50] = {"b"},
 
 		[51] = {.unmodified = ";",
 				.modified = ":"},
-		[52] = {.unmodified = (char)39, // "
-				.modified = (char)34}, //"
+		[52] = {.unmodified = "", // "
+				.modified = ""}, //"
 		[53] = {.unmodified = "`",
 				.modified = "~"},
 		[54] = {.unmodified = ",",
