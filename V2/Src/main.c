@@ -238,8 +238,8 @@ int main(void)
   KeyboardListenHandle = osThreadCreate(osThread(KeyboardListen), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
-//	osThreadDef(SendHandle, SendCallback, osPriorityNormal, 0, 128);
-//	ADCListenHandle = osThreadCreate(osThread(SendHandle), NULL);
+	osThreadDef(SendHandle, SendCallback, osPriorityNormal, 0, 128);
+	ADCListenHandle = osThreadCreate(osThread(SendHandle), NULL);
 //  osThreadDef(ADCListen, MouseListenCallback, osPriorityIdle, 0, 128);
 //  ADCListenHandle = osThreadCreate(osThread(ADCListen), NULL);
 //	osThreadDef(CLIListen, CLIListenCallback, osPriorityIdle, 0, 128);

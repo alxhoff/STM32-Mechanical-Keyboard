@@ -223,7 +223,8 @@ unsigned char keyboard_process_scan_buf(void) {
 	if (!queue_packet_to_send)
 		return -ENOINIT;
 
-	xQueueSend(queue_packet_to_send, buf, portMAX_DELAY);
+	if(buf->key_buf.count || buf->med_buf)
+		xQueueSend(queue_packet_to_send, buf, portMAX_DELAY);
 
 	memcpy(&keyboard_dev.prev_buf, &buf->key_buf, /* Save for next frame */
 	sizeof(six_key_buffer_t));

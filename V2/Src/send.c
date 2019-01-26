@@ -95,8 +95,8 @@ unsigned char send_get_send_buf(void) {
 unsigned char send_prepare_keyboard(void) {
 	memset(&keyboard_report_buf, 0, sizeof(keyboardHID_t)); /* clear report */
 
-	memcpy((&keyboard_report_buf + 2 * sizeof(unsigned char)),
-			&send_buf, sizeof(unsigned char) * 6);
+	memcpy(&keyboard_report_buf.key1,
+			&send_buf.key_buf.keys, sizeof(unsigned char) * 6);
 	keyboard_report_buf.modifiers = send_buf.mod_buf;
 
 	return 0;
