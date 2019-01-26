@@ -8,7 +8,7 @@
 #ifndef SN54HC595_H_
 #define SN54HC595_H_
 
-#include "config.h""
+#include "config.h"
 
 /*
  *#####PINOUT#####

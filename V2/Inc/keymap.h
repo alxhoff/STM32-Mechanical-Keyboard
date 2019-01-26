@@ -92,7 +92,7 @@
 #define K_PGDWN			HID_KEYBOARD_SC_PAGE_DOWN
 #define K_END			HID_KEYBOARD_SC_END
 #define K_HOME			HID_KEYBOARD_SC_HOME
-#define K_TAB			HID_KEYBOARD_SC_KEYPAD_TAB
+#define K_KTAB			HID_KEYBOARD_SC_KEYPAD_TAB
 
 //ARROWS
 #define K_LEFT			HID_KEYBOARD_SC_LEFT_ARROW
@@ -131,7 +131,8 @@ char *keymap_get_name(void);
 void keymap_set_mod_key_code(unsigned char code);
 unsigned char keymap_get_mod_key_code(void);
 unsigned char keymap_get_ID(void);
-
+unsigned char keymap_list_init(keymap_layer_t *layer);
+int keymap_list_append_layer(keymap_layer_t *layer);
 
 
 #endif /* KEYMAP_H_ */

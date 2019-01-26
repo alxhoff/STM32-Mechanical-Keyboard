@@ -53,11 +53,13 @@
 
 /* USER CODE BEGIN Includes */
 //#include "AT24Cxx_stm32_hal.h"
+#include <string.h>
 //layers & init
 #include "keymap.h"
 #include "keymap_defaults.h"
 #include "macro.h"
 #include "scan.h"
+#include "SN54HC595.h"
 
 //hardware devices
 #include "keyboard.h"
@@ -581,8 +583,8 @@ static void MX_GPIO_Init(void)
 /* ADCListenCallback function */
 void MouseListenCallback(void const * argument)
 {
-	TickType_t xLastWakeTime = xTaskGetTickCount();
-	const TickType_t xPeriod = 5;
+//	TickType_t xLastWakeTime = xTaskGetTickCount();
+//	const TickType_t xPeriod = 5;
 
 	/* Infinite loop */
 	for (;;)

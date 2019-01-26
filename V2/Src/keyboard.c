@@ -12,6 +12,8 @@
 #include "keymap.h"
 #include "cmsis_os.h"
 
+#include <stdlib.h>
+
 QueueHandle_t queue_packet_to_send;
 
 keyboard_device_t keyboard_dev = {

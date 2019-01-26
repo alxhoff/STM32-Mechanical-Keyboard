@@ -10,6 +10,8 @@
 #include "lookup.h"
 #include "keyboard.h"
 #include "usb_device.h"
+#include "cmsis_os.h"
+#include "usbd_hid.h"
 
 typedef struct macro_table{
 	macro_entry_t 	*head;
@@ -127,7 +129,6 @@ void macro_add_entry(macro_entry_t *entry)
 unsigned char macro_rem_entry(unsigned char sc)
 {
 	macro_entry_t *head = macro_dev.head;
-	macro_entry_t *prev = NULL;
 	if(head->sc == sc)
 	{
 		//single item list
@@ -188,12 +189,13 @@ unsigned char macro_execute_macro( macro_entry_t* macro )
 		} //TODO move to keyboard function
 		macro_report.key1 =	lookup_get_key((unsigned char)macro->string[i]);
 		macro_report.modifiers = lookup_get_mod((unsigned char)macro->string[i]);
-		USBD_HID_SendReport(&hUsbDeviceFS, &macro_report, sizeof(keyboardHID_t));
+		USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t *)&macro_report, sizeof(keyboardHID_t));
 
 		vTaskDelay(16);
 		i++;
 	}
-	macro_send_blank( &macro_report );
+	//TODO is this needed?
+	keyboard_send_blank();
 
 	return 0;
 }

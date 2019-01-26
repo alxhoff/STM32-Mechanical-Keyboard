@@ -47,7 +47,7 @@ unsigned char state_CLI()
 //
 //	HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
 //
-//	return 0;
+	return 0;
 }
 
 unsigned char CLI_process_line()
