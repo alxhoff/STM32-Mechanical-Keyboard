@@ -60,6 +60,7 @@
 #include "macro.h"
 #include "scan.h"
 #include "SN54HC595.h"
+#include "send.h"
 
 //hardware devices
 #include "keyboard.h"
@@ -237,8 +238,8 @@ int main(void)
   KeyboardListenHandle = osThreadCreate(osThread(KeyboardListen), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
-	osThreadDef(SendHandle, SendCallback, osPriorityNormal, 0, 128);
-	ADCListenHandle = osThreadCreate(osThread(SendHandle), NULL);
+//	osThreadDef(SendHandle, SendCallback, osPriorityNormal, 0, 128);
+//	ADCListenHandle = osThreadCreate(osThread(SendHandle), NULL);
 //  osThreadDef(ADCListen, MouseListenCallback, osPriorityIdle, 0, 128);
 //  ADCListenHandle = osThreadCreate(osThread(ADCListen), NULL);
 //	osThreadDef(CLIListen, CLIListenCallback, osPriorityIdle, 0, 128);
@@ -610,9 +611,11 @@ void CLIListenCallback(void const * argument)
 
 void SendCallback(void const *argument)
 {
+	send_init();
 	for(;;)
 	{
-
+		send_get_send_buf();
+		send_reports();
 	}
 }
 /* USER CODE END 4 */

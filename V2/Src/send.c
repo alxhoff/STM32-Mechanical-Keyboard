@@ -87,7 +87,7 @@ unsigned char send_init(void)
 
 unsigned char send_get_send_buf(void) {
 	if(xSemaphoreTake(processing_lock, portMAX_DELAY) == pdTRUE )
-		xQueueRecieve(queue_packet_to_send, &send_buf, portMAX_DELAY);
+		xQueueReceive(queue_packet_to_send, &send_buf, portMAX_DELAY);
 
 	return 0;
 }
