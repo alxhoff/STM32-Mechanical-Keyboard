@@ -115,26 +115,6 @@ void SendCallback(void const *arguemnt);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
-struct keyboardHID_t {
-      uint8_t id;
-      uint8_t modifiers;
-      uint8_t key1;
-      uint8_t key2;
-      uint8_t key3;
-      uint8_t key4;
-      uint8_t key5;
-      uint8_t key6;
-
-  };
-struct mediaHID_t {
-  uint8_t id;
-  uint8_t keys;
-};
-struct keyboardHID_t keyboardHID;
-
-// HID Media
-
-struct mediaHID_t mediaHID;
 
 /* USER CODE END 0 */
 
@@ -142,13 +122,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-	keyboardHID.id = 1;
-	keyboardHID.modifiers = 0;
 
-
-
-	mediaHID.id = 2;
-	mediaHID.keys = 0;
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -682,25 +656,6 @@ void KeyboardListenCallback(void const * argument)
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);
 		//HID TEST
 
-		    keyboardHID.modifiers = (1 << 5);
-			keyboardHID.key1 =0x04;
-			keyboardHID.key2 = 0x05;
-			keyboardHID.key3 = 0x06;
-			keyboardHID.key4 = 0x07;
-			keyboardHID.key5 = 0x08;
-			keyboardHID.key6 = 0x09;
-		    USBD_HID_SendReport(&hUsbDeviceFS, &keyboardHID, sizeof(struct keyboardHID_t));
-		    HAL_Delay(30);
-		    keyboardHID.modifiers = 0;
-			keyboardHID.key1 =0x0;
-			keyboardHID.key2 = 0x0;
-			keyboardHID.key3 = 0x0;
-			keyboardHID.key4 = 0x0;
-			keyboardHID.key5 = 0x0;
-			keyboardHID.key6 = 0x0;
-
-		    USBD_HID_SendReport(&hUsbDeviceFS, &keyboardHID, sizeof(struct keyboardHID_t));
-		    HAL_Delay(30);
 		if (keyboard_scan_matrix() == 0) /* if keys were pressed */
 			keyboard_process_scan_buf();		/* convert row-col to actual keys */
 

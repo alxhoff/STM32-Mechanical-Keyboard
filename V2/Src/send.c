@@ -92,7 +92,8 @@ unsigned char send_get_send_buf(void) {
 }
 
 unsigned char send_prepare_keyboard(void) {
-	memset(&keyboard_report_buf, 0, sizeof(keyboardHID_t)); /* clear report */
+	memset(&keyboard_report_buf.modifiers, 0, /* clear report without changing id*/
+			sizeof(keyboardHID_t) - sizeof(unsigned char));
 
 	memcpy(&keyboard_report_buf.key1,
 			&send_buf.key_buf.keys, sizeof(unsigned char) * 6);
