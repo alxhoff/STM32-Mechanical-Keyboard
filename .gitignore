@@ -2,8 +2,19 @@
 .metadata/*
 **/RemoteSystemsTempFiles
 **/startup
+**/.settings
 NuceloKeyVboardController/Debug
 V2/Debug
+
+#documentation
+**/latex
+**/html
+
+#eclipse
+*.cfg
+*.xml
+core
+
 
 # Prerequisites
 *.d
