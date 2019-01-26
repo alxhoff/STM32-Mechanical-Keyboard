@@ -168,7 +168,7 @@ unsigned char is_in_prev_buf(unsigned char sc)
 void keyboard_sort_scaned_key(send_buffer_t *send_buf,
 		key_buffer_t *buf_new, unsigned char key)
 {
-	if(key >= 0xE0 && key <= 0xE7) /* media */
+	if(key >= 0xE8 && key <= 0xEF) /* media */
 	{
 		send_buf->med_buf = key;
 		return;
@@ -191,7 +191,7 @@ void keyboard_sort_scaned_key(send_buffer_t *send_buf,
 unsigned char keyboard_process_scan_buf(void)
 {
 	static unsigned char ret = 0;
-	static unsigned char tmp_sc;
+	volatile static unsigned char tmp_sc;
 	unsigned char i = 0;
 	static key_buffer_t sc_new = {0};
 
@@ -226,9 +226,12 @@ unsigned char keyboard_process_scan_buf(void)
 	////TODO scan buf count should be zero
 
 	while(buf->key_buf.count < 6 && sc_new.count) /* Fill buf with new keys */
-		buf->key_buf.keys[buf->key_buf.count++] =
-				sc_new.buf[sc_new.count--];
-
+	{
+		buf->key_buf.keys[buf->key_buf.count] =
+				sc_new.buf[sc_new.count - 1];
+		buf->key_buf.count++;
+		sc_new.count--;
+	}
 	if(!queue_packet_to_send)
 		return -ENOINIT;
 
