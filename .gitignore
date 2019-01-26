@@ -13,7 +13,7 @@ V2/Debug
 #eclipse
 *.cfg
 *.xml
-core
+**/core
 
 
 # Prerequisites
