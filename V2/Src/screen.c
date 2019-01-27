@@ -1,9 +1,10 @@
 /*
+
  * screen.c
  *
  *  Created on: Sep 16, 2017
  *      Author: alxhoff
- */
+
 
 #include <stdlib.h>
 #include <string.h>
@@ -196,3 +197,4 @@ screen_t* screen_init(screen_init_t* init_values)
 
 	return init_dev;
 }
+*/

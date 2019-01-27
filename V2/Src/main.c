@@ -179,26 +179,20 @@ int main(void)
 
 
 	//TODO
-	/*SSD1306_device_init_t LCD_init_dev =
-	{ .background = White, .width = 128, .height = 64, .port = &hi2c1, .font =
-			&Font_11x18, };
 
-	keyboard_devs->LCD = ssd1306_init(&LCD_init_dev);
-
-	HAL_Delay(100);
-
-	LCD_CLEAR;
-	LCD_SET_CURSOR(23, 23);
-	LCD_WRITE_STRING("sup");
-	LCD_UPDATE;
+	ssd1306_init();
+	ssd1306_clear();
+	ssd1306_set_cursor(23, 23);
+	ssd1306_write_string("sup");
+	ssd1306_update_screen();
 
 	//CLI
-	screen_init_t CLI_test_init =
-	{ .rows = 3, .cols = 11, .row_height = 20, .x_offset = 3, .y_offset = 3,
-			.LCD_dev = keyboard_devs->LCD, .font = keyboard_devs->LCD->font,
-			.message = "123456789123456789123456789", .cursor_period = 750, };
-
-	keyboard_devs->screen = screen_init(&CLI_test_init);*/
+//	screen_init_t CLI_test_init =
+//	{ .rows = 3, .cols = 11, .row_height = 20, .x_offset = 3, .y_offset = 3,
+//			.LCD_dev = keyboard_devs->LCD, .font = keyboard_devs->LCD->font,
+//			.message = "123456789123456789123456789", .cursor_period = 750, };
+//
+//	keyboard_devs->screen = screen_init(&CLI_test_init);*/
 
 	//TODO
 /*	visInit(keyboard_devs);*/

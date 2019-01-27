@@ -123,52 +123,27 @@ unsigned char send_prepare_mouse(void)
 	return 0;
 }
 
-unsigned char send_blank_keyboard_report_no_lock(void) {
-	static const keyboardHID_t blank = { .id = 1 };
-
-	while(USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t *)&blank,
-					sizeof(keyboardHID_t)) == USBD_FAIL)
-				; /* wait for send */ //TODO handle better maybe?
-
-	return 0;
-}
-
 unsigned char send_keyboard_report(void)
 {
 	if(xSemaphoreTake( USB_send_lock, (TickType_t) portMAX_DELAY) == pdTRUE){
 		while(USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t *)&keyboard_report_buf,
 				sizeof(keyboardHID_t)) == USBD_FAIL)
-			; /* wait for send */ //TODO handle better maybe?
+			vTaskDelay(1); /* wait for send */ //TODO handle better maybe?
 
 		xSemaphoreGive(USB_send_lock);
 	}
 	return 0;
 }
-
-unsigned char send_blank_media_report_no_lock(void) {
-	static const mediaHID_t blank = { .id = 1 };
-	if (USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t *)&blank,
-			sizeof(mediaHID_t))){
-		return -ESEND;
-	}
-
-	return 0;
-}
-
 
 unsigned char send_media_report(void)
 {
 	if(xSemaphoreTake( USB_send_lock, (TickType_t) portMAX_DELAY) == pdTRUE){
-		if(USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t *)&media_report_buf,
-				sizeof(mediaHID_t))){
+			while(USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t *)&media_report_buf,
+					sizeof(mediaHID_t)) == USBD_FAIL)
+				vTaskDelay(1); /* wait for send */ //TODO handle better maybe?
+
 			xSemaphoreGive(USB_send_lock);
-			return -ESEND;
 		}
-		while(send_USB_ready(&hUsbDeviceFS))
-					vTaskDelay(1);
-		send_blank_media_report_no_lock();
-		xSemaphoreGive(USB_send_lock);
-	}
 	return 0;
 }
 
