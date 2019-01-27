@@ -115,30 +115,21 @@ unsigned char keyboard_scan_buf_length(void) {
 }
 
 unsigned char keyboard_scan_matrix(void) {
-	//TODO check if VVV is needed. Maybe already handled
-	// in process_key_buf
-	keyboard_scan_buff_reset();
 
-//	static unsigned char row_mask[SHIFT_DEVICES] = {0};
 	static unsigned short row_mask = { 0 };
 	unsigned char ret = 0;
 
-	for (unsigned char col = 0; col < KEYBOARD_COLS; col++) {
-		//Set current column high so that rows can be read
-//		row_mask[row/8] = (1<<(row-((row/8)*8)));
+	for (unsigned char col = 0; col < KEYBOARD_COLS; col++) { /* Set each col high and test rows*/
 		row_mask = (1 << col);
 
 		ret = SN54HC595_out_bytes((unsigned char *)&row_mask, SHIFT_DEVICES);
 		if (ret)
 			return -EAGAIN;
-		vTaskDelay(1);	//wait for shift register
 
 		for (unsigned char row = 0; row < KEYBOARD_ROWS; row++) /* test each row */
 			if (keyboard_read_row(row)) /*key is pressed */
 				keyboard_scan_buff_add(KEYBOARD_COLS - col - 1, row); //TODO remove - requirement
 
-		//TODO is this necessary?
-//		row_mask = 0;
 		SN54HC595_clear();
 	}
 

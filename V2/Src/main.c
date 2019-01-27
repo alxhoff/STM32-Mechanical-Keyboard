@@ -624,7 +624,7 @@ void SendCallback(void const *argument)
 	for(;;)
 	{
 		send_get_send_buf();
-		send_reports();
+//		send_reports();
 	}
 }
 
@@ -667,16 +667,15 @@ void KeyboardListenCallback(void const * argument)
 	TickType_t xLastWakeTime = xTaskGetTickCount();
 	const TickType_t xPeriod = 20;
 
-
 	/* Infinite loop */
 	for (;;)
 	{
-		vTaskDelayUntil(&xLastWakeTime, xPeriod);
 		//HID TEST
-
 		if (keyboard_scan_matrix() == 0) /* if keys were pressed */
 			keyboard_process_scan_buf();		/* convert row-col to actual keys */
 
+
+		vTaskDelayUntil(&xLastWakeTime, xPeriod);
 		//STATE MACHINE HERE
 //		clear_keyboard_report(keyboard_devs->keyboard_HID);
 //		process_keyboard_flags(keyboard_devs->keyboard_HID);
