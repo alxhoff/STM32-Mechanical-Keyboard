@@ -424,7 +424,8 @@ uint8_t USBD_HID_SendReport     (USBD_HandleTypeDef  *pdev,
                         HID_EPIN_ADDR,                                      
                         report,
                         len);
-    }
+    }else
+    	return USBD_FAIL;
   }
   return USBD_OK;
 }

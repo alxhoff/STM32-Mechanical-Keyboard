@@ -239,7 +239,7 @@ int main(void)
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* definition and creation of KeyboardListen */
-  osThreadDef(KeyboardListen, KeyboardListenCallback, osPriorityHigh, 0, 128);
+  osThreadDef(KeyboardListen, KeyboardListenCallback, osPriorityNormal, 0, 128);
   KeyboardListenHandle = osThreadCreate(osThread(KeyboardListen), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
