@@ -26,13 +26,6 @@
 #include "states.h"
 #include "buffers.h"
 
-
-typedef enum{
-	keyboard,
-	media,
-	mouse
-} report_type;
-
 /**
 * @brief Inits the keyboard device and GPIO pins
 *
@@ -48,8 +41,6 @@ typedef enum{
 void keyboard_init(void);
 
 unsigned char keyboard_scan_matrix(void);
-
-void keyboard_init_status_LEDS(void);
 
 /**
 * @brief Processes the input key buffer
@@ -69,39 +60,5 @@ void keyboard_init_status_LEDS(void);
 * @return 0 on success
 */
 unsigned char keyboard_process_scan_buf(void);
-
-/**
-* @brief Processes any pending HID reports
-*
-* Once a HID report is pending the keyboard state/media state will be set to
-* active, if the state is such then the current pending report is sent.
-* If there is not report pending but one was just sent and empty report is sent.
-* This corresponds to the state "clearing".
-*
-* @param data global keyboard HID data
-* @return 0 on success
-*/
-//unsigned char process_keyboard_flags ( keyboard_HID_data_t* data );
-
-/**
-* @brief Retrieves the key code for a single key.
-*
-* The key code retrieved is taken from the most underlying layer.
-*
-* @param layer_list layer list to be used to extracting the key code
-* @param col column of the key
-* @param row row of the key
-* @return key code of the key from the most underlying layer
-*/
-//unsigned char process_single_key( keymap_list_t* layer_list, unsigned char col, unsigned char row );
-
-/**
-* @brief Clears the keyboard HID report
-*/
-//void clear_keyboard_report(  keyboard_HID_data_t* data );
-unsigned char keyboard_read_row(unsigned char row);
-void keyboard_reset_scan_buff(void);
-void keyboard_scan_buff_add(unsigned char col, unsigned char row);
-unsigned char send_blank(void);
 
 #endif /* KEYBOARD_H_ */

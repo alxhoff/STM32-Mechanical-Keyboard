@@ -8,7 +8,7 @@
 #include "error.h"
 #include "config.h"
 #include "keyboard.h"
-#include "keyboard_private.h"
+#include "buffers.h"
 #include "keymap.h"
 #include "cmsis_os.h"
 #include "SN54HC595.h"
@@ -17,6 +17,74 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "buffers.h"
+
+  /**
+   * @typedef scaned_key_t
+   * @brief Typedef of scaned_key
+   * */
+  /**
+   * @struct scaned_key
+   * @brief Represents a single keyboard key
+   *
+   * The key structure represents a key at a given moment in time by representing
+   * its row and column as well as its current key_code. Does not account for layers
+   * as it stores one static key_code which can be dynamically changed.
+   *
+   * */
+typedef struct scaned_key{
+	unsigned char row;			/**< Key's row */
+	unsigned char col;			/**< Key's col */
+} scaned_key_t;
+
+/**
+ * @typedef scan_buffer_t
+ * @brief Typedef of scan_buffer
+ * */
+/**
+ * @struct scan_buffer
+ * @brief Keypress input buffer used to store keystroke input from keyboard.
+ *
+ * When the keyboard is initially scanned, all keys that were found to be pressed are
+ * stored in the keypress buffer before being processed. The key presses are saved as
+ * row and col values, not key_codes.
+ *
+ * */
+typedef struct scan_buffer{
+	scaned_key_t buf[SCAN_KEY_BUFFER_LENGTH];	/**< Key buffer */
+	unsigned char count;		/**< Stores the amount of keys currently within the buffer*/
+} scan_buffer_t;
+
+typedef struct key_buffer{
+	unsigned char buf[SCAN_KEY_BUFFER_LENGTH];
+	unsigned char count;
+} key_buffer_t;
+
+/**
+ * @typedef keyboard_device_t
+ * @brief Typedef of keyboard_device
+ * */
+/**
+ * @struct keyboard_device
+ * @brief Stores the GPIO interface information
+ *
+ * Details the GPIO pins and ports used to access the rows
+ * and columns of the keyboard.
+ *
+ * */
+typedef struct keyboard_device{
+	uint16_t 			row_pins[KEYBOARD_ROWS];			/**< GPIO pins used by the keyboard rows */
+	GPIO_TypeDef* 		row_ports[KEYBOARD_ROWS];		/**< GPIO ports used by the keyboard rows */
+
+	const unsigned char keyboard_report_ID;
+	const unsigned char media_report_ID;
+
+	//TODO lock this to prepare for multicore
+	SemaphoreHandle_t 	buf_lock;
+	scan_buffer_t 		scan_buf;			/**< Buffer where scanned keys are stored before processing */
+	six_key_buffer_t 	prev_buf;
+} keyboard_device_t;
+
 QueueHandle_t queue_packet_to_send;
 
 keyboard_device_t keyboard_dev = { .row_ports = { ROW_PORT_0, ROW_PORT_1,
@@ -24,7 +92,7 @@ keyboard_device_t keyboard_dev = { .row_ports = { ROW_PORT_0, ROW_PORT_1,
 		ROW_PIN_1, ROW_PIN_2, ROW_PIN_3, ROW_PIN_4 }, .keyboard_report_ID = 1,
 		.media_report_ID = 2, };
 
-void keyboard_init_status_LEDS(void) {
+static void keyboard_init_status_LEDS(void) {
 	GPIO_InitTypeDef GPIO_InitStruct;
 
 	/*Configure GPIO pin : PA15 */
@@ -49,7 +117,7 @@ void keyboard_init_status_LEDS(void) {
 	HAL_GPIO_Init(FUNC_STATUS_PORT, &GPIO_InitStruct);
 }
 
-void keyboard_init_row_inputs(void) {
+static void keyboard_init_row_inputs(void) {
 	GPIO_InitTypeDef GPIO_InitStruct;
 
 	//INIT ROWS - input
@@ -66,6 +134,7 @@ void keyboard_init(void) {
 	keyboard_init_row_inputs();
 
 	queue_packet_to_send = xQueueCreate(20, sizeof(send_buffer_t));
+	keyboard_dev.buf_lock = xSemaphoreCreateMutex();
 //	//HID DATA
 //	keyboard_devices->keyboard_HID =
 //			(keyboard_HID_data_t*)calloc(1, sizeof(keyboard_HID_data_t));
@@ -95,22 +164,18 @@ void keyboard_init(void) {
 
 }
 
-unsigned char keyboard_read_row(unsigned char row) {
+static unsigned char keyboard_read_row(unsigned char row) {
 	return HAL_GPIO_ReadPin(keyboard_dev.row_ports[row],
 			keyboard_dev.row_pins[row]);
 }
 
-void keyboard_scan_buff_reset(void) {
-	keyboard_dev.scan_buf.count = 0;
-}
-
-void keyboard_scan_buff_add(unsigned char col, unsigned char row) {
+static void keyboard_scan_buff_add(unsigned char col, unsigned char row) {
 	keyboard_dev.scan_buf.buf[keyboard_dev.scan_buf.count].col = col;
 	keyboard_dev.scan_buf.buf[keyboard_dev.scan_buf.count].row = row;
 	keyboard_dev.scan_buf.count++;
 }
 
-unsigned char keyboard_scan_buf_length(void) {
+static unsigned char keyboard_scan_buf_length(void) {
 	return keyboard_dev.scan_buf.count;
 }
 
@@ -119,27 +184,36 @@ unsigned char keyboard_scan_matrix(void) {
 	static unsigned short row_mask = { 0 };
 	unsigned char ret = 0;
 
+	if( xSemaphoreTake(keyboard_dev.buf_lock, (TickType_t) 0) == pdFALSE)
+		return -EAGAIN;
+
 	for (unsigned char col = 0; col < KEYBOARD_COLS; col++) { /* Set each col high and test rows*/
 		row_mask = (1 << col);
 
 		ret = SN54HC595_out_bytes((unsigned char *)&row_mask, SHIFT_DEVICES);
+		vTaskDelay(1);
 		if (ret)
-			return -EAGAIN;
+			goto error;
 
 		for (unsigned char row = 0; row < KEYBOARD_ROWS; row++) /* test each row */
 			if (keyboard_read_row(row)) /*key is pressed */
 				keyboard_scan_buff_add(KEYBOARD_COLS - col - 1, row); //TODO remove - requirement
 
-		SN54HC595_clear();
+//		SN54HC595_clear();
 	}
 
 	if (!keyboard_scan_buf_length())
-		return -ENOENT;
+		goto error;
 
+	xSemaphoreGive(keyboard_dev.buf_lock);
 	return 0;
+
+error:
+	xSemaphoreGive(keyboard_dev.buf_lock);
+	return -EAGAIN;
 }
 
-unsigned char is_in_prev_buf(unsigned char sc) {
+static unsigned char is_in_prev_buf(unsigned char sc) {
 	static unsigned char i = 0;
 	for (; i < keyboard_dev.prev_buf.count; i++)
 		if (sc == keyboard_dev.prev_buf.keys[i])
@@ -149,7 +223,7 @@ unsigned char is_in_prev_buf(unsigned char sc) {
 
 // sort all standard keys: normal, mod and media into buffer
 //returns -1 if 6 normals keys have been processed
-void keyboard_sort_scaned_key(send_buffer_t *send_buf, key_buffer_t *buf_new,
+static void keyboard_sort_scaned_key(send_buffer_t *send_buf, key_buffer_t *buf_new,
 		unsigned char key) {
 	if (key >= 0xE8 && key <= 0xEF) /* media */
 	{
@@ -180,96 +254,58 @@ unsigned char keyboard_process_scan_buf(void) {
 	if (!buf)
 		return -ENOMEM;
 
-	while (keyboard_dev.scan_buf.count) {
-		tmp_sc = keymap_get_key(keyboard_dev.scan_buf.buf[i].row,
-				keyboard_dev.scan_buf.buf[i].col);
-		/* State change */
-		ret = lookup_state_change_key(tmp_sc);
-		if (ret) { /* if state change key */
-			//TODO HANDLE STATE CHANGE
-			keyboard_dev.scan_buf.count = 0; /* clear buffer */
-			return 0;
+	if(xSemaphoreTake(keyboard_dev.buf_lock, (TickType_t) 0) == pdTRUE){
+
+		while (keyboard_dev.scan_buf.count) {
+			tmp_sc = keymap_get_key(keyboard_dev.scan_buf.buf[i].row,
+					keyboard_dev.scan_buf.buf[i].col);
+			/* State change */
+			ret = lookup_state_change_key(tmp_sc);
+			if (ret) { /* if state change key */
+				//TODO HANDLE STATE CHANGE
+				keyboard_dev.scan_buf.count = 0; /* clear buffer */
+				return 0;
+			}
+
+			/* Toggle key */
+			ret = lookup_toggle_key(tmp_sc);
+			if (ret) {
+				//TODO handle toggle press
+			}
+
+			/* The rest */
+			keyboard_sort_scaned_key(buf, &sc_new, tmp_sc);
+
+			keyboard_dev.scan_buf.count--;
+			i++;
 		}
 
-		/* Toggle key */
-		ret = lookup_toggle_key(tmp_sc);
-		if (ret) {
-			//TODO handle toggle press
+		while (buf->key_buf.count < 6 && sc_new.count) /* Fill buf with new keys */
+		{
+			buf->key_buf.keys[buf->key_buf.count] = sc_new.buf[sc_new.count - 1];
+			buf->key_buf.count++;
+			sc_new.count--;
 		}
 
-		/* The rest */
-		keyboard_sort_scaned_key(buf, &sc_new, tmp_sc);
+		if (!queue_packet_to_send)
+			goto queue_no_init;
 
-		keyboard_dev.scan_buf.count--;
-		i++;
+		if(buf->key_buf.count || buf->med_buf)
+			xQueueSendToFront(queue_packet_to_send, buf, portMAX_DELAY);
+
+		memcpy(&keyboard_dev.prev_buf, &buf->key_buf, /* Save for next frame */
+		sizeof(six_key_buffer_t));
+
+		xSemaphoreGive(keyboard_dev.buf_lock);
+		return 0;
 	}
-	////TODO scan buf count should be zero
-
-	while (buf->key_buf.count < 6 && sc_new.count) /* Fill buf with new keys */
-	{
-		buf->key_buf.keys[buf->key_buf.count] = sc_new.buf[sc_new.count - 1];
-		buf->key_buf.count++;
-		sc_new.count--;
-	}
-	if (!queue_packet_to_send)
-		return -ENOINIT;
-
-	if(buf->key_buf.count || buf->med_buf)
-		xQueueSend(queue_packet_to_send, buf, portMAX_DELAY);
-
-	memcpy(&keyboard_dev.prev_buf, &buf->key_buf, /* Save for next frame */
-	sizeof(six_key_buffer_t));
-
-	return 0;
+	return -EAVAIL;
+queue_no_init:
+	xSemaphoreGive(keyboard_dev.buf_lock);
+	return -ENOINIT;
 }
 
-//
-//unsigned char process_keyboard_flags ( keyboard_HID_data_t* data )
-//{
-//	if(data->keyboard_state == active){
-//		keyboard_prepare_report(data);
-//		send_keyboard_report(data, keyboard);
-//		data->keyboard_state = clearing;
-//	}else if( data->keyboard_state == clearing){
-//		send_keyboard_report(data, keyboard);
-//		data->keyboard_state = inactive;
-//	}
-//	if(data->media_state == active){
-//		media_prepare_report(data);
-//		send_keyboard_report(data, media);
-//		data->media_state = clearing;
-//	}else if( data->media_state == clearing){
-//		send_keyboard_report(data, media);
-//		data->media_state = inactive;
-//	}
-//	return 0;
-//}
-//
-//unsigned char process_single_key(unsigned char col, unsigned char row )
-//{
-//	unsigned char ret = 0;
-////	ret = layer_list->layer_head->grid[row][col];
-//	if(ret)
-//		return ret;
-//	else
-//		return 0;
-//}
-//
-//void clear_keyboard_report(  keyboard_HID_data_t* data )
-//{
-//	if(data->keyboard_state == clearing || data->keyboard_state == active){
-//		data->keyboard_report.key1 = 0;
-//		data->keyboard_report.key2 = 0;
-//		data->keyboard_report.key3 = 0;
-//		data->keyboard_report.key4 = 0;
-//		data->keyboard_report.key5 = 0;
-//		data->keyboard_report.key6 = 0;
-//		data->keyboard_report.modifiers = 0;
-//	}
-//	if(data->keyboard_state == clearing || data->keyboard_state == active)
-//		data->media_report.keys = 0;
-//}
-//
+
 //void display_int_on_screen(unsigned char col, unsigned char row)
 //{
 //	static char col_str[10];

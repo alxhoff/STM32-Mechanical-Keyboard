@@ -113,7 +113,6 @@ void KeyboardListenCallback(void const * argument);
 /* Private function prototypes -----------------------------------------------*/
 void MouseListenCallback(void const * argument);
 void CLIListenCallback(void const * argument);
-void SendCallback(void const *arguemnt);
 void StatesCallback(void const *arguemnt);
 /* USER CODE END PFP */
 
@@ -240,13 +239,10 @@ int main(void)
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* definition and creation of KeyboardListen */
-  osThreadDef(KeyboardListen, KeyboardListenCallback, osPriorityIdle, 0, 128);
+  osThreadDef(KeyboardListen, KeyboardListenCallback, osPriorityHigh, 0, 128);
   KeyboardListenHandle = osThreadCreate(osThread(KeyboardListen), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
-//	osThreadDef(SendHandle, SendCallback, osPriorityNormal, 0, 128);
-//	ADCListenHandle = osThreadCreate(osThread(SendHandle), NULL);
-
 	osThreadDef(StatesHandle, StatesCallback, osPriorityNormal, 0, 128);
 	ADCListenHandle = osThreadCreate(osThread(StatesHandle), NULL);
 //  osThreadDef(ADCListen, MouseListenCallback, osPriorityIdle, 0, 128);
@@ -607,7 +603,7 @@ void MouseListenCallback(void const * argument)
 void CLIListenCallback(void const * argument)
 {
 	TickType_t xLastWakeTime = xTaskGetTickCount();
-	const TickType_t xPeriod = 20;
+	const TickType_t xPeriod = 100;
 
 	for (;;)
 	{
@@ -618,25 +614,17 @@ void CLIListenCallback(void const * argument)
 	}
 }
 
-void SendCallback(void const *argument)
-{
-	send_init();
-	for(;;)
-	{
-		send_get_send_buf();
-//		send_reports();
-	}
-}
-
 void StatesCallback(void const *argument)
 {
-	TickType_t xLastWakeTime = xTaskGetTickCount();
-	const TickType_t xPeriod = 20;
+//	TickType_t xLastWakeTime = xTaskGetTickCount();
+//	TickType_t xPeriod = 20;
 	states_init();
 	for(;;)
 	{
-		vTaskDelayUntil(&xLastWakeTime, xPeriod);
 		states_run();
+
+//		xPeriod = STATES_PERIOD - (xLastWakeTime - xTaskGetTickCount());
+//		vTaskDelayUntil(&xLastWakeTime, xPeriod);
 	}
 }
 /* USER CODE END 4 */
@@ -665,7 +653,7 @@ void KeyboardListenCallback(void const * argument)
 {
   /* USER CODE BEGIN KeyboardListenCallback */
 	TickType_t xLastWakeTime = xTaskGetTickCount();
-	const TickType_t xPeriod = 20;
+	TickType_t xPeriod = 10;
 
 	/* Infinite loop */
 	for (;;)
@@ -674,8 +662,9 @@ void KeyboardListenCallback(void const * argument)
 		if (keyboard_scan_matrix() == 0) /* if keys were pressed */
 			keyboard_process_scan_buf();		/* convert row-col to actual keys */
 
-
+		xPeriod = SCAN_PERIOD - (xLastWakeTime - xTaskGetTickCount());
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);
+
 		//STATE MACHINE HERE
 //		clear_keyboard_report(keyboard_devs->keyboard_HID);
 //		process_keyboard_flags(keyboard_devs->keyboard_HID);

@@ -18,6 +18,7 @@ typedef enum {
 	ENOENT			= 7,
 	EINVAL			= 8,
 	EAGAIN			= 9,
+	EAVAIL			= 10,
 } err_codes_t;
 
 #endif /* ERROR_H_ */

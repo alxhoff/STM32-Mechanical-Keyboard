@@ -63,4 +63,9 @@
 #define	HID_KEYBOARD_SC_MACRO_SET_FUNCTION				  0xFC
 #define HID_KEYBOARD_SC_CLI_FUNCTION					  0xFB
 
+//TASK PERIODS
+#define STATES_PERIOD			20
+#define SCAN_PERIOD				20
+
+
 #endif /* CONFIG_H_ */

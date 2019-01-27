@@ -9,8 +9,9 @@
 #include "pipes.h"
 #include "error.h"
 #include "usb_device.h"
+#include "usbd_hid.h"
 
-#define INTER_PACKEY_DELAY	vTaskDelay(30)
+#define INTER_PACKET_DELAY	vTaskDelay(USBD_HID_GetPollingInterval(&hUsbDeviceFS))
 
 /**
  * @typedef keyboardHID_t
@@ -76,11 +77,28 @@ SemaphoreHandle_t processing_lock = NULL;
 SemaphoreHandle_t USB_send_lock = NULL;
 
 unsigned char send_get_send_buf(void) {
-	if(processing_lock)
-		if(xSemaphoreTake(processing_lock, portMAX_DELAY) == pdTRUE )
-			xQueueReceive(queue_packet_to_send, &send_buf, portMAX_DELAY);
+	unsigned char ret = 0;
+	if(queue_packet_to_send)
+		if(xSemaphoreTake(processing_lock, (TickType_t) 0) == pdTRUE ){
+			ret = xQueueReceive(queue_packet_to_send, &send_buf, (TickType_t) portMAX_DELAY);
+			if(ret == pdTRUE)
+				return 0;
+			goto error;
+		}
+error:
+	xSemaphoreGive(processing_lock);
+	return -ENOINIT;
+}
 
-	return 0;
+//returns 0 if USB is idle
+static unsigned char send_USB_ready(USBD_HandleTypeDef * pdev)
+{
+	USBD_HID_HandleTypeDef *hhid = (USBD_HID_HandleTypeDef*)pdev->pClassData;
+	if (pdev->dev_state == USBD_STATE_CONFIGURED )
+	  {
+		return !hhid->state;
+	  }
+	return -ENOINIT;
 }
 
 unsigned char send_prepare_keyboard(void) {
@@ -123,7 +141,8 @@ unsigned char send_keyboard_report(void)
 			xSemaphoreGive(USB_send_lock);
 			return -ESEND;
 		}
-		INTER_PACKEY_DELAY;
+		while(send_USB_ready(&hUsbDeviceFS))
+			vTaskDelay(1);
 		send_blank_keyboard_report_no_lock();
 		xSemaphoreGive(USB_send_lock);
 	}
@@ -149,7 +168,8 @@ unsigned char send_media_report(void)
 			xSemaphoreGive(USB_send_lock);
 			return -ESEND;
 		}
-		INTER_PACKEY_DELAY;
+		while(send_USB_ready(&hUsbDeviceFS))
+					vTaskDelay(1);
 		send_blank_media_report_no_lock();
 		xSemaphoreGive(USB_send_lock);
 	}
@@ -207,8 +227,8 @@ void send_enter(void){
 }
 
 void send_run(void){
-	send_get_send_buf();
-	send_reports();
+	if(!send_get_send_buf())
+		send_reports();
 }
 
 void send_exit(void){
