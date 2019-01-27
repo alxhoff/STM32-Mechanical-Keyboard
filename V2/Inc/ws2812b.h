@@ -14,8 +14,10 @@
 
 #ifndef WS2812B_H_
 #define WS2812B_H_
-#include <config.h>
+
+#include "config.h"
 #include "ws2812b.h"
+#include "stm32f4xx_hal.h"
 #include "cmsis_os.h"
 
 // GPIO enable command

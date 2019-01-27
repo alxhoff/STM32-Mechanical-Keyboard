@@ -18,53 +18,38 @@
 
 #include "stm32f4xx_hal.h"
 #include "datatypes.h"
-#include "ws2812b.h"
 #include "LEDs.h"
 
 // Helper defines
-#define newColor(r, g, b) (((uint32_t)(r) << 16) | ((uint32_t)(g) <<  8) | (b))
-#define Red(c) ((uint8_t)((c >> 16) & 0xFF))
-#define Green(c) ((uint8_t)((c >> 8) & 0xFF))
-#define Blue(c) ((uint8_t)(c & 0xFF))
 
-uint32_t Wheel(uint8_t WheelPos) {
-  WheelPos = 255 - WheelPos;
-  if(WheelPos < 85) {
-    return newColor(255 - WheelPos * 3, 0, WheelPos * 3);
-  }
-  if(WheelPos < 170) {
-    WheelPos -= 85;
-    return newColor(0, WheelPos * 3, 255 - WheelPos * 3);
-  }
-  WheelPos -= 170;
-  return newColor(WheelPos * 3, 255 - WheelPos * 3, 0);
-}
 
-uint32_t Wheel_snappy_fade_out(uint8_t WheelPos) {
-  WheelPos = WheelPos % 256;
-  if(WheelPos < 85) {
-    return newColor(WheelPos * 3, 0, WheelPos * 3);
-  }
-  if(WheelPos < 170) {
-    WheelPos += 85;
-    return newColor(0, WheelPos * 3, WheelPos * 3);
-  }
-  WheelPos += 170;
-  return newColor(WheelPos * 3, WheelPos * 3, 0);
-}
 
-uint32_t Wheel_snappy_fade_in(uint8_t WheelPos) {
-	  WheelPos = 255 - WheelPos;
-  if(WheelPos < 85) {
-    return newColor(WheelPos * 3, 0, WheelPos * 3);
-  }
-  if(WheelPos < 170) {
-    WheelPos += 85;
-    return newColor(0, WheelPos * 3, WheelPos * 3);
-  }
-  WheelPos += 170;
-  return newColor(WheelPos * 3, WheelPos * 3, 0);
-}
+
+//uint32_t Wheel_snappy_fade_out(uint8_t WheelPos) {
+//  WheelPos = WheelPos % 256;
+//  if(WheelPos < 85) {
+//    return newColor(WheelPos * 3, 0, WheelPos * 3);
+//  }
+//  if(WheelPos < 170) {
+//    WheelPos += 85;
+//    return newColor(0, WheelPos * 3, WheelPos * 3);
+//  }
+//  WheelPos += 170;
+//  return newColor(WheelPos * 3, WheelPos * 3, 0);
+//}
+//
+//uint32_t Wheel_snappy_fade_in(uint8_t WheelPos) {
+//	  WheelPos = 255 - WheelPos;
+//  if(WheelPos < 85) {
+//    return newColor(WheelPos * 3, 0, WheelPos * 3);
+//  }
+//  if(WheelPos < 170) {
+//    WheelPos += 85;
+//    return newColor(0, WheelPos * 3, WheelPos * 3);
+//  }
+//  WheelPos += 170;
+//  return newColor(WheelPos * 3, WheelPos * 3, 0);
+//}
 
 //void LED_snappy_rainbow_left_fade_out(key_devices_t* keyboard_devs)
 //{
@@ -599,10 +584,10 @@ uint32_t Wheel_snappy_fade_in(uint8_t WheelPos) {
 //	}
 //}
 
-void visInit(void)
-{
+//void visInit(void)
+//{
 //	uint8_t i;
-
+//
 //	keyboard_devs->LEDs = (LED_array_t*) calloc(1, sizeof(LED_array_t));
 //
 //	keyboard_devs->LEDs->inverted_rows = 1;
@@ -647,13 +632,13 @@ void visInit(void)
 //		}
 //		ws2812b.item[i].frameBufferSize = sizeof(keyboard_devs->LEDs->buffers[i]);
 //	}
-
-	ws2812b_init();
-}
-
-void visHandle(void)
-{
-//	keyboard_devs->LEDs->update(keyboard_devs);
-	ws2812b.startTransfer = 1;
-	ws2812b_handle();
-}
+//
+//	ws2812b_init();
+//}
+//
+//void visHandle(void)
+//{
+////	keyboard_devs->LEDs->update(keyboard_devs);
+//	ws2812b.startTransfer = 1;
+//	ws2812b_handle();
+//}

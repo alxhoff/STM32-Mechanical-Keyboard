@@ -93,6 +93,7 @@ osThreadId ADCListenHandle;
 osThreadId CLIListenHandle;
 osThreadId SendHandle;
 osThreadId StatesHandle;
+osThreadId LEDHandle;
 //AT24Cxx_devices eeprom_devs;
 
 /* USER CODE END PV */
@@ -114,6 +115,7 @@ void KeyboardListenCallback(void const * argument);
 void MouseListenCallback(void const * argument);
 void CLIListenCallback(void const * argument);
 void StatesCallback(void const *arguemnt);
+void LEDCallback(void const *argument);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
@@ -179,12 +181,8 @@ int main(void)
 
 
 	//TODO
-
 	ssd1306_init();
-	ssd1306_clear();
-	ssd1306_set_cursor(23, 23);
-	ssd1306_write_string("sup");
-	ssd1306_update_screen();
+
 
 	//CLI
 //	screen_init_t CLI_test_init =
@@ -238,7 +236,9 @@ int main(void)
 
   /* USER CODE BEGIN RTOS_THREADS */
 	osThreadDef(StatesHandle, StatesCallback, osPriorityNormal, 0, 128);
-	ADCListenHandle = osThreadCreate(osThread(StatesHandle), NULL);
+	StatesHandle = osThreadCreate(osThread(StatesHandle), NULL);
+	osThreadDef(LEDHandle, LEDCallback, osPriorityNormal, 0, 128);
+	LEDHandle = osThreadCreate(osThread(LEDHandle), NULL);
 //  osThreadDef(ADCListen, MouseListenCallback, osPriorityIdle, 0, 128);
 //  ADCListenHandle = osThreadCreate(osThread(ADCListen), NULL);
 //	osThreadDef(CLIListen, CLIListenCallback, osPriorityIdle, 0, 128);
@@ -594,7 +594,7 @@ void MouseListenCallback(void const * argument)
 	}
 }
 
-void CLIListenCallback(void const * argument)
+void CLIListenCallback(void const *argument)
 {
 	TickType_t xLastWakeTime = xTaskGetTickCount();
 	const TickType_t xPeriod = 100;
@@ -608,7 +608,7 @@ void CLIListenCallback(void const * argument)
 	}
 }
 
-void StatesCallback(void const *argument)
+void StatesCallback(void  const *argument)
 {
 //	TickType_t xLastWakeTime = xTaskGetTickCount();
 //	TickType_t xPeriod = 20;
@@ -619,6 +619,17 @@ void StatesCallback(void const *argument)
 
 //		xPeriod = STATES_PERIOD - (xLastWakeTime - xTaskGetTickCount());
 //		vTaskDelayUntil(&xLastWakeTime, xPeriod);
+	}
+}
+
+void LEDCallback(void const *argument)
+{
+	TickType_t xLastWakeTime = xTaskGetTickCount();
+	const TickType_t xPeriod = 20;
+	LEDs_init();
+	for(;;){
+		LEDs_run();
+		vTaskDelayUntil(&xLastWakeTime, xPeriod);
 	}
 }
 /* USER CODE END 4 */

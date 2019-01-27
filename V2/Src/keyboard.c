@@ -175,10 +175,6 @@ static void keyboard_scan_buff_add(unsigned char col, unsigned char row) {
 	keyboard_dev.scan_buf.count++;
 }
 
-static unsigned char keyboard_scan_buf_length(void) {
-	return keyboard_dev.scan_buf.count;
-}
-
 unsigned char keyboard_scan_matrix(void) {
 
 	static unsigned short row_mask = { 0 };
