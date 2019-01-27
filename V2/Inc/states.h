@@ -8,48 +8,14 @@
 #ifndef STATES_H_
 #define STATES_H_
 
-//KEYBOARD STATES
-#include <stddef.h>
-
-#define ADD_STATE( STATE_STRUCT )
-
 typedef enum{
-	typing,
-	layer_set,
-	macro_set,
-	macro_run,
-	CLI
-} keyboard_states_t;
+	state_send,
+	state_CLI,
+} state_e;
 
-typedef struct state state_t;
-struct state{
-	unsigned char 	ID;
-
-	void*			data;
-
-	char* 			name;
-
-	unsigned char	(*init)(void);
-
-	unsigned char 	(*enter)(state_t*);
-	unsigned char 	(*run)(state_t*);
-	unsigned char 	(*exit)(state_t*);
-};
-
-typedef struct state_machine{
-	state_t			*current_state;
-	state_t			*next_state;
-
-	state_t			*states;
-	size_t			count;
-} state_machine_t;
-
-typedef enum{
-	inactive,
-	active,
-	clearing
-} report_states;
-
-extern keyboard_states_t current_keyboard_state;
+unsigned char states_init(void);
+unsigned char states_run(void);
+void *get_state_data(void);
+void set_state_data(void *data);
 
 #endif /* STATES_H_ */

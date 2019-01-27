@@ -61,6 +61,7 @@
 #include "scan.h"
 #include "SN54HC595.h"
 #include "send.h"
+#include "states.h"
 
 //hardware devices
 #include "keyboard.h"
@@ -91,6 +92,7 @@ osThreadId KeyboardListenHandle;
 osThreadId ADCListenHandle;
 osThreadId CLIListenHandle;
 osThreadId SendHandle;
+osThreadId StatesHandle;
 //AT24Cxx_devices eeprom_devs;
 
 /* USER CODE END PV */
@@ -112,6 +114,7 @@ void KeyboardListenCallback(void const * argument);
 void MouseListenCallback(void const * argument);
 void CLIListenCallback(void const * argument);
 void SendCallback(void const *arguemnt);
+void StatesCallback(void const *arguemnt);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
@@ -241,8 +244,11 @@ int main(void)
   KeyboardListenHandle = osThreadCreate(osThread(KeyboardListen), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
-	osThreadDef(SendHandle, SendCallback, osPriorityNormal, 0, 128);
-	ADCListenHandle = osThreadCreate(osThread(SendHandle), NULL);
+//	osThreadDef(SendHandle, SendCallback, osPriorityNormal, 0, 128);
+//	ADCListenHandle = osThreadCreate(osThread(SendHandle), NULL);
+
+	osThreadDef(StatesHandle, StatesCallback, osPriorityNormal, 0, 128);
+	ADCListenHandle = osThreadCreate(osThread(StatesHandle), NULL);
 //  osThreadDef(ADCListen, MouseListenCallback, osPriorityIdle, 0, 128);
 //  ADCListenHandle = osThreadCreate(osThread(ADCListen), NULL);
 //	osThreadDef(CLIListen, CLIListenCallback, osPriorityIdle, 0, 128);
@@ -619,6 +625,18 @@ void SendCallback(void const *argument)
 	{
 		send_get_send_buf();
 		send_reports();
+	}
+}
+
+void StatesCallback(void const *argument)
+{
+	TickType_t xLastWakeTime = xTaskGetTickCount();
+	const TickType_t xPeriod = 20;
+	states_init();
+	for(;;)
+	{
+		vTaskDelayUntil(&xLastWakeTime, xPeriod);
+		states_run();
 	}
 }
 /* USER CODE END 4 */

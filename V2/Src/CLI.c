@@ -15,20 +15,16 @@
 
 unsigned char state_enter_CLI()
 {
-	current_keyboard_state = CLI;
-	vTaskDelay(200);
 	return 0;
 }
 
 unsigned char state_exit_CLI()
 {
-	current_keyboard_state = typing;
-	vTaskDelay(200);
 	return 0;
 }
 
-unsigned char state_CLI()
-{
+//unsigned char state_CLI()
+//{
 //	//get input until enter is pressed
 //	HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
 //	key_code_w_mod_t input = {0};
@@ -47,8 +43,8 @@ unsigned char state_CLI()
 //
 //	HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
 //
-	return 0;
-}
+//	return 0;
+//}
 
 unsigned char CLI_process_line()
 {

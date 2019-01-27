@@ -9,6 +9,9 @@
 #define SEND_H_
 
 unsigned char send_init(void);
+void send_enter(void);
+void send_run(void);
+void send_exit(void);
 unsigned char send_get_send_buf(void);
 unsigned char send_reports(void);
 

@@ -75,20 +75,10 @@ send_buffer_t send_buf = {0};
 SemaphoreHandle_t processing_lock = NULL;
 SemaphoreHandle_t USB_send_lock = NULL;
 
-unsigned char send_init(void)
-{
-	processing_lock = xSemaphoreCreateMutex();
-	if(!processing_lock)
-		return -ENOMEM;
-	USB_send_lock = xSemaphoreCreateMutex();
-	if(!USB_send_lock)
-		return -ENOMEM;
-	return 0;
-}
-
 unsigned char send_get_send_buf(void) {
-	if(xSemaphoreTake(processing_lock, portMAX_DELAY) == pdTRUE )
-		xQueueReceive(queue_packet_to_send, &send_buf, portMAX_DELAY);
+	if(processing_lock)
+		if(xSemaphoreTake(processing_lock, portMAX_DELAY) == pdTRUE )
+			xQueueReceive(queue_packet_to_send, &send_buf, portMAX_DELAY);
 
 	return 0;
 }
@@ -200,3 +190,26 @@ unsigned char send_reports(void)
 	return 0;
 }
 
+
+//SEND STATE FUNCTIONS
+unsigned char send_init(void)
+{
+	processing_lock = xSemaphoreCreateMutex();
+	if(!processing_lock)
+		return -ENOMEM;
+	USB_send_lock = xSemaphoreCreateMutex();
+	if(!USB_send_lock)
+		return -ENOMEM;
+	return 0;
+}
+
+void send_enter(void){
+}
+
+void send_run(void){
+	send_get_send_buf();
+	send_reports();
+}
+
+void send_exit(void){
+}
