@@ -8,7 +8,10 @@
 #include "states.h"
 #include "error.h"
 
+//states
 #include "send.h"
+#include "macro.h"
+#include "CLI.h"
 
 #include <string.h>
 #include <stdlib.h>
@@ -109,8 +112,6 @@ static unsigned char states_init_states(void) {
 	return 0;
 }
 
-
-
 #define SET_INITIAL_STATE( STATE )	\
 			state_machine_dev.current_state = state_machine_dev.states[STATE];	\
 			state_machine_dev.next_state = state_machine_dev.states[STATE];
@@ -119,6 +120,10 @@ unsigned char states_init(void) {
 
 	//send state
 	states_add(send_init, send_enter, send_run, send_exit, state_send, "send");
+	states_add(macro_init, macro_enter, macro_run, macro_exit,
+			state_macro_run, "macro run");
+	states_add(macro_set_init, macro_set_enter, macro_set_run, macro_set_exit,
+			state_macro_set, "macro set");
 
 
 	//set initial state

@@ -186,6 +186,11 @@ int main(void)
 
 	screen_update();
 
+	macro_add_new_entry("first test macro yo",
+	  			HID_KEYBOARD_SC_T);
+
+	macro_add_new_entry("pew pew this is a macro and it can use all DA SYMBOLZZZ !@#$%^*()_+",
+			HID_KEYBOARD_SC_7_AND_AMPERSAND);
 
 
 	//CLI
@@ -645,14 +650,6 @@ void StartDefaultTask(void const * argument)
   MX_USB_DEVICE_Init();
 
   /* USER CODE BEGIN 5 */
-  macro_add_new_entry("first test macro yo",
-  			HID_KEYBOARD_SC_T);
-
-
-  	macro_add_new_entry("pew pew this is a macro and it can use all DA SYMBOLZZZ !@#$%^*()_+",
-  			HID_KEYBOARD_SC_7_AND_AMPERSAND);
-
-
 	/* Infinite loop */
 	TickType_t xLastWakeTime = xTaskGetTickCount();
 	const TickType_t xPeriod = 2000;

@@ -11,6 +11,8 @@
 typedef enum{
 	state_send,
 	state_CLI,
+	state_macro_run,
+	state_macro_set
 } state_e;
 
 unsigned char states_init(void);

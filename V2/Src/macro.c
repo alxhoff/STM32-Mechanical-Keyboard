@@ -30,68 +30,6 @@ typedef struct macro_table {
 
 macro_table_t macro_dev = { 0 };
 
-//unsigned char state_enter_macro_set()
-//{
-//	current_keyboard_state = macro_set;
-//	vTaskDelay(200);
-//	return 0;
-//}
-//
-//unsigned char state_exit_macro_set()
-//{
-//	current_keyboard_state = typing;
-//	vTaskDelay(200);
-//	return 0;
-//}
-//
-//unsigned char state_macro_set( keymap_list_t* layer_list )
-//{
-//	HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
-//
-//	key_code macro_key = scan_get_single_key( keyboard_devs->keyboard, layer_list );
-//	//TODO LIGHTS
-//	macro_entry_t* new_macro = macro_allocate_new_macro( keyboard_devs->macro_table );
-//	new_macro->sc = macro_key; //GOOD
-//	new_macro->string =
-//			scan_get_input_seq( keyboard_devs->keyboard,
-//					keyboard_devs->layer_list, KEY(MACRO_S) );
-//
-//	state_exit_macro_set();
-//
-//	HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
-//
-//	return 0;
-//}
-//
-//unsigned char state_enter_macro_run()
-//{
-//	current_keyboard_state = macro_run;
-//	vTaskDelay(200);
-//
-//	return 0;
-//}
-//
-//unsigned char state_exit_macro_run()
-//{
-//	current_keyboard_state = typing;
-//	return 0;
-//}
-//
-//unsigned char state_macro_run( keymap_list_t* layer_list )
-//{
-//	HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
-//
-//	key_code macro_key = scan_get_single_key( keyboard_devs->keyboard, layer_list );
-//	macro_entry_t* cur_macro;
-//	cur_macro = macro_table_get_w_key_code( keyboard_devs->macro_table, macro_key );
-//	macro_execute_macro( keyboard_devs->macro_table, cur_macro );
-//	state_exit_macro_run();
-//
-//	HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
-//
-//	return 0;
-//}
-
 unsigned char macro_add_new_entry(char *string, unsigned char sc) {
 	macro_entry_t *macro = calloc(1, sizeof(macro_entry_t));
 	if(!macro)
@@ -167,5 +105,41 @@ unsigned char macro_run_sc(unsigned char sc) {
 	if (!macro)
 		return -ENOENT;
 
-	return send_string(macro->string);
+	send_string(macro->string);
+
+	return 0;
+}
+
+//STATES
+unsigned char macro_init(void){
+
+	return 0;
+}
+
+void macro_enter(void) {
+
+}
+
+void macro_run(void) {
+
+}
+
+void macro_exit(void) {
+
+}
+
+unsigned char macro_set_init(void){
+
+}
+
+void macro_set_enter(void){
+
+}
+
+void macro_set_run(void){
+
+}
+
+void macro_set_exit(void){
+
 }
