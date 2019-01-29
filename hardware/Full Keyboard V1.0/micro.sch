@@ -1,0 +1,465 @@
+EESchema Schematic File Version 2
+LIBS:FullKeyboardV1-rescue
+LIBS:keyboard
+LIBS:FullKeyboardV1-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 3 3
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+Text HLabel 8700 5400 2    60   Input ~ 0
+COL0
+Text HLabel 8700 5300 2    60   Input ~ 0
+COL1
+Text HLabel 2750 5650 2    60   Input ~ 0
+COL2
+Text HLabel 2750 5550 2    60   Input ~ 0
+COL3
+Text HLabel 2750 5450 2    60   Input ~ 0
+COL4
+Text HLabel 2750 5350 2    60   Input ~ 0
+COL5
+Text HLabel 2750 5250 2    60   Input ~ 0
+COL6
+Text HLabel 2750 5150 2    60   Input ~ 0
+COL7
+Text HLabel 2750 5050 2    60   Input ~ 0
+COL8
+Text HLabel 2750 4950 2    60   Input ~ 0
+COL9
+Text HLabel 2750 4850 2    60   Input ~ 0
+COL10
+Text HLabel 2750 4650 2    60   Input ~ 0
+COL11
+Text HLabel 2750 4550 2    60   Input ~ 0
+COL12
+Text HLabel 2750 4450 2    60   Input ~ 0
+COL13
+Text HLabel 2750 4250 2    60   Input ~ 0
+ROW0
+Text HLabel 3800 3250 0    60   Input ~ 0
+ROW1
+Text HLabel 4600 3450 2    60   Input ~ 0
+ROW2
+Text HLabel 4600 3350 2    60   Input ~ 0
+ROW3
+Text HLabel 4600 3250 2    60   Input ~ 0
+ROW4
+$Comp
+L Nucleo144_H0 H1
+U 1 1 599F7335
+P 3250 3900
+F 0 "H1" H 2200 2000 60  0000 C CNN
+F 1 "Nucleo144_H0" H 2600 4950 60  0000 C CNN
+F 2 "keyboard:Nucleo144" H 2450 3950 60  0001 C CNN
+F 3 "" H 2600 4250 60  0000 C CNN
+	1    3250 3900
+	1    0    0    -1  
+$EndComp
+Text HLabel 2750 3750 2    60   Input ~ 0
+LED0
+Text HLabel 2750 3650 2    60   Input ~ 0
+LED1
+Text HLabel 2750 3550 2    60   Input ~ 0
+LED2
+Text HLabel 2750 3450 2    60   Input ~ 0
+RGB0
+Text HLabel 2750 3350 2    60   Input ~ 0
+RGB1
+Text HLabel 2750 3250 2    60   Input ~ 0
+RGB2
+Text HLabel 2750 3050 2    60   Input ~ 0
+RGB3
+Text HLabel 2750 3150 2    60   Input ~ 0
+RGB4
+$Comp
+L GND #PWR0163
+U 1 1 59A0C3DB
+P 2750 4750
+F 0 "#PWR0163" H 2750 4500 50  0001 C CNN
+F 1 "GND" H 2750 4600 50  0000 C CNN
+F 2 "" H 2750 4750 50  0000 C CNN
+F 3 "" H 2750 4750 50  0000 C CNN
+	1    2750 4750
+	0    -1   -1   0   
+$EndComp
+$Comp
+L GND #PWR0164
+U 1 1 59A0C3F3
+P 1950 3650
+F 0 "#PWR0164" H 1950 3400 50  0001 C CNN
+F 1 "GND" H 1950 3500 50  0000 C CNN
+F 2 "" H 1950 3650 50  0000 C CNN
+F 3 "" H 1950 3650 50  0000 C CNN
+	1    1950 3650
+	0    1    1    0   
+$EndComp
+$Comp
+L GND #PWR0165
+U 1 1 59A0C401
+P 1800 3550
+F 0 "#PWR0165" H 1800 3300 50  0001 C CNN
+F 1 "GND" H 1800 3400 50  0000 C CNN
+F 2 "" H 1800 3550 50  0000 C CNN
+F 3 "" H 1800 3550 50  0000 C CNN
+	1    1800 3550
+	0    1    1    0   
+$EndComp
+$Comp
+L GND #PWR0166
+U 1 1 59A0C431
+P 4600 3150
+F 0 "#PWR0166" H 4600 2900 50  0001 C CNN
+F 1 "GND" H 4600 3000 50  0000 C CNN
+F 2 "" H 4600 3150 50  0000 C CNN
+F 3 "" H 4600 3150 50  0000 C CNN
+	1    4600 3150
+	0    -1   -1   0   
+$EndComp
+$Comp
+L GND #PWR0167
+U 1 1 59A0C43F
+P 3800 4250
+F 0 "#PWR0167" H 3800 4000 50  0001 C CNN
+F 1 "GND" H 3800 4100 50  0000 C CNN
+F 2 "" H 3800 4250 50  0000 C CNN
+F 3 "" H 3800 4250 50  0000 C CNN
+	1    3800 4250
+	0    1    1    0   
+$EndComp
+$Comp
+L CONN_01X05 P3
+U 1 1 59A199E2
+P 8500 3250
+F 0 "P3" H 8500 3550 50  0000 C CNN
+F 1 "CONN_01X05" V 8600 3250 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x05" H 8500 3250 50  0001 C CNN
+F 3 "" H 8500 3250 50  0000 C CNN
+	1    8500 3250
+	-1   0    0    1   
+$EndComp
+Text HLabel 8700 5200 2    60   Input ~ 0
+COL2
+Text HLabel 8700 5100 2    60   Input ~ 0
+COL3
+Text HLabel 8700 5000 2    60   Input ~ 0
+COL4
+Text HLabel 8700 4900 2    60   Input ~ 0
+COL5
+Text HLabel 8700 4800 2    60   Input ~ 0
+COL6
+Text HLabel 8700 4700 2    60   Input ~ 0
+COL7
+Text HLabel 8700 4600 2    60   Input ~ 0
+COL8
+Text HLabel 8700 4500 2    60   Input ~ 0
+COL9
+Text HLabel 8700 4400 2    60   Input ~ 0
+COL10
+Text HLabel 8700 4150 2    60   Input ~ 0
+COL11
+Text HLabel 8700 3950 2    60   Input ~ 0
+COL12
+Text HLabel 8700 4050 2    60   Input ~ 0
+COL13
+Text HLabel 8700 3450 2    60   Input ~ 0
+ROW0
+Text HLabel 8700 3250 2    60   Input ~ 0
+ROW2
+Text HLabel 8700 3150 2    60   Input ~ 0
+ROW3
+Text HLabel 8700 3050 2    60   Input ~ 0
+ROW4
+Text HLabel 1950 5550 0    60   Input ~ 0
+COL0
+Text HLabel 1950 5650 0    60   Input ~ 0
+COL1
+$Comp
+L CONN_01X11 P5
+U 1 1 59A1D43E
+P 8500 4900
+F 0 "P5" H 8500 5500 50  0000 C CNN
+F 1 "CONN_01X11" V 8600 4900 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x11" H 8500 4900 50  0001 C CNN
+F 3 "" H 8500 4900 50  0000 C CNN
+	1    8500 4900
+	-1   0    0    1   
+$EndComp
+Text HLabel 8700 3350 2    60   Input ~ 0
+ROW1
+$Comp
+L +5V #PWR0168
+U 1 1 59A1DD8F
+P 1950 3450
+F 0 "#PWR0168" H 1950 3300 50  0001 C CNN
+F 1 "+5V" H 1950 3590 50  0000 C CNN
+F 2 "" H 1950 3450 50  0000 C CNN
+F 3 "" H 1950 3450 50  0000 C CNN
+	1    1950 3450
+	0    -1   -1   0   
+$EndComp
+$Comp
+L CONN_01X05 P6
+U 1 1 59A218FE
+P 8500 2600
+F 0 "P6" H 8500 2900 50  0000 C CNN
+F 1 "CONN_01X05" V 8600 2600 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x05" H 8500 2600 50  0001 C CNN
+F 3 "" H 8500 2600 50  0000 C CNN
+	1    8500 2600
+	-1   0    0    1   
+$EndComp
+Text HLabel 8700 2800 2    60   Input ~ 0
+RGB0
+Text HLabel 8700 2700 2    60   Input ~ 0
+RGB1
+Text HLabel 8700 2600 2    60   Input ~ 0
+RGB2
+Text HLabel 8700 2500 2    60   Input ~ 0
+RGB3
+Text HLabel 8700 2400 2    60   Input ~ 0
+RGB4
+$Comp
+L R_PACK4 RP1
+U 1 1 59A61A9C
+P 5500 2750
+F 0 "RP1" H 5500 3200 50  0000 C CNN
+F 1 "R_PACK4" H 5500 2700 50  0000 C CNN
+F 2 "Resistors_SMD:R_Array_Convex_4x0402" H 5500 2750 50  0001 C CNN
+F 3 "" H 5500 2750 50  0000 C CNN
+	1    5500 2750
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	5550 2550 5850 2550
+Connection ~ 5650 2550
+Connection ~ 5750 2550
+$Comp
+L +5V #PWR0169
+U 1 1 59A61D98
+P 5650 2450
+F 0 "#PWR0169" H 5650 2300 50  0001 C CNN
+F 1 "+5V" H 5650 2590 50  0000 C CNN
+F 2 "" H 5650 2450 50  0000 C CNN
+F 3 "" H 5650 2450 50  0000 C CNN
+	1    5650 2450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5650 2450 5650 2550
+$Comp
+L +5V #PWR0170
+U 1 1 59A61F89
+P 6750 3050
+F 0 "#PWR0170" H 6750 2900 50  0001 C CNN
+F 1 "+5V" H 6750 3190 50  0000 C CNN
+F 2 "" H 6750 3050 50  0000 C CNN
+F 3 "" H 6750 3050 50  0000 C CNN
+	1    6750 3050
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR0171
+U 1 1 59A61FA9
+P 6750 3150
+F 0 "#PWR0171" H 6750 2900 50  0001 C CNN
+F 1 "GND" H 6750 3000 50  0000 C CNN
+F 2 "" H 6750 3150 50  0000 C CNN
+F 3 "" H 6750 3150 50  0000 C CNN
+	1    6750 3150
+	0    -1   -1   0   
+$EndComp
+$Comp
+L GND #PWR0172
+U 1 1 59A62171
+P 5950 3350
+F 0 "#PWR0172" H 5950 3100 50  0001 C CNN
+F 1 "GND" H 5950 3200 50  0000 C CNN
+F 2 "" H 5950 3350 50  0000 C CNN
+F 3 "" H 5950 3350 50  0000 C CNN
+	1    5950 3350
+	1    0    0    -1  
+$EndComp
+Text GLabel 6750 3350 2    60   Input ~ 0
+SDA
+Text GLabel 7000 3250 2    60   Input ~ 0
+SCL
+Wire Wire Line
+	7000 3250 6750 3250
+Text GLabel 1950 5250 0    60   Input ~ 0
+SDA
+Text GLabel 1950 5150 0    60   Input ~ 0
+SCL
+$Comp
+L 1.3_inch_LCD LCD1
+U 1 1 59A5FF56
+P 5750 4050
+F 0 "LCD1" H 5400 4100 60  0000 C CNN
+F 1 "1.3_inch_LCD" H 5750 4300 60  0000 C CNN
+F 2 "keyboard:1.3_inch_LCD" H 5750 4050 60  0001 C CNN
+F 3 "" H 5750 4050 60  0000 C CNN
+	1    5750 4050
+	1    0    0    -1  
+$EndComp
+Text GLabel 5900 4250 3    60   Input ~ 0
+SDA
+Text GLabel 5800 4250 3    60   Input ~ 0
+SCL
+$Comp
+L GND #PWR0173
+U 1 1 59A5FFED
+P 5700 4400
+F 0 "#PWR0173" H 5700 4150 50  0001 C CNN
+F 1 "GND" H 5700 4250 50  0000 C CNN
+F 2 "" H 5700 4400 50  0000 C CNN
+F 3 "" H 5700 4400 50  0000 C CNN
+	1    5700 4400
+	1    0    0    -1  
+$EndComp
+$Comp
+L +5V #PWR0174
+U 1 1 59A60010
+P 5600 4250
+F 0 "#PWR0174" H 5600 4100 50  0001 C CNN
+F 1 "+5V" H 5600 4390 50  0000 C CNN
+F 2 "" H 5600 4250 50  0000 C CNN
+F 3 "" H 5600 4250 50  0000 C CNN
+	1    5600 4250
+	-1   0    0    1   
+$EndComp
+$Comp
+L AT24C02 U1
+U 1 1 59A607E0
+P 6350 3200
+F 0 "U1" H 6200 2950 60  0000 C CNN
+F 1 "AT24C02" H 6350 3450 60  0000 C CNN
+F 2 "keyboard:MY-SOP8" H 6500 3850 60  0001 C CNN
+F 3 "" H 6350 3150 60  0000 C CNN
+	1    6350 3200
+	1    0    0    -1  
+$EndComp
+$Comp
+L R_PACK4 RP2
+U 1 1 59A63412
+P 7450 2750
+F 0 "RP2" H 7450 3200 50  0000 C CNN
+F 1 "R_PACK4" H 7450 2700 50  0000 C CNN
+F 2 "Resistors_SMD:R_Array_Convex_4x0402" H 7450 2750 50  0001 C CNN
+F 3 "" H 7450 2750 50  0000 C CNN
+	1    7450 2750
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	7500 2550 7800 2550
+Connection ~ 7600 2550
+Connection ~ 7700 2550
+$Comp
+L +5V #PWR0175
+U 1 1 59A6341E
+P 7600 2450
+F 0 "#PWR0175" H 7600 2300 50  0001 C CNN
+F 1 "+5V" H 7600 2590 50  0000 C CNN
+F 2 "" H 7600 2450 50  0000 C CNN
+F 3 "" H 7600 2450 50  0000 C CNN
+	1    7600 2450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7600 2450 7600 2550
+Text GLabel 7700 2950 3    60   Input ~ 0
+SCL
+Text GLabel 7800 2950 3    60   Input ~ 0
+SDA
+Wire Wire Line
+	5850 2950 5850 3050
+Wire Wire Line
+	5850 3050 5950 3050
+Wire Wire Line
+	5750 2950 5750 3150
+Wire Wire Line
+	5750 3150 5950 3150
+Wire Wire Line
+	5650 2950 5650 3250
+Wire Wire Line
+	5650 3250 5950 3250
+Text HLabel 8700 3850 2    60   Input ~ 0
+COL14
+$Comp
+L CONN_01X04 P4
+U 1 1 59BE8479
+P 8500 4000
+F 0 "P4" H 8500 4250 50  0000 C CNN
+F 1 "CONN_01X04" V 8600 4000 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x04" H 8500 4000 50  0001 C CNN
+F 3 "" H 8500 4000 50  0000 C CNN
+	1    8500 4000
+	-1   0    0    1   
+$EndComp
+Text HLabel 2750 4350 2    60   Input ~ 0
+COL14
+Text GLabel 7100 4250 3    60   Input ~ 0
+SDA
+Text GLabel 7000 4250 3    60   Input ~ 0
+SCL
+$Comp
+L GND #PWR0176
+U 1 1 59BADB44
+P 6900 4400
+F 0 "#PWR0176" H 6900 4150 50  0001 C CNN
+F 1 "GND" H 6900 4250 50  0000 C CNN
+F 2 "" H 6900 4400 50  0000 C CNN
+F 3 "" H 6900 4400 50  0000 C CNN
+	1    6900 4400
+	1    0    0    -1  
+$EndComp
+$Comp
+L +5V #PWR0177
+U 1 1 59BADB4A
+P 6800 4250
+F 0 "#PWR0177" H 6800 4100 50  0001 C CNN
+F 1 "+5V" H 6800 4390 50  0000 C CNN
+F 2 "" H 6800 4250 50  0000 C CNN
+F 3 "" H 6800 4250 50  0000 C CNN
+	1    6800 4250
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	5700 4400 5700 4250
+Wire Wire Line
+	6900 4250 6900 4400
+$Comp
+L CONN_01X04 P8
+U 1 1 59BAF626
+P 6950 4050
+F 0 "P8" H 6950 4300 50  0000 C CNN
+F 1 "CONN_01X04" V 7050 4050 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x04" H 6950 4050 50  0001 C CNN
+F 3 "" H 6950 4050 50  0000 C CNN
+	1    6950 4050
+	0    -1   -1   0   
+$EndComp
+$Comp
+L +3.3V #PWR0178
+U 1 1 59D00EBC
+P 1800 3350
+F 0 "#PWR0178" H 1800 3200 50  0001 C CNN
+F 1 "+3.3V" H 1800 3490 50  0000 C CNN
+F 2 "" H 1800 3350 50  0000 C CNN
+F 3 "" H 1800 3350 50  0000 C CNN
+	1    1800 3350
+	0    -1   1    0   
+$EndComp
+Wire Wire Line
+	1800 3350 1950 3350
+Wire Wire Line
+	1800 3550 1950 3550
+$EndSCHEMATC

@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name keyboard)(type KiCad)(uri /home/alxhoff/Git/customKeyboard/Hardware/TestPad/keyboard.pretty)(options "")(descr ""))
+)
