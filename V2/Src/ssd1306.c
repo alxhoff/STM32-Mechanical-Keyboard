@@ -27,11 +27,25 @@
 
 #include <stdlib.h>
 
-#include "stm32f4xx_hal.h"
-#include "screen_config.h"
 #include "fonts.h"
 #include "ssd1306.h"
 #include "error.h"
+
+#define SSD1306_I2C_ADDR        0x78
+#define SSD1306_I2C_PORT		&hi2c1
+#define SSD1306_BACKGROUND		0
+#define SSD1306_FONT			&Font_11x18
+
+#define SSD1306_WIDTH			128
+#define SSD1306_CHAR_WIDTH		ssd1306_dev.font->FontWidth
+#define SSD1306_WIDTH_CHARS		SSD1306_WIDTH / SSD1306_CHAR_WIDTH
+
+#define SSD1306_HEIGHT			64
+#define SSD1306_CHAR_HEIGHT		ssd1306_dev.font->FontHeight
+#define SSD1306_HEIGHT_CHARS	SSD1306_HEIGHT / SSD1306_CHAR_HEIGHT
+
+#define SSD1306_X_OFFSET		5
+#define SSD1306_Y_OFFSET		5
 
 typedef enum {
 	Black = 0x00, /*!< Black color, no pixel */
@@ -59,11 +73,19 @@ struct ssd1306_device {
 
 	unsigned char (*clear)(void);
 	unsigned char (*update)(void);
-	unsigned char (*fill)(void);
-	unsigned char (*string)(char*);
+	void (*fill)(void);
+	void (*string)(char*);
 };
 
 ssd1306_device_t ssd1306_dev = { 0 };
+
+unsigned char ssd1306_get_cols(void) {
+	return SSD1306_WIDTH_CHARS;
+}
+
+unsigned char ssd1306_get_rows(void) {
+	return SSD1306_HEIGHT_CHARS;
+}
 
 unsigned char ssd1306_write_command(uint8_t command) {
 	if (HAL_I2C_Mem_Write(ssd1306_dev.port, SSD1306_I2C_ADDR, 0x00, 1, &command,
@@ -105,9 +127,37 @@ unsigned char ssd1306_clear(void) {
 	return 0;
 }
 
-void ssd1306_set_cursor(unsigned char x, unsigned char y) {
+void ssd1306_set_pixel(unsigned char x, unsigned char y) {
 	ssd1306_dev.x = x;
 	ssd1306_dev.y = y;
+}
+
+void ssd1306_set_cursor(int x, int y) {
+
+	if (x >= (SSD1306_WIDTH - SSD1306_CHAR_WIDTH)) /* X greater than screen width */
+		ssd1306_dev.x = SSD1306_WIDTH - SSD1306_CHAR_WIDTH;
+	else if (x < SSD1306_X_OFFSET)
+		ssd1306_dev.x = SSD1306_X_OFFSET;
+	else
+		ssd1306_dev.x = x;
+
+	//TODO check this is correct
+	if (y > (SSD1306_HEIGHT - SSD1306_CHAR_HEIGHT))
+		ssd1306_dev.y = SSD1306_HEIGHT - SSD1306_CHAR_HEIGHT;
+	else if (y < SSD1306_Y_OFFSET)
+		ssd1306_dev.y = SSD1306_Y_OFFSET;
+	else
+		ssd1306_dev.y = y;
+}
+
+void ssd1306_mv_cursor_left(void) {
+	if (ssd1306_dev.x > 0)
+		ssd1306_dev.x--;
+}
+
+void ssd1306_mv_cursor_right(void) {
+	if (ssd1306_dev.x < SSD1306_WIDTH_CHARS)
+		ssd1306_dev.x++;
 }
 
 unsigned char ssd1306_draw_pixel(uint8_t x, uint8_t y, SSD1306_colour_t colour) {
@@ -124,54 +174,54 @@ unsigned char ssd1306_draw_pixel(uint8_t x, uint8_t y, SSD1306_colour_t colour) 
 	return 0;
 }
 
-unsigned char ssd1306_write_char(char ch) {
-	uint32_t i, b, j;
+unsigned char ssd1306_draw_char_box(unsigned char x) {
+	unsigned char x_pos = x * SSD1306_CHAR_WIDTH + SSD1306_X_OFFSET;
+	unsigned char y_pos = SSD1306_Y_OFFSET;
 
-	if (ssd1306_dev.width <= (ssd1306_dev.x + ssd1306_dev.font->FontWidth)
-			|| ssd1306_dev.height
-					<= (ssd1306_dev.y + ssd1306_dev.font->FontHeight)) {
-		return -EBOUNDS;
+	for (unsigned char i = x_pos; i < x_pos + SSD1306_CHAR_WIDTH; i++)
+		for (unsigned char j = y_pos; j < y_pos + SSD1306_CHAR_HEIGHT; j++)
+			if (ssd1306_draw_pixel(i, j, !ssd1306_dev.background) != 0)
+				return -EWRITE;
+
+	return 0;
+}
+
+void ssd1306_write_char(char ch) {
+	static unsigned short b;
+
+	if (ssd1306_dev.width <= (ssd1306_dev.x + ssd1306_dev.font->FontWidth) /* would print outside of bounds */
+	|| ssd1306_dev.height <= (ssd1306_dev.y + ssd1306_dev.font->FontHeight)) {
+		return;
 	}
 
-	for (i = 0; i < ssd1306_dev.font->FontHeight; i++) {
-		b =
-				ssd1306_dev.font->data[(ch - 32) * ssd1306_dev.font->FontHeight
-						+ i];
-		for (j = 0; j < ssd1306_dev.font->FontWidth; j++) {
-			if ((b << j) & 0x8000) {
-				if (ssd1306_draw_pixel(ssd1306_dev.x + j, (ssd1306_dev.y + i),
-						(SSD1306_colour_t) !ssd1306_dev.background) != 0)
-					return -EWRITE;
-			} else {
-				if (ssd1306_draw_pixel(ssd1306_dev.x + j, (ssd1306_dev.y + i),
-						(SSD1306_colour_t) ssd1306_dev.background) != 0)
-					return -EWRITE;
-			}
-		}
+	for (unsigned char i = 0; i < ssd1306_dev.font->FontHeight; i++) {
+		b = ssd1306_dev.font->data[(ch - 32) * ssd1306_dev.font->FontHeight + i];
+		for (unsigned char j = 0; j < ssd1306_dev.font->FontWidth; j++)
+			if ((b << j) & 0x8000)
+				ssd1306_draw_pixel(ssd1306_dev.x + j, (ssd1306_dev.y + i),
+						(SSD1306_colour_t) !ssd1306_dev.background);
+			else
+				ssd1306_draw_pixel(ssd1306_dev.x + j, (ssd1306_dev.y + i),
+						(SSD1306_colour_t) ssd1306_dev.background);
 	}
 
 	ssd1306_dev.x += ssd1306_dev.font->FontWidth;
-
-	return 0;
 }
 
-unsigned char ssd1306_write_string(char* str) {
-	while (*str) {
-		if (ssd1306_write_char(*str) != 0) {
-			return -EWRITE;
-		}
-
+void ssd1306_write_string(char* str) {
+	while (*str){
+		ssd1306_write_char(*str);
 		str++;
 	}
-
-	return 0;
 }
-//
-//void ssd1306_set_cursor(ssd1306_device_t* self, uint8_t x, uint8_t y)
-//{
-//	ssd1306_dev.x = x;
-//	ssd1306_dev.y = y;
-//}
+
+void ssd1306_draw_framebuffer(char **buf) {
+	for (unsigned char i = 0; i < SSD1306_HEIGHT_CHARS; i++) {
+		ssd1306_set_cursor(SSD1306_X_OFFSET,
+		SSD1306_Y_OFFSET + i * SSD1306_CHAR_HEIGHT);
+		ssd1306_write_string(buf[i]);
+	}
+}
 
 unsigned char ssd1306_init(void) {
 	//functions
@@ -218,9 +268,8 @@ unsigned char ssd1306_init(void) {
 	ssd1306_write_command(0x14); //
 	ssd1306_write_command(0xAF); //--turn on SSD1306 panel
 
-	ssd1306_fill();
-
-	ssd1306_update_screen();
+	ssd1306_clear();
+	ssd1306_clear();
 
 	ssd1306_dev.x = 0;
 	ssd1306_dev.y = 0;
@@ -229,3 +278,14 @@ unsigned char ssd1306_init(void) {
 
 	return 0;
 }
+
+void ssd1306_draw(char **buf) {
+	ssd1306_fill();
+//	ssd1306_draw_char_box(ssd1306_dev.x);
+
+//	ssd1306_set_cursor(5, 5);
+//	ssd1306_write_string("Hello this is a long string");
+	ssd1306_draw_framebuffer(buf);
+	ssd1306_update_screen();
+}
+

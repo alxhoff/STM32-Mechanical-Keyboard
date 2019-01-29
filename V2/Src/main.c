@@ -182,6 +182,18 @@ int main(void)
 
 	//TODO
 	ssd1306_init();
+	screen_init();
+
+	screen_add_line("Hello");
+	screen_update();
+
+	screen_add_line("World");
+	screen_update();
+
+	screen_add_line("This is a long line");
+
+	screen_update();
+
 
 
 	//CLI

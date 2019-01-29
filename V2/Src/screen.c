@@ -1,16 +1,69 @@
-/*
 
+/*
  * screen.c
  *
  *  Created on: Sep 16, 2017
  *      Author: alxhoff
+*/
 
+#include "error.h"
+#include "screen_API.h"
 
 #include <stdlib.h>
 #include <string.h>
 
-#include "screen.h"
+typedef struct screen_device{
+	int			rows;
+	int 		cols;
 
+	char		**framebuffer;
+
+	int 		cursor_period;
+
+	int 		cursor_location;
+
+	void		(*draw)(char **);
+	void		(*mv_cursor_left)(void);
+	void		(*mv_cursor_right)(void);
+} screen_device_t;
+
+void screen_update(void);
+
+screen_device_t screen_dev = {
+		.cursor_period = 750,
+		.draw = &SCREEN_DRAW,
+		.mv_cursor_left = &SCREEN_MV_CUR_LEFT,
+		.mv_cursor_right = &SCREEN_MV_CUR_RIGHT
+};
+
+unsigned char screen_init(void) {
+	screen_dev.rows = SCREEN_GET_ROWS;
+	screen_dev.cols = SCREEN_GET_COLS;
+
+	screen_dev.framebuffer = calloc(screen_dev.rows * screen_dev.cols,
+				sizeof(char));
+		if(!screen_dev.framebuffer)
+			return -ENOMEM;
+
+	return 0;
+}
+
+void screen_update(void) {
+	screen_dev.draw(screen_dev.framebuffer);
+}
+
+void screen_add_line(char *line) {
+	if(screen_dev.framebuffer[screen_dev.rows - 1]) /* If the screen is full prepare for shift up */
+		free(screen_dev.framebuffer[screen_dev.rows - 1]);
+
+	for(unsigned char i = screen_dev.rows - 1; i > 0; i--)
+		screen_dev.framebuffer[i] = screen_dev.framebuffer[i -1];
+
+	screen_dev.framebuffer[0] = malloc(sizeof(char) * (strlen(line) + 1));
+	strcpy(screen_dev.framebuffer[0], line);
+}
+
+ /*
 void screen_draw_cursor(screen_t* screen)
 {
 

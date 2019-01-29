@@ -25,10 +25,13 @@
 @endverbatim
  */
 
+#include "stm32f4xx_hal.h"
+
 extern I2C_HandleTypeDef hi2c1;
 
+void ssd1306_draw(char **buf);
 unsigned char ssd1306_init(void);
-unsigned char ssd1306_clear(void);
-void ssd1306_set_cursor(unsigned char x, unsigned char y);
-unsigned char ssd1306_write_string(char* str);
-unsigned char ssd1306_update_screen(void);
+void ssd1306_mv_cursor_left(void);
+void ssd1306_mv_cursor_right(void);
+unsigned char ssd1306_get_cols(void);
+unsigned char ssd1306_get_rows(void);

@@ -32,7 +32,6 @@ typedef struct LED_array {
 
 LED_array_t LED_dev = { 0 };
 
-
 uint32_t Wheel(uint8_t WheelPos) {
 	WheelPos = 255 - WheelPos;
 	if (WheelPos < 85) {
@@ -44,6 +43,32 @@ uint32_t Wheel(uint8_t WheelPos) {
 	}
 	WheelPos -= 170;
 	return newColor(WheelPos * 3, 255 - WheelPos * 3, 0);
+}
+
+uint32_t Wheel_snappy_fade_out(uint8_t WheelPos) {
+  WheelPos = WheelPos % 256;
+  if(WheelPos < 85) {
+    return newColor(WheelPos * 3, 0, WheelPos * 3);
+  }
+  if(WheelPos < 170) {
+    WheelPos += 85;
+    return newColor(0, WheelPos * 3, WheelPos * 3);
+  }
+  WheelPos += 170;
+  return newColor(WheelPos * 3, WheelPos * 3, 0);
+}
+
+uint32_t Wheel_snappy_fade_in(uint8_t WheelPos) {
+	  WheelPos = 255 - WheelPos;
+  if(WheelPos < 85) {
+    return newColor(WheelPos * 3, 0, WheelPos * 3);
+  }
+  if(WheelPos < 170) {
+    WheelPos += 85;
+    return newColor(0, WheelPos * 3, WheelPos * 3);
+  }
+  WheelPos += 170;
+  return newColor(WheelPos * 3, WheelPos * 3, 0);
 }
 
 void LED_rainbow_right(void) {
