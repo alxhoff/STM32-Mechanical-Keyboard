@@ -10,6 +10,7 @@
 #include "error.h"
 #include "usb_device.h"
 #include "usbd_hid.h"
+#include "lookup.h"
 
 #define INTER_PACKET_DELAY	vTaskDelay(USBD_HID_GetPollingInterval(&hUsbDeviceFS))
 
@@ -112,6 +113,17 @@ unsigned char send_prepare_mouse(void)
 	return 0;
 }
 
+void send_blank_keyboard_report(void) {
+	keyboardHID_t blanke_report = {.id = 1};
+	if(xSemaphoreTake( USB_send_lock, (TickType_t) portMAX_DELAY) == pdTRUE){
+		while(USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t *)&blanke_report,
+				sizeof(keyboardHID_t)) == USBD_FAIL)
+			vTaskDelay(1); /* wait for send */ //TODO handle better maybe?
+
+		xSemaphoreGive(USB_send_lock);
+	}
+}
+
 unsigned char send_keyboard_report(void)
 {
 	if(xSemaphoreTake( USB_send_lock, (TickType_t) portMAX_DELAY) == pdTRUE){
@@ -170,6 +182,26 @@ unsigned char send_reports(void)
 	return 0;
 }
 
+//TODO optimize packet sending to allow for packets of keys with the same modifiers to be send in the
+// same packet
+void send_string(char* str) {
+	static keyboardHID_t tmp_report = {.id = 1};
+
+	while(*str){
+		tmp_report.key1 = lookup_get_key(*str);
+		tmp_report.modifiers = lookup_get_mod(*str);
+		str++;
+
+		if(xSemaphoreTake( USB_send_lock, (TickType_t) portMAX_DELAY) == pdTRUE){
+			while(USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t *)&tmp_report,
+					sizeof(keyboardHID_t)) == USBD_FAIL)
+				vTaskDelay(1); /* wait for send */ //TODO handle better maybe?
+			xSemaphoreGive(USB_send_lock);
+		}
+		vTaskDelay(30);
+	}
+	send_blank_keyboard_report();
+}
 
 //SEND STATE FUNCTIONS
 unsigned char send_init(void)

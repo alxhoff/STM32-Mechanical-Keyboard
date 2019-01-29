@@ -62,6 +62,7 @@
 #include "SN54HC595.h"
 #include "send.h"
 #include "states.h"
+#include "LEDs.h"
 
 //hardware devices
 #include "keyboard.h"
@@ -156,33 +157,24 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
 	keyboard_init();
+	send_init();
+	SN54HC595_init();
+	ssd1306_init();
+	screen_init();
 
 	//TODO what is this? VVV
 	HAL_GPIO_WritePin(CAPS_STATUS_PORT, CAPS_STATUS_PIN, GPIO_PIN_SET);
 	HAL_GPIO_WritePin(CLI_STATUS_PORT, CLI_STATUS_PIN, GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(FUNC_STATUS_PORT, FUNC_STATUS_PIN, GPIO_PIN_SET);
 
-	SN54HC595_init();
 
 	//Keymap init
 	keymap_list_init(&keymap_init0);
 	keymap_list_append_layer(&keymap_init1);
 	keymap_list_append_layer(&keymap_init2);
 
-	macro_entry_t test_macro = {
-			.sc =  HID_KEYBOARD_SC_7_AND_AMPERSAND,
-			.string = "pew pew this is a macro and it "
-					"can use all DA SYMBOLZZZ !@#$%^*()_+",
-	};
-
-	macro_add_entry(&test_macro);
-
-
-
-
 	//TODO
-	ssd1306_init();
-	screen_init();
+
 
 	screen_add_line("Hello");
 	screen_update();
@@ -653,12 +645,22 @@ void StartDefaultTask(void const * argument)
   MX_USB_DEVICE_Init();
 
   /* USER CODE BEGIN 5 */
+  macro_add_new_entry("first test macro yo",
+  			HID_KEYBOARD_SC_T);
+
+
+  	macro_add_new_entry("pew pew this is a macro and it can use all DA SYMBOLZZZ !@#$%^*()_+",
+  			HID_KEYBOARD_SC_7_AND_AMPERSAND);
+
+
 	/* Infinite loop */
 	TickType_t xLastWakeTime = xTaskGetTickCount();
-	const TickType_t xPeriod = 20;
+	const TickType_t xPeriod = 2000;
 	for (;;)
 	{
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);
+	  	macro_run_sc(HID_KEYBOARD_SC_7_AND_AMPERSAND);
+
 		//TODO LEDS
 //		visHandle(keyboard_devs);
 	}

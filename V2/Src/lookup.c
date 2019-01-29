@@ -12,19 +12,18 @@
 #define SC(key) HID_KEYBOARD_SC_##key
 #define MOD(key) HID_KEYBOARD_MODIFIER_##key
 
+typedef struct scan_code_char {
+	char* unmodified;
+	char* modified;
+} scan_code_char_t;
+
 typedef struct scan_code
 {
 	unsigned char code;
 	unsigned char mod;
 } scan_code_t;
 
-struct scan_code_char
-{
-	char* unmodified;
-	char* modified;
-};
-
-struct scan_code_char lookup_char[207] = {
+scan_code_char_t lookup_char[207] = {
 		[1] = {0},
 		[2] = {0},
 		[3] = {0},
@@ -340,7 +339,7 @@ struct scan_code_char lookup_char[207] = {
 		[206] = {"b"}
 };
 
-struct scan_code lookup_sc[256] = {
+scan_code_t lookup_sc[256] = {
 	[32]={SC(SPACE),0},
 	[33]={SC(1_AND_EXCLAMATION),MOD(RIGHTSHIFT)},
 	[34]={SC(APOSTROPHE_AND_QUOTE),MOD(RIGHTSHIFT)},
