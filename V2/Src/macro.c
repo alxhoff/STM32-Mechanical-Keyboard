@@ -130,6 +130,7 @@ void macro_exit(void) {
 
 unsigned char macro_set_init(void){
 
+	return 0;
 }
 
 void macro_set_enter(void){
