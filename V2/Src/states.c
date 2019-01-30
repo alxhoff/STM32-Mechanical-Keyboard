@@ -76,6 +76,7 @@ static unsigned char states_add(unsigned char (*probe)(void),
 	ret->name = malloc(sizeof(char) * (strlen(name) + 1));
 	if (!ret->name)
 		return -ENOMEM;
+	strcpy(ret->name, name);
 
 	state_machine_dev.states = realloc(state_machine_dev.states,
 			sizeof(state_t*) * (state_machine_dev.count + 1));

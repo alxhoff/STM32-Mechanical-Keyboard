@@ -5,6 +5,12 @@
  *      Author: alxhoff
  */
 
+#include "config.h"
+#include "screen.h"
+
+typedef struct CLI_data{
+	char			**screen_buf;
+} CLI_data_t;
 
 unsigned char CLI_process_line()
 {

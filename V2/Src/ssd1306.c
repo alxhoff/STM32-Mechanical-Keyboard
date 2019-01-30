@@ -30,6 +30,7 @@
 #include "fonts.h"
 #include "ssd1306.h"
 #include "error.h"
+#include "cmsis_os.h"
 
 #define SSD1306_I2C_ADDR        0x78
 #define SSD1306_I2C_PORT		&hi2c1
@@ -57,6 +58,7 @@ typedef struct ssd1306_device ssd1306_device_t;
 struct ssd1306_device {
 	uint16_t x;
 	uint16_t y;
+	unsigned char cursor_pos;
 
 	uint8_t initialized;
 
@@ -70,6 +72,8 @@ struct ssd1306_device {
 	uint8_t buffer[SSD1306_WIDTH * SSD1306_HEIGHT / 8];
 
 	I2C_HandleTypeDef* port;
+
+	osThreadId refresh_task;
 
 	unsigned char (*clear)(void);
 	unsigned char (*update)(void);
@@ -132,7 +136,7 @@ void ssd1306_set_pixel(unsigned char x, unsigned char y) {
 	ssd1306_dev.y = y;
 }
 
-void ssd1306_set_cursor(int x, int y) {
+void ssd1306_set_draw_cursor(int x, int y) {
 
 	if (x >= (SSD1306_WIDTH - SSD1306_CHAR_WIDTH)) /* X greater than screen width */
 		ssd1306_dev.x = SSD1306_WIDTH - SSD1306_CHAR_WIDTH;
@@ -151,13 +155,13 @@ void ssd1306_set_cursor(int x, int y) {
 }
 
 void ssd1306_mv_cursor_left(void) {
-	if (ssd1306_dev.x > 0)
-		ssd1306_dev.x--;
+	if (ssd1306_dev.cursor_pos > 0)
+		ssd1306_dev.cursor_pos--;
 }
 
 void ssd1306_mv_cursor_right(void) {
-	if (ssd1306_dev.x < SSD1306_WIDTH_CHARS)
-		ssd1306_dev.x++;
+	if (ssd1306_dev.cursor_pos < SSD1306_WIDTH_CHARS)
+		ssd1306_dev.cursor_pos++;
 }
 
 unsigned char ssd1306_draw_pixel(uint8_t x, uint8_t y, SSD1306_colour_t colour) {
@@ -174,6 +178,17 @@ unsigned char ssd1306_draw_pixel(uint8_t x, uint8_t y, SSD1306_colour_t colour) 
 	return 0;
 }
 
+unsigned char ssd1306_invert_pixel(uint8_t x, uint8_t y) {
+	if (x >= ssd1306_dev.width || y >= ssd1306_dev.height) {
+		return -EBOUNDS;
+	}
+
+	ssd1306_dev.buffer[x + (y / 8) * ssd1306_dev.width] =
+			!ssd1306_dev.buffer[x + (y / 8) * ssd1306_dev.width];
+
+	return 0;
+}
+
 unsigned char ssd1306_draw_char_box(unsigned char x) {
 	unsigned char x_pos = x * SSD1306_CHAR_WIDTH + SSD1306_X_OFFSET;
 	unsigned char y_pos = SSD1306_Y_OFFSET;
@@ -183,6 +198,17 @@ unsigned char ssd1306_draw_char_box(unsigned char x) {
 			if (ssd1306_draw_pixel(i, j, !ssd1306_dev.background) != 0)
 				return -EWRITE;
 
+	return 0;
+}
+
+unsigned char ssd1306_invert_box(unsigned char x) {
+	unsigned char x_pos = x * SSD1306_CHAR_WIDTH + SSD1306_X_OFFSET;
+	unsigned char y_pos = SSD1306_Y_OFFSET;
+
+	for (unsigned char i = x_pos; i < x_pos + SSD1306_CHAR_WIDTH; i++)
+			for (unsigned char j = y_pos; j < y_pos + SSD1306_CHAR_HEIGHT; j++)
+				if (ssd1306_invert_pixel(i, j) != 0)
+					return -EWRITE;
 	return 0;
 }
 
@@ -217,11 +243,18 @@ void ssd1306_write_string(char* str) {
 
 void ssd1306_draw_framebuffer(char **buf) {
 	for (unsigned char i = 0; i < SSD1306_HEIGHT_CHARS; i++) {
-		ssd1306_set_cursor(SSD1306_X_OFFSET,
+		ssd1306_set_draw_cursor(SSD1306_X_OFFSET,
 		SSD1306_Y_OFFSET + i * SSD1306_CHAR_HEIGHT);
 		ssd1306_write_string(buf[i]);
 	}
 }
+
+
+void ssd1306_refresh(void *args){
+	while(1)
+		ssd1306_update_screen();
+}
+
 
 unsigned char ssd1306_init(void) {
 	//functions
@@ -237,6 +270,9 @@ unsigned char ssd1306_init(void) {
 
 	ssd1306_dev.background = SSD1306_BACKGROUND;
 	ssd1306_dev.font = SSD1306_FONT;
+
+	osThreadDef(ssd1306Task, ssd1306_refresh, osPriorityNormal, 0, 128);
+	ssd1306_dev.refresh_task = osThreadCreate(osThread(ssd1306Task), NULL);
 
 	/* Init LCD */
 	ssd1306_write_command(0xAE); //display off
@@ -278,14 +314,17 @@ unsigned char ssd1306_init(void) {
 
 	return 0;
 }
+//TODO tidy this
+unsigned char prev_cursor = 0;
+void ssd1306_draw_cursor(unsigned char state) {
+	if(state != prev_cursor){
+		ssd1306_invert_box(SSD1306_X_OFFSET * ssd1306_dev.cursor_pos * SSD1306_CHAR_WIDTH);
+		prev_cursor = state;
+	}
+}
 
-void ssd1306_draw(char **buf) {
+void ssd1306_draw_text_buffer(char **buf) {
 	ssd1306_fill();
-//	ssd1306_draw_char_box(ssd1306_dev.x);
-
-//	ssd1306_set_cursor(5, 5);
-//	ssd1306_write_string("Hello this is a long string");
 	ssd1306_draw_framebuffer(buf);
-	ssd1306_update_screen();
 }
 

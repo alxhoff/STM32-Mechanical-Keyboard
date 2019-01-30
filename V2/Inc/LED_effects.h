@@ -79,6 +79,7 @@ void LED_rainbow_right(void) {
 	x -= 1;
 
 	if (x == 0)
+		//TODO this makes no senseg
 		x = (uint8_t)(256 * 5);
 	if (ws2812b.transferComplete) {
 		if (HAL_GetTick() - timestamp > RAINBOW_RIGHT_DELAY) {

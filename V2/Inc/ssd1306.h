@@ -29,7 +29,8 @@
 
 extern I2C_HandleTypeDef hi2c1;
 
-void ssd1306_draw(char **buf);
+void ssd1306_draw_text_buffer(char **buf);
+void ssd1306_draw_cursor(unsigned char state);
 unsigned char ssd1306_init(void);
 void ssd1306_mv_cursor_left(void);
 void ssd1306_mv_cursor_right(void);

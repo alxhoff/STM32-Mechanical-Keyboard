@@ -193,6 +193,7 @@ int main(void)
 			HID_KEYBOARD_SC_7_AND_AMPERSAND);
 
 
+
 	//CLI
 //	screen_init_t CLI_test_init =
 //	{ .rows = 3, .cols = 11, .row_height = 20, .x_offset = 3, .y_offset = 3,
@@ -619,15 +620,15 @@ void CLIListenCallback(void const *argument)
 
 void StatesCallback(void  const *argument)
 {
-//	TickType_t xLastWakeTime = xTaskGetTickCount();
-//	TickType_t xPeriod = 20;
+	TickType_t xLastWakeTime = xTaskGetTickCount();
+	TickType_t xPeriod = 20;
 	states_init();
 	for(;;)
 	{
 		states_run();
 
-//		xPeriod = STATES_PERIOD - (xLastWakeTime - xTaskGetTickCount());
-//		vTaskDelayUntil(&xLastWakeTime, xPeriod);
+		xPeriod = STATES_PERIOD - (xLastWakeTime - xTaskGetTickCount());
+		vTaskDelayUntil(&xLastWakeTime, xPeriod);
 	}
 }
 
@@ -638,6 +639,7 @@ void LEDCallback(void const *argument)
 	LEDs_init();
 	for(;;){
 		LEDs_run();
+		screen_update();
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);
 	}
 }

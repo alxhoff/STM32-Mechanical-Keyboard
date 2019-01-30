@@ -67,5 +67,12 @@
 #define STATES_PERIOD			20
 #define SCAN_PERIOD				20
 
+//CLI
+#define CLI_HISTORY_LENGTH		10
+
+//SCREEN
+#define SCREEN_CURSOR_PERIOD	750
+
+
 
 #endif /* CONFIG_H_ */
