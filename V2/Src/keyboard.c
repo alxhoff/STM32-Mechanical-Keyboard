@@ -135,33 +135,6 @@ void keyboard_init(void) {
 
 	queue_packet_to_send = xQueueCreate(20, sizeof(send_buffer_t));
 	keyboard_dev.buf_lock = xSemaphoreCreateMutex();
-//	//HID DATA
-//	keyboard_devices->keyboard_HID =
-//			(keyboard_HID_data_t*)calloc(1, sizeof(keyboard_HID_data_t));
-//	if(keyboard_devices->keyboard_HID == NULL)
-//		return key_init_err;
-//
-//	keyboard_devices->keyboard_HID->keyboard_report.id = 1;
-//	keyboard_devices->keyboard_HID->keyboard_state = inactive;
-//	keyboard_devices->keyboard_HID->media_report.id = 2;
-//	keyboard_devices->keyboard_HID->media_state = inactive;
-//
-//	keyboard_devices->keyboard_HID->out_buf.key_buf.count = 0;
-//	keyboard_devices->keyboard_HID->out_buf.med_buf.count = 0;
-//	keyboard_devices->keyboard_HID->out_buf.mod_buf = 0;
-//
-//	for(int i=0; i<6; i++)
-//		keyboard_devices->keyboard_HID->prev_keys[i] = 0;
-//
-//	keyboard_devices->keyboard_HID->prev_report_len = 0;
-//	keyboard_devices->keyboard_HID->key_buf.index=0;
-//	keyboard_devices->keyboard_HID->out_buf.key_buf.count = 0;
-//	keyboard_devices->keyboard_HID->out_buf.med_buf.count = 0;
-//
-//	current_keyboard_state = typing;
-
-//status LEDs
-
 }
 
 static unsigned char keyboard_read_row(unsigned char row) {
@@ -303,22 +276,3 @@ unsigned char keyboard_process_scan_buf(void) {
 	xSemaphoreGive(keyboard_dev.buf_lock);
 	return -ENOINIT;
 }
-
-//void display_int_on_screen(unsigned char col, unsigned char row)
-//{
-//	static char col_str[10];
-//	static char row_str[10];
-//	HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_SET);
-//
-//	sprintf(col_str, "Col: %d", col);
-//	sprintf(row_str, "Row: %d", row);
-//
-//	ssd1306_Fill(White);
-//	ssd1306_SetCursor(23,10);
-////	ssd1306_WriteString("here",Font_11x18,Black);
-//
-//	ssd1306_WriteString(&col_str,Font_11x18,Black);
-//	ssd1306_SetCursor(23,30);
-//	ssd1306_WriteString(&row_str,Font_11x18,Black);
-//	ssd1306_UpdateScreen();
-//}
