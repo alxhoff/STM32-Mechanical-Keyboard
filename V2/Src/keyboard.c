@@ -13,6 +13,7 @@
 #include "cmsis_os.h"
 #include "SN54HC595.h"
 #include "lookup.h"
+#include "LEDs.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -60,6 +61,14 @@ typedef struct key_buffer {
 	unsigned char count;
 } key_buffer_t;
 
+typedef struct toggle_keys{
+	unsigned char caps;
+	unsigned char CLI;
+	unsigned char func;
+
+	unsigned char changed;
+} toggle_keys_t;
+
 /**
  * @typedef keyboard_device_t
  * @brief Typedef of keyboard_device
@@ -83,6 +92,8 @@ typedef struct keyboard_device {
 	SemaphoreHandle_t buf_lock;
 	scan_buffer_t scan_buf; /**< Buffer where scanned keys are stored before processing */
 	six_key_buffer_t prev_buf;
+
+	toggle_keys_t toggles;
 } keyboard_device_t;
 
 QueueHandle_t queue_packet_to_send;
@@ -210,6 +221,19 @@ static void keyboard_sort_scaned_key(send_buffer_t *send_buf,
 		buf_new->buf[buf_new->count++] = key;
 }
 
+void keyboard_toggle_caps(void) {
+	keyboard_dev.toggles.caps ^= 1;
+}
+
+void keyboard_toggle_CLI(void) {
+	keyboard_dev.toggles.CLI ^= 1;
+}
+
+void keyboard_toggle_func(void) {
+	keyboard_dev.toggles.func ^= 1;
+}
+
+
 unsigned char keyboard_process_scan_buf(void) {
 	static unsigned char ret = 0;
 	volatile static unsigned char tmp_sc;
@@ -234,9 +258,17 @@ unsigned char keyboard_process_scan_buf(void) {
 			}
 
 			/* Toggle key */
+			//TODO make more efficient
 			ret = lookup_toggle_key(tmp_sc);
 			if (ret) {
-				//TODO handle toggle press
+				switch(ret){
+				case 1:
+					keyboard_toggle_caps();
+					keyboard_dev.toggles.changed = 1;
+					break;
+				default:
+					break;
+				}
 			}
 
 			/* The rest */
@@ -244,6 +276,29 @@ unsigned char keyboard_process_scan_buf(void) {
 
 			keyboard_dev.scan_buf.count--;
 			i++;
+		}
+
+		//Handle toggles and caps
+		if(keyboard_dev.toggles.changed){
+			//TODO debounce
+			if(keyboard_dev.toggles.caps){ /* If caps is set */
+				LEDs_set_caps();
+				buf->mod_buf |= HID_KEYBOARD_LED_CAPSLOCK;
+			}
+			else
+				LEDs_clear_caps();
+
+			if(keyboard_dev.toggles.CLI)
+				LEDs_set_CLI();
+			else
+				LEDs_clear_CLI();
+
+			if(keyboard_dev.toggles.func)
+				LEDs_set_func();
+			else
+				LEDs_clear_func();
+
+			keyboard_dev.toggles.changed = 0;
 		}
 
 		while (buf->key_buf.count < 6 && sc_new.count) /* Fill buf with new keys */

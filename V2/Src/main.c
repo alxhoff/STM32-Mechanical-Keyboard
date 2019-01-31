@@ -162,12 +162,6 @@ int main(void)
 	ssd1306_init();
 	screen_init();
 
-	//TODO what is this? VVV
-	HAL_GPIO_WritePin(CAPS_STATUS_PORT, CAPS_STATUS_PIN, GPIO_PIN_SET);
-	HAL_GPIO_WritePin(CLI_STATUS_PORT, CLI_STATUS_PIN, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(FUNC_STATUS_PORT, FUNC_STATUS_PIN, GPIO_PIN_SET);
-
-
 	//Keymap init
 	keymap_list_init(&keymap_init0);
 	keymap_list_append_layer(&keymap_init1);

@@ -449,18 +449,18 @@ unsigned char lookup_get_mod(unsigned char character)
 
 unsigned char lookup_state_change_key(unsigned char sc)
 {
-	if(sc == SC(LAYER_FUNCTION))
-	{
-		//TODO STATE CHANGE ENUM ETC
-	}else if(sc == SC(MACRO_RUN_FUNCTION))
-	{
-
-	}else if(sc == SC(MACRO_SET_FUNCTION))
-	{
-
-	}else if(sc == SC(CLI_FUNCTION))
-	{
-
+	//TODO
+	switch(sc){
+	case SC(LAYER_FUNCTION):
+		break;
+	case SC(MACRO_RUN_FUNCTION):
+		break;
+	case SC(MACRO_SET_FUNCTION):
+		break;
+	case SC(CLI_FUNCTION):
+		break;
+	default:
+		break;
 	}
 	return 0;
 }
@@ -468,7 +468,12 @@ unsigned char lookup_state_change_key(unsigned char sc)
 //look if the key is a key like caps lock
 unsigned char lookup_toggle_key(unsigned char sc)
 {
-
+	switch(sc){
+	case SC(LOCKING_CAPS_LOCK):
+		return 1;
+	default:
+		break;
+	}
 	return 0;
 }
 
