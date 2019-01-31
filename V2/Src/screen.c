@@ -37,8 +37,6 @@ typedef struct screen_device{
 	void				(*mv_cursor_right)(void);
 } screen_device_t;
 
-void screen_update(void);
-
 screen_device_t screen_dev = {
 		.cursor_period = SCREEN_CURSOR_PERIOD,
 		.draw_text = &SCREEN_DRAW_TEXT,

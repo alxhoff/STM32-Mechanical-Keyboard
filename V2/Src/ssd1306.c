@@ -164,9 +164,17 @@ unsigned char ssd1306_draw_pixel(uint8_t x, uint8_t y, SSD1306_colour_t colour) 
 	}
 
 	if (colour == Black) {
+#ifndef	SCREEN_INVERTED
+		ssd1306_dev.buffer[(SSD1306_WIDTH * SSD1306_HEIGHT / 8)
+			- (x + (y / 8) * ssd1306_dev.width)] |= 1 << (7 - (y % 8));
+	} else {
+		ssd1306_dev.buffer[(SSD1306_WIDTH * SSD1306_HEIGHT / 8) - (
+				x + (y / 8) * ssd1306_dev.width)] &= ~(1 << (7 - (y % 8)));
+#else
 		ssd1306_dev.buffer[x + (y / 8) * ssd1306_dev.width] |= 1 << (y % 8);
 	} else {
 		ssd1306_dev.buffer[x + (y / 8) * ssd1306_dev.width] &= ~(1 << (y % 8));
+#endif
 	}
 
 	return 0;
@@ -176,32 +184,12 @@ unsigned char ssd1306_invert_pixel(uint8_t x, uint8_t y) {
 	if (x >= ssd1306_dev.width || y >= ssd1306_dev.height) {
 		return -EBOUNDS;
 	}
-
+#ifndef	SCREEN_INVERTED
+	ssd1306_dev.buffer[(SSD1306_WIDTH * SSD1306_HEIGHT / 8) -
+					   (x + (y / 8) * ssd1306_dev.width)] ^= 1 << (7 - (y % 8));;
+#else
 	ssd1306_dev.buffer[x + (y / 8) * ssd1306_dev.width] ^= 1 << (y % 8);;
-
-
-	return 0;
-}
-
-unsigned char ssd1306_draw_char_box(unsigned char x) {
-	unsigned char x_pos = x * SSD1306_CHAR_WIDTH + SSD1306_X_OFFSET;
-	unsigned char y_pos = SSD1306_Y_OFFSET;
-
-	for (unsigned char i = x_pos; i < x_pos + SSD1306_CHAR_WIDTH; i++)
-		for (unsigned char j = y_pos; j < y_pos + SSD1306_CHAR_HEIGHT; j++)
-			if (ssd1306_draw_pixel(j, i, !ssd1306_dev.background) != 0)
-				return -EWRITE;
-
-	return 0;
-}
-
-unsigned char ssd1306_invert_box(unsigned char x) {
-
-	for (unsigned char i = x * SSD1306_CHAR_WIDTH + SSD1306_X_OFFSET - 1;
-			i < x * SSD1306_CHAR_WIDTH + SSD1306_X_OFFSET + SSD1306_CHAR_WIDTH; i++)
-			for (unsigned char j = SSD1306_Y_OFFSET - 1; j < SSD1306_Y_OFFSET + SSD1306_CHAR_HEIGHT - 1; j++)
-				if (ssd1306_invert_pixel(i, j) != 0)
-					return -EWRITE;
+#endif
 	return 0;
 }
 
@@ -226,6 +214,17 @@ void ssd1306_write_char(char ch) {
 
 	ssd1306_dev.x += ssd1306_dev.font->FontWidth;
 }
+
+unsigned char ssd1306_invert_box(unsigned char x) {
+
+	for (unsigned char i = x * SSD1306_CHAR_WIDTH + SSD1306_X_OFFSET - 1;
+			i < x * SSD1306_CHAR_WIDTH + SSD1306_X_OFFSET + SSD1306_CHAR_WIDTH; i++)
+			for (unsigned char j = SSD1306_Y_OFFSET - 1; j < SSD1306_Y_OFFSET + SSD1306_CHAR_HEIGHT - 1; j++)
+				if (ssd1306_invert_pixel(i, j) != 0)
+					return -EWRITE;
+	return 0;
+}
+
 
 void ssd1306_write_string(char* str) {
 	while (*str){

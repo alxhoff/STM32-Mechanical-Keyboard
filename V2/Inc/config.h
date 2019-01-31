@@ -73,6 +73,7 @@
 
 //SCREEN
 #define SCREEN_CURSOR_PERIOD	750
+#define SCREEN_INVERTED			1
 
 
 
