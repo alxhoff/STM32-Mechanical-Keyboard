@@ -177,14 +177,10 @@ int main(void)
 
 
 	screen_add_line("Hello");
-	screen_update();
 
 	screen_add_line("World");
-	screen_update();
 
 	screen_add_line("This is a long line");
-
-	screen_update();
 
 	macro_add_new_entry("first test macro yo",
 	  			HID_KEYBOARD_SC_T);
@@ -607,7 +603,7 @@ void MouseListenCallback(void const * argument)
 void CLIListenCallback(void const *argument)
 {
 	TickType_t xLastWakeTime = xTaskGetTickCount();
-	const TickType_t xPeriod = 100;
+	TickType_t xPeriod = 100;
 
 	for (;;)
 	{
@@ -635,11 +631,14 @@ void StatesCallback(void  const *argument)
 void LEDCallback(void const *argument)
 {
 	TickType_t xLastWakeTime = xTaskGetTickCount();
-	const TickType_t xPeriod = 20;
+	TickType_t xPeriod = 20;
+
 	LEDs_init();
+
 	for(;;){
 		LEDs_run();
-		screen_update();
+
+		xPeriod = STATES_PERIOD - (xLastWakeTime - xTaskGetTickCount());
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);
 	}
 }

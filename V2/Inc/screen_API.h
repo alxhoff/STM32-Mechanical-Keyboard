@@ -18,6 +18,7 @@
 #define SCREEN_DRAW_CURS	ssd1306_draw_cursor
 #define SCREEN_MV_CUR_LEFT	ssd1306_mv_cursor_left
 #define SCREEN_MV_CUR_RIGHT	ssd1306_mv_cursor_right
+#define SCREEN_CLEAR		ssd1306_fill
 
-#define SCREEN_REFRESH_TASK	ssd1306_refresh
+#define SCREEN_REFRESH		ssd1306_update_screen
 #endif /* SCREEN_API_H_ */

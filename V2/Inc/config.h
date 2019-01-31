@@ -66,6 +66,7 @@
 //TASK PERIODS
 #define STATES_PERIOD			20
 #define SCAN_PERIOD				20
+#define SCREEN_PERIOD			20
 
 //CLI
 #define CLI_HISTORY_LENGTH		10

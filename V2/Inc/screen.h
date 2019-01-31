@@ -9,7 +9,6 @@
 #define SCREEN_H_
 
 unsigned char screen_init(void);
-void screen_update(void);
 void screen_add_line(char *line);
 
 #endif /* SCREEN_H_ */

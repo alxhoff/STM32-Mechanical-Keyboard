@@ -73,8 +73,6 @@ struct ssd1306_device {
 
 	I2C_HandleTypeDef* port;
 
-	osThreadId refresh_task;
-
 	unsigned char (*clear)(void);
 	unsigned char (*update)(void);
 	void (*fill)(void);
@@ -122,13 +120,9 @@ unsigned char ssd1306_update_screen(void) {
 	return 0;
 }
 
-unsigned char ssd1306_clear(void) {
+void ssd1306_clear(void) {
 	ssd1306_fill();
-
-	if (ssd1306_update_screen() != 0)
-		return -EWRITE;
-
-	return 0;
+	ssd1306_update_screen();
 }
 
 void ssd1306_set_pixel(unsigned char x, unsigned char y) {
@@ -183,8 +177,8 @@ unsigned char ssd1306_invert_pixel(uint8_t x, uint8_t y) {
 		return -EBOUNDS;
 	}
 
-	ssd1306_dev.buffer[x + (y / 8) * ssd1306_dev.width] =
-			!ssd1306_dev.buffer[x + (y / 8) * ssd1306_dev.width];
+	ssd1306_dev.buffer[x + (y / 8) * ssd1306_dev.width] ^= 1 << (y % 8);;
+
 
 	return 0;
 }
@@ -195,18 +189,17 @@ unsigned char ssd1306_draw_char_box(unsigned char x) {
 
 	for (unsigned char i = x_pos; i < x_pos + SSD1306_CHAR_WIDTH; i++)
 		for (unsigned char j = y_pos; j < y_pos + SSD1306_CHAR_HEIGHT; j++)
-			if (ssd1306_draw_pixel(i, j, !ssd1306_dev.background) != 0)
+			if (ssd1306_draw_pixel(j, i, !ssd1306_dev.background) != 0)
 				return -EWRITE;
 
 	return 0;
 }
 
 unsigned char ssd1306_invert_box(unsigned char x) {
-	unsigned char x_pos = x * SSD1306_CHAR_WIDTH + SSD1306_X_OFFSET;
-	unsigned char y_pos = SSD1306_Y_OFFSET;
 
-	for (unsigned char i = x_pos; i < x_pos + SSD1306_CHAR_WIDTH; i++)
-			for (unsigned char j = y_pos; j < y_pos + SSD1306_CHAR_HEIGHT; j++)
+	for (unsigned char i = x * SSD1306_CHAR_WIDTH + SSD1306_X_OFFSET - 1;
+			i < x * SSD1306_CHAR_WIDTH + SSD1306_X_OFFSET + SSD1306_CHAR_WIDTH; i++)
+			for (unsigned char j = SSD1306_Y_OFFSET - 1; j < SSD1306_Y_OFFSET + SSD1306_CHAR_HEIGHT - 1; j++)
 				if (ssd1306_invert_pixel(i, j) != 0)
 					return -EWRITE;
 	return 0;
@@ -249,13 +242,6 @@ void ssd1306_draw_framebuffer(char **buf) {
 	}
 }
 
-
-void ssd1306_refresh(void *args){
-	while(1)
-		ssd1306_update_screen();
-}
-
-
 unsigned char ssd1306_init(void) {
 	//functions
 	ssd1306_dev.clear = &ssd1306_clear;
@@ -270,9 +256,6 @@ unsigned char ssd1306_init(void) {
 
 	ssd1306_dev.background = SSD1306_BACKGROUND;
 	ssd1306_dev.font = SSD1306_FONT;
-
-	osThreadDef(ssd1306Task, ssd1306_refresh, osPriorityNormal, 0, 128);
-	ssd1306_dev.refresh_task = osThreadCreate(osThread(ssd1306Task), NULL);
 
 	/* Init LCD */
 	ssd1306_write_command(0xAE); //display off
@@ -315,16 +298,12 @@ unsigned char ssd1306_init(void) {
 	return 0;
 }
 //TODO tidy this
-unsigned char prev_cursor = 0;
 void ssd1306_draw_cursor(unsigned char state) {
-	if(state != prev_cursor){
+	if(state)
 		ssd1306_invert_box(SSD1306_X_OFFSET * ssd1306_dev.cursor_pos * SSD1306_CHAR_WIDTH);
-		prev_cursor = state;
-	}
 }
 
 void ssd1306_draw_text_buffer(char **buf) {
-	ssd1306_fill();
 	ssd1306_draw_framebuffer(buf);
 }
 
