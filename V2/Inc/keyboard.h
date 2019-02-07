@@ -27,38 +27,38 @@
 #include "buffers.h"
 
 /**
-* @brief Inits the keyboard device and GPIO pins
-*
-* To initialise the keyboard device, this function must be called
-* with the colum GPIO pins and ports, stored in arrays, passed to it.
-* The GPIO are initialised and all default values are set.
-*
-* @param keyboard_devices global keyboard devices struct
-* @param row_ports array of GPIO pointers to the row ports
-* @param row_pins array of GPIO pin values
-* @return 0 on success
-*/
+ * @brief Inits the keyboard device and GPIO pins
+ *
+ * To initialise the keyboard device, this function must be called
+ * with the colum GPIO pins and ports, stored in arrays, passed to it.
+ * The GPIO are initialised and all default values are set.
+ *
+ * @param keyboard_devices global keyboard devices struct
+ * @param row_ports array of GPIO pointers to the row ports
+ * @param row_pins array of GPIO pin values
+ * @return 0 on success
+ */
 void keyboard_init(void);
 
 unsigned char keyboard_scan_matrix(void);
 
 /**
-* @brief Processes the input key buffer
-*
-* Once the keyboard scan is complete and the input key buffer has been
-* populated the buffer must be processed. The keyboard state is first handled,
-* going to state code if needed. The buffer is then processed, sorting keys
-* into either modifier keys, media keys or keyboard keys. Once sorted the
-* key codes or bitmasks are retrieved/set. Normal keyboard button presses
-* are first compared against the last HID report as repeating keys get priority
-* in the the next HID report as they represent keys being held down. Keys not
-* in the previous HID report are shortlisted such that after all keys have been
-* converted into key codes the HID report can be filled with shortlisted keys.
-*
-* @param data global keyboard HID data
-* @param layer_list layer list used to convert key_codes
-* @return 0 on success
-*/
+ * @brief Processes the input key buffer
+ *
+ * Once the keyboard scan is complete and the input key buffer has been
+ * populated the buffer must be processed. The keyboard state is first handled,
+ * going to state code if needed. The buffer is then processed, sorting keys
+ * into either modifier keys, media keys or keyboard keys. Once sorted the
+ * key codes or bitmasks are retrieved/set. Normal keyboard button presses
+ * are first compared against the last HID report as repeating keys get priority
+ * in the the next HID report as they represent keys being held down. Keys not
+ * in the previous HID report are shortlisted such that after all keys have been
+ * converted into key codes the HID report can be filled with shortlisted keys.
+ *
+ * @param data global keyboard HID data
+ * @param layer_list layer list used to convert key_codes
+ * @return 0 on success
+ */
 unsigned char keyboard_process_scan_buf(void);
 
 #endif /* KEYBOARD_H_ */

@@ -122,10 +122,8 @@
 
 //prototypes
 
-void keymap_set_key(unsigned char row,
-		unsigned char col, unsigned char val);
-unsigned char keymap_get_key(unsigned char row,
-		unsigned char col);
+void keymap_set_key(unsigned char row, unsigned char col, unsigned char val);
+unsigned char keymap_get_key(unsigned char row, unsigned char col);
 void keymap_set_name(char* name);
 char *keymap_get_name(void);
 void keymap_set_mod_key_code(unsigned char code);

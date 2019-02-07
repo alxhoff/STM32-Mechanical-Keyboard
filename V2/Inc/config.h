@@ -5,7 +5,6 @@
  *      Author: alxhoff
  */
 
-
 #ifndef CONFIG_H_
 #define CONFIG_H_
 
@@ -74,7 +73,5 @@
 //SCREEN
 #define SCREEN_CURSOR_PERIOD	750
 #define SCREEN_INVERTED			1
-
-
 
 #endif /* CONFIG_H_ */

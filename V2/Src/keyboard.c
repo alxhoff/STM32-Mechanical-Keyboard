@@ -61,7 +61,7 @@ typedef struct key_buffer {
 	unsigned char count;
 } key_buffer_t;
 
-typedef struct toggle_keys{
+typedef struct toggle_keys {
 	unsigned char caps;
 	unsigned char CLI;
 	unsigned char func;
@@ -233,7 +233,6 @@ void keyboard_toggle_func(void) {
 	keyboard_dev.toggles.func ^= 1;
 }
 
-
 unsigned char keyboard_process_scan_buf(void) {
 	static unsigned char ret = 0;
 	volatile static unsigned char tmp_sc;
@@ -261,7 +260,7 @@ unsigned char keyboard_process_scan_buf(void) {
 			//TODO make more efficient
 			ret = lookup_toggle_key(tmp_sc);
 			if (ret) {
-				switch(ret){
+				switch (ret) {
 				case 1:
 					keyboard_toggle_caps();
 					keyboard_dev.toggles.changed = 1;
@@ -279,21 +278,20 @@ unsigned char keyboard_process_scan_buf(void) {
 		}
 
 		//Handle toggles and caps
-		if(keyboard_dev.toggles.changed){
+		if (keyboard_dev.toggles.changed) {
 			//TODO debounce
-			if(keyboard_dev.toggles.caps){ /* If caps is set */
+			if (keyboard_dev.toggles.caps) { /* If caps is set */
 				LEDs_set_caps();
 				buf->mod_buf |= HID_KEYBOARD_LED_CAPSLOCK;
-			}
-			else
+			} else
 				LEDs_clear_caps();
 
-			if(keyboard_dev.toggles.CLI)
+			if (keyboard_dev.toggles.CLI)
 				LEDs_set_CLI();
 			else
 				LEDs_clear_CLI();
 
-			if(keyboard_dev.toggles.func)
+			if (keyboard_dev.toggles.func)
 				LEDs_set_func();
 			else
 				LEDs_clear_func();

@@ -46,29 +46,29 @@ uint32_t Wheel(uint8_t WheelPos) {
 }
 
 uint32_t Wheel_snappy_fade_out(uint8_t WheelPos) {
-  WheelPos = WheelPos % 256;
-  if(WheelPos < 85) {
-    return newColor(WheelPos * 3, 0, WheelPos * 3);
-  }
-  if(WheelPos < 170) {
-    WheelPos += 85;
-    return newColor(0, WheelPos * 3, WheelPos * 3);
-  }
-  WheelPos += 170;
-  return newColor(WheelPos * 3, WheelPos * 3, 0);
+	WheelPos = WheelPos % 256;
+	if (WheelPos < 85) {
+		return newColor(WheelPos * 3, 0, WheelPos * 3);
+	}
+	if (WheelPos < 170) {
+		WheelPos += 85;
+		return newColor(0, WheelPos * 3, WheelPos * 3);
+	}
+	WheelPos += 170;
+	return newColor(WheelPos * 3, WheelPos * 3, 0);
 }
 
 uint32_t Wheel_snappy_fade_in(uint8_t WheelPos) {
-	  WheelPos = 255 - WheelPos;
-  if(WheelPos < 85) {
-    return newColor(WheelPos * 3, 0, WheelPos * 3);
-  }
-  if(WheelPos < 170) {
-    WheelPos += 85;
-    return newColor(0, WheelPos * 3, WheelPos * 3);
-  }
-  WheelPos += 170;
-  return newColor(WheelPos * 3, WheelPos * 3, 0);
+	WheelPos = 255 - WheelPos;
+	if (WheelPos < 85) {
+		return newColor(WheelPos * 3, 0, WheelPos * 3);
+	}
+	if (WheelPos < 170) {
+		WheelPos += 85;
+		return newColor(0, WheelPos * 3, WheelPos * 3);
+	}
+	WheelPos += 170;
+	return newColor(WheelPos * 3, WheelPos * 3, 0);
 }
 
 void LED_rainbow_right(void) {
@@ -80,7 +80,7 @@ void LED_rainbow_right(void) {
 
 	if (x == 0)
 		//TODO this makes no senseg
-		x = (uint8_t)(256 * 5);
+		x = (uint8_t) (256 * 5);
 	if (ws2812b.transferComplete) {
 		if (HAL_GetTick() - timestamp > RAINBOW_RIGHT_DELAY) {
 			timestamp = HAL_GetTick();

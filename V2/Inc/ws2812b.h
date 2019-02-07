@@ -1,16 +1,16 @@
 /*
 
-  WS2812B CPU and memory efficient library
+ WS2812B CPU and memory efficient library
 
-  Date: 28.9.2016
+ Date: 28.9.2016
 
-  Author: Martin Hubacek
-  	  	  http://www.martinhubacek.cz
-  	  	  @hubmartin
+ Author: Martin Hubacek
+ http://www.martinhubacek.cz
+ @hubmartin
 
-  Licence: MIT License
+ Licence: MIT License
 
-*/
+ */
 
 #ifndef WS2812B_H_
 #define WS2812B_H_
@@ -68,8 +68,7 @@ typedef struct WS2812_BufferItem {
 	uint8_t channel;	// digital output pin/channel
 } WS2812_BufferItem;
 
-typedef struct WS2812_Struct
-{
+typedef struct WS2812_Struct {
 	WS2812_BufferItem item[WS2812_BUFFER_COUNT];
 	SemaphoreHandle_t transferSet;
 	uint8_t transferComplete;
@@ -81,10 +80,10 @@ typedef struct WS2812_Struct
 WS2812_Struct ws2812b;
 
 //TEST
-extern uint8_t test_buff1[4*3];
-extern uint8_t test_buff2[4*3];
-extern uint8_t test_buff3[4*3];
-extern uint8_t test_buff4[4*3];
+extern uint8_t test_buff1[4 * 3];
+extern uint8_t test_buff2[4 * 3];
+extern uint8_t test_buff3[4 * 3];
+extern uint8_t test_buff4[4 * 3];
 ////
 
 // Bit band stuff
@@ -99,7 +98,8 @@ extern uint8_t test_buff4[4*3];
 #define varResetBit(var,bit) (Var_ResetBit_BB((uint32_t)&var,bit))
 #define varGetBit(var,bit) (Var_GetBit_BB((uint32_t)&var,bit))
 
-void ws2812b_set_pixel(uint8_t row, uint16_t column, uint8_t red, uint8_t green, uint8_t blue);
+void ws2812b_set_pixel(uint8_t row, uint16_t column, uint8_t red, uint8_t green,
+		uint8_t blue);
 void DMA_TransferCompleteHandler(DMA_HandleTypeDef *DmaHandle);
 void DMA_TransferHalfHandler(DMA_HandleTypeDef *DmaHandle);
 void DMA_TransferError(DMA_HandleTypeDef *DmaHandle);

@@ -1,0 +1,96 @@
+EESchema Schematic File Version 4
+EELAYER 26 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L MCU_ST_STM32F4:STM32F407VGTx U?
+U 1 1 5C5CA6FA
+P 3150 4100
+F 0 "U?" H 2750 1300 50  0000 C CNN
+F 1 "STM32F407VGTx" H 2500 1400 50  0000 C CNN
+F 2 "Package_QFP:LQFP-100_14x14mm_P0.5mm" H 2450 1500 50  0001 R CNN
+F 3 "http://www.st.com/st-web-ui/static/active/en/resource/technical/document/datasheet/DM00037051.pdf" H 3150 4100 50  0001 C CNN
+	1    3150 4100
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:VDD #PWR?
+U 1 1 5C5CA986
+P 3450 1100
+F 0 "#PWR?" H 3450 950 50  0001 C CNN
+F 1 "VDD" H 3467 1273 50  0000 C CNN
+F 2 "" H 3450 1100 50  0001 C CNN
+F 3 "" H 3450 1100 50  0001 C CNN
+	1    3450 1100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3450 1400 3450 1350
+Wire Wire Line
+	3350 1400 3350 1350
+Wire Wire Line
+	3350 1350 3450 1350
+Connection ~ 3450 1350
+Wire Wire Line
+	3450 1350 3450 1100
+Wire Wire Line
+	3250 1400 3250 1350
+Wire Wire Line
+	3250 1350 3350 1350
+Connection ~ 3350 1350
+Wire Wire Line
+	3150 1400 3150 1350
+Wire Wire Line
+	3150 1350 3250 1350
+Connection ~ 3250 1350
+Wire Wire Line
+	3050 1400 3050 1350
+Wire Wire Line
+	3050 1350 3150 1350
+Connection ~ 3150 1350
+Wire Wire Line
+	2950 1400 2950 1350
+Wire Wire Line
+	2950 1350 3050 1350
+Connection ~ 3050 1350
+$Comp
+L power:GND #PWR?
+U 1 1 5C5CAC02
+P 3150 7050
+F 0 "#PWR?" H 3150 6800 50  0001 C CNN
+F 1 "GND" H 3155 6877 50  0000 C CNN
+F 2 "" H 3150 7050 50  0001 C CNN
+F 3 "" H 3150 7050 50  0001 C CNN
+	1    3150 7050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3150 6900 3150 7000
+Wire Wire Line
+	3350 6900 3350 7000
+Wire Wire Line
+	3350 7000 3150 7000
+Connection ~ 3150 7000
+Wire Wire Line
+	3150 7000 3150 7050
+Wire Wire Line
+	3050 6900 3050 7000
+Wire Wire Line
+	3050 7000 3150 7000
+Wire Wire Line
+	2950 6900 2950 7000
+Wire Wire Line
+	2950 7000 3050 7000
+Connection ~ 3050 7000
+$EndSCHEMATC

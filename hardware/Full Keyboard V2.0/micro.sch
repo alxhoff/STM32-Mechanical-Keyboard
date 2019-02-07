@@ -1,5 +1,6 @@
 EESchema Schematic File Version 2
 LIBS:FullKeyboardV1-rescue
+LIBS:keyboard
 LIBS:FullKeyboardV1-cache
 EELAYER 25 0
 EELAYER END
@@ -401,78 +402,78 @@ $EndComp
 $Comp
 L SN43HC595 U4
 U 1 1 59C67367
-P 6550 3200
-F 0 "U4" H 6400 2600 60  0000 C CNN
-F 1 "SN74HC595" H 6550 3800 60  0000 C CNN
-F 2 "keyboard:SOP16" H 6450 3450 60  0001 C CNN
-F 3 "" H 6450 3450 60  0000 C CNN
-	1    6550 3200
+P 6550 1850
+F 0 "U4" H 6400 1250 60  0000 C CNN
+F 1 "SN74HC595" H 6550 2450 60  0000 C CNN
+F 2 "keyboard:SOP16" H 6450 2100 60  0001 C CNN
+F 3 "" H 6450 2100 60  0000 C CNN
+	1    6550 1850
 	1    0    0    -1  
 $EndComp
 $Comp
 L SN43HC595 U3
 U 1 1 59C67413
-P 6550 1750
-F 0 "U3" H 6400 1150 60  0000 C CNN
-F 1 "SN74HC595" H 6550 2350 60  0000 C CNN
-F 2 "keyboard:SOP16" H 6450 2000 60  0001 C CNN
-F 3 "" H 6450 2000 60  0000 C CNN
-	1    6550 1750
+P 6550 3450
+F 0 "U3" H 6400 2850 60  0000 C CNN
+F 1 "SN74HC595" H 6550 4050 60  0000 C CNN
+F 2 "keyboard:SOP16" H 6450 3700 60  0001 C CNN
+F 3 "" H 6450 3700 60  0000 C CNN
+	1    6550 3450
 	1    0    0    -1  
 $EndComp
 Text Notes 10250 950  0    60   ~ 0
 Test Pins
 Text Notes 8450 1000 0    60   ~ 0
 SPI Devices
-Text Label 6950 2850 0    60   ~ 0
+Text Label 6950 1500 0    60   ~ 0
+SRCLK
+Text Label 6950 3100 0    60   ~ 0
 SRCLK
 Text Label 6950 1400 0    60   ~ 0
-SRCLK
-Text Label 6950 1300 0    60   ~ 0
 SER_IN
-Text Label 6950 3050 0    60   ~ 0
+Text Label 6950 1700 0    60   ~ 0
 RCLK
-Text Label 6950 1600 0    60   ~ 0
+Text Label 6950 3300 0    60   ~ 0
 RCLK
-Text Label 6950 1900 0    60   ~ 0
-OUTEN
-Text Label 6950 3350 0    60   ~ 0
+Text Label 6950 3600 0    60   ~ 0
 OUTEN
 Text Label 6950 2000 0    60   ~ 0
+OUTEN
+Text Label 6950 3700 0    60   ~ 0
 SRCLR
-Text Label 6950 3450 0    60   ~ 0
+Text Label 6950 2100 0    60   ~ 0
 SRCLR
 Text Notes 6250 1000 0    60   ~ 0
 Shift Registers\n
-Text HLabel 6150 2850 0    60   Input ~ 0
-COL0
-Text HLabel 6150 2950 0    60   Input ~ 0
-COL1
-Text HLabel 6150 3050 0    60   Input ~ 0
-COL2
-Text HLabel 6150 3150 0    60   Input ~ 0
-COL3
-Text HLabel 6150 3250 0    60   Input ~ 0
-COL4
-Text HLabel 6150 3350 0    60   Input ~ 0
-COL5
-Text HLabel 6150 3450 0    60   Input ~ 0
-COL6
-Text HLabel 6150 1300 0    60   Input ~ 0
-COL7
-Text HLabel 6150 1400 0    60   Input ~ 0
-COL8
 Text HLabel 6150 1500 0    60   Input ~ 0
-COL9
+COL0
 Text HLabel 6150 1600 0    60   Input ~ 0
-COL10
+COL1
 Text HLabel 6150 1700 0    60   Input ~ 0
-COL11
+COL2
 Text HLabel 6150 1800 0    60   Input ~ 0
-COL12
+COL3
 Text HLabel 6150 1900 0    60   Input ~ 0
-COL13
+COL4
 Text HLabel 6150 2000 0    60   Input ~ 0
+COL5
+Text HLabel 6150 2100 0    60   Input ~ 0
+COL6
+Text HLabel 6150 3000 0    60   Input ~ 0
+COL7
+Text HLabel 6150 3100 0    60   Input ~ 0
+COL8
+Text HLabel 6150 3200 0    60   Input ~ 0
+COL9
+Text HLabel 6150 3300 0    60   Input ~ 0
+COL10
+Text HLabel 6150 3400 0    60   Input ~ 0
+COL11
+Text HLabel 6150 3500 0    60   Input ~ 0
+COL12
+Text HLabel 6150 3600 0    60   Input ~ 0
+COL13
+Text HLabel 6150 3700 0    60   Input ~ 0
 COL14
 $Comp
 L +3V3 #PWR0177
@@ -488,45 +489,45 @@ $EndComp
 $Comp
 L +3V3 #PWR0178
 U 1 1 59C69E88
-P 6950 2150
-F 0 "#PWR0178" H 6950 2000 50  0001 C CNN
-F 1 "+3V3" H 6950 2290 50  0000 C CNN
-F 2 "" H 6950 2150 50  0000 C CNN
-F 3 "" H 6950 2150 50  0000 C CNN
-	1    6950 2150
+P 6950 3850
+F 0 "#PWR0178" H 6950 3700 50  0001 C CNN
+F 1 "+3V3" H 6950 3990 50  0000 C CNN
+F 2 "" H 6950 3850 50  0000 C CNN
+F 3 "" H 6950 3850 50  0000 C CNN
+	1    6950 3850
 	0    1    1    0   
 $EndComp
 $Comp
 L +3V3 #PWR0179
 U 1 1 59C69F63
-P 6950 3600
-F 0 "#PWR0179" H 6950 3450 50  0001 C CNN
-F 1 "+3V3" H 6950 3740 50  0000 C CNN
-F 2 "" H 6950 3600 50  0000 C CNN
-F 3 "" H 6950 3600 50  0000 C CNN
-	1    6950 3600
+P 6950 2250
+F 0 "#PWR0179" H 6950 2100 50  0001 C CNN
+F 1 "+3V3" H 6950 2390 50  0000 C CNN
+F 2 "" H 6950 2250 50  0000 C CNN
+F 3 "" H 6950 2250 50  0000 C CNN
+	1    6950 2250
 	0    1    1    0   
 $EndComp
 $Comp
 L GND #PWR0180
 U 1 1 59C6A058
-P 7150 2250
-F 0 "#PWR0180" H 7150 2000 50  0001 C CNN
-F 1 "GND" H 7150 2100 50  0000 C CNN
-F 2 "" H 7150 2250 50  0000 C CNN
-F 3 "" H 7150 2250 50  0000 C CNN
-	1    7150 2250
+P 7150 3950
+F 0 "#PWR0180" H 7150 3700 50  0001 C CNN
+F 1 "GND" H 7150 3800 50  0000 C CNN
+F 2 "" H 7150 3950 50  0000 C CNN
+F 3 "" H 7150 3950 50  0000 C CNN
+	1    7150 3950
 	0    -1   -1   0   
 $EndComp
 $Comp
 L GND #PWR0181
 U 1 1 59C6A08A
-P 7150 3700
-F 0 "#PWR0181" H 7150 3450 50  0001 C CNN
-F 1 "GND" H 7150 3550 50  0000 C CNN
-F 2 "" H 7150 3700 50  0000 C CNN
-F 3 "" H 7150 3700 50  0000 C CNN
-	1    7150 3700
+P 7150 2350
+F 0 "#PWR0181" H 7150 2100 50  0001 C CNN
+F 1 "GND" H 7150 2200 50  0000 C CNN
+F 2 "" H 7150 2350 50  0000 C CNN
+F 3 "" H 7150 2350 50  0000 C CNN
+	1    7150 2350
 	0    -1   -1   0   
 $EndComp
 Wire Wire Line
@@ -561,12 +562,6 @@ Wire Wire Line
 	9100 1600 9100 1750
 Wire Notes Line
 	9800 4500 9800 800 
-Wire Wire Line
-	6150 2250 6150 2500
-Wire Wire Line
-	6150 2500 6950 2500
-Wire Wire Line
-	6950 2500 6950 2750
 Wire Notes Line
 	7500 800  7500 4500
 Wire Wire Line
@@ -574,9 +569,9 @@ Wire Wire Line
 Wire Wire Line
 	1850 1850 2000 1850
 Wire Wire Line
-	7150 3700 6950 3700
+	7150 2350 6950 2350
 Wire Wire Line
-	6950 2250 7150 2250
+	6950 3950 7150 3950
 Wire Wire Line
 	3850 2650 3850 2750
 $Comp
@@ -646,4 +641,10 @@ F 3 "" H 6650 4700 50  0000 C CNN
 	1    6650 4700
 	1    0    0    -1  
 $EndComp
+Wire Wire Line
+	6150 2350 6150 2650
+Wire Wire Line
+	6150 2650 6950 2650
+Wire Wire Line
+	6950 2650 6950 3000
 $EndSCHEMATC

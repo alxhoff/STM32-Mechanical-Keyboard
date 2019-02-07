@@ -1,0 +1,161 @@
+EESchema Schematic File Version 4
+EELAYER 26 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L MCU_ST_STM32F4:STM32F407VGTx U?
+U 1 1 5C5CA6FA
+P 3150 4100
+F 0 "U?" H 2750 1300 50  0000 C CNN
+F 1 "STM32F407VGTx" H 2500 1400 50  0000 C CNN
+F 2 "Package_QFP:LQFP-100_14x14mm_P0.5mm" H 2450 1500 50  0001 R CNN
+F 3 "http://www.st.com/st-web-ui/static/active/en/resource/technical/document/datasheet/DM00037051.pdf" H 3150 4100 50  0001 C CNN
+	1    3150 4100
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:VDD #PWR?
+U 1 1 5C5CA986
+P 3450 1100
+F 0 "#PWR?" H 3450 950 50  0001 C CNN
+F 1 "VDD" H 3467 1273 50  0000 C CNN
+F 2 "" H 3450 1100 50  0001 C CNN
+F 3 "" H 3450 1100 50  0001 C CNN
+	1    3450 1100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3450 1400 3450 1350
+Wire Wire Line
+	3350 1400 3350 1350
+Wire Wire Line
+	3350 1350 3450 1350
+Connection ~ 3450 1350
+Wire Wire Line
+	3450 1350 3450 1100
+Wire Wire Line
+	3250 1400 3250 1350
+Wire Wire Line
+	3250 1350 3350 1350
+Connection ~ 3350 1350
+Wire Wire Line
+	3150 1400 3150 1350
+Wire Wire Line
+	3150 1350 3250 1350
+Connection ~ 3250 1350
+Wire Wire Line
+	3050 1400 3050 1350
+Wire Wire Line
+	3050 1350 3150 1350
+Connection ~ 3150 1350
+Wire Wire Line
+	2950 1400 2950 1350
+Wire Wire Line
+	2950 1350 3050 1350
+Connection ~ 3050 1350
+$Comp
+L power:GND #PWR?
+U 1 1 5C5CAC02
+P 2950 7350
+F 0 "#PWR?" H 2950 7100 50  0001 C CNN
+F 1 "GND" H 2955 7177 50  0000 C CNN
+F 2 "" H 2950 7350 50  0001 C CNN
+F 3 "" H 2950 7350 50  0001 C CNN
+	1    2950 7350
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5C5CB589
+P 1900 2100
+F 0 "C?" V 1671 2100 50  0000 C CNN
+F 1 "C_Small" V 1762 2100 50  0000 C CNN
+F 2 "" H 1900 2100 50  0001 C CNN
+F 3 "~" H 1900 2100 50  0001 C CNN
+	1    1900 2100
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5C5CB650
+P 1650 2200
+F 0 "C?" V 1421 2200 50  0000 C CNN
+F 1 "C_Small" V 1512 2200 50  0000 C CNN
+F 2 "" H 1650 2200 50  0001 C CNN
+F 3 "~" H 1650 2200 50  0001 C CNN
+	1    1650 2200
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2000 2100 2250 2100
+Wire Wire Line
+	2250 2200 1750 2200
+$Comp
+L power:GND #PWR?
+U 1 1 5C5CBAE9
+P 1250 2250
+F 0 "#PWR?" H 1250 2000 50  0001 C CNN
+F 1 "GND" H 1255 2077 50  0000 C CNN
+F 2 "" H 1250 2250 50  0001 C CNN
+F 3 "" H 1250 2250 50  0001 C CNN
+	1    1250 2250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1800 2100 1250 2100
+Wire Wire Line
+	1250 2100 1250 2200
+Wire Wire Line
+	1550 2200 1250 2200
+Connection ~ 1250 2200
+Wire Wire Line
+	1250 2200 1250 2250
+$Comp
+L Device:R_Small_US R?
+U 1 1 5C5CC33E
+P 3250 7100
+F 0 "R?" H 3318 7146 50  0000 L CNN
+F 1 "0" H 3318 7055 50  0000 L CNN
+F 2 "" H 3250 7100 50  0001 C CNN
+F 3 "~" H 3250 7100 50  0001 C CNN
+	1    3250 7100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3250 6900 3250 7000
+Wire Wire Line
+	3350 6900 3350 7300
+Wire Wire Line
+	3350 7300 3250 7300
+Wire Wire Line
+	3250 7300 3250 7200
+Wire Wire Line
+	3250 7300 3150 7300
+Wire Wire Line
+	3150 7300 3150 6900
+Connection ~ 3250 7300
+Wire Wire Line
+	3050 6900 3050 7300
+Wire Wire Line
+	3050 7300 3150 7300
+Connection ~ 3150 7300
+Wire Wire Line
+	2950 6900 2950 7300
+Wire Wire Line
+	2950 7300 3050 7300
+Connection ~ 3050 7300
+Wire Wire Line
+	2950 7350 2950 7300
+Connection ~ 2950 7300
+$EndSCHEMATC

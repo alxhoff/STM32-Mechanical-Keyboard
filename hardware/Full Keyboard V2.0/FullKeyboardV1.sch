@@ -1,5 +1,6 @@
 EESchema Schematic File Version 2
 LIBS:FullKeyboardV1-rescue
+LIBS:keyboard
 LIBS:FullKeyboardV1-cache
 EELAYER 25 0
 EELAYER END
@@ -5221,4 +5222,15 @@ Wire Wire Line
 	6850 -2250 6850 -2200
 Wire Wire Line
 	6850 -2350 7000 -2350
+$Comp
+L Cherry_bottom_row U5
+U 1 1 5A809A2A
+P 5700 3750
+F 0 "U5" H 6300 4050 60  0000 C CNN
+F 1 "Cherry_bottom_row" H 5650 4050 60  0000 C CNN
+F 2 "keyboard:RGB_CHERRY_SPACEBAR_ROW" H 5550 4600 60  0001 C CNN
+F 3 "" H 5550 4600 60  0001 C CNN
+	1    5700 3750
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC

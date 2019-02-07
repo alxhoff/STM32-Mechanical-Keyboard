@@ -437,20 +437,17 @@ scan_code_t lookup_sc[256] = {
 	[232]={SC(MEDIA_PLAY),0},
 };
 
-unsigned char lookup_get_key(unsigned char character)
-{
+unsigned char lookup_get_key(unsigned char character) {
 	return lookup_sc[character].code;
 }
 
-unsigned char lookup_get_mod(unsigned char character)
-{
+unsigned char lookup_get_mod(unsigned char character) {
 	return lookup_sc[character].mod;
 }
 
-unsigned char lookup_state_change_key(unsigned char sc)
-{
+unsigned char lookup_state_change_key(unsigned char sc) {
 	//TODO
-	switch(sc){
+	switch (sc) {
 	case SC(LAYER_FUNCTION):
 		break;
 	case SC(MACRO_RUN_FUNCTION):
@@ -466,9 +463,8 @@ unsigned char lookup_state_change_key(unsigned char sc)
 }
 
 //look if the key is a key like caps lock
-unsigned char lookup_toggle_key(unsigned char sc)
-{
-	switch(sc){
+unsigned char lookup_toggle_key(unsigned char sc) {
+	switch (sc) {
 	case SC(LOCKING_CAPS_LOCK):
 		return 1;
 	default:
