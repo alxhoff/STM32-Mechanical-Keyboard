@@ -204,15 +204,14 @@ void send_string(char* str) {
 }
 
 //SEND STATE FUNCTIONS
-unsigned char send_init(void)
+void send_init(void)
 {
 	processing_lock = xSemaphoreCreateMutex();
 	if(!processing_lock)
-		return -ENOMEM;
+		return;
 	USB_send_lock = xSemaphoreCreateMutex();
 	if(!USB_send_lock)
-		return -ENOMEM;
-	return 0;
+		return;
 }
 
 void send_enter(void){

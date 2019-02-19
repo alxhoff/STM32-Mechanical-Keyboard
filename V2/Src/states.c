@@ -26,7 +26,7 @@ struct state {
 
 	unsigned char initd;
 
-	unsigned char (*probe)(void);
+	void (*probe)(void);
 
 	void (*enter)(void);
 	void (*run)(void);
@@ -37,11 +37,34 @@ typedef struct state_machine {
 	state_t *current_state;
 	state_t *next_state;
 
+	unsigned char input;
+
 	state_t **states;
 	unsigned char count;
 } state_machine_t;
 
 state_machine_t state_machine_dev = { 0 };
+
+void states_set_input(unsigned char input) {
+	state_machine_dev.input = input;
+}
+
+unsigned char states_get_input(void) {
+	return state_machine_dev.input;
+}
+
+void states_clear_input(void) {
+	state_machine_dev.input = 0;
+}
+
+unsigned char states_get_state(void) {
+	return state_machine_dev.current_state->id;
+}
+
+void states_set_state(unsigned char state) {
+	state_machine_dev.next_state = state_machine_dev.states[state];
+}
+
 
 unsigned char states_run(void) {
 	if (state_machine_dev.next_state->id
@@ -59,9 +82,8 @@ unsigned char states_run(void) {
 	return 0;
 }
 
-static unsigned char states_add(unsigned char (*probe)(void),
-		void (*enter)(void), void (*run)(void), void (*exit)(void), state_e id,
-		char* name) {
+static unsigned char states_add(void (*probe)(void), void (*enter)(void),
+		void (*run)(void), void (*exit)(void), state_e id, char* name) {
 	unsigned char error = 0;
 	state_t *ret = calloc(1, sizeof(state_t));
 	if (!ret)
@@ -83,7 +105,9 @@ static unsigned char states_add(unsigned char (*probe)(void),
 	state_machine_dev.states[state_machine_dev.count] = ret;
 	state_machine_dev.count++;
 
-	error = ret->probe();
+	if (ret->probe)
+		ret->probe();
+
 	if (error)
 		return -ENOINIT;
 
@@ -91,6 +115,7 @@ static unsigned char states_add(unsigned char (*probe)(void),
 
 	return 0;
 }
+
 
 void *get_state_data(void) {
 	return state_machine_dev.current_state->data;
@@ -104,10 +129,9 @@ static unsigned char states_init_states(void) {
 
 	for (int i = 0; i < state_machine_dev.count; i++)
 		if (!state_machine_dev.states[i]->initd) {
-			if ((state_machine_dev.states[i]->probe)())
-				return -ENOINIT;
-			else
-				state_machine_dev.states[i]->initd = 1;
+			if (state_machine_dev.states[i]->probe)
+				(state_machine_dev.states[i]->probe)();
+			state_machine_dev.states[i]->initd = 1;
 		}
 
 	return 0;
@@ -125,7 +149,6 @@ unsigned char states_init(void) {
 			state_macro_run, "macro run");
 	states_add(macro_set_init, macro_set_enter, macro_set_run, macro_set_exit,
 			state_macro_set, "macro set");
-
 
 	//set initial state
 	SET_INITIAL_STATE(state_send);

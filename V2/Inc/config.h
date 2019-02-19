@@ -73,5 +73,10 @@
 //SCREEN
 #define SCREEN_CURSOR_PERIOD	750
 #define SCREEN_INVERTED			1
+#define SSD1306_I2C_PORT		hi2c1
+#define SCREEN_USE_CURSOR		1
+#define FREERTOS				1
+#define SCREEN_FRAMEBUFFER_LENGTH	20
+
 
 #endif /* CONFIG_H_ */

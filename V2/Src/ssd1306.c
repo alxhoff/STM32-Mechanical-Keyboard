@@ -30,10 +30,12 @@
 #include "fonts.h"
 #include "ssd1306.h"
 #include "error.h"
+#include "config.h"
+#ifdef FREERTOS
 #include "cmsis_os.h"
+#endif
 
 #define SSD1306_I2C_ADDR        0x78
-#define SSD1306_I2C_PORT		&hi2c1
 #define SSD1306_BACKGROUND		0
 #define SSD1306_FONT			&Font_11x18
 
@@ -73,7 +75,7 @@ struct ssd1306_device {
 
 	I2C_HandleTypeDef* port;
 
-	unsigned char (*clear)(void);
+	void (*clear)(void);
 	unsigned char (*update)(void);
 	void (*fill)(void);
 	void (*string)(char*);
@@ -98,7 +100,6 @@ unsigned char ssd1306_write_command(uint8_t command) {
 }
 
 void ssd1306_fill(void) {
-
 	for (int i = 0; i < sizeof(ssd1306_dev.buffer); i++) {
 		ssd1306_dev.buffer[i] = (ssd1306_dev.background == Black) ? 0xFF : 0x00;
 	}
@@ -139,7 +140,6 @@ void ssd1306_set_draw_cursor(int x, int y) {
 	else
 		ssd1306_dev.x = x;
 
-	//TODO check this is correct
 	if (y > (SSD1306_HEIGHT - SSD1306_CHAR_HEIGHT))
 		ssd1306_dev.y = SSD1306_HEIGHT - SSD1306_CHAR_HEIGHT;
 	else if (y < SSD1306_Y_OFFSET)
@@ -252,7 +252,7 @@ unsigned char ssd1306_init(void) {
 	ssd1306_dev.fill = &ssd1306_fill;
 	ssd1306_dev.string = &ssd1306_write_string;
 
-	ssd1306_dev.port = SSD1306_I2C_PORT;
+	ssd1306_dev.port = &SSD1306_I2C_PORT;
 
 	ssd1306_dev.width = SSD1306_WIDTH;
 	ssd1306_dev.height = SSD1306_HEIGHT;

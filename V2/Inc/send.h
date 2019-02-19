@@ -8,7 +8,7 @@
 #ifndef SEND_H_
 #define SEND_H_
 
-unsigned char send_init(void);
+void send_init(void);
 void send_enter(void);
 void send_run(void);
 void send_exit(void);

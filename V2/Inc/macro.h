@@ -15,7 +15,7 @@ unsigned char macro_rem_entry(unsigned char sc);
 unsigned char macro_run_sc(unsigned char sc);
 
 //STATES
-unsigned char macro_init(void);
+void macro_init(void);
 
 void macro_enter(void);
 
@@ -23,7 +23,7 @@ void macro_run(void);
 
 void macro_exit(void);
 
-unsigned char macro_set_init(void);
+void macro_set_init(void);
 
 void macro_set_enter(void);
 
