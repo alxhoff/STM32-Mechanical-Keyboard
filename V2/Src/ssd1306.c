@@ -91,7 +91,8 @@ unsigned char ssd1306_get_rows(void) {
 	return SSD1306_HEIGHT_CHARS;
 }
 
-unsigned char ssd1306_write_command(uint8_t command) {
+signed char ssd1306_write_command(uint8_t command) {
+	signed char ret = 0;
 	if (HAL_I2C_Mem_Write(ssd1306_dev.port, SSD1306_I2C_ADDR, 0x00, 1, &command,
 			1, 10) != 0)
 		return -EWRITE;
@@ -105,7 +106,7 @@ void ssd1306_fill(void) {
 	}
 }
 
-unsigned char ssd1306_update_screen(void) {
+signed char ssd1306_update_screen(void) {
 	uint8_t i;
 
 	for (i = 0; i < 8; i++) {
@@ -158,7 +159,7 @@ void ssd1306_mv_cursor_right(void) {
 		ssd1306_dev.cursor_pos++;
 }
 
-unsigned char ssd1306_draw_pixel(uint8_t x, uint8_t y, SSD1306_colour_t colour) {
+signed char ssd1306_draw_pixel(uint8_t x, uint8_t y, SSD1306_colour_t colour) {
 	if (x >= ssd1306_dev.width || y >= ssd1306_dev.height) {
 		return -EBOUNDS;
 	}
@@ -180,7 +181,7 @@ unsigned char ssd1306_draw_pixel(uint8_t x, uint8_t y, SSD1306_colour_t colour) 
 	return 0;
 }
 
-unsigned char ssd1306_invert_pixel(uint8_t x, uint8_t y) {
+signed char ssd1306_invert_pixel(uint8_t x, uint8_t y) {
 	if (x >= ssd1306_dev.width || y >= ssd1306_dev.height) {
 		return -EBOUNDS;
 	}
@@ -218,7 +219,7 @@ void ssd1306_write_char(char ch) {
 	ssd1306_dev.x += ssd1306_dev.font->FontWidth;
 }
 
-unsigned char ssd1306_invert_box(unsigned char x) {
+signed char ssd1306_invert_box(unsigned char x) {
 
 	for (unsigned char i = x * SSD1306_CHAR_WIDTH + SSD1306_X_OFFSET - 1;
 			i < x * SSD1306_CHAR_WIDTH + SSD1306_X_OFFSET + SSD1306_CHAR_WIDTH;
@@ -245,7 +246,7 @@ void ssd1306_draw_framebuffer(char **buf) {
 	}
 }
 
-unsigned char ssd1306_init(void) {
+signed char ssd1306_init(void) {
 	//functions
 	ssd1306_dev.clear = &ssd1306_clear;
 	ssd1306_dev.update = &ssd1306_update_screen;
