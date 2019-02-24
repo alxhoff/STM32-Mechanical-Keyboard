@@ -13,14 +13,14 @@
 #define MOD(key) HID_KEYBOARD_MODIFIER_##key
 
 typedef struct scan_code_char {
-	char* unmodified;
-	char* modified;
+	const char* unmodified;
+	const char* modified;
 } scan_code_char_t;
 
 typedef struct scan_code
 {
-	unsigned char code;
-	unsigned char mod;
+	const unsigned char code;
+	const unsigned char mod;
 } scan_code_t;
 
 scan_code_char_t lookup_char[207] = {
@@ -436,6 +436,13 @@ scan_code_t lookup_sc[256] = {
 	[126]={SC(NON_US_HASHMARK_AND_TILDE),MOD(RIGHTSHIFT)},
 	[232]={SC(MEDIA_PLAY),0},
 };
+
+const char *lookup_get_char(unsigned char sc, unsigned char mod) {
+	if (mod)
+		return lookup_char[sc].modified;
+
+	return lookup_char[sc].unmodified;
+}
 
 unsigned char lookup_get_key(unsigned char character) {
 	return lookup_sc[character].code;
