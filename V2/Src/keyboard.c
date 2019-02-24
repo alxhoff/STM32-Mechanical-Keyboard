@@ -98,6 +98,8 @@ typedef struct keyboard_device {
 	toggle_keys_t toggles;
 	TimerHandle_t toggle_debounce;
 	SemaphoreHandle_t toggle_lock;
+
+	osThreadId scan_task_handle;
 } keyboard_device_t;
 
 QueueHandle_t queue_packet_to_send;
@@ -148,25 +150,6 @@ void keyboard_toggle_callback(TimerHandle_t timer){
 	xSemaphoreGive(keyboard_dev.toggle_lock);
 }
 
-signed char keyboard_init(void) {
-	keyboard_init_status_LEDS();
-	keyboard_init_row_inputs();
-
-	queue_packet_to_send = xQueueCreate(20, sizeof(send_buffer_t));
-	keyboard_dev.buf_lock = xSemaphoreCreateMutex();
-
-	keyboard_dev.toggle_debounce = xTimerCreate("Cursor Timer",
-			TOGGLE_DELAY, 0, NULL, keyboard_toggle_callback);
-
-	if (!keyboard_dev.toggle_debounce)
-		return -ENOINIT;
-
-	keyboard_dev.toggle_lock = xSemaphoreCreateBinary();
-	xSemaphoreGive(keyboard_dev.toggle_lock);
-
-	return 0;
-}
-
 static unsigned char keyboard_read_row(unsigned char row) {
 	return HAL_GPIO_ReadPin(keyboard_dev.row_ports[row],
 			keyboard_dev.row_pins[row]);
@@ -178,7 +161,7 @@ static void keyboard_scan_buff_add(unsigned char col, unsigned char row) {
 	keyboard_dev.scan_buf.count++;
 }
 
-unsigned char keyboard_scan_matrix(void) {
+signed char keyboard_scan_matrix(void) {
 
 	static unsigned short row_mask = { 0 };
 	unsigned char ret = 0;
@@ -197,12 +180,13 @@ unsigned char keyboard_scan_matrix(void) {
 		for (unsigned char row = 0; row < KEYBOARD_ROWS; row++) /* test each row */
 			if (keyboard_read_row(row)) /*key is pressed */
 				keyboard_scan_buff_add(KEYBOARD_COLS - col - 1, row); //TODO remove - requirement
-
-//		SN54HC595_clear();
 	}
 
 	xSemaphoreGive(keyboard_dev.buf_lock);
-	return 0;
+	if (keyboard_dev.scan_buf.count)
+		return 0;
+	else
+		return -EAGAIN;
 
 	error:
 	xSemaphoreGive(keyboard_dev.buf_lock);
@@ -252,7 +236,7 @@ void keyboard_toggle_func(void) {
 	keyboard_dev.toggles.func ^= 1;
 }
 
-unsigned char keyboard_process_scan_buf(void) {
+signed char keyboard_process_scan_buf(void) {
 	static unsigned char ret = 0;
 	volatile static unsigned char tmp_sc;
 	unsigned char i = 0;
@@ -353,4 +337,43 @@ unsigned char keyboard_process_scan_buf(void) {
 	queue_no_init:
 	xSemaphoreGive(keyboard_dev.buf_lock);
 	return -ENOINIT;
+}
+
+void keyboard_scan_task(void const *args){
+	TickType_t xLastWakeTime = xTaskGetTickCount();
+	TickType_t xPeriod = 10;
+
+	/* Infinite loop */
+	for (;;)
+	{
+		//HID TEST
+		if (keyboard_scan_matrix() == 0) /* if keys were pressed */
+			keyboard_process_scan_buf();		/* convert row-col to actual keys */
+
+		xPeriod = SCAN_PERIOD - (xLastWakeTime - xTaskGetTickCount());
+		vTaskDelayUntil(&xLastWakeTime, xPeriod);
+	}
+}
+
+//TODO error handling
+signed char keyboard_init(void) {
+	keyboard_init_status_LEDS();
+	keyboard_init_row_inputs();
+
+	queue_packet_to_send = xQueueCreate(20, sizeof(send_buffer_t));
+	keyboard_dev.buf_lock = xSemaphoreCreateMutex();
+
+	keyboard_dev.toggle_debounce = xTimerCreate("Cursor Timer",
+			TOGGLE_DELAY, 0, NULL, keyboard_toggle_callback);
+
+	if (!keyboard_dev.toggle_debounce)
+		return -ENOINIT;
+
+	keyboard_dev.toggle_lock = xSemaphoreCreateBinary();
+	xSemaphoreGive(keyboard_dev.toggle_lock);
+
+	osThreadDef(keyboard_scan, keyboard_scan_task, osPriorityNormal, 0, 128);
+	keyboard_dev.scan_task_handle = osThreadCreate(osThread(keyboard_scan), NULL);
+
+	return 0;
 }

@@ -74,7 +74,7 @@ keyboardHID_t keyboard_report_buf = {.id = 1};
 mediaHID_t media_report_buf = {.id = 2};
 mouseHID_t mouse_report_buf = {.id = 3};
 send_buffer_t send_buf = {0};
-SemaphoreHandle_t processing_lock = NULL;
+static SemaphoreHandle_t processing_lock = NULL;
 SemaphoreHandle_t USB_send_lock = NULL;
 
 unsigned char send_get_send_buf(void) {
@@ -176,6 +176,7 @@ unsigned char send_reports(void)
 //	ret = send_prepare_mouse();
 //	if(!ret)
 //		send_mouse_report();
+
 
 	xSemaphoreGive(processing_lock);
 

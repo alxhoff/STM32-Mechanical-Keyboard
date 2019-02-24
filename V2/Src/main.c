@@ -58,7 +58,6 @@
 #include "keymap.h"
 #include "keymap_defaults.h"
 #include "macro.h"
-#include "scan.h"
 #include "SN54HC595.h"
 #include "send.h"
 #include "states.h"
@@ -231,8 +230,8 @@ int main(void)
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* definition and creation of KeyboardListen */
-  osThreadDef(KeyboardListen, KeyboardListenCallback, osPriorityNormal, 0, 128);
-  KeyboardListenHandle = osThreadCreate(osThread(KeyboardListen), NULL);
+//  osThreadDef(KeyboardListen, KeyboardListenCallback, osPriorityNormal, 0, 128);
+//  KeyboardListenHandle = osThreadCreate(osThread(KeyboardListen), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
 	osThreadDef(StatesHandle, StatesCallback, osPriorityNormal, 0, 128);
@@ -663,23 +662,23 @@ void StartDefaultTask(void const * argument)
 void KeyboardListenCallback(void const * argument)
 {
   /* USER CODE BEGIN KeyboardListenCallback */
-	TickType_t xLastWakeTime = xTaskGetTickCount();
-	TickType_t xPeriod = 10;
-
-	/* Infinite loop */
-	for (;;)
-	{
-		//HID TEST
-		if (keyboard_scan_matrix() == 0) /* if keys were pressed */
-			keyboard_process_scan_buf();		/* convert row-col to actual keys */
-
-		xPeriod = SCAN_PERIOD - (xLastWakeTime - xTaskGetTickCount());
-		vTaskDelayUntil(&xLastWakeTime, xPeriod);
-
-		//STATE MACHINE HERE
-//		clear_keyboard_report(keyboard_devs->keyboard_HID);
-//		process_keyboard_flags(keyboard_devs->keyboard_HID);
-	}
+//	TickType_t xLastWakeTime = xTaskGetTickCount();
+//	TickType_t xPeriod = 10;
+//
+//	/* Infinite loop */
+//	for (;;)
+//	{
+//		//HID TEST
+//		if (keyboard_scan_matrix() == 0) /* if keys were pressed */
+//			keyboard_process_scan_buf();		/* convert row-col to actual keys */
+//
+//		xPeriod = SCAN_PERIOD - (xLastWakeTime - xTaskGetTickCount());
+//		vTaskDelayUntil(&xLastWakeTime, xPeriod);
+//
+//		//STATE MACHINE HERE
+////		clear_keyboard_report(keyboard_devs->keyboard_HID);
+////		process_keyboard_flags(keyboard_devs->keyboard_HID);
+//	}
   /* USER CODE END KeyboardListenCallback */
 }
 

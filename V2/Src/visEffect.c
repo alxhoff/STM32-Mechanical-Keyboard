@@ -17,7 +17,6 @@
 #include <string.h>
 
 #include "stm32f4xx_hal.h"
-#include "datatypes.h"
 #include "LEDs.h"
 
 // Helper defines

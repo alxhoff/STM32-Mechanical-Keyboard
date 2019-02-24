@@ -17,14 +17,6 @@
 #ifndef KEYBOARD_H_
 #define KEYBOARD_H_
 
-/* -- Includes -- */
-/* HAL libraries */
-#include "config.h"
-#include "stm32f4xx_hal.h"
-/* Local includes */
-#include "datatypes.h"
-#include "states.h"
-#include "buffers.h"
 
 /**
  * @brief Inits the keyboard device and GPIO pins
@@ -40,7 +32,7 @@
  */
 signed char keyboard_init(void);
 
-unsigned char keyboard_scan_matrix(void);
+signed char keyboard_scan_matrix(void);
 
 /**
  * @brief Processes the input key buffer
@@ -59,6 +51,6 @@ unsigned char keyboard_scan_matrix(void);
  * @param layer_list layer list used to convert key_codes
  * @return 0 on success
  */
-unsigned char keyboard_process_scan_buf(void);
+signed char keyboard_process_scan_buf(void);
 
 #endif /* KEYBOARD_H_ */

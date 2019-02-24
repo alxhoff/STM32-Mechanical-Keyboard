@@ -7,6 +7,11 @@
 
 #include "config.h"
 #include "screen.h"
+#include "keyboard.h"
+#include "cmsis_os.h"
+#include "buffers.h"
+#include "pipes.h"
+#include "error.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -16,6 +21,8 @@ typedef struct CLI_data{
 } CLI_data_t;
 
 CLI_data_t CLI_dev = {0};
+send_buffer_t key_buf = {0};
+static SemaphoreHandle_t processing_lock = NULL;
 
 signed char CLI_process_line(void)
 {
@@ -42,7 +49,9 @@ void CLI_init(void){
 	}
 #endif
 
-
+	processing_lock = xSemaphoreCreateMutex();
+	if(!processing_lock)
+		return;
 
 //TODO dynamic line length
 
@@ -56,12 +65,33 @@ void CLI_init(void){
 			return;
 }
 
+signed char CLI_recv_presses(void){
+	unsigned char ret = 0;
+	if(queue_packet_to_send)
+		if(xSemaphoreTake(processing_lock, (TickType_t) 0) == pdTRUE ){
+			ret = xQueueReceive(queue_packet_to_send, &key_buf, (TickType_t) portMAX_DELAY);
+			if(ret == pdTRUE)
+				return 0;
+			goto error;
+		}
+error:
+	xSemaphoreGive(processing_lock);
+	return -ENOINIT;
+}
+
 void CLI_enter(void){
 
 }
 
-void CLI_run(void){
+void CLI_handle_input(void){
 
+
+
+}
+
+void CLI_run(void){
+	if(!CLI_recv_presses())
+		CLI_handle_input();
 }
 
 void CLI_exit(void){

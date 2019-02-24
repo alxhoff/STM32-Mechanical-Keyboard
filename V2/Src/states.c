@@ -144,15 +144,17 @@ static unsigned char states_init_states(void) {
 unsigned char states_init(void) {
 
 	//send state
+	//TODO state adding order shouldn't matter but it does
 	states_add(send_init, send_enter, send_run, send_exit, state_send, "send");
+	states_add(CLI_init, CLI_enter, CLI_run, CLI_exit, state_CLI, "CLI");
 	states_add(macro_init, macro_enter, macro_run, macro_exit,
 			state_macro_run, "macro run");
 	states_add(macro_set_init, macro_set_enter, macro_set_run, macro_set_exit,
 			state_macro_set, "macro set");
-	states_add(CLI_init, CLI_enter, CLI_run, CLI_exit, state_CLI, "CLI");
 
 	//set initial state
 	SET_INITIAL_STATE(state_CLI);
+//	SET_INITIAL_STATE(state_send);
 
 	states_init_states();
 	return 0;
