@@ -149,9 +149,10 @@ unsigned char states_init(void) {
 			state_macro_run, "macro run");
 	states_add(macro_set_init, macro_set_enter, macro_set_run, macro_set_exit,
 			state_macro_set, "macro set");
+	states_add(CLI_init, CLI_enter, CLI_run, CLI_exit, state_CLI, "CLI");
 
 	//set initial state
-	SET_INITIAL_STATE(state_send);
+	SET_INITIAL_STATE(state_CLI);
 
 	states_init_states();
 	return 0;

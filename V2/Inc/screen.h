@@ -10,5 +10,6 @@
 
 unsigned char screen_init(void);
 void screen_add_line(char *line);
+void screen_set_buf(char **buf);
 
 #endif /* SCREEN_H_ */

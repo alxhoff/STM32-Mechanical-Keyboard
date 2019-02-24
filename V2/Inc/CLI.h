@@ -8,7 +8,7 @@
 #ifndef CLI_H_
 #define CLI_H_
 
-unsigned char CLI_init(void);
+void CLI_init(void);
 void CLI_enter(void);
 void CLI_run(void);
 void CLI_exit(void);

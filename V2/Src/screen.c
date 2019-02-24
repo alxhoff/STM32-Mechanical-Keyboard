@@ -61,7 +61,7 @@ void screen_cursor_callback(TimerHandle_t timer) {
 }
 #endif
 
-void screen_set_framebuffer(char **fb) {
+void screen_set_buf(char **fb) {
 	screen_dev.framebuffer = fb;
 }
 
