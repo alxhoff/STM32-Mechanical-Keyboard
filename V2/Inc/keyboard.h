@@ -38,7 +38,7 @@
  * @param row_pins array of GPIO pin values
  * @return 0 on success
  */
-void keyboard_init(void);
+signed char keyboard_init(void);
 
 unsigned char keyboard_scan_matrix(void);
 

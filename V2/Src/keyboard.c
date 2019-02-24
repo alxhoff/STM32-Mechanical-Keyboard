@@ -20,6 +20,8 @@
 
 #include "buffers.h"
 
+#define TOGGLE_DELAY		200
+
 /**
  * @typedef scaned_key_t
  * @brief Typedef of scaned_key
@@ -94,6 +96,8 @@ typedef struct keyboard_device {
 	six_key_buffer_t prev_buf;
 
 	toggle_keys_t toggles;
+	TimerHandle_t toggle_debounce;
+	SemaphoreHandle_t toggle_lock;
 } keyboard_device_t;
 
 QueueHandle_t queue_packet_to_send;
@@ -140,12 +144,27 @@ static void keyboard_init_row_inputs(void) {
 	}
 }
 
-void keyboard_init(void) {
+void keyboard_toggle_callback(TimerHandle_t timer){
+	xSemaphoreGive(keyboard_dev.toggle_lock);
+}
+
+signed char keyboard_init(void) {
 	keyboard_init_status_LEDS();
 	keyboard_init_row_inputs();
 
 	queue_packet_to_send = xQueueCreate(20, sizeof(send_buffer_t));
 	keyboard_dev.buf_lock = xSemaphoreCreateMutex();
+
+	keyboard_dev.toggle_debounce = xTimerCreate("Cursor Timer",
+			TOGGLE_DELAY, 0, NULL, keyboard_toggle_callback);
+
+	if (!keyboard_dev.toggle_debounce)
+		return -ENOINIT;
+
+	keyboard_dev.toggle_lock = xSemaphoreCreateBinary();
+	xSemaphoreGive(keyboard_dev.toggle_lock);
+
+	return 0;
 }
 
 static unsigned char keyboard_read_row(unsigned char row) {
@@ -262,8 +281,11 @@ unsigned char keyboard_process_scan_buf(void) {
 			if (ret) {
 				switch (ret) {
 				case 1:
-					keyboard_toggle_caps();
-					keyboard_dev.toggles.changed = 1;
+					if(xSemaphoreTake(keyboard_dev.toggle_lock, 0)){
+						xTimerReset(keyboard_dev.toggle_debounce, portMAX_DELAY);
+						keyboard_toggle_caps();
+						keyboard_dev.toggles.changed = 1;
+					}
 					break;
 				default:
 					break;
@@ -283,8 +305,11 @@ unsigned char keyboard_process_scan_buf(void) {
 			if (keyboard_dev.toggles.caps) { /* If caps is set */
 				LEDs_set_caps();
 				buf->mod_buf |= HID_KEYBOARD_LED_CAPSLOCK;
-			} else
+			} else {
 				LEDs_clear_caps();
+				buf->mod_buf &= ~HID_KEYBOARD_LED_CAPSLOCK;
+			}
+
 
 			if (keyboard_dev.toggles.CLI)
 				LEDs_set_CLI();
