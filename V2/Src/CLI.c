@@ -24,8 +24,6 @@
 
 typedef struct CLI_data{
 	char			**screen_buf;
-	unsigned char 	cursor_x_pos;
-	unsigned char	cursor_y_pos;
 } CLI_data_t;
 
 CLI_data_t CLI_dev = {0};
@@ -40,37 +38,16 @@ signed char CLI_process_line(void)
 
 
 void CLI_init(void){
-#if CLI_DYNAMIC_LINE_LENGTH
-#else
-	CLI_dev.screen_buf = malloc(sizeof(char *) * CLI_HISTORY_LENGTH);
-#endif
-	if (!CLI_dev.screen_buf)
-		goto page_error;
 
-#if CLI_DYNAMIC_LINE_LENGTH
+	CLI_dev.screen_buf = screen_get_buffer();
 
-#else
-	for (int i = 0; i < CLI_HISTORY_LENGTH; i++){
-		CLI_dev.screen_buf[i] = calloc(CLI_LINE_LENGTH, sizeof(char));
-		if (!CLI_dev.screen_buf[i])
-			goto line_error;
-	}
-#endif
+	if(!CLI_dev.screen_buf)
+		return;
 
 	processing_lock = xSemaphoreCreateMutex();
 	if(!processing_lock)
 		return;
 
-//TODO dynamic line length
-
-	strcpy(CLI_dev.screen_buf[0], "CLI");
-
-	screen_set_buf(CLI_dev.screen_buf);
-
-	line_error:
-	//TODO
-	page_error:
-			return;
 }
 
 signed char CLI_recv_presses(void){
@@ -129,37 +106,34 @@ signed char CLI_append_to_string(char **str, char *new){
 }
 
 signed char CLI_add_to_string_at_pos(char **str, char *new, int pos){
-#if CLI_DYNAMIC_LINE_LENGTH
-#else
-	if(pos >= CLI_LINE_LENGTH)
-		return -EINVAL;
 
 	size_t new_len = strlen(new);
+	size_t str_len = strlen(*str);
 
-	char *tmp = malloc(sizeof(char) * (strlen(*str) - pos + 1));
+	*str = realloc(*str, sizeof(char) * (str_len + new_len + 1));
+
+	if (!*str)
+		return -ENOMEM;
+
+	char *tmp = calloc(sizeof(char), (strlen(*str) - pos + 1));
 	if (!tmp)
 		return -ENOMEM;
 
 	strcpy(tmp, *str + pos);
 	strncpy(*str + pos, new, new_len);
-	strncpy(*str + pos + new_len, tmp, strlen(tmp));
+	strcpy(*str + pos + new_len, tmp);
 	free(tmp);
-#endif
 }
 
 void CLI_handle_input(void){
-#if CLI_DYNAMIC_LINE_LENGTH
-#else
-	if(CLI_dev.cursor_x_pos == CLI_LINE_LENGTH - 1)
-		return;
-#endif
-
 
 	unsigned char mod = (((key_buf.mod_buf >> 1 ) & 1) | ((key_buf.mod_buf >> 5) & 1)) ? 1 : 0;
 
-	for(int i = 0; i < key_buf.key_buf.count; i++)
-		CLI_add_to_string_at_pos( &CLI_dev.screen_buf[0], (char *)lookup_get_char(key_buf.key_buf.keys[i], mod), 1);
-
+	for(int i = 0; i < key_buf.key_buf.count; i++){
+		CLI_add_to_string_at_pos( &CLI_dev.screen_buf[0],
+				(char *)lookup_get_char(key_buf.key_buf.keys[i], mod), screen_get_cursor_x());
+		screen_move_cursor_right();
+	}
 
 	xSemaphoreGive(processing_lock);
 }

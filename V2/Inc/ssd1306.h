@@ -32,7 +32,7 @@ extern I2C_HandleTypeDef hi2c1;
 void ssd1306_fill(void);
 signed char ssd1306_update_screen(void);
 void ssd1306_draw_text_buffer(char **buf);
-void ssd1306_draw_cursor(unsigned char state);
+void ssd1306_draw_cursor(unsigned char state, int x, int y);
 signed char ssd1306_init(void);
 void ssd1306_mv_cursor_left(void);
 void ssd1306_mv_cursor_right(void);

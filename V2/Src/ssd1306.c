@@ -219,13 +219,10 @@ void ssd1306_write_char(char ch) {
 	ssd1306_dev.x += ssd1306_dev.font->FontWidth;
 }
 
-signed char ssd1306_invert_box(unsigned char x) {
+signed char ssd1306_invert_box(unsigned char x, unsigned char y) {
 
-	for (unsigned char i = x * SSD1306_CHAR_WIDTH + SSD1306_X_OFFSET - 1;
-			i < x * SSD1306_CHAR_WIDTH + SSD1306_X_OFFSET + SSD1306_CHAR_WIDTH;
-			i++)
-		for (unsigned char j = SSD1306_Y_OFFSET - 1;
-				j < SSD1306_Y_OFFSET + SSD1306_CHAR_HEIGHT - 1; j++)
+	for (unsigned char i = x; i < x + SSD1306_CHAR_WIDTH + 1; i++)
+		for (unsigned char j = y; j < y + SSD1306_CHAR_HEIGHT; j++)
 			if (ssd1306_invert_pixel(i, j) != 0)
 				return -EWRITE;
 	return 0;
@@ -302,10 +299,10 @@ signed char ssd1306_init(void) {
 	return 0;
 }
 
-void ssd1306_draw_cursor(unsigned char state) {
+void ssd1306_draw_cursor(unsigned char state, int x, int y) {
 	if (state)
-		ssd1306_invert_box(
-		SSD1306_X_OFFSET * ssd1306_dev.cursor_pos * SSD1306_CHAR_WIDTH);
+		ssd1306_invert_box(	SSD1306_X_OFFSET + SSD1306_CHAR_WIDTH * x - 1,
+				SSD1306_Y_OFFSET + SSD1306_CHAR_HEIGHT * y - 1);
 }
 
 void ssd1306_draw_text_buffer(char **buf) {
