@@ -91,7 +91,7 @@ void CLI_enter(void){
 
 }
 
-signed char CLI_write_to_cursor(char **str, char *new){
+signed char CLI_write_to_string_front(char **str, char *new){
 	size_t new_len = strlen(new);
 #if CLI_DYNAMIC_LINE_LENGTH
 	char *dest = malloc(sizeof(char) * (strlen(str) + new_len + 1));
@@ -112,10 +112,53 @@ signed char CLI_write_to_cursor(char **str, char *new){
 	return 0;
 }
 
+signed char CLI_append_to_string(char **str, char *new){
+	size_t str_len = strlen(*str);
+#if CLI_DYNAMIC_LINE_LENGTH
+	size_t new_len = strlen(new);
+
+	*str = realloc(sizeof(char) * (strlen(str) + new_len + 1));
+#else
+	if(str_len == CLI_LINE_LENGTH)
+		return -EBUFF;
+#endif
+
+	strcpy(*str + str_len, new);
+
+	return 0;
+}
+
+signed char CLI_add_to_string_at_pos(char **str, char *new, int pos){
+#if CLI_DYNAMIC_LINE_LENGTH
+#else
+	if(pos >= CLI_LINE_LENGTH)
+		return -EINVAL;
+
+	size_t new_len = strlen(new);
+
+	char *tmp = malloc(sizeof(char) * (strlen(*str) - pos + 1));
+	if (!tmp)
+		return -ENOMEM;
+
+	strcpy(tmp, *str + pos);
+	strncpy(*str + pos, new, new_len);
+	strncpy(*str + pos + new_len, tmp, strlen(tmp));
+	free(tmp);
+#endif
+}
+
 void CLI_handle_input(void){
+#if CLI_DYNAMIC_LINE_LENGTH
+#else
+	if(CLI_dev.cursor_x_pos == CLI_LINE_LENGTH - 1)
+		return;
+#endif
+
+
 	unsigned char mod = (((key_buf.mod_buf >> 1 ) & 1) | ((key_buf.mod_buf >> 5) & 1)) ? 1 : 0;
+
 	for(int i = 0; i < key_buf.key_buf.count; i++)
-		CLI_write_to_cursor( &CLI_dev.screen_buf[0], (char *)lookup_get_char(key_buf.key_buf.keys[i], mod));
+		CLI_add_to_string_at_pos( &CLI_dev.screen_buf[0], (char *)lookup_get_char(key_buf.key_buf.keys[i], mod), 1);
 
 
 	xSemaphoreGive(processing_lock);

@@ -165,7 +165,7 @@ signed char ssd1306_draw_pixel(uint8_t x, uint8_t y, SSD1306_colour_t colour) {
 	}
 
 	if (colour == Black) {
-#ifndef	SCREEN_INVERTED
+#if	SCREEN_INVERTED
 		ssd1306_dev.buffer[(SSD1306_WIDTH * SSD1306_HEIGHT / 8)
 				- (x + (y / 8) * ssd1306_dev.width)] |= 1 << (7 - (y % 8));
 	} else {
@@ -185,7 +185,7 @@ signed char ssd1306_invert_pixel(uint8_t x, uint8_t y) {
 	if (x >= ssd1306_dev.width || y >= ssd1306_dev.height) {
 		return -EBOUNDS;
 	}
-#ifndef	SCREEN_INVERTED
+#if	SCREEN_INVERTED
 	ssd1306_dev.buffer[(SSD1306_WIDTH * SSD1306_HEIGHT / 8)
 			- (x + (y / 8) * ssd1306_dev.width)] ^= 1 << (7 - (y % 8));
 	;
