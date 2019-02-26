@@ -123,8 +123,6 @@ void screen_refresh(void const *args) {
 
 #ifdef SCREEN_USE_CURSOR
 
-	screen_dev.cursor_location_x = 13;
-
 	screen_dev.draw_text(screen_dev.framebuffer, screen_dev.cursor_on,
 			screen_dev.cursor_location_x, screen_dev.cursor_location_y);
 

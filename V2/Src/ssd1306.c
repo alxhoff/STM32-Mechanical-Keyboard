@@ -252,11 +252,12 @@ void ssd1306_draw_framebuffer(char **buf, int cursor_x) {
 }
 
 void ssd1306_draw_cursor(unsigned char state, int x, int y) {
-	if (state)
-		if( x > SSD1306_WIDTH_CHARS)
+	if (state){
+		if( x >= SSD1306_WIDTH_CHARS)
 			x = SSD1306_WIDTH_CHARS - 1;
 		ssd1306_invert_box(	SSD1306_X_OFFSET + SSD1306_CHAR_WIDTH * x - 1,
 				SSD1306_Y_OFFSET + SSD1306_CHAR_HEIGHT * y - 1);
+	}
 }
 
 void ssd1306_refresh(char **buf, unsigned char cursor_on, int cursor_x, int cursor_y) {

@@ -12,6 +12,7 @@
 #include "buffers.h"
 #include "pipes.h"
 #include "lookup.h"
+#include "HIDClassCommon.h"
 #include "error.h"
 
 #include <stdlib.h>
@@ -128,11 +129,28 @@ signed char CLI_add_to_string_at_pos(char **str, char *new, int pos){
 void CLI_handle_input(void){
 
 	unsigned char mod = (((key_buf.mod_buf >> 1 ) & 1) | ((key_buf.mod_buf >> 5) & 1)) ? 1 : 0;
-
+	unsigned char val = 0;
 	for(int i = 0; i < key_buf.key_buf.count; i++){
-		CLI_add_to_string_at_pos( &CLI_dev.screen_buf[0],
-				(char *)lookup_get_char(key_buf.key_buf.keys[i], mod), screen_get_cursor_x());
-		screen_move_cursor_right();
+
+		if(key_buf.key_buf.keys[i] >= 0x04 && key_buf.key_buf.keys[i] <= 0x27){
+			//Find char representation
+			val = (char *)lookup_get_char(key_buf.key_buf.keys[i], mod);
+			CLI_add_to_string_at_pos( &CLI_dev.screen_buf[0], val, screen_get_cursor_x());
+		}
+
+		//Handle all special input into CLI
+		switch(key_buf.key_buf.keys[i]){
+		//arrow keys
+		case HID_KEYBOARD_SC_LEFT_ARROW:
+			screen_move_cursor_left();
+			break;
+		case HID_KEYBOARD_SC_RIGHT_ARROW:
+			screen_move_cursor_right();
+			break;
+		default:
+			break;
+
+		}
 	}
 
 	xSemaphoreGive(processing_lock);
