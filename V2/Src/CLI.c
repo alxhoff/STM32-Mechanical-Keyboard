@@ -124,18 +124,21 @@ signed char CLI_add_to_string_at_pos(char **str, char *new, int pos){
 	strncpy(*str + pos, new, new_len);
 	strcpy(*str + pos + new_len, tmp);
 	free(tmp);
+
+	return 0;
 }
 
 void CLI_handle_input(void){
 
 	unsigned char mod = (((key_buf.mod_buf >> 1 ) & 1) | ((key_buf.mod_buf >> 5) & 1)) ? 1 : 0;
-	unsigned char val = 0;
+	char *val = 0;
 	for(int i = 0; i < key_buf.key_buf.count; i++){
 
 		if(key_buf.key_buf.keys[i] >= 0x04 && key_buf.key_buf.keys[i] <= 0x27){
 			//Find char representation
+			int line = screen_get_cursor_y();
 			val = (char *)lookup_get_char(key_buf.key_buf.keys[i], mod);
-			CLI_add_to_string_at_pos( &CLI_dev.screen_buf[0], val, screen_get_cursor_x());
+			CLI_add_to_string_at_pos( &CLI_dev.screen_buf[line], val, screen_get_cursor_x());
 		}
 
 		//Handle all special input into CLI
