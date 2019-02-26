@@ -229,18 +229,39 @@ signed char ssd1306_invert_box(unsigned char x, unsigned char y) {
 }
 
 void ssd1306_write_string(char* str) {
-	while (*str) {
+	int chars_to_fit = (SSD1306_WIDTH - ssd1306_dev.x) / SSD1306_CHAR_WIDTH;
+	int i = 0;
+
+	while (*str && i++ < chars_to_fit) {
 		ssd1306_write_char(*str);
 		str++;
 	}
 }
 
-void ssd1306_draw_framebuffer(char **buf) {
+void ssd1306_draw_framebuffer(char **buf, int cursor_x) {
+	int offset = 0;
+
+	if(cursor_x >= SSD1306_WIDTH_CHARS)
+		offset += cursor_x - SSD1306_WIDTH_CHARS;
+
 	for (unsigned char i = 0; i < SSD1306_HEIGHT_CHARS; i++) {
 		ssd1306_set_draw_cursor(SSD1306_X_OFFSET,
 		SSD1306_Y_OFFSET + i * SSD1306_CHAR_HEIGHT);
-		ssd1306_write_string(buf[i]);
+		ssd1306_write_string(buf[i] + offset);
 	}
+}
+
+void ssd1306_draw_cursor(unsigned char state, int x, int y) {
+	if (state)
+		if( x > SSD1306_WIDTH_CHARS)
+			x = SSD1306_WIDTH_CHARS - 1;
+		ssd1306_invert_box(	SSD1306_X_OFFSET + SSD1306_CHAR_WIDTH * x - 1,
+				SSD1306_Y_OFFSET + SSD1306_CHAR_HEIGHT * y - 1);
+}
+
+void ssd1306_refresh(char **buf, unsigned char cursor_on, int cursor_x, int cursor_y) {
+	ssd1306_draw_framebuffer(buf, cursor_x);
+	ssd1306_draw_cursor(cursor_on, cursor_x, cursor_y);
 }
 
 signed char ssd1306_init(void) {
@@ -297,15 +318,5 @@ signed char ssd1306_init(void) {
 	ssd1306_dev.initialized = 1;
 
 	return 0;
-}
-
-void ssd1306_draw_cursor(unsigned char state, int x, int y) {
-	if (state)
-		ssd1306_invert_box(	SSD1306_X_OFFSET + SSD1306_CHAR_WIDTH * x - 1,
-				SSD1306_Y_OFFSET + SSD1306_CHAR_HEIGHT * y - 1);
-}
-
-void ssd1306_draw_text_buffer(char **buf) {
-	ssd1306_draw_framebuffer(buf);
 }
 

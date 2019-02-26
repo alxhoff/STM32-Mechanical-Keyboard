@@ -169,7 +169,7 @@ int main(void)
 	//TODO
 
 
-	screen_add_line("Hello");
+	screen_add_line("Hello world this is a long line");
 
 	screen_add_line("World");
 
