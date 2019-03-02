@@ -167,8 +167,6 @@ signed char screen_add_line_at_index(unsigned char index, char *line) {
 		screen_dev.row_count = index + 1;
 	}
 
-	volatile unsigned char length = strlen(line);
-
 	screen_dev.framebuffer[index] = realloc(screen_dev.framebuffer[index], sizeof(char) * (strlen(line) + 1));
 
 	if(!screen_dev.framebuffer[index])

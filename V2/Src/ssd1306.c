@@ -76,7 +76,7 @@ struct ssd1306_device {
 	I2C_HandleTypeDef* port;
 
 	void (*clear)(void);
-	unsigned char (*update)(void);
+	signed char (*update)(void);
 	void (*fill)(void);
 	void (*string)(char*);
 };
@@ -92,7 +92,6 @@ unsigned char ssd1306_get_rows(void) {
 }
 
 signed char ssd1306_write_command(uint8_t command) {
-	signed char ret = 0;
 	if (HAL_I2C_Mem_Write(ssd1306_dev.port, SSD1306_I2C_ADDR, 0x00, 1, &command,
 			1, 10) != 0)
 		return -EWRITE;

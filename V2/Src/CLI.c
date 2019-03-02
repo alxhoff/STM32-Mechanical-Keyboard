@@ -159,7 +159,7 @@ void CLI_exit(void){
 
 }
 
-void CLI_debounce_callback(void){
+void CLI_debounce_callback(TimerHandle_t timer){
 	xSemaphoreGive(CLI_dev.debounce_lock);
 }
 
