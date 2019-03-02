@@ -24,7 +24,11 @@
 //} CLI_input_buf;
 
 typedef struct CLI_data{
-	char			**screen_buf;
+	char				**screen_buf;
+#ifdef FREERTOS
+	TimerHandle_t 		debounce_timer;
+	SemaphoreHandle_t 	debounce_lock;
+#endif
 } CLI_data_t;
 
 CLI_data_t CLI_dev = {0};
@@ -37,25 +41,11 @@ signed char CLI_process_line(void)
 	return 0;
 }
 
-
-void CLI_init(void){
-
-	CLI_dev.screen_buf = screen_get_buffer();
-
-	if(!CLI_dev.screen_buf)
-		return;
-
-	processing_lock = xSemaphoreCreateMutex();
-	if(!processing_lock)
-		return;
-
-}
-
 signed char CLI_recv_presses(void){
 	unsigned char ret = 0;
 	if(queue_packet_to_send)
 		if(xSemaphoreTake(processing_lock, (TickType_t) 0) == pdTRUE ){
-			ret = xQueueReceive(queue_packet_to_send, &key_buf, (TickType_t) portMAX_DELAY);
+			ret = xQueueReceive(queue_packet_to_send, &key_buf, (TickType_t) 0);
 			if(ret == pdTRUE)
 				return 0;
 			goto error;
@@ -136,9 +126,8 @@ void CLI_handle_input(void){
 
 		if(key_buf.key_buf.keys[i] >= 0x04 && key_buf.key_buf.keys[i] <= 0x27){
 			//Find char representation
-			int line = screen_get_cursor_y();
 			val = (char *)lookup_get_char(key_buf.key_buf.keys[i], mod);
-			CLI_add_to_string_at_pos( &CLI_dev.screen_buf[line], val, screen_get_cursor_x());
+			CLI_add_to_string_at_pos( &CLI_dev.screen_buf[screen_get_cursor_y()], val, screen_get_cursor_x());
 		}
 
 		//Handle all special input into CLI
@@ -155,8 +144,10 @@ void CLI_handle_input(void){
 
 		}
 	}
-
 	xSemaphoreGive(processing_lock);
+	xQueueReset(queue_packet_to_send);
+	xTimerReset(CLI_dev.debounce_timer, portMAX_DELAY);
+	xSemaphoreTake(CLI_dev.debounce_lock, portMAX_DELAY);
 }
 
 void CLI_run(void){
@@ -166,4 +157,27 @@ void CLI_run(void){
 
 void CLI_exit(void){
 
+}
+
+void CLI_debounce_callback(void){
+	xSemaphoreGive(CLI_dev.debounce_lock);
+}
+
+void CLI_init(void){
+
+	CLI_dev.screen_buf = screen_get_buffer();
+
+	if(!CLI_dev.screen_buf)
+		return;
+
+	processing_lock = xSemaphoreCreateMutex();
+	if(!processing_lock)
+		return;
+
+#ifdef FREERTOS
+	//TODO error checking
+	CLI_dev.debounce_timer = xTimerCreate("Debounce Timer", CLI_DEBOUNCE_DELAY, 0,
+			NULL, CLI_debounce_callback);
+	CLI_dev.debounce_lock = xSemaphoreCreateBinary();
+#endif
 }

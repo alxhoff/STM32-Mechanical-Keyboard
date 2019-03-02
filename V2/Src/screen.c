@@ -140,6 +140,45 @@ void screen_refresh(void const *args) {
 #endif
 }
 
+signed char screen_add_line(char *line) {
+	screen_dev.framebuffer = realloc(screen_dev.framebuffer,sizeof(char) * (screen_dev.row_count + 1));
+
+	if(!screen_dev.framebuffer)
+		return -ENOMEM;
+
+	screen_dev.framebuffer[screen_dev.row_count] = malloc(sizeof(char) * (strlen(line) + 1));
+
+	if(!screen_dev.framebuffer[screen_dev.row_count])
+		return -ENOMEM;
+
+	strcpy(screen_dev.framebuffer[screen_dev.row_count], line);\
+	screen_dev.row_count++;
+
+	return 0;
+}
+
+signed char screen_add_line_at_index(unsigned char index, char *line) {
+	if(index + 1 >= screen_dev.row_count){
+		screen_dev.framebuffer = realloc(screen_dev.framebuffer, sizeof(char *) * (index + 1));
+		if(!screen_dev.framebuffer)
+			return-ENOMEM;
+		for (int i = screen_dev.row_count; i <= index; i++)
+			screen_dev.framebuffer[i] = NULL;
+		screen_dev.row_count = index + 1;
+	}
+
+	volatile unsigned char length = strlen(line);
+
+	screen_dev.framebuffer[index] = realloc(screen_dev.framebuffer[index], sizeof(char) * (strlen(line) + 1));
+
+	if(!screen_dev.framebuffer[index])
+		return -ENOMEM;
+
+	strcpy(screen_dev.framebuffer[index], line); //CRASHES HERE
+
+	return 0;
+}
+
 signed char screen_init(void) {
 
 	screen_dev.rows = SCREEN_GET_ROWS;
@@ -174,35 +213,4 @@ signed char screen_init(void) {
 	timer_error:
 	return -ENOINIT;
 #endif
-}
-
-signed char screen_add_line(char *line) {
-	screen_dev.framebuffer = realloc(screen_dev.framebuffer,sizeof(char) * (screen_dev.row_count + 1));
-
-	if(!screen_dev.framebuffer)
-		return -ENOMEM;
-
-	screen_dev.framebuffer[screen_dev.row_count] = malloc(sizeof(char) * (strlen(line) + 1));
-
-	if(!screen_dev.framebuffer[screen_dev.row_count])
-		return -ENOMEM;
-
-	strcpy(screen_dev.framebuffer[screen_dev.row_count], line);\
-	screen_dev.row_count++;
-
-	return 0;
-}
-
-signed char screen_add_line_at_index(unsigned char i, char *line) {
-	if(i >= screen_dev.row_count)
-		return -EINVAL;
-
-	screen_dev.framebuffer[i] = realloc(screen_dev.framebuffer[i], sizeof(char) * (strlen(line) + 1));
-
-	if(!screen_dev.framebuffer[i])
-		return -ENOMEM;
-
-	strcpy(screen_dev.framebuffer[i], line);
-
-	return 0;
 }
