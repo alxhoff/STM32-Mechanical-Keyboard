@@ -127,7 +127,7 @@ void screen_refresh(void const *args) {
 			screen_dev.cursor_location_x, screen_dev.cursor_location_y);
 
 #else
-	//TODO
+	screen_dev.draw_text(screen_dev.framebuffer, 0, 0, 0);
 #endif
 	screen_dev.update_screen();
 #ifdef FREERTOS
