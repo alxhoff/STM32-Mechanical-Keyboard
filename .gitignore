@@ -1,6 +1,5 @@
 .metadata
-.metadata/*
-**/RemoteSystemsTempFiles
+/RemoteSystemsTempFiles
 **/startup
 NuceloKeyboardController/.settings/
 V2/.settings/
