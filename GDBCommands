@@ -1,0 +1,7 @@
+
+target remote localhost:3333
+monitor reset halt
+monitor stm32f1x unlock 0
+load STM32F1_bluepill.elf
+break main
+continue
