@@ -62,8 +62,14 @@
 		}                                                              \
 	}
 
+enum e_keymap_type {
+    keymap_layer,
+    keymap_overlay,
+};
+
 struct keymap {
-    uint8_t grid [KEYBOARD_ROWS][KEYBOARD_COLS];
+    uint8_t grid [KEYBOARD_COLS][KEYBOARD_ROWS];
+    e_keymap_type type;
     uint8_t modifier;
     char *name;
 };
@@ -72,6 +78,10 @@ uint8_t getKeyboardRowCount(void);
 uint8_t getKeyboardColCount(void);
 
 struct keymap *keymapInit(void);
-int8_t keymapAdd(struct keymap *km);
+struct keymap *keymapCreate(char *name);
+int8_t keymapDelete(char* name); 
+
+uint8_t keymapGetScanCode(uint8_t col, uint8_t row);
+
 
 #endif /* KEYMAP_H_ */

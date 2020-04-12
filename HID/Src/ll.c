@@ -63,12 +63,44 @@ int llDeleteItem(ll_handle_t *list, struct ll_item *item)
     return -1;
 }
 
+int llDeleteItemData(ll_handle_t *list, void *data)
+{
+    struct ll_list *l = (struct ll_list *)list;
+    struct ll_item *iterator = &l->head;
+    struct ll_item *del;
+
+    for(; iterator->next; iterator=iterator->next)
+        if(iterator->next->data == date)
+            break;
+
+    if(iterator->next){
+        if(iterator->next->data == data){
+            del = iterator->next;
+            if(!iterator->next->next)
+                iterator->next = NULL;
+            else 
+                iterator->next = del->next;
+
+            free(del);
+            l->item_count--;
+            return 0;
+        }
+    }
+
+    return -1;
+}
+
 struct ll_item *llGetHead(ll_handle_t list)
 {
-    return ((struct ll_list *) list)->head.next;
+    return ((struct ll_list *) list)->head;
 }
 
 size_t llGetItemSize(ll_handle_t list)
 {
     return ((struct ll_list *) list)->item_size;
+}
+
+size_t llGetItemCount(ll_handle_t list)
+{
+    return ((struct ll_list *) list)->item_count;
 }

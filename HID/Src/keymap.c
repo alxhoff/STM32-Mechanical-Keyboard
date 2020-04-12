@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "keymap.h"
+#include "keymap_config.h"
 #include "config.h"
 #include "ll.h"
 
@@ -9,6 +10,16 @@ uint8_t keymap_rows = KEYBOARD_COLS;
 uint8_t keymap_cols = KEYBOARD_ROWS;
 
 ll_handle_t keymap_list;
+
+struct keymap *current_keymap = NULL;
+
+uint8_t keymapGetScanCode(uint8_t col, uint8_t row)
+{
+	if (current_keymap)
+		return current_keymap->grid[col][row];
+
+	return HID_KEYBOARD_SC_ERROR_UNDEFINED;
+}
 
 int keymapInit(struct keymap *km)
 {
@@ -18,6 +29,8 @@ int keymapInit(struct keymap *km)
 
 	if (llAddItem(keymap_list, &DEFAULT_KEYMAP))
 		return -1;
+
+	current_keymap = &DEFAULT_KEYMAP;
 
 	return 0;
 }
@@ -43,6 +56,7 @@ struct keymap *keymapCreate(char *name)
 		if (!km->name)
 			goto err_name;
 	}
+	llAddItem(keymap_list, (void *)km);
 
 	return km;
 
@@ -52,7 +66,22 @@ err_keymap:
 	return NULL;
 }
 
-int keymapAdd(struct keymap *km)
+struct keymap *keymapFind(char *name)
 {
-    return llAddItem(keymap_list, km);
+	struct ll_item *iterator = llGetHead(keymap_list);
+
+	for (; iterator->next; iterator = iterator->next)
+		if (!strcmp(name, (struct keymap *)(iterator->data)->name))
+			return (struct keymap *)iterator->data;
+
+	return NULL;
+}
+
+int8_t keymapDelete(char *name)
+{
+	struct keymap *km = keymapFind(name);
+	if (!keymap)
+		return -1;
+
+	return llDeleteItemData(keymap_list, (void *)km);
 }

@@ -13,7 +13,9 @@ typedef struct ll_item {
 ll_handle_t llCreateList(size_t item_size);
 int llAddItem(ll_handle_t *list, void *data);
 int llDeleteItem(ll_handle_t *list, struct ll_item *item);
+int llDeleteItemData(ll_handle_t *list, void *data);
 struct ll_item *llGetHead(ll_handle_t list);
 size_t llGetItemSize(ll_handle_t list);
+size_t llGetItemCount(ll_handle_t list);
 
-#endif // __LL_H__
+#endif 

@@ -16,11 +16,14 @@
 
 #include <stdlib.h>
 
+#include "config.h"
+
 #define SCANBUF_LEN (MAX_SUPPORTED_KEY_VAL / 8 + 1)
 
 // First bitmap is used for storing a bitmap of entire keyboard. 
 // The second buffer keeps track of the six keys for 6KRO reports. 
 // The third is an empty buffer used as a comparison to check if a buffer is empty.
+// The fourth layer stores registered layer modifiers.
 
 #define FULL_BITMAP scanbuf_bitmap[0]
 #define SIXKRO_BITMAP scanbuf_bitmap[1]
@@ -28,14 +31,10 @@
 
 uin8_t scanbuf6_count = 0;
 
-uint8_t scanbuf_bitmap[3][SCANBUF_LEN] = {0};
+uint8_t scanbuf_bitmap[4][SCANBUF_LEN] = {0};
 uint8_t cur_scanbuf = 0;
 
-#ifdef SUPPORT_16BIT_SCANCODES
-int8_t scanbufSetBit(uint16_t scancode)
-#else 
 int8_t scanbufSetBit(uint8_t scancode)
-#endif // SUPPORT_16BIT_SCANCODES
 {
     if(scancode > MAX_SUPPORTED_KEY_VAL)
         return -1;
@@ -43,39 +42,23 @@ int8_t scanbufSetBit(uint8_t scancode)
     FULL_BITMAP[scancode / 8] |= (1 << (scancode % 8));
 }
 
-#ifdef SUPPORT_16BIT_SCANCODES
-static uint8_t checkBit(uint8_t *sb, uint16_t scancode)
-#else 
 static uint8_t checkBit(uint8_t *sb, int8_t scancode)
-#endif // SUPPORT_16BIT_SCANCODES
 {
     return (uint8_t) (sb[scancode / 8] >> (scancode % 8) & 0x01;
 }
 
-#ifdef SUPPORT_16BIT_SCANCODES
-uint8_t scanbufCheckBit(uint16_t scancode)
-#else 
 uint8_t scanbufCheckBit(int8_t scancode)
-#endif // SUPPORT_16BIT_SCANCODES
 {
     return checkBit(FULL_BITMAP, scancode);
 }
 
-#ifdef SUPPORT_16BIT_SCANCODES
-static uint8_t sixKeyCheckBit(uint16_t scancode)
-#else 
 static uint8_t sixKeyCheckBit(int8_t scancode)
-#endif // SUPPORT_16BIT_SCANCODES
 {
     return checkBit(SIXKRO_BITMAP, scancode);
 }
 
 
-#ifdef SUPPORT_16BIT_SCANCODES
-static int8_t sixKeyAdd(uint16_t scancode)
-#else 
 static int8_t sixKeyAdd(uint8_t scancode)
-#endif // SUPPORT_16BIT_SCANCODES
 {
     if(scanbuf6_count < 6){
         SIXKRO_BITMAP[scancode/8] |= (1 << (scancode % 8));
@@ -163,7 +146,7 @@ static void sixKeyFill(void)
  * This function should be called after a scan has finished, it will update
  * the 6KRO buffer and swap the active bitmap with the background bitmap
  */
-void scanbufSwapBuf(void)
+void scanbufCompileBuf(void)
 {
     static uint8_t count;
 
@@ -171,6 +154,8 @@ void scanbufSwapBuf(void)
     scanbuf6_count = sixKeyCount();
 
 }
+
+int8_t scanbufProcessBuf(void);
 
 size_t scanbufGetLen(void)
 {
