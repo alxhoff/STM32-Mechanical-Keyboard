@@ -36,4 +36,21 @@ struct HID_descr_composite {
     int8_t wheel;
 };
 
+union {
+    struct HID_descr_boot_keyboard keyboard;
+    struct HID_descr_boot_mouse mouse;
+} HID_descr_boot;
+
+union {
+    struct HID_descr_keyboard keyboard;
+    struct HID_descr_mouse mouse;
+} HID_descr_IDs;
+
+// Available: BOOT_DESCRIPTOR, ID_DESCRIPTORS, COMPOSITE, NKRO
+struct HID_report {
+    union HID_descr_boot boot;
+    union HID_descr_keyboard 
+    struct HID_descr_composite composite;
+}
+
 #endif // __DESCRIPTORS_H__
