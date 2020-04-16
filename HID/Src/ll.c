@@ -70,7 +70,7 @@ int llDeleteItemData(ll_handle_t *list, void *data)
     struct ll_item *del;
 
     for(; iterator->next; iterator=iterator->next)
-        if(iterator->next->data == date)
+        if(iterator->next->data == data)
             break;
 
     if(iterator->next){
@@ -92,7 +92,7 @@ int llDeleteItemData(ll_handle_t *list, void *data)
 
 struct ll_item *llGetHead(ll_handle_t list)
 {
-    return ((struct ll_list *) list)->head;
+    return &((struct ll_list *) list)->head;
 }
 
 size_t llGetItemSize(ll_handle_t list)

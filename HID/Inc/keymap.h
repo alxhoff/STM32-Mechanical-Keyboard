@@ -8,7 +8,11 @@
 #ifndef KEYMAP_H_
 #define KEYMAP_H_
 
+#include <stdint.h>
+
 #include "HIDClassCommon.h"
+#include "config.h"
+#include "keymap_config.h"
 
 #define KEYMAP(K00, K01, K02, K03, K04, K05, K06, K07, K08, K09, K10, K11,     \
 	       K12, K13, K14, K15, K16, K17, K18, K19, K20, K21, K22, K23,     \
@@ -63,25 +67,24 @@
 	}
 
 enum e_keymap_type {
-    keymap_layer,
-    keymap_overlay,
+	keymap_layer,
+	keymap_overlay,
 };
 
 struct keymap {
-    uint8_t grid [KEYBOARD_COLS][KEYBOARD_ROWS];
-    e_keymap_type type;
-    uint8_t modifier;
-    char *name;
+	uint8_t grid[KEYBOARD_COLS][KEYBOARD_ROWS];
+	enum e_keymap_type type;
+	uint8_t modifier;
+	char *name;
 };
 
 uint8_t getKeyboardRowCount(void);
 uint8_t getKeyboardColCount(void);
 
-struct keymap *keymapInit(void);
+int8_t keymapInit(struct keymap *km);
 struct keymap *keymapCreate(char *name);
-int8_t keymapDelete(char* name); 
+int8_t keymapDelete(char *name);
 
 uint8_t keymapGetScanCode(uint8_t col, uint8_t row);
-
 
 #endif /* KEYMAP_H_ */

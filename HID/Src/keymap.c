@@ -1,9 +1,9 @@
 
 #include <stdlib.h>
+#include <stdint.h>
 
 #include "keymap.h"
-#include "keymap_config.h"
-#include "config.h"
+#include "defkeymaps.h"
 #include "ll.h"
 
 uint8_t keymap_rows = KEYBOARD_COLS;
@@ -21,7 +21,7 @@ uint8_t keymapGetScanCode(uint8_t col, uint8_t row)
 	return HID_KEYBOARD_SC_ERROR_UNDEFINED;
 }
 
-int keymapInit(struct keymap *km)
+int8_t keymapInit(struct keymap *km)
 {
 	keymap_list = llCreateList(sizeof(struct keymap));
 	if (!keymap_list)
@@ -71,7 +71,7 @@ struct keymap *keymapFind(char *name)
 	struct ll_item *iterator = llGetHead(keymap_list);
 
 	for (; iterator->next; iterator = iterator->next)
-		if (!strcmp(name, (struct keymap *)(iterator->data)->name))
+		if (!strcmp(name, ((struct keymap *)(iterator->data))->name))
 			return (struct keymap *)iterator->data;
 
 	return NULL;
@@ -80,7 +80,7 @@ struct keymap *keymapFind(char *name)
 int8_t keymapDelete(char *name)
 {
 	struct keymap *km = keymapFind(name);
-	if (!keymap)
+	if (!km)
 		return -1;
 
 	return llDeleteItemData(keymap_list, (void *)km);

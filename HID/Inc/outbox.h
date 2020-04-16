@@ -4,7 +4,7 @@
 typedef void *outbox_handle_t;
 
 struct outbox_ops {
-    void (*send_report)(void *report, size_t len);
+    void (*send_report)(void *handle, void *report, size_t len);
 };
 
 #endif // __OUTBOX_H__

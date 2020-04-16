@@ -1,3 +1,5 @@
+#include <stdint.h>
+#include <stdlib.h>
 
 #include "HIDClassCommon.h"
 #include "lookup.h"
@@ -41,16 +43,16 @@ struct ascii_scan_code ascii_from_sc[HID_KEYBOARD_SC_MEDIA_CALCULATOR] = {
 	[SC(X)] = { .unmodified = "x", .modified = "X" },
 	[SC(Y)] = { .unmodified = "y", .modified = "Y" },
 	[SC(Z)] = { .unmodified = "z", .modified = "Z" },
-	[SC(1)] = { .unmodified = "1", .modified = "!" },
-	[SC(2)] = { .unmodified = "2", .modified = "@" },
-	[SC(3)] = { .unmodified = "3", .modified = "#" },
-	[SC(4)] = { .unmodified = "4", .modified = "$" },
-	[SC(5)] = { .unmodified = "5", .modified = "%" },
-	[SC(6)] = { .unmodified = "6", .modified = "^" },
-	[SC(7)] = { .unmodified = "7", .modified = "&" },
-	[SC(8)] = { .unmodified = "8", .modified = "*" },
-	[SC(9)] = { .unmodified = "9", .modified = "(" },
-	[SC(0)] = { .unmodified = "0", .modified = ")" },
+	[SC(1_AND_EXCLAMATION)] = { .unmodified = "1", .modified = "!" },
+	[SC(2_AND_AT)] = { .unmodified = "2", .modified = "@" },
+	[SC(3_AND_HASHMARK)] = { .unmodified = "3", .modified = "#" },
+	[SC(4_AND_DOLLAR)] = { .unmodified = "4", .modified = "$" },
+	[SC(5_AND_PERCENTAGE)] = { .unmodified = "5", .modified = "%" },
+	[SC(6_AND_CARET)] = { .unmodified = "6", .modified = "^" },
+	[SC(7_AND_AMPERSAND)] = { .unmodified = "7", .modified = "&" },
+	[SC(8_AND_ASTERISK)] = { .unmodified = "8", .modified = "*" },
+	[SC(9_AND_OPENING_PARENTHESIS)] = { .unmodified = "9", .modified = "(" },
+	[SC(0_AND_CLOSING_PARENTHESIS)] = { .unmodified = "0", .modified = ")" },
 	[SC(ENTER)] = { .unmodified = "\n", .modified = "\n" },
 	[SC(MINUS_AND_UNDERSCORE)] = { .unmodified = "-", .modified = "_" },
 	[SC(EQUAL_AND_PLUS)] = { .unmodified = "=", .modified = "+" },
@@ -89,7 +91,7 @@ struct ascii_scan_code ascii_from_sc[HID_KEYBOARD_SC_MEDIA_CALCULATOR] = {
 	[SC(PAGE_UP)] = { .unmodified = "PGU", .modified = "PGU" },
 	[SC(DELETE)] = { .unmodified = "DEL", .modified = "DEL" },
 	[SC(END)] = { .unmodified = "END", .modified = "END" },
-	[SC(RAGE_DOWN)] = { .unmodified = "PGD", .modified = "PGD" },
+	[SC(PAGE_DOWN)] = { .unmodified = "PGD", .modified = "PGD" },
 	[SC(RIGHT_ARROW)] = { .unmodified = "RIG", .modified = "RIG" },
 	[SC(LEFT_ARROW)] = { .unmodified = "LEF", .modified = "LEF" },
 	[SC(DOWN_ARROW)] = { .unmodified = "DWN", .modified = "DWN" },
@@ -97,7 +99,7 @@ struct ascii_scan_code ascii_from_sc[HID_KEYBOARD_SC_MEDIA_CALCULATOR] = {
 	[SC(NUM_LOCK)] = { .unmodified = "NLK", .modified = "NLK" },
 };
 
-scan_code_ascii sc_from_ascii[HID_KEYBOARD_SC_MEDIA_CALCULATOR] = {
+struct scan_code_ascii sc_from_ascii[HID_KEYBOARD_SC_MEDIA_CALCULATOR] = {
 	[' '] = { SC(SPACE), 0 },
 	['!'] = { SC(1_AND_EXCLAMATION), MOD(RIGHTSHIFT) },
 	['\''] = { SC(2_AND_AT), MOD(RIGHTSHIFT) },

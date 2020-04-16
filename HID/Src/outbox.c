@@ -1,6 +1,7 @@
 
 #include <stdlib.h>
 
+#include "outbox.h"
 #include "descriptors.h"
 #include "scanbuf.h"
 
@@ -29,5 +30,5 @@ void outboxConsumeScanBuf(void)
 
 void outboxSendReport(struct outbox *ob, void *report, size_t len)
 {
-    (ob->send_report)(ob->handle, report, len);
+    (ob->ops->send_report)(ob->handle, report, len);
 }

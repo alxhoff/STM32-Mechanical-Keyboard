@@ -14,151 +14,221 @@
  *
  */
 
+#include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
 
+#include "scanbuf.h"
 #include "config.h"
 
 #define SCANBUF_LEN (MAX_SUPPORTED_KEY_VAL / 8 + 1)
+#define SCANBUF_CAST(handle) ((struct scanBuf *)handle)
 
-// First bitmap is used for storing a bitmap of entire keyboard. 
-// The second buffer keeps track of the six keys for 6KRO reports. 
-// The third is an empty buffer used as a comparison to check if a buffer is empty.
-// The fourth layer stores registered layer modifiers.
+const uint8_t zero_bitmap[SCANBUF_LEN] = { 0 };
 
-#define FULL_BITMAP scanbuf_bitmap[0]
-#define SIXKRO_BITMAP scanbuf_bitmap[1]
-#define SIXKRO_EMPTY_BITMAP scanbuf_bitmap[2]
+struct scanBuf {
+	uint8_t length;
 
-uin8_t scanbuf6_count = 0;
+	uint8_t six_key_bit_count;
+	uint8_t six_key_bitmap[SCANBUF_LEN];
 
-uint8_t scanbuf_bitmap[4][SCANBUF_LEN] = {0};
-uint8_t cur_scanbuf = 0;
+	uint8_t keyboard_bitmap[SCANBUF_LEN];
 
-int8_t scanbufSetBit(uint8_t scancode)
-{
-    if(scancode > MAX_SUPPORTED_KEY_VAL)
-        return -1;
-
-    FULL_BITMAP[scancode / 8] |= (1 << (scancode % 8));
-}
+	uint8_t layer_modifier_bitmap[SCANBUF_LEN];
+};
 
 static uint8_t checkBit(uint8_t *sb, int8_t scancode)
 {
-    return (uint8_t) (sb[scancode / 8] >> (scancode % 8) & 0x01;
+    return (uint8_t) (sb[scancode / 8] >> (scancode % 8) & 0x01);
 }
 
-uint8_t scanbufCheckBit(int8_t scancode)
+static uint8_t scanbufCheckKeyboardBit(struct scanBuf *sb, int8_t scancode)
 {
-    return checkBit(FULL_BITMAP, scancode);
+	return checkBit((uint8_t *)sb->keyboard_bitmap, scancode);
 }
 
-static uint8_t sixKeyCheckBit(int8_t scancode)
+static uint8_t sixKeyCheckBit(struct scanBuf *sb, int8_t scancode)
 {
-    return checkBit(SIXKRO_BITMAP, scancode);
+	return checkBit((uint8_t *)sb->six_key_bitmap, scancode);
 }
 
-
-static int8_t sixKeyAdd(uint8_t scancode)
+static int8_t sixKeyAdd(struct scanBuf *sb, uint8_t scancode)
 {
-    if(scanbuf6_count < 6){
-        SIXKRO_BITMAP[scancode/8] |= (1 << (scancode % 8));
-        scanbuf6_count++;
-        return 0;
-    }
-    return -1;
+	if (sb->six_key_bit_count < 6) {
+		sb->six_key_bitmap[scancode / 8] |= (1 << (scancode % 8));
+		sb->six_key_bit_count++;
+		return 0;
+	}
+	return -1;
 }
 
 static void decrementByteArray(uint8_t *array, size_t len)
 {
-    size_t i = 0;
+	size_t i = 0;
 
-    for(; i < len; i++)
-        if(array[i]){
-            array[i]--;
-            if(i > 0) 
-                for(i-- ; i >= 0 ; i--)
-                    array[i] = 0xFF;
-            return;
-        }
+	for (; i < len; i++)
+		if (array[i]) {
+			array[i]--;
+			if (i > 0)
+				for (i--; i >= 0; i--)
+					array[i] = 0xFF;
+			return;
+		}
 }
 
 static void bytewiseANDArray(uint8_t *arr_1, uint8_t *arr_2, size_t len)
 {
-    static size_t i;
+	static size_t i;
 
-    for(i = 0; i < len; i++)
-        arr_1[i] &= arr_2[i];
+	for (i = 0; i < len; i++)
+		arr_1[i] &= arr_2[i];
 }
 
 static void bytewiseXORArray(uint8_t *arr_1, uint8_t *arr_2, size_t len)
 {
-    static size_t i;
+	static size_t i;
 
-    for(i = 0; i < len; i++)
-        arr_1[i] ^= arr_2[i];
+	for (i = 0; i < len; i++)
+		arr_1[i] ^= arr_2[i];
 }
 
-static uint8_t sixKeyIsEmpty(uint8_t *tmp_6_array)
+static uint8_t sixKeyIsEmpty(uint8_t *tmp_six_key_array)
 {
-    return !memcmp(tmp_6_array, SIXKRO_EMPTY_BITMAP, SCANBUF_LEN);
+	return !memcmp(tmp_six_key_array, zero_bitmap, SCANBUF_LEN);
 }
 
 // Return 0 is buffer is not full, otherwise 1
-uint8_t sixKeyCount(void) 
+static uint8_t sixKeyCount(struct scanBuf *sb)
 {
-    uint8_t count = 0;
-    static int8_t n[SCANBUF_LEN];
-    static int8_t m[SCANBUF_LEN];
+	uint8_t count = 0;
+	static int8_t n[SCANBUF_LEN];
+	static int8_t m[SCANBUF_LEN];
 
-    if(sixKeyIsEmpty(SIXKRO_BITMAP))
-        return 0;
+	if (sixKeyIsEmpty(sb->six_key_bitmap))
+		return 0;
 
-    memcpy(&n, SIXKRO_BITMAP, SCANBUF_LEN);
+	memcpy(&n, sb->six_key_bitmap, SCANBUF_LEN);
 
-    do{
-        count++;
-        memcmp(&m, &n, SCANBUF_LEN);
-        decrementByteArray(&m, SCANBUF_LEN);
-        bytewiseANDArray(&n, &m, SCANBUF_LEN);
-    }while(!sixKeyIsEmpty(&n));
+	do {
+		count++;
+		memcmp((uint8_t *)&m, (uint8_t *)&n, SCANBUF_LEN);
+		decrementByteArray((uint8_t *)&m, SCANBUF_LEN);
+		bytewiseANDArray((uint8_t *)&n, (uint8_t *)&m, SCANBUF_LEN);
+	} while (!sixKeyIsEmpty((uint8_t *)&n));
 
-    return count;
+	return count;
 }
 
-void scanbufClear(void)
+static void sixKeyFill(struct scanBuf *sb)
 {
-    memset(FULL_BITMAP, 0, SCANBUF_LEN);
-}
+	static size_t i;
+	static uint8_t j;
 
-static void sixKeyFill(void)
-{
-    static size_t i;
-    static uint8_t j;
-
-    for(i = 0; i < SCANBUF_LEN; i++)
-        for(j = 0; j < 8; j++)
-            if(scanbufCheckBit(i * 8 + j))
-                if(sixKeyAdd(i * 8 + j))
-                    return;
+	for (i = 0; i < SCANBUF_LEN; i++)
+		for (j = 0; j < 8; j++)
+			if (scanbufCheckKeyboardBit(sb, i * 8 + j))
+				if (sixKeyAdd(sb, i * 8 + j))
+					return;
 }
 
 /*
  * This function should be called after a scan has finished, it will update
  * the 6KRO buffer and swap the active bitmap with the background bitmap
  */
-void scanbufCompileBuf(void)
+void scanbufCompileSixKeyBitmap(scanBuf_handle_t handle)
 {
-    static uint8_t count;
+    struct scanBuf *sb = SCANBUF_CAST(handle);
 
-    bytewiseXORArray(SIXKRO_BITMAP, FULL_BITMAP);
-    scanbuf6_count = sixKeyCount();
-
+	bytewiseXORArray(sb->six_key_bitmap, sb->keyboard_bitmap, sb->length);
+	sb->six_key_bit_count = sixKeyCount(sb);
 }
 
-int8_t scanbufProcessBuf(void);
-
-size_t scanbufGetLen(void)
+scanBuf_handle_t scanbufAlloc(void)
 {
-    return (size_t) SCANBUF_LEN;
+	struct scanBuf *ret =
+		(struct scanBuf *)calloc(1, sizeof(struct scanBuf));
+
+	if (!ret)
+		return NULL;
+
+	ret->length = SCANBUF_LEN;
+
+	return (scanBuf_handle_t)ret;
 }
 
+void scanbufSetBit(scanBuf_handle_t handle, uint8_t scancode)
+{
+	if (scancode < MAX_SUPPORTED_KEY_VAL)
+		SCANBUF_CAST(handle)->keyboard_bitmap[scancode / 8] |= (1 << (scancode % 8));
+}
+
+void scanbufClear(scanBuf_handle_t handle)
+{
+	memset(SCANBUF_CAST(handle)->keyboard_bitmap, 0, SCANBUF_LEN);
+}
+
+size_t scanbufGetLen(scanBuf_handle_t handle)
+{
+	return (size_t)SCANBUF_CAST(handle)->length;
+}
+
+uint8_t *scanBufGetFullBitmap(scanBuf_handle_t handle)
+{
+	uint8_t *ret = (uint8_t *)malloc(SCANBUF_CAST(handle)->length);
+	if (!ret)
+		return NULL;
+
+	memcpy(ret, SCANBUF_CAST(handle)->keyboard_bitmap, SCANBUF_LEN);
+
+	return ret;
+}
+
+static uint8_t bitmapToArray(uint8_t *bitmap, uint8_t **buffer, uint8_t length,
+			      uint8_t bits_to_find)
+{
+	uint8_t j, i = 0, found_bits = 0;
+    uint8_t required_bits;
+
+    if(bits_to_find)
+        required_bits = bits_to_find;
+    else {
+        required_bits = length;
+    }
+
+	uint8_t *ret_buf =
+		(uint8_t *)malloc(required_bits);
+	if (!ret_buf)
+		return -1;
+
+    *buffer = ret_buf;
+
+	for (; i < length; i++) {
+		for (j = 0; j < 8; j++) {
+			if (found_bits == required_bits)
+				goto all_found;
+
+			if ((bitmap[i] >> j) &
+			    0x01)
+				ret_buf[found_bits++] = i * 8 + j + 1;
+		}
+	}
+
+all_found:
+	return found_bits;
+}
+
+/*
+ * Converts the stored 6 key bitmap into an array of scan codes.
+ * Returns the number of scan codes, ie. the length of the array.
+ */
+int8_t scanBufGetSixKeyBitmap(scanBuf_handle_t handle, uint8_t *buffer)
+{
+    return bitmapToArray(SCANBUF_CAST(handle)->six_key_bitmap, &buffer,
+            SCANBUF_CAST(handle)->length, SCANBUF_CAST(handle)->six_key_bit_count);
+}
+
+int8_t scanBufGetLayerMod(scanBuf_handle_t handle, uint8_t *buffer)
+{
+    return bitmapToArray(SCANBUF_CAST(handle)->layer_modifier_bitmap, &buffer, 
+            SCANBUF_CAST(handle)->length, 0);    
+}
