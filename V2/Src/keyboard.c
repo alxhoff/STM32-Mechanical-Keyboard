@@ -102,9 +102,9 @@ typedef struct keyboard_device {
 	osThreadId scan_task_handle;
 } keyboard_device_t;
 
-QueueHandle_t queue_packet_to_send;
+QueueHandle_t send_buffer_queue;
 
-keyboard_device_t keyboard_dev = { .row_ports = { ROW_PORT_0, ROW_PORT_1,
+keyboard_device_t kb = { .row_ports = { ROW_PORT_0, ROW_PORT_1,
 ROW_PORT_2, ROW_PORT_3, ROW_PORT_4 }, .row_pins = { ROW_PIN_0,
 ROW_PIN_1, ROW_PIN_2, ROW_PIN_3, ROW_PIN_4 }, .keyboard_report_ID = 1,
 		.media_report_ID = 2, };
@@ -139,34 +139,34 @@ static void keyboard_init_row_inputs(void) {
 
 	//INIT ROWS - input
 	for (unsigned char i = 0; i < KEYBOARD_ROWS; i++) {
-		GPIO_InitStruct.Pin = keyboard_dev.row_pins[i];
+		GPIO_InitStruct.Pin = kb.row_pins[i];
 		GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
 		GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-		HAL_GPIO_Init(keyboard_dev.row_ports[i], &GPIO_InitStruct);
+		HAL_GPIO_Init(kb.row_ports[i], &GPIO_InitStruct);
 	}
 }
 
-void keyboard_toggle_callback(TimerHandle_t timer){
-	xSemaphoreGive(keyboard_dev.toggle_lock);
+void keyboardCapsDebounceCallback(TimerHandle_t timer){
+	xSemaphoreGive(kb.toggle_lock);
 }
 
 static unsigned char keyboard_read_row(unsigned char row) {
-	return HAL_GPIO_ReadPin(keyboard_dev.row_ports[row],
-			keyboard_dev.row_pins[row]);
+	return HAL_GPIO_ReadPin(kb.row_ports[row],
+			kb.row_pins[row]);
 }
 
 static void keyboard_scan_buff_add(unsigned char col, unsigned char row) {
-	keyboard_dev.scan_buf.buf[keyboard_dev.scan_buf.count].col = col;
-	keyboard_dev.scan_buf.buf[keyboard_dev.scan_buf.count].row = row;
-	keyboard_dev.scan_buf.count++;
+	kb.scan_buf.buf[kb.scan_buf.count].col = col;
+	kb.scan_buf.buf[kb.scan_buf.count].row = row;
+	kb.scan_buf.count++;
 }
 
-signed char keyboard_scan_matrix(void) {
+signed char keyboardScanMatrix(void) {
 
 	static unsigned short row_mask = { 0 };
 	unsigned char ret = 0;
 
-	if ( xSemaphoreTake(keyboard_dev.buf_lock, (TickType_t) 0) == pdFALSE)
+	if ( xSemaphoreTake(kb.buf_lock, (TickType_t) 0) == pdFALSE)
 		return -EAGAIN;
 
 	for (unsigned char col = 0; col < KEYBOARD_COLS; col++) { /* Set each col high and test rows*/
@@ -182,21 +182,21 @@ signed char keyboard_scan_matrix(void) {
 				keyboard_scan_buff_add(KEYBOARD_COLS - col - 1, row); //TODO remove - requirement
 	}
 
-	xSemaphoreGive(keyboard_dev.buf_lock);
-	if (keyboard_dev.scan_buf.count)
+	xSemaphoreGive(kb.buf_lock);
+	if (kb.scan_buf.count)
 		return 0;
 	else
 		return -EAGAIN;
 
 	error:
-	xSemaphoreGive(keyboard_dev.buf_lock);
+	xSemaphoreGive(kb.buf_lock);
 	return -EAGAIN;
 }
 
 static unsigned char is_in_prev_buf(unsigned char sc) {
 	static unsigned char i = 0;
-	for (; i < keyboard_dev.prev_buf.count; i++)
-		if (sc == keyboard_dev.prev_buf.keys[i])
+	for (; i < kb.prev_buf.count; i++)
+		if (sc == kb.prev_buf.keys[i])
 			return 1;
 	return 0;
 }
@@ -207,36 +207,36 @@ static void keyboard_sort_scaned_key(send_buffer_t *send_buf,
 		key_buffer_t *buf_new, unsigned char key) {
 	if (key >= 0xE8 && key <= 0xEF) /* media */
 	{
-		send_buf->med_buf = key;
+		send_buf->med_buff = key;
 		return;
 	}
 
 	if (key >= 0xE0 && key <= 0xE7) /* modifier */
 	{
-		send_buf->mod_buf |= (1 << (key - 0xE0));
+		send_buf->mod_buff |= (1 << (key - 0xE0));
 		return;
 	}
 
 	//sort key into send buffer or new keys buf
 	if (is_in_prev_buf(key))
-		send_buf->key_buf.keys[send_buf->key_buf.count++] = key;
+		send_buf->key_buff.keys[send_buf->key_buff.count++] = key;
 	else
 		buf_new->buf[buf_new->count++] = key;
 }
 
-void keyboard_toggle_caps(void) {
-	keyboard_dev.toggles.caps ^= 1;
+void keyboardCapsToggle(void) {
+	kb.toggles.caps ^= 1;
 }
 
-void keyboard_toggle_CLI(void) {
-	keyboard_dev.toggles.CLI ^= 1;
+void keyboardCLIToggle(void) {
+	kb.toggles.CLI ^= 1;
 }
 
-void keyboard_toggle_func(void) {
-	keyboard_dev.toggles.func ^= 1;
+void keyboardFuncToggle(void) {
+	kb.toggles.func ^= 1;
 }
 
-signed char keyboard_process_scan_buf(void) {
+signed char keyboardProcessScanBuff(void) {
 	static unsigned char ret = 0;
 	volatile static unsigned char tmp_sc;
 	unsigned char i = 0;
@@ -246,29 +246,29 @@ signed char keyboard_process_scan_buf(void) {
 	if (!buf)
 		return -ENOMEM;
 
-	if (xSemaphoreTake(keyboard_dev.buf_lock, (TickType_t) 0) == pdTRUE) {
+	if (xSemaphoreTake(kb.buf_lock, (TickType_t) 0) == pdTRUE) {
 
-		while (keyboard_dev.scan_buf.count) {
-			tmp_sc = keymap_get_key(keyboard_dev.scan_buf.buf[i].row,
-					keyboard_dev.scan_buf.buf[i].col);
+		while (kb.scan_buf.count) {
+			tmp_sc = keymapGetKeyCode(kb.scan_buf.buf[i].row,
+					kb.scan_buf.buf[i].col);
 			/* State change */
-			ret = lookup_state_change_key(tmp_sc);
+			ret = lookupCheckStateChange(tmp_sc);
 			if (ret) { /* if state change key */
 				//TODO HANDLE STATE CHANGE
-				keyboard_dev.scan_buf.count = 0; /* clear buffer */
+				kb.scan_buf.count = 0; /* clear buffer */
 				return 0;
 			}
 
 			/* Toggle key */
 			//TODO make more efficient
-			ret = lookup_toggle_key(tmp_sc);
+			ret = lookupCaps(tmp_sc);
 			if (ret) {
 				switch (ret) {
 				case 1:
-					if(xSemaphoreTake(keyboard_dev.toggle_lock, 0)){
-						xTimerReset(keyboard_dev.toggle_debounce, portMAX_DELAY);
-						keyboard_toggle_caps();
-						keyboard_dev.toggles.changed = 1;
+					if(xSemaphoreTake(kb.toggle_lock, 0)){
+						xTimerReset(kb.toggle_debounce, portMAX_DELAY);
+						keyboardCapsToggle();
+						kb.toggles.changed = 1;
 					}
 					break;
 				default:
@@ -279,67 +279,67 @@ signed char keyboard_process_scan_buf(void) {
 			/* The rest */
 			keyboard_sort_scaned_key(buf, &sc_new, tmp_sc);
 
-			keyboard_dev.scan_buf.count--;
+			kb.scan_buf.count--;
 			i++;
 		}
 
 		//Handle toggles and caps
-		if (keyboard_dev.toggles.changed) {
+		if (kb.toggles.changed) {
 			//TODO debounce
-			if (keyboard_dev.toggles.caps) { /* If caps is set */
-				LEDs_set_caps();
-				buf->mod_buf |= HID_KEYBOARD_LED_CAPSLOCK;
+			if (kb.toggles.caps) { /* If caps is set */
+				LEDsSetCaps();
+				buf->mod_buff |= HID_KEYBOARD_LED_CAPSLOCK;
 			} else {
-				LEDs_clear_caps();
-				buf->mod_buf &= ~HID_KEYBOARD_LED_CAPSLOCK;
+				LEDsClearCaps();
+				buf->mod_buff &= ~HID_KEYBOARD_LED_CAPSLOCK;
 			}
 
 
-			if (keyboard_dev.toggles.CLI)
-				LEDs_set_CLI();
+			if (kb.toggles.CLI)
+				LEDsSetCLI();
 			else
-				LEDs_clear_CLI();
+				LEDsClearCLI();
 
-			if (keyboard_dev.toggles.func)
-				LEDs_set_func();
+			if (kb.toggles.func)
+				LEDsSetFunc();
 			else
-				LEDs_clear_func();
+				LEDsClearFunc();
 
-			keyboard_dev.toggles.changed = 0;
+			kb.toggles.changed = 0;
 		}
 
-		while (buf->key_buf.count < 6 && sc_new.count) /* Fill buf with new keys */
+		while (buf->key_buff.count < 6 && sc_new.count) /* Fill buf with new keys */
 		{
-			buf->key_buf.keys[buf->key_buf.count] =
+			buf->key_buff.keys[buf->key_buff.count] =
 					sc_new.buf[sc_new.count - 1];
-			buf->key_buf.count++;
+			buf->key_buff.count++;
 			sc_new.count--;
 		}
 
 		/* if prev packet had contents and current doesn't then send empty packet */
-		if (keyboard_dev.prev_buf.count && !buf->key_buf.count) {
-			buf->key_buf.count = 1; /* trigger sending of empty packet */
-			memset(&keyboard_dev.prev_buf, 0, sizeof(six_key_buffer_t));
+		if (kb.prev_buf.count && !buf->key_buff.count) {
+			buf->key_buff.count = 1; /* trigger sending of empty packet */
+			memset(&kb.prev_buf, 0, sizeof(six_key_buffer_t));
 		} else
-			memcpy(&keyboard_dev.prev_buf, &buf->key_buf, /* Save for next frame */
+			memcpy(&kb.prev_buf, &buf->key_buff, /* Save for next frame */
 			sizeof(six_key_buffer_t));
 
-		if (!queue_packet_to_send) /* check queue has been created */
+		if (!send_buffer_queue) /* check queue has been created */
 			goto queue_no_init;
 
-		if (buf->key_buf.count || buf->med_buf)
-			xQueueSendToFront(queue_packet_to_send, buf, portMAX_DELAY);
+		if (buf->key_buff.count || buf->med_buff)
+			xQueueSendToFront(send_buffer_queue, buf, portMAX_DELAY);
 
-		xSemaphoreGive(keyboard_dev.buf_lock);
+		xSemaphoreGive(kb.buf_lock);
 		return 0;
 	}
 	return -EAVAIL;
 	queue_no_init:
-	xSemaphoreGive(keyboard_dev.buf_lock);
+	xSemaphoreGive(kb.buf_lock);
 	return -ENOINIT;
 }
 
-void keyboard_scan_task(void const *args){
+void keyboardScanTask(void const *args){
 	TickType_t xLastWakeTime = xTaskGetTickCount();
 	TickType_t xPeriod = 10;
 
@@ -347,8 +347,8 @@ void keyboard_scan_task(void const *args){
 	for (;;)
 	{
 		//HID TEST
-		if (keyboard_scan_matrix() == 0) /* if keys were pressed */
-			keyboard_process_scan_buf();		/* convert row-col to actual keys */
+		if (keyboardScanMatrix() == 0) /* if keys were pressed */
+			keyboardProcessScanBuff();		/* convert row-col to actual keys */
 
 		xPeriod = SCAN_PERIOD - (xLastWakeTime - xTaskGetTickCount());
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);
@@ -356,24 +356,24 @@ void keyboard_scan_task(void const *args){
 }
 
 //TODO error handling
-signed char keyboard_init(void) {
+signed char keyboardInit(void) {
 	keyboard_init_status_LEDS();
 	keyboard_init_row_inputs();
 
-	queue_packet_to_send = xQueueCreate(20, sizeof(send_buffer_t));
-	keyboard_dev.buf_lock = xSemaphoreCreateMutex();
+	send_buffer_queue = xQueueCreate(20, sizeof(send_buffer_t));
+	kb.buf_lock = xSemaphoreCreateMutex();
 
-	keyboard_dev.toggle_debounce = xTimerCreate("Cursor Timer",
-			TOGGLE_DELAY, 0, NULL, keyboard_toggle_callback);
+	kb.toggle_debounce = xTimerCreate("Cursor Timer",
+			TOGGLE_DELAY, 0, NULL, keyboardCapsDebounceCallback);
 
-	if (!keyboard_dev.toggle_debounce)
+	if (!kb.toggle_debounce)
 		return -ENOINIT;
 
-	keyboard_dev.toggle_lock = xSemaphoreCreateBinary();
-	xSemaphoreGive(keyboard_dev.toggle_lock);
+	kb.toggle_lock = xSemaphoreCreateBinary();
+	xSemaphoreGive(kb.toggle_lock);
 
-	osThreadDef(keyboard_scan, keyboard_scan_task, osPriorityNormal, 0, 128);
-	keyboard_dev.scan_task_handle = osThreadCreate(osThread(keyboard_scan), NULL);
+	osThreadDef(keyboard_scan, keyboardScanTask, osPriorityNormal, 0, 128);
+	kb.scan_task_handle = osThreadCreate(osThread(keyboard_scan), NULL);
 
 	return 0;
 }

@@ -452,7 +452,7 @@ unsigned char lookup_get_mod(unsigned char character) {
 	return lookup_sc[character].mod;
 }
 
-unsigned char lookup_state_change_key(unsigned char sc) {
+unsigned char lookupCheckStateChange(unsigned char sc) {
 	//TODO
 	switch (sc) {
 	case SC(LAYER_FUNCTION):
@@ -470,7 +470,7 @@ unsigned char lookup_state_change_key(unsigned char sc) {
 }
 
 //look if the key is a key like caps lock
-unsigned char lookup_toggle_key(unsigned char sc) {
+unsigned char lookupCaps(unsigned char sc) {
 	switch (sc) {
 	case SC(LOCKING_CAPS_LOCK):
 		return 1;

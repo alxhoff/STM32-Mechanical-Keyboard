@@ -79,9 +79,9 @@ SemaphoreHandle_t USB_send_lock = NULL;
 
 unsigned char send_get_send_buf(void) {
 	unsigned char ret = 0;
-	if(queue_packet_to_send)
+	if(send_buffer_queue)
 		if(xSemaphoreTake(processing_lock, (TickType_t) 0) == pdTRUE ){
-			ret = xQueueReceive(queue_packet_to_send, &send_buf, (TickType_t) portMAX_DELAY);
+			ret = xQueueReceive(send_buffer_queue, &send_buf, (TickType_t) portMAX_DELAY);
 			if(ret == pdTRUE)
 				return 0;
 			goto error;
@@ -96,14 +96,14 @@ unsigned char send_prepare_keyboard(void) {
 			sizeof(keyboardHID_t) - sizeof(unsigned char));
 
 	memcpy(&keyboard_report_buf.key1,
-			&send_buf.key_buf.keys, sizeof(unsigned char) * 6);
-	keyboard_report_buf.modifiers = send_buf.mod_buf;
+			&send_buf.key_buff.keys, sizeof(unsigned char) * 6);
+	keyboard_report_buf.modifiers = send_buf.mod_buff;
 
 	return 0;
 }
 
 unsigned char send_prepare_media(void) {
-	media_report_buf.keys = send_buf.med_buf;
+	media_report_buf.keys = send_buf.med_buff;
 	return 0;
 }
 

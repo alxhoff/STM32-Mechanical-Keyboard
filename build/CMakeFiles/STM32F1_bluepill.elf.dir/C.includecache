@@ -1,0 +1,32 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../HID/Inc/config.h
+defconfig.h
+../HID/Inc/defconfig.h
+
+../HID/Inc/defconfig.h
+
+../HID/Inc/scanbuf.h
+stdint.h
+-
+stdlib.h
+-
+
+/home/alxhoff/git/GitHub/STM32-Mechanical-Keyboard/HID/Src/scanbuf.c
+stdint.h
+-
+stdlib.h
+-
+string.h
+-
+scanbuf.h
+/home/alxhoff/git/GitHub/STM32-Mechanical-Keyboard/HID/Src/scanbuf.h
+config.h
+/home/alxhoff/git/GitHub/STM32-Mechanical-Keyboard/HID/Src/config.h
+

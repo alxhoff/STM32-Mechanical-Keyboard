@@ -22,9 +22,9 @@
  * the input buffers and the HID reports.
  *
  * */
-typedef struct six_key_buffer{
+typedef struct six_key_buffer {
 	unsigned char keys[6];
-	unsigned char count;					/**< Stores the number of keys currently within the buffer */
+	unsigned char count; /**< Stores the number of keys currently within the buffer */
 } six_key_buffer_t;
 
 /**
@@ -40,10 +40,10 @@ typedef struct six_key_buffer{
  * is indicated by the send_flag.
  *
  * */
-typedef struct send_buffer{
-	six_key_buffer_t key_buf;		/**< Stores the keyboard HID report buffer */
-	unsigned char mod_buf;				/**< Stores the keyboard HID report modifier keys buffer */
-	unsigned char med_buf;		/**< Stores the media HID report buffer */
+typedef struct send_buffer {
+	six_key_buffer_t key_buff; /**< Stores the keyboard HID report buffer */
+	unsigned char mod_buff; /**< Stores the keyboard HID report modifier keys buffer */
+	unsigned char med_buff; /**< Stores the media HID report buffer */
 //	unsigned char send_flag;				/**< Flag to indicate if the buffers need to be processed */
 } send_buffer_t;
 

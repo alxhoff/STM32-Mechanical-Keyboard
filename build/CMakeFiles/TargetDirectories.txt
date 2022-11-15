@@ -1,0 +1,10 @@
+/home/alxhoff/git/GitHub/STM32-Mechanical-Keyboard/build/CMakeFiles/rebuild_cache.dir
+/home/alxhoff/git/GitHub/STM32-Mechanical-Keyboard/build/CMakeFiles/edit_cache.dir
+/home/alxhoff/git/GitHub/STM32-Mechanical-Keyboard/build/CMakeFiles/STM32F1_bluepill.elf.bin.dir
+/home/alxhoff/git/GitHub/STM32-Mechanical-Keyboard/build/CMakeFiles/clean_lib.dir
+/home/alxhoff/git/GitHub/STM32-Mechanical-Keyboard/build/CMakeFiles/STM32F1_bluepill.elf.hex.dir
+/home/alxhoff/git/GitHub/STM32-Mechanical-Keyboard/build/CMakeFiles/flash.dir
+/home/alxhoff/git/GitHub/STM32-Mechanical-Keyboard/build/CMakeFiles/debug.dir
+/home/alxhoff/git/GitHub/STM32-Mechanical-Keyboard/build/CMakeFiles/STM32F1_bluepill.elf.dir
+/home/alxhoff/git/GitHub/STM32-Mechanical-Keyboard/build/CMakeFiles/clean_cmake.dir
+/home/alxhoff/git/GitHub/STM32-Mechanical-Keyboard/build/CMakeFiles/clean_all.dir

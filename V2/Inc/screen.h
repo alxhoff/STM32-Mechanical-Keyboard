@@ -9,7 +9,7 @@
 #define SCREEN_H_
 
 signed char screen_init(void);
-char **screen_get_buffer(void);
+char** screen_get_buffer(void);
 int screen_get_cursor_x(void);
 int screen_get_cursor_y(void);
 signed char screen_add_line(char *line);

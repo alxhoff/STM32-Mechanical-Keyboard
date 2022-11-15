@@ -23,6 +23,6 @@
 #define Y_MID			178
 
 unsigned char mouse_init(void);
-unsigned char mouse_run (void);
+unsigned char mouse_run(void);
 
 #endif /* MOUSE_H_ */

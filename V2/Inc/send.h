@@ -12,7 +12,7 @@ void send_init(void);
 void send_enter(void);
 void send_run(void);
 void send_exit(void);
-void send_string(char* str);
+void send_string(char *str);
 unsigned char send_get_send_buf(void);
 unsigned char send_reports(void);
 

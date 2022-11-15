@@ -155,7 +155,7 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
 
-	keyboard_init();
+	keyboardInit();
 	send_init();
 	SN54HC595_init();
 	ssd1306_init();
@@ -626,10 +626,10 @@ void LEDCallback(void const *argument)
 	TickType_t xLastWakeTime = xTaskGetTickCount();
 	TickType_t xPeriod = 20;
 
-	LEDs_init();
+	LEDsInit();
 
 	for(;;){
-		LEDs_run();
+		LEDsRun();
 
 		xPeriod = STATES_PERIOD - (xLastWakeTime - xTaskGetTickCount());
 		vTaskDelayUntil(&xLastWakeTime, xPeriod);

@@ -10,10 +10,10 @@
 
 typedef struct list_entry list_entry_t;
 
-struct list_entry{
-	struct list_entry 	*next, *prev;
+struct list_entry {
+	struct list_entry *next, *prev;
 
-	void*				data;
+	void *data;
 };
 
 #endif /* LINKED_LIST_H_ */

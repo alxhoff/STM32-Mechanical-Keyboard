@@ -28,46 +28,71 @@
 #define FALSE			0
 #endif
 
-typedef enum {ALARM_EVERY_SECOND, ALARM_MATCH_SECONDS,
-		ALARM_MATCH_MINUTES, ALARM_MATCH_HOURS,
-		ALARM_MATCH_DATE_OR_DAY} ALARM_TYPE;
+typedef enum {
+	ALARM_EVERY_SECOND,
+	ALARM_MATCH_SECONDS,
+	ALARM_MATCH_MINUTES,
+	ALARM_MATCH_HOURS,
+	ALARM_MATCH_DATE_OR_DAY
+} ALARM_TYPE;
 
-typedef enum {ALARM_ONE, ALARM_TWO, BOTH} ALARM_NUMBER;
+typedef enum {
+	ALARM_ONE, ALARM_TWO, BOTH
+} ALARM_NUMBER;
 
-typedef enum {DAY_OF_MONTH, DAY_OF_WEEK} DY_DT;
+typedef enum {
+	DAY_OF_MONTH, DAY_OF_WEEK
+} DY_DT;
 
-typedef enum {ONE_K, ONE_POINT_K, FOUR_K, EIGHT_K} WAVE_FREQ;
+typedef enum {
+	ONE_K, ONE_POINT_K, FOUR_K, EIGHT_K
+} WAVE_FREQ;
 
-typedef enum {EMPTY_MONTH, JANUARY, FEBUARY, MARCH, APRIL, MAY, JUNE,
-	JULY, AUGUST, SEPTERMBER, OCTOBER, NOVEMBER, DECEMBER}
-months;
+typedef enum {
+	EMPTY_MONTH,
+	JANUARY,
+	FEBUARY,
+	MARCH,
+	APRIL,
+	MAY,
+	JUNE,
+	JULY,
+	AUGUST,
+	SEPTERMBER,
+	OCTOBER,
+	NOVEMBER,
+	DECEMBER
+} months;
 
-typedef enum{EMPTY_DAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY,
-	FRIDAY, SATURDAY, SUNDAY} days;
+typedef enum {
+	EMPTY_DAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
+} days;
 
-typedef enum{AM, PM} time_of_day;
+typedef enum {
+	AM, PM
+} time_of_day;
 
 typedef struct {
-        u08 sec;
-        u08 min;
-        u08 hour;
-		u08 week_day;
-        u08 date;
-        u08 month;
-        u16 year;
-        u08	alarm1_sec;
-        u08 alarm1_min;
-        u08 alarm1_hour;
-        u08 alarm1_date;
-        u08 alarm2_min;
-        u08 alarm2_hour;
-        u08 alarm2_date;
-        u08 control;
-        u08 status;
-        u08 offset;
-        u08 MSB_temp;
-        u08 LSB_temp;
-    } ds3231Registers;
+	u08 sec;
+	u08 min;
+	u08 hour;
+	u08 week_day;
+	u08 date;
+	u08 month;
+	u16 year;
+	u08 alarm1_sec;
+	u08 alarm1_min;
+	u08 alarm1_hour;
+	u08 alarm1_date;
+	u08 alarm2_min;
+	u08 alarm2_hour;
+	u08 alarm2_date;
+	u08 control;
+	u08 status;
+	u08 offset;
+	u08 MSB_temp;
+	u08 LSB_temp;
+} ds3231Registers;
 
 typedef struct {
 	u08 twelve_hour;
@@ -83,7 +108,7 @@ typedef struct {
 
 typedef struct {
 	u08 twelve_hour;
-	u08	sec;
+	u08 sec;
 	u08 min;
 	u08 hour;
 	time_of_day pm;
@@ -118,13 +143,18 @@ typedef struct {
 
 uint8_t dec2bcd(uint8_t d);
 uint8_t bcd2dec(uint8_t b);
-void DS3231_set_time_short(I2C_HandleTypeDef *hi2c, u08 twelve_hour, u08 hour, u08 min, u08 sec);
-void DS3231_get_time_short(I2C_HandleTypeDef *hi2c, u08* pm, u08* twelve_hour, u08* hour, u08*min, u08* sec);
-void DS3231_set_date_short(I2C_HandleTypeDef *hi2c, u16 year, u08 month, u08 date, u08 day);
-void DS3231_get_date_short(I2C_HandleTypeDef *hi2c, u16* year, u08* month, u08* date, u08* day);
-void DS3231_set_time(I2C_HandleTypeDef *hi2c, ds3231Time* time);
-void DS3231_get_time(I2C_HandleTypeDef *hi2c, ds3231Time* return_struct);
+void DS3231_set_time_short(I2C_HandleTypeDef *hi2c, u08 twelve_hour, u08 hour,
+		u08 min, u08 sec);
+void DS3231_get_time_short(I2C_HandleTypeDef *hi2c, u08 *pm, u08 *twelve_hour,
+		u08 *hour, u08 *min, u08 *sec);
+void DS3231_set_date_short(I2C_HandleTypeDef *hi2c, u16 year, u08 month,
+		u08 date, u08 day);
+void DS3231_get_date_short(I2C_HandleTypeDef *hi2c, u16 *year, u08 *month,
+		u08 *date, u08 *day);
+void DS3231_set_time(I2C_HandleTypeDef *hi2c, ds3231Time *time);
+void DS3231_get_time(I2C_HandleTypeDef *hi2c, ds3231Time *return_struct);
 float DS3231_get_temp(I2C_HandleTypeDef *hi2c);
-void DS3231_register_dump(I2C_HandleTypeDef *hi2c, ds3231Registers* return_struct);
+void DS3231_register_dump(I2C_HandleTypeDef *hi2c,
+		ds3231Registers *return_struct);
 
 #endif /* DS3231_STM32_ALEX_H_ */

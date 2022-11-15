@@ -25,10 +25,10 @@
 #define Blue(c) ((uint8_t)(c & 0xFF))
 
 typedef struct LED_array {
-	uint8_t buffers[KEYBOARD_ROWS][LED_ROW_BUFF_LENGTH*3];
+	uint8_t buffers[KEYBOARD_ROWS][LED_ROW_BUFF_LENGTH * 3];
 
 	void (*update)(void);
-}LED_array_t;
+} LED_array_t;
 
 LED_array_t LED_dev = { 0 };
 

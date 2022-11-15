@@ -10,6 +10,6 @@
 
 #include "cmsis_os.h"
 
-extern QueueHandle_t queue_packet_to_send;
+extern QueueHandle_t send_buffer_queue;
 
 #endif /* PIPES_H_ */

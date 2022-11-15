@@ -1,16 +1,16 @@
 /*
 
-  WS2812B CPU and memory efficient library
+ WS2812B CPU and memory efficient library
 
-  Date: 28.9.2016
+ Date: 28.9.2016
 
-  Author: Martin Hubacek
-  	  	  http://www.martinhubacek.cz
-  	  	  @hubmartin
+ Author: Martin Hubacek
+ http://www.martinhubacek.cz
+ @hubmartin
 
-  Licence: MIT License
+ Licence: MIT License
 
-*/
+ */
 
 #ifndef VISEFFECT_H_
 #define VISEFFECT_H_

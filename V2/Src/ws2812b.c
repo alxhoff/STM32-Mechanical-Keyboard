@@ -19,7 +19,7 @@
 
 #define BUFFER_SIZE		(sizeof(ws2812bDmaBitBuffer)/sizeof(uint16_t))
 
-extern WS2812_Struct ws2812b;
+WS2812_Struct ws2812b;
 
 //TEST
 uint8_t test_buff1[4 * 3];
@@ -558,7 +558,7 @@ void ws2812b_set_pixel(uint8_t row, uint16_t column, uint8_t red, uint8_t green,
 #endif
 }
 
-void ws2812b_init() {
+void ws2812bInit() {
 	ws2812b_gpio_init();
 
 	DMA_init();
@@ -569,7 +569,7 @@ void ws2812b_init() {
 	ws2812b.transferComplete = 1;
 }
 
-void ws2812b_handle() {
+void ws2812bHandle() {
 	if (ws2812b.startTransfer) {
 		ws2812b.startTransfer = 0;
 		WS2812_sendbuf();

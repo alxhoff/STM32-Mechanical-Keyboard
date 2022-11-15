@@ -12,16 +12,16 @@
 
 typedef struct keymap_layer keymap_layer_t;
 
-struct keymap_layer{
+struct keymap_layer {
 //	key_grid_TypeDef* grid;
-	unsigned char 		grid[KEYBOARD_ROWS][KEYBOARD_COLS];
+	unsigned char grid[KEYBOARD_ROWS][KEYBOARD_COLS];
 
-	unsigned char 		mod_key_code;
+	unsigned char mod_key_code;
 
-	char* 				name;
-	volatile unsigned char 		ID;
+	char *name;
+	volatile unsigned char ID;
 
-	keymap_layer_t* 	next;
+	keymap_layer_t *next;
 };
 
 #endif /* KEYMAP_PRIVATE_H_ */

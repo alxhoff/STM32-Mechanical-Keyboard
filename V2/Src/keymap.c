@@ -63,31 +63,31 @@ keymap_layer_t *keymap_layer_init(char* name, unsigned char modifier_key_code) {
 	error: return NULL;
 }
 
-void keymap_set_key(unsigned char row, unsigned char col, unsigned char val) {
+void keymapSetKeyCode(unsigned char row, unsigned char col, unsigned char val) {
 	keymap_layer_list.current_layer->grid[row][col] = val;
 }
 
-unsigned char keymap_get_key(unsigned char row, unsigned char col) {
+unsigned char keymapGetKeyCode(unsigned char row, unsigned char col) {
 	return keymap_layer_list.current_layer->grid[row][col];
 }
 
-void keymap_set_name(char* name) {
+void keymapSetCurrentName(char* name) {
 	keymap_layer_list.current_layer->name = name;
 }
 
-char *keymap_get_name(void) {
+char *keymapGetCurrentName(void) {
 	return keymap_layer_list.current_layer->name;
 }
 
-void keymap_set_mod_key_code(unsigned char code) {
+void keymapSetCurrentModKeyCode(unsigned char code) {
 	keymap_layer_list.current_layer->mod_key_code = code;
 }
 
-unsigned char keymap_get_mod_key_code(void) {
+unsigned char keymapGetCurrentModKeyCode(void) {
 	return keymap_layer_list.current_layer->mod_key_code;
 }
 
-unsigned char keymap_get_ID(void) {
+unsigned char keymapGetCurrentID(void) {
 	return keymap_layer_list.current_layer->ID;
 }
 

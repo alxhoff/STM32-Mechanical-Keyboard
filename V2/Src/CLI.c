@@ -43,9 +43,9 @@ signed char CLI_process_line(void)
 
 signed char CLI_recv_presses(void){
 	unsigned char ret = 0;
-	if(queue_packet_to_send)
+	if(send_buffer_queue)
 		if(xSemaphoreTake(processing_lock, (TickType_t) 0) == pdTRUE ){
-			ret = xQueueReceive(queue_packet_to_send, &key_buf, (TickType_t) 0);
+			ret = xQueueReceive(send_buffer_queue, &key_buf, (TickType_t) 0);
 			if(ret == pdTRUE)
 				return 0;
 			goto error;
@@ -120,18 +120,18 @@ signed char CLI_add_to_string_at_pos(char **str, char *new, int pos){
 
 void CLI_handle_input(void){
 
-	unsigned char mod = (((key_buf.mod_buf >> 1 ) & 1) | ((key_buf.mod_buf >> 5) & 1)) ? 1 : 0;
+	unsigned char mod = (((key_buf.mod_buff >> 1 ) & 1) | ((key_buf.mod_buff >> 5) & 1)) ? 1 : 0;
 	char *val = 0;
-	for(int i = 0; i < key_buf.key_buf.count; i++){
+	for(int i = 0; i < key_buf.key_buff.count; i++){
 
-		if(key_buf.key_buf.keys[i] >= 0x04 && key_buf.key_buf.keys[i] <= 0x27){
+		if(key_buf.key_buff.keys[i] >= 0x04 && key_buf.key_buff.keys[i] <= 0x27){
 			//Find char representation
-			val = (char *)lookup_get_char(key_buf.key_buf.keys[i], mod);
+			val = (char *)lookup_get_char(key_buf.key_buff.keys[i], mod);
 			CLI_add_to_string_at_pos( &CLI_dev.screen_buf[screen_get_cursor_y()], val, screen_get_cursor_x());
 		}
 
 		//Handle all special input into CLI
-		switch(key_buf.key_buf.keys[i]){
+		switch(key_buf.key_buff.keys[i]){
 		//arrow keys
 		case HID_KEYBOARD_SC_LEFT_ARROW:
 			screen_move_cursor_left();
@@ -145,7 +145,7 @@ void CLI_handle_input(void){
 		}
 	}
 	xSemaphoreGive(processing_lock);
-	xQueueReset(queue_packet_to_send);
+	xQueueReset(send_buffer_queue);
 	xTimerReset(CLI_dev.debounce_timer, portMAX_DELAY);
 	xSemaphoreTake(CLI_dev.debounce_lock, portMAX_DELAY);
 }
